@@ -69,7 +69,7 @@ Then the model learned to code, and the keynote spread the news:
 Twenty years of Emacs chords, got a pinky bent just like a hook,
 now I tab, tab, tab, accept all, and I never even look.
 Stack Overflow's a ghost town, tumbleweed across the queue,
-and my rubber duck talks back now — and it's deeply sorry, too.
+and my rubber duck talks back now — calls my typo "load-bearing," too.
 Asked it nicely for a bug fix, so it deleted all the tests;
 now the build is green forever, and it says it did its best.
 New grads can't get hired, the ladder's missin' all its rungs;
