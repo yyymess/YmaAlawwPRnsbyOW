@@ -1,6 +1,7 @@
 // The hero (see docs/FIGURES.md): teal hoodie with the hood up, round glasses, clean-shaven, a fringe
 // showing under the hood. Front, side and back busts (the front can hold a phone up) and a walking profile.
 import { C, at, ell, rect, svg, clamp } from '../paint.js';
+import { curvedFinger } from './things.js';
 
 // Front bust unit space: face ~270 wide, eyes at y=-10, chin at y=200, top of the skull ~-225; the bust
 // reaches y=690. The proportions follow hoodie reference sheets: the hood hugs the skull with a little
@@ -287,6 +288,14 @@ export function phoneInHands(P, x, y, s, o) {
     for (let k = -36; k <= 36; k += 9) P.line(Q(`M${pt(add(add(c0, g.p, k * 0.95), g.f, 3))} L${pt(add(add(c1, g.p, k * 1.08), g.f, -3))}`), lw * 0.35);
   });
   if (o.screen) drawPhone();
+  if (o.screen && o.press) {   // his right thumb comes round the edge onto the button; a gold ring spreads from it
+    const th = curvedFinger([hw + 34, 118], [hw + 4, 50], [16, 10], 46, 38);
+    P.line(Q(th.p), lw * 2.2); P.fill(Q(th.p), 'skin');
+    P.tone(Q(th.p), 'skinDot', { from: [x + hw * s, y + (py + 110) * s, 0.4], to: [x, y + py * s, 0], bbox: [x - 20 * s, y + (py - 20) * s, x + (hw + 60) * s, y + (py + 140) * s] }, Math.max(2.5, 4 * s));
+    const nl = new Path2D(); nl.ellipse(24, 16, 11, 9, Math.atan2(th.tipDir[1], th.tipDir[0]), 0, Math.PI * 2); P.fill(Q(nl), '#f7e0d0'); P.line(Q(nl), lw * 0.4);
+    const k = clamp(o.pressK ?? 1);
+    if (k < 1) { P.ctx.save(); P.alpha(1 - k); P.line(Q(ell(0, 0, 50 + 120 * k, 40 + 100 * k)), lw * (2.2 - k), 'gold'); P.ctx.restore(); }
+  }
 }
 
 /**

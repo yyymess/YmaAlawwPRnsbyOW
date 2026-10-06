@@ -16,7 +16,8 @@ export default function bridge(P, f) {
   const cutB = beatCut(f, Ls[2]), cutC = beatCut(f, Ls[3]), cutD = beatCut(f, Ls[4]);
   page(P, f);
   const sub = t < cutB ? f.start : t < cutC ? cutB : t < cutD ? cutC : cutD, zb = 1 + 0.04 * ease.out(clamp((t - sub) / 6));
-  ctx.save(); P.clip(rect(110, 150, 1380, 560)); ctx.translate(800, 430); ctx.scale(zb, zb); ctx.translate(-800, -430);
+  P.fill(rect(110, 160, 1380, 552), 'sepia'); P.tone(rect(110, 160, 1380, 552), INK, { from: [800, 160, 0.06], to: [800, 712, 0.16], bbox: [110, 160, 1490, 712] }, 5);
+  ctx.save(); P.clip(rect(110, 160, 1380, 552)); ctx.translate(800, 436); ctx.scale(zb, zb); ctx.translate(-800, -436);
   if (t < cutB) isotype(P, f, Ls, t);
   else if (t < cutC) schoolroom(P, f, Ls, t, t - cutB);
   else if (t < cutD) glueWorks(P, f, Ls, t, t - cutC);
@@ -24,17 +25,19 @@ export default function bridge(P, f) {
   ctx.restore();
   // the plate's caption: the line being sung, printed
   const line = f.L.at(t) && f.L.at(t).start >= Ls[0].start - 0.5 ? f.L.at(t) : Ls[0];
+  P.line(rect(110, 160, 1380, 552), 3, INK); P.line(rect(118, 168, 1364, 536), 1.2, INK);
   P.line(svg('M160 742 L1440 742'), 2, INK); P.line(svg('M160 750 L1440 750'), 1, INK);
   lyric(P, line, t, 800, 812, { size: 44, maxW: 1240, always: true, lead: 0.5, color: 'charDk', dim: INK });
 }
 
 function page(P, f) {
   P.fill(rect(0, 0, W, H), 'sepia');
-  P.tone(rect(0, 0, W, H), INK, { from: [800, 450, 0.0], to: [0, 0, 0.55], radial: true, bbox: [0, 0, W, H] }, 7);
+  P.tone(rect(0, 0, W, H), INK, { from: [800, 450, 0.14], to: [0, 0, 0.5], radial: true, bbox: [0, 0, W, H] }, 6);
+  P.fill(rect(84, 54, 1432, 102), 'sepia'); P.fill(rect(84, 726, 1432, 132), 'sepia');   // clean paper behind the heading and the caption
   P.line(rect(60, 30, 1480, 840, 2), 4, INK); P.line(rect(72, 42, 1456, 816, 2), 1.5, INK);
   P.text('THE ALMANAC OF PROGRESS', 800, 96, { font: FONT.caps, weight: 700, size: 44, tracking: 10, color: INK });
   P.line(svg('M300 118 L1300 118'), 1.5, INK);
-  P.text('Being a True Account of the Horse Population, with Engravings', 800, 140, { size: 22, style: 'italic', color: INK });
+  P.text('Being a True Account of the Horse Population, with Engravings', 800, 144, { size: 26, style: 'italic', color: 'charDk' });
   for (const x of [130, 1470]) P.flower(x, 96, 0.5, 'sepia', 0);
 }
 
@@ -77,7 +80,7 @@ function isotype(P, f, Ls, t) {
     }
     if (t > b1) P.text('3,000,000', 1350, y2 - 90, { font: FONT.caps, weight: 700, size: 30, color: INK, align: 'right' });
   }
-  P.text('Each figure represents one million horses.', 1440, 700, { size: 20, style: 'italic', color: INK, align: 'right' });
+  P.both(rect(980, 640, 460, 50, 6), 'ivory', 2); horseIcon(P, 1020, 676, 0.42); P.text('= one million horses', 1420, 674, { size: 26, style: 'italic', color: 'charDk', align: 'right' });
 }
 
 // ---- nobody retrained the horses: an empty schoolroom, one horse, no clue ---------------------------------------
@@ -101,13 +104,15 @@ function schoolroom(P, f, Ls, t, lt) {
 function glueWorks(P, f, Ls, t, lt) {
   const ctx = P.ctx;
   // the works: brick, stacks, smoke
-  for (let i = 0; i < 3; i++) { const x = 820 + i * 150; P.both(rect(x, 200, 60, 260), INK, 3); for (let k = 0; k < 4; k++) { const u = ((lt * 0.4 + k * 0.25 + i * 0.1) % 1); ctx.save(); P.alpha(0.6 * (1 - u)); cloud(P, x + 30 + u * 60, 190 - u * 160, 30 + u * 40, 'sepia', k + i); ctx.restore(); } }
+  for (let i = 0; i < 3; i++) { const x = 820 + i * 150; P.both(rect(x, 250, 60, 210), INK, 3); for (let k = 0; k < 3; k++) { const u = ((lt * 0.4 + k * 0.33 + i * 0.1) % 1); ctx.save(); P.alpha(0.7 * (1 - u)); cloud(P, x + 30 + u * 50, 236 - u * 50, 24 + u * 20, 'ivory', k + i); ctx.restore(); } }
   P.both(svg('M700 640 L700 380 L800 300 L900 380 L1000 300 L1100 380 L1200 300 L1300 380 L1300 640 Z'), 'ochre', 4);
   P.tone(svg('M700 640 L700 380 L800 300 L900 380 L1000 300 L1100 380 L1200 300 L1300 380 L1300 640 Z'), INK, { from: [700, 380, 0.1], to: [1300, 640, 0.5], bbox: [700, 300, 1300, 640] }, 6);
   P.both(rect(780, 420, 440, 80, 6), 'ivory', 3); P.text('GLUE WORKS', 1000, 476, { font: FONT.caps, weight: 700, size: 46, tracking: 6, color: INK });
   P.both(svg('M840 640 L840 540 C840 510 920 510 920 540 L920 640 Z'), 'charDk', 3);
   // the horses, a line of them walking in through the door
-  for (let i = 0; i < 6; i++) { const x = 160 + ((lt * 90 + i * 130) % 780); if (x > 860) continue; horse(P, x, 650, 0.24, lt * 6 + i, { color: 'ochre', dark: INK }); }
+  ctx.save(); P.clip(rect(0, 0, 846, 900));   // they go in at the door
+  for (let i = 0; i < 4; i++) { const x = -160 + ((lt * 80 + i * 250) % 1000); horse(P, x, 652, 0.26, lt * 6 + i * 1.3, { color: 'ochre', dark: INK }); }
+  ctx.restore();
 }
 
 // ---- and now I'm the glue code too: the bottle with his face in the cartouche --------------------------------------

@@ -392,13 +392,14 @@ export function palm(P, x, y, s, rot = 0, o = {}) {
 }
 
 /** a fist closed round something (a sleeve below it); o: the sleeve's colour, flip for the other hand */
-export function fist(P, x, y, s, sleeve = 'teal', flip = false) {
-  const lw = begin(P, x, y, s); if (flip) P.ctx.scale(-1, 1);
-  const sl = svg('M-34 40 C-40 90 -46 130 -54 200 L46 200 C40 130 36 90 30 40 Z'); P.fill(sl, sleeve); P.tone(sl, '#000', { from: [-30, 40, 0.1], to: [40, 200, 0.4], bbox: [-56, 40, 48, 200] }, 5); P.line(sl, lw * 1.2);
+export function fist(P, x, y, s, sleeve = 'teal', flip = false, o = {}) {
+  const lw = begin(P, x, y, s, o.rot ?? 0); if (flip) P.ctx.scale(-1, 1);
+  const L = o.len ?? 160, sl = svg(`M-34 40 C-40 ${40 + L * 0.3} -46 ${40 + L * 0.55} -54 ${40 + L} L46 ${40 + L} C40 ${40 + L * 0.55} 36 ${40 + L * 0.3} 30 40 Z`);
+  P.fill(sl, sleeve); P.tone(sl, '#000', { from: [-30, 40, 0.1], to: [40, 40 + L, 0.4], bbox: [-56, 40, 48, 40 + L] }, 5); P.line(sl, lw * 1.2);
   const f = svg('M-36 -34 C-38 -48 -24 -54 -10 -50 L26 -44 C40 -42 44 -28 40 -14 L36 30 C34 44 22 50 6 48 L-26 44 C-38 42 -42 30 -40 18 Z');
   P.fill(f, 'skin'); P.tone(f, 'skinDot', { from: [0, -40, 0], to: [36, 40, 0.45], bbox: [-42, -56, 46, 50] }, 4); P.line(f, lw * 1.2);
   for (let i = 0; i < 3; i++) P.line(svg(`M-30 ${-28 + i * 20} C-10 ${-24 + i * 20} 14 ${-24 + i * 20} 36 ${-30 + i * 20}`), lw * 0.5);
   P.both(svg('M-36 -10 C-48 -6 -50 12 -40 22 C-32 28 -20 24 -14 14 Z'), 'skin', lw);   // the thumb across the front
-  P.both(rect(-36, 38, 70, 18, 5), 'gold', lw * 0.8);
+  P.both(rect(-36, 38, 70, 18, 5), o.cuff ?? 'gold', lw * 0.8);
   end(P);
 }

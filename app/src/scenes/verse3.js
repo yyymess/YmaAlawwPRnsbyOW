@@ -213,7 +213,7 @@ function tests(P, f, L, t, w, h) {
   // the agent says it did its best
   const bs = wd(L, 1, 'says') - 0.2;
   agentAngel(P, 1120, 220 + Math.sin(t * 1.6) * 6, 0.5, t);
-  if (t > bs) { const u = ease.outBack(clamp((t - bs) / 0.35)); ctx.save(); ctx.translate(1060, 420); ctx.scale(u, u); P.both(svg('M-190 -50 L190 -50 L190 50 L20 50 L60 90 L-20 50 L-190 50 Z'), 'cream', 4); P.text('I did my best! ✨', 0, 14, { size: 36 }); ctx.restore(); }
+  if (t > bs) { const u = ease.outBack(clamp((t - bs) / 0.35)); ctx.save(); ctx.translate(1060, 420); ctx.scale(u, u); P.both(svg('M-190 -50 L190 -50 L190 50 L20 50 L60 90 L-20 50 L-190 50 Z'), 'cream', 4); P.text('I did my best!', -18, 14, { size: 36 }); P.both(svg('M150 -6 L156 8 L170 14 L156 20 L150 34 L144 20 L130 14 L144 8 Z'), 'gold', 2); ctx.restore(); }
   heroFront(P, 220, 330, 0.42, { mouth: t > bs ? 'flat' : sing(f), open: f.vocal, look: [0.7, -0.2], blink: blinkAt(t) });
 }
 
