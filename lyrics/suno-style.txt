@@ -1,11 +1,23 @@
 TITLE
 Engineer's Paradise
 
-STYLE OF MUSIC (743 characters)
-Lead vocal: a thin, bright, nasal, high male tenor, dorky and clean-cut, the kid who aced the spelling bee. He speaks the verses in rhyme, rhythmically, in a stiff, square, perfectly on-the-beat cadence with no swing and no slur, over-precise diction, every consonant crisp, wide-eyed and sincerely proud of every line, no swagger. Backing: a faithful re-creation of a slow mid-90s hip-hop ballad, 80 BPM, C minor, 4/4; one two-bar loop Cm – Ab – Fm – G, a chord every two beats, on sustained synth strings, church organ and low synth bass; sparse drum machine, snare on 2 and 4. Chorus: a big gospel choir sings a slow minor-key hymn-like melody. Bridge: drums drop out. Outro: choir fades in a big hall. Polished, bright late-90s studio mix.
+STYLE OF MUSIC (C, tag list — best so far, 419 chars)
+nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
 
 EXCLUDE STYLES
-deep voice, baritone, gravelly voice, gangsta, street slang delivery, laid-back flow, swing, melodic singing on verses, musical theater, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, female lead vocal
+deep voice, baritone, gravelly, gangsta, street slang, laid-back, swing, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
 
 MORE OPTIONS
 Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
+
+---- shorter variants of C to try ----
+
+C2 (174 chars)
+nerdy nasal tenor, geeky, square on-beat cadence, crisp diction, deadpan, 90s hip-hop ballad, 80 bpm, c minor, string loop, church organ, sparse boom bap, gospel choir chorus
+
+C3 (132 chars)
+geeky nasal tenor, spelling-bee diction, stiff on-beat flow, slow 90s string-loop hip-hop ballad, 80 bpm, c minor, gospel choir hook
+
+---- A/B tests (change one thing at a time, style C) ----
+1. Lyrics without the three intro lines (does the psalm line pull the voice toward the original?)
+2. Intro kept, title changed to "Code Review" (does the title pull it?)
