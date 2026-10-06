@@ -111,18 +111,15 @@ export function painter(ctx) {
       if (draw < 1) { ctx.save(); ctx.setLineDash([4000 * draw, 4000]); }
       P.line(p, w + 3); P.line(p, w - 1, 'sageDk');
       if (draw < 1) { ctx.restore(); return; }
-      if (plug) {   // a USB-C plug, big enough to read: strain relief, white overmold, the silver shell and
-                    // its pill-shaped opening with the tongue inside (the part people recognise)
+      if (plug) {   // a USB-C plug in plain side view, big enough to read: strain relief, white overmold,
+                    // and the narrower silver shell with its rounded tip
         const [x, y] = pts[pts.length - 1], [px, py] = pts[pts.length - 2], k = ((w + 3) / 8) * 1.3, silver = '#cfcac0';
         ctx.save(); ctx.translate(x, y); ctx.rotate(Math.atan2(y - py, x - px)); ctx.scale(k, k);
         P.both(svg('M-2 -4.5 L13 -8 L13 8 L-2 4.5 Z'), 'cream', 2.5 / k);
         P.both(rect(11, -14, 38, 28, 8), 'cream', 2.5 / k);
         P.line(svg('M17 -9 L17 9'), 1.4 / k, 'grey');
-        P.both(rect(48, -10, 20, 20, 4), silver, 2.2 / k);
-        P.line(svg('M51 -5.5 L64 -5.5'), 1.6 / k, '#f6f1e6');
-        P.both(rect(64, -10.5, 9, 21, 4.5), silver, 2.2 / k);
-        P.both(rect(66.5, -7.5, 4, 15, 2), 'black', 1 / k);
-        P.line(svg('M68.5 -4 L68.5 4'), 1.6 / k, silver);
+        P.both(rect(48, -9.5, 20, 19, [2, 6, 6, 2]), silver, 2.2 / k);
+        P.line(svg('M51 -5 L63 -5'), 1.6 / k, '#f6f1e6');
         ctx.restore();
       }
     },

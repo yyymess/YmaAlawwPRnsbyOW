@@ -17,7 +17,7 @@ A parody of "Gangsta's Paradise" by way of "Amish Paradise", about the engineer'
 - **Colour**: flat, muted Mucha palette: gold `#d2a74e` / light gold, sage `#9aa784` / dark sage, dusty rose `#d39c8e` / light rose, teal `#365f63` / dark teal, cream and paper `#ece2cb`, one red `#b5463a` for alarms and soda.
 - **Screentone** only for light and shadow: the shadow side of faces and hoods, screen light on faces, dark chapels, can shading. Dots, hexagonal grid, size follows a gradient.
 - **Grain**: a quiet lithograph grain and uneven ink over everything.
-- **Ornament** is made of engineering things: halos of keycaps and code glyphs, vines that are charging cables ending in USB-C plugs (drawn big enough to read at a glance: white overmold, silver shell, the pill-shaped opening), beads, five-petal blossoms, corner fans, whiplash flourishes, ribbon banners with forked tails, arches with keystones.
+- **Ornament** is made of engineering things: halos of keycaps and code glyphs, vines that are charging cables ending in USB-C plugs (plain side view, big enough to read at a glance: white overmold, the narrower silver shell; keep the old margin to the panel's top), beads, five-petal blossoms, corner fans, whiplash flourishes, ribbon banners with forked tails, arches with keystones.
 - **Type**: Federant (Art Nouveau display) for titles and lyrics; Cinzel (classical caps) for small lettering; IBM Plex Mono only inside code and UI objects. Comic Sans appears exactly once: on the fridge sign.
 - **Hero**: teal hoodie, hood up, round glasses, a little dark fringe, drawstrings that curl like Mucha ribbons.
 
