@@ -19,7 +19,7 @@ deep voice, baritone, gravelly voice, gangsta, street slang delivery, laid-back 
 ==================== C — tag list (short keywords, no prose) (433 chars)
 
 STYLE OF MUSIC
-nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, spoken intro, drums drop out in bridge, choir outro fade, polished late-90s mix
+nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
 
 EXCLUDE STYLES
 deep voice, baritone, gravelly voice, gangsta, street slang delivery, laid-back flow, swing, melodic singing on verses, musical theater, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, female lead vocal

@@ -2,7 +2,7 @@
 
 ~80 BPM, C minor, 4/4. Structure: Intro (4 bars) · V1 (12) · C1 (8) · V2 (14) · C2 (8) · V3 (14) · C3 (8) · Bridge (8) · Outro (8) = 84 bars ≈ 4:12 (one bar = 3 s).
 
-## Intro (spoken, low, over strings)
+## Intro (same voice as the verses, rhythmic, light — the originals rap this line too)
 
 Yea, though I commit through the valley of the shadow of deprecation,
 I will fear no outage, for my agent is with me;
