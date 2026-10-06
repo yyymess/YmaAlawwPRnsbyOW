@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineer's Paradise</title>
+<style>
+  @font-face { font-family: Federant; src: url(fonts/Federant.ttf); }
+  @font-face { font-family: Cinzel; src: url(fonts/Cinzel.ttf); font-weight: 400 900; }
+  @font-face { font-family: "Plex Mono"; src: url(fonts/PlexMono.ttf); }
+  @font-face { font-family: Inter; src: url(fonts/Inter.ttf); font-weight: 100 900; }
+  @font-face { font-family: Archivo; src: url(fonts/Archivo.ttf); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: "Comic Neue"; src: url(fonts/ComicNeue-Bold.ttf); font-weight: 700; }
+  html, body { margin: 0; height: 100%; background: #0b0a09; color: #ddd; font: 13px "Plex Mono", monospace; }
+  #wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+  canvas { max-width: 100vw; max-height: calc(100vh - 34px); aspect-ratio: 16 / 9; background: #000; }
+  #hud { height: 26px; line-height: 26px; padding: 4px 12px; opacity: .85; white-space: nowrap; }
+  body.export #hud { display: none; } body.export canvas { max-width: none; max-height: none; }
+  body.clean #hud { visibility: hidden; }
+</style>
+<div id="wrap"><canvas id="c" width="1920" height="1080"></canvas><div id="hud">loading…</div></div>
+<audio id="a" src="../audio/engineers-paradise.m4a" preload="auto"></audio>
+<script type="module" src="src/main.js"></script>
