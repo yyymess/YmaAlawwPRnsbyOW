@@ -7,7 +7,7 @@ const svg = (d) => new Path2D(d);
 const SANS = 'Inter, sans-serif', SERIF = 'Fraunces, serif', ROUND = 'Nunito, sans-serif', MONO = '"Plex Mono", monospace';
 const SKIN = ['coral', 0.28];               // light, warm, non-specific skin: sparse coral dots on paper
 
-// The hero: hood up, round glasses, short dark beard, hoodie drawstrings. s = scale.
+// The hero: hood up, round glasses, clean-shaven, hoodie drawstrings. s = scale.
 function hero(p, x, y, s, o = {}) {
   const T = (d) => { const m = new DOMMatrix().translate(x, y).scale(s); const q = new Path2D(); q.addPath(svg(d), m); return q; };
   const bb = [x - 420 * s, y - 420 * s, x + 420 * s, y + 600 * s];
@@ -23,10 +23,8 @@ function hero(p, x, y, s, o = {}) {
   if (o.skin !== false) p.fill(face, SKIN[0], SKIN[1], { bbox: bb });
   p.fill(face, 'black', { from: [x + 30 * s, y, 0], to: [x + 135 * s, y, o.shadow ?? 0.5] }, { bbox: bb, cell: 6 });
   if (o.uplight) p.fill(face, o.uplight, { from: [x, y + 200 * s, 0.6], to: [x, y - 40 * s, 0] }, { bbox: bb, cell: 6 });
-  // short beard along the jaw, moustache, mouth
-  p.fill(T('M-128 60 C-120 160 -65 205 0 208 C65 205 120 160 128 60 C112 118 72 150 0 152 C-72 150 -112 118 -128 60 Z'), 'black', 0.62, { bbox: bb, cell: 5 });
-  p.fill(T('M-46 106 C-22 92 22 92 46 106 C26 114 -26 114 -46 106 Z'), 'black', 0.8, { bbox: bb, cell: 5 });
-  p.fill(ell(x, y + 132 * s, (o.sing ? 18 : 26) * s, (o.sing ? 20 : 8) * s), o.mouth ?? 'black');
+  // mouth (clean-shaven)
+  p.fill(ell(x, y + 120 * s, (o.sing ? 18 : 24) * s, (o.sing ? 20 : 6) * s), o.mouth ?? 'black');
   // glasses + eyes
   p.line(T('M-112 -12 C-112 -58 -22 -58 -22 -12 C-22 32 -112 32 -112 -12 Z'), 'black', 7 * s + 1.5);
   p.line(T('M22 -12 C22 -58 112 -58 112 -12 C112 32 22 32 22 -12 Z'), 'black', 7 * s + 1.5);
