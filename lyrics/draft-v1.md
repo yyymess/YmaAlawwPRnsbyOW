@@ -4,7 +4,7 @@
 
 ## Intro (same voice as the verses, rhythmic, light — the originals rap this line too)
 
-As I walk through the Valley where the robotaxis roam,
+As I walk through the Valley where the robo-taxis roam,
 I fear no outage, 'cause my agent's on call from home;
 with its tokens and its context, it comforts me, you know.
 
