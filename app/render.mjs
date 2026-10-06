@@ -79,7 +79,7 @@ else {
         '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
       const closed = new Promise((r) => ff.on('close', r));
       // extra pages render ahead; frames are written in order
-      const pages = [page]; for (let i = 1; i < workers; i++) pages.push((await open(server)).page);
+      const pages = [page], extra = []; for (let i = 1; i < workers; i++) { const o = await open(server); pages.push(o.page); extra.push(o.browser); }
       const t0 = Date.now(); let next = 0;
       const pending = new Map();
       const work = async (pg) => { for (;;) { const i = next++; if (i >= n) return; const buf = await shot(pg, from + (i + 0.5) / fps, opt('fmt', 'png')); pending.set(i, buf); } };
@@ -88,15 +88,16 @@ else {
           while (!pending.has(i)) await new Promise((r) => setTimeout(r, 5));
           const b = pending.get(i); pending.delete(i);
           if (!ff.stdin.write(b)) await new Promise((r) => ff.stdin.once('drain', r));
-          if (i % (fps * 5) === 0) { const el = (Date.now() - t0) / 1000; process.stdout.write(`\r${i}/${n} frames  ${(i / el || 0).toFixed(1)} fps  eta ${((n - i) / (i / el || 1) / 60).toFixed(1)} min   `); }
+          if (i % fps === 0) { const el = (Date.now() - t0) / 1000; process.stdout.write(`\r${i}/${n} frames  ${(i / el || 0).toFixed(1)} fps  eta ${((n - i) / (i / el || 1) / 60).toFixed(1)} min   `); }
         }
         ff.stdin.end();
       })();
       await Promise.all([...pages.map(work), writer]);
       await closed;
+      await Promise.all(extra.map((b) => b.close()));
       console.log(`\n${out}  (${((Date.now() - t0) / 60000).toFixed(1)} min)`);
     }
     const errs = await errors(page); if (errs.length) console.error('SCENE ERRORS:\n' + errs.join('\n'));
     if (logs.length) console.error('BROWSER:\n' + [...new Set(logs)].slice(0, 20).join('\n'));
-  } finally { await browser.close(); server.close(); }
+  } finally { await browser.close(); server.closeAllConnections?.(); server.close(); }
 }
