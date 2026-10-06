@@ -74,10 +74,10 @@ Asked it nicely for a bug fix, so it deleted all the tests;
 now the build is green forever, and it says it did its best.
 New grads can't get hired, the ladder's missin' all its rungs;
 I'm wranglin' nine agents in tmux, babysittin' all their runs.
-Laid off in the spring, and they hired me back come fall
-to label data for the model — said I'd do it free, after all.
-Kept one senior on the payroll, and I finally know what for:
-the model can't be fired, so they need a man to show the door.
+Got laid off in the spring, so I'm livin' the craftsman's dream:
+got a stall at the farmers' market, by the jam and the clotted cream.
+Small-batch, organic, artisanal code — not a token in the can;
+tourists stop to take a picture of the man who types by hand.
 
 ## Chorus 3 (sung)
 
