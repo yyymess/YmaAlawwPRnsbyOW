@@ -44,8 +44,8 @@ Now the code don't really matter, it's the story in the doc:
 write "drove cross-functional alignment," and they'll hand you all the stock.
 There's a graveyard full of products, near three hundred stones in rows;
 every one bought someone a level — where the users went, God knows.
-Then the org chart got real, every box became a fiefdom,
-every box pointin' a gun at the box right beside 'em.
+Then the org chart got real: changin' one button from blue to gray
+took three syncs, nine sign-offs, and a launch review in May.
 Code yellow on the revenue, so we shrank the little "Ad"
 till the users couldn't tell — best quarter we ever had.
 Got an email Friday morning, so I drove in like before:
