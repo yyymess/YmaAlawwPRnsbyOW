@@ -40,8 +40,8 @@ Then one Monday at the fridge there's a sign in Comic Sans:
 "Soda now fifty cents" — and a fella with a plan.
 He had more stock than the founders and conjoined triangles to show,
 and the mission on the wall got a footnote down below.
-Promo used to be a thesis, a committee of your peers —
-now they rate us once a year: it's cheaper, and nobody hears.
+Now the code don't really matter, it's the story in the doc:
+write "drove cross-functional alignment," and they'll hand you all the stock.
 There's a graveyard full of products, near three hundred stones in rows;
 every one bought someone a level — where the users went, God knows.
 Then the org chart got real, every box became a fiefdom,
@@ -106,6 +106,15 @@ Rest in peace, the craft of mine
 in the engineer's paradise…
 
 (spoken, last bar, flat) Accept all.
+
+---
+
+## Spare lines (liked, not placed yet)
+
+- Then they moved the free dinner to right after the last bus goes —
+  you can stay and eat, or you can leave. Everybody knows.
+- Design doc used to be a page; now it's forty, plus a deck,
+  seven VPs to sign it, and a privacy-legal-brand check.
 
 ---
 
