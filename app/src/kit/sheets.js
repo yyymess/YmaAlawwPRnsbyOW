@@ -22,3 +22,9 @@ export function props(P) {
   P.vine([[760, 840], [800, 760], [700, 690], [780, 560]], 5);
   heroFront(P, 1150, 600, 0.42, { hold: 'phone', uplit: 0.6, look: [0, 0.6] });
 }
+
+// close-ups for checking the side view and the grip
+export function closeup(P) {
+  heroSide(P, 330, 330, 0.8, {});
+  heroFront(P, 1130, 330, 0.8, { hold: 'phone', uplit: 0.6, look: [0, 0.6], mouth: 'smile' });
+}

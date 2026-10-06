@@ -14,9 +14,9 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 - **The point**: a soft point at the crown seam (our "religious" touch, like a monk's cowl), modest, about 60 units above the skull; the tip flops a little.
 - **The opening**: the rim sits **on the forehead** (brows still visible) and **over the edges of the cheeks**, so the face nearly fills it. The dark inside shows only as a thin sliver at the sides and below the jaw, round the neck. A gentle pointed arch at the top.
 - The hood's sides fall nearly straight past the jaw, then its base spreads onto the shoulders; the pullover's crossover V sits at the collarbone, with the neck showing in it.
-- **No hair** when the hood is up.
+- **Hair** may show when it looks natural: a short fringe hanging from under the rim, stopping above the brows, and a thin lock by the cheek in profile. Never above or outside the rim.
 - **Drawstrings** come out of eyelets either side of the V and hang to mid-chest; aglets at the ends.
-- **Side view**: the face (brow, nose, lips, chin, and the cheek up to the temple) stands **in front of** the rim, which runs from over the forehead back past the cheekbone and down under the jaw to the chest. The hood's back curves round the skull, **dips in at the nape**, and lies along the upper back to the shoulder blades, so it merges with the back line rather than sticking out as a hump.
+- **Side view** (the commonest mistake is a bloated side): a worn hood is **boxy** in profile, a nearly flat top running back to a corner (the soft point lives here), a back that falls close to the skull, then a **clear dip at the nape** before its base runs down the slope of the shoulders, pulled taut. Worn deep, the rim projects a little in front of the forehead and runs back past the cheekbone, under the jaw, to the chest; the face (brow, nose, lips, chin and the cheek) stands in front of it. The torso is about one head deep, the shoulder under the sleeve is rounded, and the tone stays on the back third only.
 - **Back view**: a centre seam from the point down; the hood's lower edge makes a soft U across the upper back, with a little shadow under it and folds bunched where it lies.
 - Body: dropped shoulder seams, a **kangaroo pocket**, **ribbed cuffs and hem**; sleeves are wider than the arm inside and gather into narrower cuffs. Big, loose folds: a few long lines, not many short ones.
 
@@ -24,6 +24,7 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 - Limbs are two segments with visible joints: thigh/shin with a **knee**, upper arm/forearm with an **elbow**. Never a straight capsule.
 - Walk cycle per leg: the thigh swings ±0.42 rad; the **knee bends most in the swing** (the leg passing forward) and is nearly straight on contact; the foot stays flat in stance and peels off at the toe. Arms swing opposite to the legs with a slightly bent elbow. The body bobs twice per stride (lowest on contact).
 - Hands are mitten shapes with a thumb, oriented along the forearm; when holding things, fingers wrap the object and overlap its edges.
+- **Holding a phone up to read, with both hands** (seen from the back of the phone): the palms are on the phone's back and the thumbs reach round to the screen, so we see the backs of both hands over its lower half. Each hand leaves its cuff along the forearm, bends in at the wrist, and lays its fingers across the back at about 30°, so the two hands **cross**: one hand's fingers form the upper band, the other's lie over them lower down. A hand is about as wide as the phone; the fingers reach the far edge. Forearms rise almost straight from below.
 
 ## Line, colour, tone
 - Heavier contour on the outer silhouette, lighter for folds and features. A fold is one long curved line, not many.

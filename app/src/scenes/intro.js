@@ -79,17 +79,17 @@ function chapel(P, f, archFill = 'rose') {
   return arch;
 }
 // the hero sits lower than the arch's centre so the point of his hood aims at the agent above it
-const HX = 800, HY = 440, HS = 0.82, AY = 100;
+const HX = 800, HY = 430, HS = 0.8, AY = 100;
 function angel(P, f, start, end) {
   const t = f.t, lt = t - start, push = keys(t, [[start, 1.0], [end, 1.07]]);
   P.save(); P.zoom(push, 800, 420);
   chapel(P, f, 'rose');
-  P.beads(HX, 460, 350, 44, 9, 'goldLt', f.kick);
-  P.halo(HX, 460, 320, undefined, f.beat * 0.02, 0.2);
+  P.beads(HX, 450, 350, 44, 9, 'goldLt', f.kick);
+  P.halo(HX, 450, 320, undefined, f.beat * 0.02, 0.2);
   // he lifts the phone, its light comes up on his face
   const lift = ease.outCubic(prog(lt, 0.2, 1.1));
   const lit = lift * 0.6;
-  heroFront(P, HX, HY, HS, { uplit: lit, hold: 'phone', phoneY: lerp(540, 300, lift), mouth: singing(f) ? 'sing' : 'neutral', open: f.vocal, look: [0, 0.6 * lit], blink: blink(t) });
+  heroFront(P, HX, HY, HS, { uplit: lit, hold: 'phone', phoneY: lerp(540, 290, lift), mouth: singing(f) ? 'sing' : 'neutral', open: f.vocal, look: [0, 0.6 * lit], blink: blink(t) });
   // the agent appears on "agent's", high above him like an angel
   const ag = f.L.get('I fear no outage').words.find((w) => w.w.startsWith('agent')).start;
   const a = ease.outBack(prog(t, ag - 0.3, ag + 0.5));
@@ -104,12 +104,12 @@ function blossoms(P, f, start) {
   const t = f.t, lt = t - start;
   P.save(); P.zoom(keys(t, [[start, 1.07], [start + 1.2, 1.0, ease.outCubic]]), 800, 420);
   chapel(P, f, 'sage');
-  P.beads(HX, 460, 350, 44, 9, 'goldLt', f.kick);
+  P.beads(HX, 450, 350, 44, 9, 'goldLt', f.kick);
   const glow = keys(t, [[start, 0.2], [f.end - 1.5, 0.9]]);
-  P.halo(HX, 460, 320, undefined, f.beat * 0.02, glow);
+  P.halo(HX, 450, 320, undefined, f.beat * 0.02, glow);
   const comfort = f.L.get('it comforts me').words.find((w) => w.w.startsWith('comforts')).start;
   const calm = prog(t, comfort - 0.3, comfort + 0.5);
-  heroFront(P, HX, HY, HS, { uplit: 0.5, hold: 'phone', phoneY: 300, mouth: calm > 0.5 && !singing(f) ? 'smile' : singing(f) ? 'sing' : 'neutral', open: f.vocal, blink: calm > 0.5 ? 1 : blink(t) });
+  heroFront(P, HX, HY, HS, { uplit: 0.5, hold: 'phone', phoneY: 290, mouth: calm > 0.5 && !singing(f) ? 'smile' : singing(f) ? 'sing' : 'neutral', open: f.vocal, blink: calm > 0.5 ? 1 : blink(t) });
   agentAngel(P, HX, AY + Math.sin(t * 1.6) * 5, 0.62, t);
   // tokens drift down from the upper left like petals, starting on "tokens"
   const tk = f.L.get('with its tokens').words.find((w) => w.w.startsWith('tokens')).start;
