@@ -103,7 +103,7 @@ in the engineer's paradise.
 Rest in peace, the craft of mine
 in the engineer's paradise…
 
-(spoken, last bar) LGTM.
+(spoken, last bar, flat) Accept all.
 
 ---
 
