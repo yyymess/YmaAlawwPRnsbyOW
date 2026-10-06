@@ -26,6 +26,15 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 - Hands are mitten shapes with a thumb, oriented along the forearm; when holding things, fingers wrap the object and overlap its edges.
 - **Holding a phone up to read, with both hands** (seen from the back of the phone): the palms are on the phone's back and the thumbs reach round to the screen, so we see the backs of both hands over its lower half. Each hand leaves its cuff along the forearm, bends in at the wrist, and lays its fingers across the back at about 30°, so the two hands **cross**: one hand's fingers form the upper band, the other's lie over them lower down. A hand is about as wide as the phone; the fingers reach the far edge. Forearms rise almost straight from below.
 
+## Hands, in practice
+- Draw a hand as **one silhouette**: the back of the hand plus tapered, slightly curved fingers (`curvedFinger`, `drawHand` in `app/src/kit/things.js`), outlines under the fills so only the outer edge shows; thin lines part the fingers, a crease marks each middle joint, nails only on the back of the hand.
+- A hand is always **attached**: a sleeve or forearm runs from the wrist out of frame or to the body. A floating cuff reads as a prop.
+- Shade a hand like the face (screentone away from the light); a hand on top casts a soft tone shadow on the one below.
+- Holding things: fingers wrap over the object's edge; a fist round a pen shows three finger creases and the thumb across the front (`fist`).
+
+## Animals
+- The horse (`horse`): a barrel with chest and hindquarters, an arched neck with a mane along the crest, a wedge of a head with an ear and a forelock; front legs bend at the knee, hind legs at the backward hock; legs taper towards dark hooves.
+
 ## Line, colour, tone
 - Heavier contour on the outer silhouette, lighter for folds and features. A fold is one long curved line, not many.
 - Clothes: one flat colour, one lighter shade for edges (rim, cuffs), screentone for the shadow side.
