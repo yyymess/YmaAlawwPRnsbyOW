@@ -4,9 +4,9 @@
 
 ## Intro (same voice as the verses, rhythmic, light — the originals rap this line too)
 
-Yea, though I commit through the valley of the shadow of deprecation,
-I will fear no outage, for my agent is with me;
-its tokens and its context, they comfort me.
+As I walk through the Valley where the robotaxis roam,
+I fear no outage, 'cause my agent's on call from home;
+with its tokens and its context, it comforts me, you know.
 
 ## Verse 1 — the dream
 
