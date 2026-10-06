@@ -223,8 +223,8 @@ export function phoneInHands(P, x, y, s, o) {
     const back = Q(`M${pt(add(g.w, p, 40))} C${pt(add(add(g.w, p, 40), up, 44))} ${pt(add(add(K, u, 60), d, -40))} ${pt(add(K, u, 58))} L${pt(add(add(K, u, -58), d, 6))} C${pt(add(add(K, u, -60), d, -44))} ${pt(add(add(g.w, p, -42), up, 40))} ${pt(add(g.w, p, -40))} Z`);
     const fingers = FINGERS.map((F, i) => {
       const fd = rot(d, (i - 1.5) * 0.05 * side), b = add(add(K, u, (1.5 - i) * 28), fd, -18);
-      const len = Math.min(F.len + 18, (76 + side * b[0]) / Math.abs(fd[0]));     // a fingertip may just reach the far edge
-      return { ...fingerShape(b, fd, len, F.w0, F.w1, F.bend * -side), fd, i };
+      const lim = (76 + side * b[0]) / Math.abs(fd[0]), capped = F.len + 18 > lim;   // a finger that reaches the far edge curls round it
+      return { ...fingerShape(b, fd, capped ? lim : F.len + 18, F.w0, F.w1, F.bend * -side), fd, i, capped };
     });
     return { ...g, side, d, u, f, p, K, back, fingers };
   });
@@ -278,8 +278,15 @@ export function phoneInHands(P, x, y, s, o) {
       if (F.i < 3) P.line(Q(pathOf(F.Rp.slice(3))), lw * 0.55);
       const c40 = F.C[5], c70 = F.C[9], n = [-F.fd[1], F.fd[0]], w5 = 13;
       P.line(Q(`M${pt(add(add(c40, n, w5 * 0.55), F.fd, -2))} Q${pt(add(c40, F.fd, 3))} ${pt(add(add(c40, n, -w5 * 0.55), F.fd, -2))}`), lw * 0.4);   // the middle joint
-      const nb = add(F.C[12], F.fd, -15), nl = new Path2D(); nl.ellipse(nb[0] + F.fd[0] * 6, nb[1] + F.fd[1] * 6, 9, 7, Math.atan2(F.fd[1], F.fd[0]), 0, Math.PI * 2);
-      P.fill(Q(nl), '#f7e0d0'); P.line(Q(nl), lw * 0.4);   // the nail
+      if (F.capped) {   // curling round the edge: the last joint bends away out of sight, shaded, no nail
+        const e0 = add(F.C[12], F.fd, -16), wt = 12;
+        P.line(Q(`M${pt(add(e0, n, wt))} Q${pt(add(e0, F.fd, 6))} ${pt(add(e0, n, -wt))}`), lw * 0.5);
+        const tip = new Path2D(); tip.ellipse(F.C[12][0] + F.fd[0] * 4, F.C[12][1] + F.fd[1] * 4, 12, 10, Math.atan2(F.fd[1], F.fd[0]), 0, Math.PI * 2);
+        P.tone(Q(tip), 'skinDot', { from: [x, y, 0.45], to: [x + 1, y, 0.45], bbox: [x - 240 * s, y + (py - 80) * s, x + 240 * s, y + (py + 300) * s] }, Math.max(2.5, 4 * s));
+      } else {
+        const nb = add(F.C[12], F.fd, -15), nl = new Path2D(); nl.ellipse(nb[0] + F.fd[0] * 6, nb[1] + F.fd[1] * 6, 9, 7, Math.atan2(F.fd[1], F.fd[0]), 0, Math.PI * 2);
+        P.fill(Q(nl), '#f7e0d0'); P.line(Q(nl), lw * 0.4);   // the nail
+      }
     }
     for (let i = 0; i < 4; i++) { const k = add(add(g.K, g.u, (1.5 - i) * 28), g.d, -22); P.line(Q(`M${pt(add(k, g.u, 9))} Q${pt(add(k, g.d, 5))} ${pt(add(k, g.u, -9))}`), lw * 0.4); }   // knuckles
     // the cuff over the wrist: ribbed, hugging it
