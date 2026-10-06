@@ -10,7 +10,7 @@ import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
 import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll, flame } from '../kit/things.js';
-import { cloud, heart, palm } from './verse1.js';
+import { cloud, heart, palm, duck } from './verse1.js';
 
 const CEN = { x: 480, y: 30, w: 640, h: 640, rise: 250 };
 const WING = [{ x: 70, y: 110, w: 390, h: 540, rise: 160 }, { x: 1140, y: 110, w: 390, h: 540, rise: 160 }];
@@ -220,14 +220,23 @@ const VARIANTS = {
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(8, Math.floor(lt / 0.5) + 1)); }
       else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); heroFront(P, 180, 210, 0.38, { mouth: 'frown', look: [0.3, 0.9], brow: 1, blink: blinkAt(t) }); palm(P, 250, 560, 0.95, -0.2, { sleeve: 300 }); for (const [cx, cy, v] of [[236, 446, '10¢'], [276, 470, '5¢']]) { P.both(ell(cx, cy, 26), 'gold', 3); P.line(ell(cx, cy, 20), 1.2, 'ochre'); P.text(v, cx, cy + 7, { font: FONT.caps, weight: 700, size: 17 }); } }
       else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'slick', top: 'vest', color: 'navy', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 1), look: [0.5, 0] }); }
-      else { fillBg(P, box, 'cream', 'sepia', 0.4); }
+      else {   // his desk, cleared: an empty chair, a box with the plant and the duck
+        fillBg(P, box, 'cream', 'sepia', 0.4);
+        P.both(rect(40, 420, 310, 22, 4), 'ochre', 4); P.line(svg('M60 442 L60 560 M330 442 L330 560'), 8, 'sepiaDk');
+        P.both(svg('M120 560 L130 470 L220 470 L230 560 Z'), 'charDk', 4); P.both(rect(126, 360, 98, 116, 14), 'char', 4);
+        P.both(svg('M220 420 L228 330 L342 330 L350 420 Z'), 'ochre', 4); for (let k = 0; k < 3; k++) P.leaf(256 + k * 10, 324, -1.7 + k * 0.4, 0.7); duck(P, 316, 334, 0.32);
+      }
     },
     right(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(10, Math.floor(lt / 0.4) + 1)); }
       else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); priceTag(P, 195, 160, 1.4, '50¢', 0.1); }
       else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'side', top: 'vest', color: 'char', shirt: 'roseLt', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 2), look: [-0.5, 0] }); }
-      else { fillBg(P, box, 'cream', 'sepia', 0.4); }
+      else {   // the way out
+        fillBg(P, box, 'cream', 'sepia', 0.4);
+        P.both(rect(90, 200, 210, 380, 6), 'sepiaDk', 5); P.both(rect(110, 220, 170, 360, 4), 'ochre', 3); P.both(ell(256, 400, 10), 'gold', 3);
+        P.both(rect(120, 120, 150, 56, 8), 'sage', 4); P.text('EXIT', 195, 162, { font: FONT.caps, weight: 700, size: 34, color: 'cream' });
+      }
     },
   },
   3: {
