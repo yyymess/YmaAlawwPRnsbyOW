@@ -1,7 +1,7 @@
 // Review sheets for characters and props (app/kit.html?sheet=...).
 import { heroFront, heroSide, heroBack, heroWalk, phone } from './hero.js';
 import { robotaxi, agent } from './props.js';
-import { rect } from '../paint.js';
+import { rect, svg } from '../paint.js';
 
 export function hero(P) {
   // turnaround: front, side, back, front with the phone; then the walk cycle
@@ -27,4 +27,29 @@ export function props(P) {
 export function closeup(P) {
   heroSide(P, 330, 330, 0.8, {});
   heroFront(P, 1130, 330, 0.8, { hold: 'phone', uplit: 0.6, look: [0, 0.6], mouth: 'smile' });
+}
+
+import { person } from './people.js';
+// the supporting cast
+export function cast(P) {
+  person(P, 200, 230, 0.34, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'] });
+  person(P, 520, 230, 0.34, { hair: 'bald', top: 'robe', color: 'teal', mantle: 'rose', stern: true, mouth: 'flat', glasses: 'rect', acc: ['halo'], beard: 'grey', fw: 1.06 });
+  person(P, 840, 230, 0.34, { hair: 'messy', top: 'hoodie', color: 'plum', mouth: 'smile', glasses: 'rect', fw: 0.94 });
+  person(P, 1160, 230, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], skin: 'skin3', hairColor: '#4a3426' });
+  person(P, 1460, 230, 0.34, { hair: 'long', top: 'gown', color: 'black', acc: ['mortar'], skin: 'skin2', mouth: 'smile' });
+  person(P, 200, 640, 0.34, { hair: 'short', top: 'shirt', color: 'shirt', glasses: 'round', acc: ['halo'] });
+  person(P, 520, 640, 0.34, { hair: 'buzz', top: 'turtleneck', color: 'black', mouth: 'neutral' });
+  person(P, 840, 640, 0.34, { hair: 'short', top: 'hoodie', color: 'navy', arms: 'phone', uplit: 0.6, look: [0, 0.6] });
+  person(P, 1160, 640, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'o', seed: 3 });
+  person(P, 1460, 640, 0.34, { hair: 'side', top: 'tee', color: 'ochre', acc: ['headphones', 'lanyard'], lanyardColor: 'teal', mouth: 'grin' });
+}
+
+import { heroPose } from './hero.js';
+// poses: sitting typing, sitting reading, lunging with a lance, writing at a lectern
+export function poses(P) {
+  heroPose(P, 220, 820, 0.62, { seat: 250, lean: 0.18, legs: { near: { a: 1.5, b: 0.05 }, far: { a: 1.42, b: -0.1 } }, arms: { near: { a: 0.55, e: 1.5 }, far: { a: 0.45, e: 1.45 } }, uplit: 0.5 });
+  heroPose(P, 640, 820, 0.62, { seat: 250, lean: -0.08, legs: { near: { a: 1.25, b: 0.05 }, far: { a: 1.15, b: -0.05 } }, arms: { near: { a: 0.35, e: 1.2 }, far: { a: 0.25, e: 1.1 } }, lookUp: -0.3, mouth: 'smile' });
+  heroPose(P, 1030, 820, 0.62, { lean: 0.28, hipY: -430, legs: { near: { a: 0.75, b: 0.05 }, far: { a: -0.55, b: -0.55 } }, arms: { near: { a: 1.25, e: 1.55 }, far: { a: 0.9, e: 1.5 } }, hands: { near: 'fist', far: 'fist' },
+    hold: (P, which, w, ang) => { if (which === 'far') P.line(svg(`M${w[0] - 260} ${w[1] + 70} L${w[0] + 420} ${w[1] - 80}`), 9); } });
+  heroPose(P, 1420, 820, 0.62, { lean: 0.12, legs: { near: { a: 0.05, b: 0.05 }, far: { a: -0.08, b: -0.08 } }, arms: { near: { a: 0.75, e: 1.35 }, far: { a: 0.45, e: 1.2 } }, look: [0, 0.6], hands: { near: 'fist' } });
 }

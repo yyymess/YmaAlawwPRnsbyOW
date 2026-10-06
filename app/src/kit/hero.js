@@ -44,7 +44,7 @@ export function heroFront(P, x, y, s, o = {}) {
   const face = T(FRONT.face);
   P.fill(face, 'skin');
   P.tone(face, 'skinDot', { from: [x, y - 124 * s, 0.8], to: [x, y - 50 * s, 0], bbox: bb }, fc);            // the hood's shadow on the brow
-  if (o.uplit) P.tone(face, 'goldLt', { from: [x, y + 200 * s, 0.6 * o.uplit], to: [x, y + 50 * s, 0], bbox: bb }, fc);
+  if (o.uplit) P.tone(face, o.glow ?? 'goldLt', { from: [x, y + 200 * s, 0.6 * o.uplit], to: [x, y + 50 * s, 0], bbox: bb }, fc);
   P.tone(face, 'skinDot', { from: [x + 40 * s, y, 0], to: [x + 135 * s, y, 0.45], bbox: bb }, fc);
   P.line(face, lw * 1.2);
   if (o.hair !== false) {   // a fringe from under the rim, stopping above the brows
@@ -65,25 +65,35 @@ export function heroFront(P, x, y, s, o = {}) {
   if (o.hold === 'phone') phoneInHands(P, x, y, s, o);
 }
 
-function features(P, x, y, s, T, lw, o) {
+/** the face's features in front-bust units (brows, eyes, glasses, nose, mouth, cheek); shared with the cast */
+export function features(P, x, y, s, T, lw, o) {
   const browUp = (o.brow ?? 0) * 10;
-  P.line(T(`M-88 ${-62 - browUp} C-70 ${-72 - browUp} -48 ${-72 - browUp} -30 ${-64 - browUp} M30 ${-64 - browUp} C48 ${-72 - browUp} 70 ${-72 - browUp} 88 ${-62 - browUp}`), lw * 0.7);
+  if (o.stern) P.line(T('M-92 -78 C-70 -76 -48 -68 -26 -54 M26 -54 C48 -68 70 -76 92 -78'), lw * 1.3);   // brows drawn down hard
+  else P.line(T(`M-88 ${-62 - browUp} C-70 ${-72 - browUp} -48 ${-72 - browUp} -30 ${-64 - browUp} M30 ${-64 - browUp} C48 ${-72 - browUp} 70 ${-72 - browUp} 88 ${-62 - browUp}`), lw * 0.7);
   const [lx, ly] = o.look ?? [0, 0], blink = clamp(o.blink ?? 0);
   for (const sx of [-1, 1]) {
     const ex = x + (sx * 67 + lx * 14) * s, ey = y + (-10 + ly * 10) * s;
     if (blink > 0.6) P.line(svg(`M${ex - 12 * s} ${ey} C${ex - 4 * s} ${ey + 5 * s} ${ex + 4 * s} ${ey + 5 * s} ${ex + 12 * s} ${ey}`), lw * 0.9);
     else P.fill(ell(ex, ey, 9 * s + 1, (9 * s + 1) * (1 - blink)), 'line');
   }
-  for (const sx of [-1, 1]) {
-    P.line(T(`M${sx * 112} -12 C${sx * 112} -56 ${sx * 22} -56 ${sx * 22} -12 C${sx * 22} 30 ${sx * 112} 30 ${sx * 112} -12 Z`), lw * 1.05);
-    if (o.uplit) P.line(T(`M${sx * 96 - 6} -38 L${sx * 80 - 6} -16 M${sx * 84 - 6} -40 L${sx * 70 - 6} -22`), lw * 0.6, 'cream');   // the screen, caught in the lenses
+  const gl = o.glasses ?? 'round';
+  if (gl !== 'none') {
+    for (const sx of [-1, 1]) {
+      if (gl === 'rect') P.line(T(`M${sx * 110} -40 L${sx * 24} -40 L${sx * 26} 14 L${sx * 106} 14 Z`), lw * 1.05);
+      else P.line(T(`M${sx * 112} -12 C${sx * 112} -56 ${sx * 22} -56 ${sx * 22} -12 C${sx * 22} 30 ${sx * 112} 30 ${sx * 112} -12 Z`), lw * 1.05);
+      if (o.uplit) P.line(T(`M${sx * 96 - 6} -38 L${sx * 80 - 6} -16 M${sx * 84 - 6} -40 L${sx * 70 - 6} -22`), lw * 0.6, 'cream');   // the screen, caught in the lenses
+    }
+    P.line(T('M-22 -16 L22 -16'), lw);
+    if (o.temples) for (const sx of [-1, 1]) P.line(T(`M${sx * 112} -18 L${sx * 136} -22`), lw * 0.9);
   }
-  P.line(T('M-22 -16 L22 -16'), lw);
   P.line(T('M6 30 C-4 62 -8 74 8 80'), lw * 0.6);
   const m = o.mouth ?? 'neutral';
   if (m === 'sing' || m === 'o') { const op = m === 'o' ? 1 : clamp(o.open ?? 0.6); P.both(ell(x, y + 122 * s, (16 + 6 * op) * s, (6 + 18 * op) * s), 'tealDk', lw * 0.7); }
   else if (m === 'smile') P.line(T('M-34 116 C-14 140 14 140 34 116'), lw * 0.9);
   else if (m === 'frown') P.line(T('M-28 132 C-10 118 10 118 28 132'), lw * 0.9);
+  else if (m === 'flat') P.line(T('M-30 126 L30 126'), lw * 0.9);
+  else if (m === 'smirk') P.line(T('M-28 128 C-6 132 18 128 34 112'), lw * 0.9);
+  else if (m === 'grin') { P.both(T('M-40 112 C-20 146 20 146 40 112 Z'), 'cream', lw * 0.8); P.line(T('M-38 116 L38 116'), lw * 0.4); }
   else P.line(T('M-26 122 C-8 130 10 130 28 120'), lw * 0.8);
   if (!o.uplit && o.cheek !== false) P.fill(ell(x - 85 * s, y + 70 * s, 22 * s, 12 * s), 'roseLt');
 }
@@ -137,7 +147,7 @@ function profileHead(P, lw, cell, o = {}) {
   P.fill(face, 'skin'); P.tone(face, 'skinDot', { from: [104, -120, 0.75], to: [104, -50, 0], bbox: fb }, cell * 0.75);
   P.tone(face, 'skinDot', { from: [74, 0, 0], to: [24, 0, 0.5], bbox: fb }, cell * 0.75);                                     // the hood's shadow on the cheek
   P.tone(face, 'skinDot', { from: [60, 150, 0.6], to: [80, 120, 0], bbox: fb }, cell * 0.75);                                  // under the chin
-  if (o.uplit) P.tone(face, 'goldLt', { from: [110, 160, 0.6 * o.uplit], to: [110, 30, 0], bbox: fb }, cell * 0.75);
+  if (o.uplit) P.tone(face, o.glow ?? 'goldLt', { from: [110, 160, 0.6 * o.uplit], to: [110, 30, 0], bbox: fb }, cell * 0.75);
   P.line(face, lw * 1.1);
   // hair: a fringe falling forward from under the rim, a lock by the cheek
   if (o.hair !== false) {
@@ -189,7 +199,7 @@ function fingerShape(b, d, len, w0, w1, bend) {
 }
 const pathOf = (pts) => { const p = new Path2D(); pts.forEach((q, i) => (i ? p.lineTo(...q) : p.moveTo(...q))); return p; };
 
-function phoneInHands(P, x, y, s, o) {
+export function phoneInHands(P, x, y, s, o) {
   const ctx = P.ctx, lw = Math.max(1.4, 4 * s), hood = o.hood ?? 'teal', py = o.phoneY ?? 290, hw = 64, hh = 136;
   const Q = at(x, y + py * s, s), cell = Math.max(3, 6 * s), fc = Math.max(2.5, 4 * s);
   const pt = (p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
@@ -326,5 +336,73 @@ export function phone(P, x, y, s = 1, rot = 0, glow = 0) {
   P.tone(rect(-60, -128, 120, 256, 20), '#0f1c1b', { from: [-60, -128, 0], to: [60, 128, 0.5], bbox: [-66, -134, 66, 134] }, 5);
   P.both(rect(-50, -116, 56, 60, 10), 'teal', 2.5);
   for (const [cx, cy] of [[-35, -101], [-9, -101], [-35, -73]]) P.both(ell(cx, cy, 9), 'black', 1.5);
+  ctx.restore();
+}
+
+/**
+ * The hero in profile in any pose, facing right, (x, y) on the floor under the hip. Angles in radians
+ * from straight down, positive forwards (to the right): legs {near, far}: {a: thigh, b: shin}; arms
+ * {near, far}: {a: upper arm, e: forearm}; lean: the torso tipped forwards about the hip; seat: hip
+ * height when sitting (draws a chair). o.hold(P, which, wrist, angle) draws a prop in a hand, in the
+ * figure's units, before the hand closes over it. o.hands: {near, far}: 'open'|'fist'.
+ */
+export function heroPose(P, x, y, s, o = {}) {
+  const ctx = P.ctx, lw = Math.max(1.5, 4 * s) / s, hood = o.hood ?? 'teal';
+  const L1 = 240, L2 = 232, UA = 196, FA = 176;
+  const legs = { near: { a: 0, b: 0 }, far: { a: 0, b: 0 }, ...(o.legs ?? {}) };
+  const arms = { near: { a: 0.05, e: 0.2 }, far: { a: -0.05, e: 0.15 }, ...(o.arms ?? {}) };
+  const lean = o.lean ?? 0;
+  const hip = o.seat ? [0, -o.seat] : [0, -(L1 * Math.cos(Math.max(Math.abs(legs.near.a), 0)) + L2 + 26)];
+  if (o.hipY !== undefined) hip[1] = o.hipY;
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+  const limb = (pts, w, color) => {
+    const p = new Path2D(); pts.forEach(([px, py], i) => (i ? p.lineTo(px, py) : p.moveTo(px, py)));
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round'; P.line(p, w + 2 * lw, 'line'); P.line(p, w, color);
+  };
+  const pt = (o0, ang, len) => [o0[0] + Math.sin(ang) * len, o0[1] + Math.cos(ang) * len];
+  if (o.seat) {   // a plain wooden chair
+    const cy = -o.seat + 34;
+    P.both(rect(-110, cy, 200, 26, 8), o.chair ?? 'sepiaDk', lw); P.both(rect(-110, cy - 330, 26, 330, 10), o.chair ?? 'sepiaDk', lw);
+    for (const lx of [-100, 70]) P.both(rect(lx, cy + 22, 20, o.seat - 30, 6), o.chair ?? 'sepiaDk', lw);
+  }
+  const drawLeg = (g, color, shoe) => {
+    const k = pt(hip, g.a, L1), an = pt(k, g.b, L2);
+    limb([[hip[0], hip[1] - 20], k, pt(an, g.b + Math.PI, 26)], 70, color);
+    ctx.save(); ctx.translate(an[0], an[1]); ctx.rotate(g.foot ?? 0);
+    P.both(svg('M-36 -14 C-36 -30 30 -32 66 -12 C86 -2 86 16 70 20 L-36 20 Z'), shoe, lw); P.line(svg('M-34 12 L78 12'), lw * 0.6);
+    ctx.restore();
+  };
+  // the torso and shoulder, tipped about the hip
+  const sh = pt(hip, Math.PI - lean, 290).map((v, i) => v + (i === 0 ? 8 * Math.cos(lean) : 0));
+  const hand = (w, ang, kind, which) => {
+    ctx.save(); ctx.translate(w[0], w[1]); ctx.rotate(-ang);
+    P.both(rect(-26, -18, 52, 26, 8), which === 'near' ? 'tealLt' : 'tealDk', lw); for (let k = -16; k <= 16; k += 8) P.line(svg(`M${k} -14 L${k} 4`), lw * 0.4);
+    ctx.restore();
+    if (o.hold) o.hold(P, which, pt(w, ang, 40), ang);
+    ctx.save(); ctx.translate(w[0], w[1]); ctx.rotate(-ang);
+    if (kind === 'fist') { P.both(svg('M-26 6 C-30 30 -24 58 -4 64 C14 70 30 58 30 36 C30 22 26 10 22 6 Z'), 'skin', lw); P.line(svg('M-18 30 C-4 34 10 34 22 28 M-16 46 C-2 50 10 50 22 44'), lw * 0.5); }
+    else { P.both(svg('M-24 6 C-28 36 -24 66 -8 82 C4 92 22 88 26 70 C30 50 26 24 22 6 Z'), 'skin', lw); P.line(svg('M22 26 C34 30 38 44 28 54'), lw * 0.8); }
+    ctx.restore();
+  };
+  const drawArm = (g, color, which) => {
+    const e = pt(sh, g.a, UA), w = pt(e, g.e, FA);
+    limb([[sh[0], sh[1] + 20], e, pt(w, g.e + Math.PI, 10)], 70, color);
+    P.line(new Path2D(`M${e[0] - 14} ${e[1] - 30} C${e[0] - 4} ${e[1] - 10} ${e[0] + 6} ${e[1] + 10} ${e[0] + 22} ${e[1] + 22}`), lw * 0.5);
+    hand(w, g.e, (o.hands ?? {})[which] ?? 'open', which);
+  };
+  drawArm(arms.far, 'tealDk', 'far');
+  drawLeg(legs.far, 'denimDk', 'grey');
+  ctx.save(); ctx.translate(hip[0], hip[1]); ctx.rotate(lean);
+  const torso = svg('M-17 -313 C-17 -304 -29 -297 -43 -291 C-58 -285 -70 -271 -74 -250 C-77 -236 -79 -200 -79 -150 C-79 -80 -78 -20 -76 24 L86 24 C98 -80 102 -200 88 -290 C60 -318 10 -330 -17 -313 Z');
+  P.fill(torso, hood); P.tone(torso, 'hoodDot', { from: [0, 0, 0], to: [-90, 0, 0.3], bbox: [-100, -335, 110, 30] }, 7); P.line(torso, lw * 1.4);
+  P.both(rect(-80, -4, 170, 30, 8), 'tealLt', lw); for (let k = -66; k < 84; k += 14) P.line(svg(`M${k} 0 L${k} 22`), lw * 0.4);
+  P.line(svg('M96 -150 L40 -150 C30 -110 30 -60 36 -6'), lw * 0.8);
+  ctx.restore();
+  drawLeg(legs.near, 'denim', 'cream');
+  ctx.save(); ctx.translate(sh[0] + 26 + Math.sin(lean) * 40, sh[1] - 108 + (1 - Math.cos(lean)) * 40); ctx.rotate(lean * 0.5 - (o.lookUp ?? 0) * 0.25); ctx.scale(0.5, 0.5);
+  profileHead(P, lw * 2, 12, o);
+  ctx.restore();
+  drawArm(arms.near, hood, 'near');
+  if (o.front) o.front(P, { hip, sh });
   ctx.restore();
 }

@@ -8,6 +8,8 @@ export const C = {
   skinDot: '#b07e68', hoodDot: '#1a2f2e', hair: '#2b221c', cream: '#f3ead6', red: '#b5463a', redDk: '#6e2119',
   night: '#132625', sky: '#f0d9a8', hill: '#c9a865', grey: '#8d8a80',
   tealLt: '#4f8183', mint: '#a9d6cf', mintDk: '#6fa7a0', denim: '#4a5d73', denimDk: '#34445a', glass: '#bcd6d2', black: '#1e1a17',
+  navy: '#3a4660', navyDk: '#283247', shirt: '#dfe6e3', char: '#4d4844', charDk: '#37332f', plum: '#6d4b5c', ochre: '#b98b3c',
+  skin2: '#f4dcc9', skin3: '#e9c8ad', sepia: '#e6d3ad', sepiaDk: '#8a6a43', silver: '#cfcac0',
 };
 export const FONT = { display: 'Federant, serif', caps: 'Cinzel, serif', mono: '"Plex Mono", monospace', comic: '"Comic Neue", "Comic Sans MS", cursive' };
 
@@ -17,6 +19,7 @@ export const lerp = (a, b, t) => a + (b - a) * t;
 export const prog = (t, a, b) => clamp((t - a) / (b - a));
 export const ease = {
   in: (x) => x * x, out: (x) => 1 - (1 - x) * (1 - x), inOut: (x) => (x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2),
+  inCubic: (x) => x * x * x, inOutSine: (x) => -(Math.cos(Math.PI * x) - 1) / 2,
   outCubic: (x) => 1 - (1 - x) ** 3, inOutCubic: (x) => (x < 0.5 ? 4 * x ** 3 : 1 - (-2 * x + 2) ** 3 / 2),
   outBack: (x) => 1 + 2.2 * (x - 1) ** 3 + 1.2 * (x - 1) ** 2, outExpo: (x) => (x >= 1 ? 1 : 1 - 2 ** (-10 * x)),
 };
@@ -161,8 +164,13 @@ export function painter(ctx) {
 export function lyric(P, line, t, x, y, o = {}) {
   const size = o.size ?? 48, font = o.font ?? FONT.display, gap = size * 0.28, maxW = o.maxW ?? 1300, lh = size * 1.18;
   const words = line.words.map((w) => ({ w, s: w.w, wd: P.measure(w.w, { size, font, weight: o.weight }) }));
-  const rows = [[]]; let rw = 0;
+  let rows = [[]]; let rw = 0;
   for (const it of words) { if (rw + it.wd > maxW && rows[rows.length - 1].length) { rows.push([]); rw = 0; } rows[rows.length - 1].push(it); rw += it.wd + gap; }
+  if (rows.length === 2) {   // balance two rows: break where the longer row is shortest
+    const ws = words.map((it) => it.wd + gap); let best = 1, bestW = Infinity;
+    for (let k = 1; k < words.length; k++) { const a = ws.slice(0, k).reduce((u, v) => u + v, 0), b = ws.slice(k).reduce((u, v) => u + v, 0); if (Math.max(a, b) < bestW && a <= maxW + gap && b <= maxW + gap) { bestW = Math.max(a, b); best = k; } }
+    rows = [words.slice(0, best), words.slice(best)];
+  }
   const pre = o.lead ?? 0.4, visible = t >= line.start - pre;
   if (!visible && !o.always) return rows;
   const ctx = P.ctx;

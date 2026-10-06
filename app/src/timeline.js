@@ -10,7 +10,7 @@ const load = (name) => async () => { try { return await modules[name](); } catch
 export function makeTimeline(L, A) {
   const s = (n) => A.sectionByName(n);
   const E = (id, file, sec, params = {}) => ({ id, load: load(file), start: s(sec).start, end: s(sec).end, params: { ...params, section: sec } });
-  return [
+  const tl = [
     E('intro', 'intro', 'intro'),
     E('verse1', 'verse1', 'verse1'),
     E('chorus1', 'chorus', 'chorus1', { n: 1 }),
@@ -21,4 +21,14 @@ export function makeTimeline(L, A) {
     E('bridge', 'bridge', 'bridge'),
     E('outro', 'outro', 'outro'),
   ];
+  // a section whose singing starts before its downbeat (a pickup) cuts in on the beat before the first
+  // word, but never before the previous line has finished
+  for (let i = 1; i < tl.length; i++) {
+    const e = tl[i], first = L.lines.find((l) => l.start >= e.start - 2.0);
+    if (!first || first.start >= e.start) continue;
+    const prev = L.lines[L.lines.indexOf(first) - 1], beat = A.timeOfBeat(Math.floor(A.beatAt(first.start)));
+    const start = Math.min(first.start - 0.05, Math.max(beat, prev ? prev.end : 0));
+    e.start = start; tl[i - 1].end = start;
+  }
+  return tl;
 }
