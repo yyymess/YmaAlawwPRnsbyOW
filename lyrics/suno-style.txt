@@ -4,11 +4,11 @@ Engineer's Paradise
 LYRICS
 lyrics/suno.txt (keep the intro: without it the vocal starts off unsettled)
 
-STYLE OF MUSIC (C5 — C4 with a geekier, weirder voice)
-geeky, dorky, quirky male vocal, adenoidal nasal tenor, thin and high, awkward and over-eager, occasional voice cracks, over-enunciated, wide-eyed, deadpan, conversational rhymed verses, relaxed and clear, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
+STYLE OF MUSIC (C6 — C4 + geeky, verses talked not sung)
+geeky male vocal, nasal, thin, high-pitched tenor, clean-cut, verses talked in rhythm not sung, no melody on verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
 
 EXCLUDE STYLES
-deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
+deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, sung verses, crooning, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
 
 MORE OPTIONS
 Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off

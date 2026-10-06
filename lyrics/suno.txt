@@ -3,7 +3,7 @@ As I walk through the Valley where the robotaxis roam,
 I fear no outage, 'cause my agent's on call from home;
 with its tokens and its context, it comforts me, you know.
 
-[Verse 1: conversational rhymes, geeky nasal tenor]
+[Verse 1: talked in rhythm, not sung, geeky nasal tenor]
 Seventeen with a compiler and a dial-up phone line,
 read the em-peg spec on Friday nights — and honestly, I was fine.
 I believed in open standards, I could recite the RFCs,
@@ -27,7 +27,7 @@ in the engineer's paradise,
 change the world, we didn't mind
 in the engineer's paradise.
 
-[Verse 2: conversational rhymes, geeky nasal tenor]
+[Verse 2: talked in rhythm, not sung, geeky nasal tenor]
 Then one Monday at the fridge there's a sign in Comic Sans:
 "Soda now fifty cents" — and a fella with a plan.
 He had more shares than the founders and a flywheel slide to show,
@@ -53,7 +53,7 @@ in the engineer's paradise,
 badge turned red — goodnight
 in the engineer's paradise.
 
-[Verse 3: conversational rhymes, geeky nasal tenor]
+[Verse 3: talked in rhythm, not sung, geeky nasal tenor]
 Then the model learned to code, and the keynote spread the news:
 "the hottest language now is English" — guess which language we lose.
 Twenty years of Emacs chords, got a pinky bent just like a hook,
