@@ -1,11 +1,11 @@
 TITLE
 Engineer's Paradise
 
-STYLE OF MUSIC (953 characters)
-80 BPM, C minor, 4/4. Mid-1990s West Coast hip-hop ballad, slow and stately. The whole song sits on one repeating two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through verses and choruses. A sustained legato synth string section plays the loop, over a soft church-organ pad and a low synth bass on the chord roots. Sparse, laid-back drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat, lots of space. Verses: one clean male tenor rapper, slightly nasal, crisp enunciation, steady even flow locked to the beat, earnest and sincere, never shouting. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody, with a soulful male lead on top. Spoken intro over the strings. Bridge: drums drop out, only strings, organ and a half-sung lead. Outro: the choir repeats the chorus in a big reverberant hall and fades out. Polished, bright, full late-90s studio mix. Straight-faced and cinematic.
+STYLE OF MUSIC (961 characters)
+Lead vocal first: NOT a typical rap voice. A thin, bright, nasal, high male tenor, a nerdy suburban accordion-and-glasses type who raps like a spelling-bee champion: over-precise diction, every consonant crisp, square and unhip, theatrical and wide-eyed, sincerely proud of every line. 80 BPM, C minor, 4/4, a faithful re-creation of a slow mid-90s hip-hop ballad instrumental. One repeating two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through the whole song, played by sustained legato synth strings over a soft church-organ pad and a low synth bass on the roots. Sparse drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat, lots of space. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody. Spoken intro over the strings. Bridge: drums drop out, strings and organ only. Outro: the choir repeats the chorus in a big reverberant hall and fades out. Polished, bright late-90s studio mix.
 
 EXCLUDE STYLES
-comedy, novelty, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
+deep voice, baritone, gravelly voice, gangsta rap vocal, street slang delivery, melodic rap, mumble rap, comedy, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
 
 MORE OPTIONS
 Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
