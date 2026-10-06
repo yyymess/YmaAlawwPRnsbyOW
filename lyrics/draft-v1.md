@@ -64,8 +64,8 @@ in the engineer's paradise.
 
 ## Verse 3 — the horseless carriage
 
-Then the CEO got on stage: "the bot writes thirty percent!"
-Two weeks later — guess which thirty percent of us got sent.
+Then the model learned to code, and the keynote spread the news:
+"the hottest language now is English" — guess which language we lose.
 Twenty years of Emacs chords, got a pinky bent just like a hook,
 now I tab, tab, tab, accept all, and I never even look.
 Stack Overflow's a ghost town, tumbleweed across the queue,
@@ -115,6 +115,8 @@ in the engineer's paradise…
 
 - Then they moved the free dinner to right after the last bus goes —
   you can stay and eat, or you can leave. Everybody knows.
+- Then the CEO got on stage: "the bot writes thirty percent!"
+  Two weeks later — guess which thirty percent of us got sent.
 - Design doc used to be a page; now it's forty, plus a deck,
   seven VPs to sign it, and a privacy-legal-brand check.
 
