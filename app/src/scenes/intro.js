@@ -4,7 +4,7 @@
 //  C. "with its tokens and its context…": tokens drift past like blossoms; he closes his eyes, comforted
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp } from '../paint.js';
 import { heroFront, heroWalk, phone } from '../kit/hero.js';
-import { cut, lyricBanner, robotaxi, token, agent, posterFrame } from '../kit/props.js';
+import { cut, lyricBanner, robotaxi, token, agentAngel, posterFrame, tree, cypress, campus } from '../kit/props.js';
 
 export default function intro(P, f) {
   const c1 = cut(f, 'I fear no outage'), c2 = cut(f, 'with its tokens');
@@ -24,15 +24,12 @@ function landscape(P, f, cam) {
   P.beads(sx, sy, 285, 36, 6, 'goldLt', f.kick);
   // far hills, the campus on the far ridge, near hills
   P.both(svg(`M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520 L1700 900 L-100 900 Z`), 'hill', 4);
-  const bx = 360 - cam * 0.3;
-  P.both(rect(bx, 470, 150, 70, 4), 'cream', 3); for (let i = 0; i < 5; i++) P.line(rect(bx + 12 + i * 27, 482, 18, 22), 2);
-  P.line(svg(`M${bx + 150} 480 C${bx + 190} 490 ${bx + 200} 520 ${bx + 230} 540`), 5, 'red');                      // the slide
+  campus(P, 380 - cam * 0.3, 532, 0.5);
   P.both(svg(`M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z`), 'sage', 4);
   P.tone(svg(`M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z`), 'hoodDot', { from: [800, 620, 0], to: [800, 900, 0.35], bbox: [0, 580, W, H] }, 7);
-  for (const [x0, y0, sc] of [[150, 610, 1], [1380, 600, 0.9], [980, 615, 0.7]]) {
-    const x = x0 - cam * 0.55; P.both(rect(x - 8 * sc, y0 - 10, 16 * sc, 70 * sc), 'hair', 3);
-    P.both(ell(x, y0 - 60 * sc, 60 * sc, 72 * sc), 'sageDk', 3);
-  }
+  tree(P, 150 - cam * 0.55, 650, 0.9, 2); cypress(P, 250 - cam * 0.55, 655, 0.8); cypress(P, 1290 - cam * 0.55, 640, 0.7);
+  tree(P, 1420 - cam * 0.55, 645, 0.8, 5); tree(P, 990 - cam * 0.55, 640, 0.55, 8);
+  for (let gx = -40; gx < W + 80; gx += 70) { const x = gx - ((cam * 0.55) % 70); P.line(svg(`M${x} 690 l6 -16 M${x + 8} 690 l2 -20 M${x + 16} 690 l-4 -14`), 2, 'sageDk'); }
   // the lane
   P.both(rect(-20, 700, W + 40, 70), 'cream', 4);
   P.tone(rect(-20, 700, W + 40, 70), 'skinDot', { from: [0, 700, 0.0], to: [0, 770, 0.35], bbox: [0, 700, W, 770] }, 6);
@@ -50,7 +47,7 @@ function valley(P, f, end) {
   // the robo-taxi glides right-to-left on the lane as he sings "robo-taxis"
   const rt = f.L.get('robo-taxis').words.find((w) => w.w.startsWith('robo')).start;
   const rx = keys(t, [[rt - 2.2, 1900], [rt + 1.8, -500, ease.inOut]]);
-  if (rx > -480 && rx < 1880) robotaxi(P, rx, 735, 0.62, t, -1);
+  if (rx > -480 && rx < 1880) robotaxi(P, rx, 728, 0.9, t, -1);
   // the hero walks in from the left
   const hx = keys(t, [[0.4, -160], [end, 760]]), phase = (hx / 150) * Math.PI;
   heroWalk(P, hx - cam * 0.2, 760, 0.42, phase, { carry: null });
@@ -90,14 +87,11 @@ function angel(P, f, start, end) {
   // he lifts the phone, its light comes up on his face
   const lift = ease.outCubic(prog(lt, 0.2, 1.1));
   const lit = lift * 0.6;
-  heroFront(P, 800, 420, 0.86, { uplit: lit, mouth: singing(f) ? 'sing' : 'neutral', open: f.vocal, look: [0, 0.6 * lit], blink: blink(t) });
-  const py = lerp(780, 640, lift);
-  phone(P, 800, py, 1.25, 0, lit);
-  P.both(ell(800 - 44, py + 40, 18, 22), 'skin', 3); P.both(ell(800 + 44, py + 40, 18, 22), 'skin', 3);
-  // the agent answers on "agent's"
+  heroFront(P, 800, 420, 0.86, { uplit: lit, hold: 'phone', phoneY: lerp(560, 350, lift), mouth: singing(f) ? 'sing' : 'neutral', open: f.vocal, look: [0, 0.6 * lit], blink: blink(t) });
+  // the agent appears on "agent's", high above him like an angel
   const ag = f.L.get('I fear no outage').words.find((w) => w.w.startsWith('agent')).start;
-  const a = ease.outBack(prog(t, ag - 0.3, ag + 0.4));
-  if (a > 0) { P.save(); P.ctx.globalAlpha = clamp(a); agent(P, 1050, 460 - Math.sin(t * 2.4) * 10, a * 1.5, t); P.restore(); }
+  const a = ease.outBack(prog(t, ag - 0.3, ag + 0.5));
+  if (a > 0) { P.save(); P.ctx.globalAlpha = clamp(a); agentAngel(P, 800, lerp(80, 132, clamp(a)) + Math.sin(t * 1.6) * 6, 0.7 * a, t); P.restore(); }
   P.restore();
   lyricBanner(P, f, f.L.get('I fear no outage'), 800, 812, { size: 40 });
 }
@@ -113,9 +107,8 @@ function blossoms(P, f, start) {
   P.halo(800, 380, 330, undefined, f.beat * 0.02, glow);
   const comfort = f.L.get('it comforts me').words.find((w) => w.w.startsWith('comforts')).start;
   const calm = prog(t, comfort - 0.3, comfort + 0.5);
-  heroFront(P, 800, 420, 0.86, { uplit: 0.35, mouth: calm > 0.5 && !singing(f) ? 'smile' : singing(f) ? 'sing' : 'neutral', open: f.vocal, blink: calm > 0.5 ? 1 : blink(t) });
-  phone(P, 800, 640, 1.25, 0, 1);
-  P.both(ell(756, 680, 18, 22), 'skin', 3); P.both(ell(844, 680, 18, 22), 'skin', 3);
+  heroFront(P, 800, 420, 0.86, { uplit: 0.5, hold: 'phone', mouth: calm > 0.5 && !singing(f) ? 'smile' : singing(f) ? 'sing' : 'neutral', open: f.vocal, blink: calm > 0.5 ? 1 : blink(t) });
+  agentAngel(P, 800, 132 + Math.sin(t * 1.6) * 6, 0.7, t);
   // tokens drift down from the upper left like petals, starting on "tokens"
   const tk = f.L.get('with its tokens').words.find((w) => w.w.startsWith('tokens')).start;
   const r = rng(11);

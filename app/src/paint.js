@@ -7,6 +7,7 @@ export const C = {
   rose: '#d39c8e', roseLt: '#e8c2b2', teal: '#365f63', tealDk: '#24413f', ivory: '#f4e6d2', skin: '#efd2bb',
   skinDot: '#b07e68', hoodDot: '#1a2f2e', hair: '#2b221c', cream: '#f3ead6', red: '#b5463a', redDk: '#6e2119',
   night: '#132625', sky: '#f0d9a8', hill: '#c9a865', grey: '#8d8a80',
+  tealLt: '#4f8183', mint: '#a9d6cf', mintDk: '#6fa7a0', denim: '#4a5d73', denimDk: '#34445a', glass: '#bcd6d2', black: '#1e1a17',
 };
 export const FONT = { display: 'Federant, serif', caps: 'Cinzel, serif', mono: '"Plex Mono", monospace', comic: '"Comic Neue", "Comic Sans MS", cursive' };
 
@@ -110,11 +111,14 @@ export function painter(ctx) {
       if (draw < 1) { ctx.save(); ctx.setLineDash([4000 * draw, 4000]); }
       P.line(p, w + 3); P.line(p, w - 1, 'sageDk');
       if (draw < 1) { ctx.restore(); return; }
-      if (plug) {
-        const [x, y] = pts[pts.length - 1], [px, py] = pts[pts.length - 2];
+      if (plug) {   // an RJ45 plug in proportion to the cable: boot, clear body with gold contacts, latch
+        const [x, y] = pts[pts.length - 1], [px, py] = pts[pts.length - 2], cw = w + 3;
         ctx.save(); ctx.translate(x, y); ctx.rotate(Math.atan2(y - py, x - px));
-        P.both(rect(0, -13, 34, 26, 4), 'cream', 3); for (let i = 0; i < 4; i++) P.line(svg(`M${8 + i * 6} -9 L${8 + i * 6} 9`), 1.5);
-        P.both(svg('M34 -5 L42 -5 L42 5 L34 5 Z'), 'cream', 2.5); ctx.restore();
+        P.both(svg(`M-2 ${-cw / 2} L14 ${-cw * 0.95} L14 ${cw * 0.95} L-2 ${cw / 2} Z`), 'sageDk', 2.5);
+        P.both(rect(14, -cw * 1.15, cw * 2.2, cw * 2.3, 2), 'cream', 2.5);
+        for (let i = 0; i < 6; i++) P.line(svg(`M${14 + cw * 1.5} ${-cw * 0.8 + i * cw * 0.32} L${14 + cw * 2.1} ${-cw * 0.8 + i * cw * 0.32}`), 1.2, 'gold');
+        P.both(svg(`M18 ${-cw * 1.15} L${14 + cw * 1.4} ${-cw * 1.15} L${14 + cw * 1.1} ${-cw * 1.55} L24 ${-cw * 1.45} Z`), 'cream', 2);
+        ctx.restore();
       }
     },
     leaf(x, y, a, s = 1, color = 'sageDk') { ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.scale(s, s); P.both(svg('M0 0 C14 -16 44 -16 60 0 C44 16 14 16 0 0 Z'), color, 3 / s); P.line(svg('M4 0 L52 0'), 1.8 / s); ctx.restore(); },

@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Kit sheet</title>
+<style>
+  @font-face { font-family: Federant; src: url(fonts/Federant.ttf); }
+  @font-face { font-family: Cinzel; src: url(fonts/Cinzel.ttf); font-weight: 400 900; }
+  @font-face { font-family: "Plex Mono"; src: url(fonts/PlexMono.ttf); }
+  body { margin: 0; background: #222; }
+</style>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script type="module">
+  // Character / prop review sheets: ?sheet=hero|props
+  import { painter, W, H, rect } from './src/paint.js';
+  import * as sheets from './src/kit/sheets.js';
+  await Promise.all(['40px Federant', '700 40px Cinzel', '600 20px "Plex Mono"'].map((f) => document.fonts.load(f)));
+  const c = document.getElementById('c'), ctx = c.getContext('2d'); ctx.scale(1920 / W, 1080 / H);
+  const P = painter(ctx); P.paper();
+  sheets[new URLSearchParams(location.search).get('sheet') ?? 'hero'](P);
+  P.grain(0);
+  window.__ep = { ready: true, errors: [], frame() {}, png: () => c.toDataURL('image/png'), duration: 1 };
+</script>
