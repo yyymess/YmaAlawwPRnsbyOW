@@ -49,6 +49,7 @@ export function robotaxi(P, x, y, s, t, dir = -1) {
     ctx.restore();
     P.both(rect(sx * 222 - 4, -92, 8, 18, 3), 'gold', lw * 0.6);                                          // light
   }
+  P.ctx.save(); P.ctx.setLineDash([]); P.line(ell(0, -300, 210, 20), lw * 2.6, 'line'); P.line(ell(0, -300, 210, 20), lw * 1.4, 'gold'); P.ctx.restore();   // its sensors' halo
   // wheels at the ends, with X covers
   for (const wx of [-170, 170]) {
     P.both(svg(`M${wx - 80} -6 C${wx - 80} -70 ${wx + 80} -70 ${wx + 80} -6 Z`), 'mintDk', lw);          // arch

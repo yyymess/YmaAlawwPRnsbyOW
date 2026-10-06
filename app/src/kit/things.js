@@ -41,6 +41,7 @@ export function modem(P, x, y, s, t, o = {}) {
   const lw = begin(P, x, y, s);
   P.both(svg('M-80 0 L-70 -40 L70 -40 L80 0 Z'), 'charDk', lw);
   P.both(rect(-80, -6, 160, 10, 3), 'char', lw * 0.8);
+  P.text('56K', 50, -2, { font: FONT.caps, weight: 700, size: 13, color: 'goldLt' });
   const labels = ['HS', 'AA', 'CD', 'OH', 'RD', 'SD', 'TR', 'MR'];
   labels.forEach((l, i) => {
     const lit = o.active ? Math.sin(t * (9 + i * 3.1) + i * 1.7) > 0.1 - (i === 3 ? 1 : 0) : i === 6 || i === 7;
@@ -195,7 +196,10 @@ export function tablet(P, x, y, w, h, o = {}) {
   P.fill(shape, o.color ?? 'sepia'); P.tone(shape, 'sepiaDk', { from: [-w / 2, 0, 0], to: [w / 2, h, 0.5], bbox: [-w / 2, -w * 0.05, w / 2, h] }, 6); P.line(shape, lw * 1.4);
   P.line(svg(`M0 ${w * 0.14} L0 ${h}`), lw * 0.8);
   P.ctx.save(); P.clip(shape);
-  (o.lines ?? []).forEach((l, i) => { const ly = (o.top ?? h * 0.36) + i * (o.lineH ?? 54); P.text(l, 0, ly + 2, { font: FONT.caps, weight: 700, size: o.size ?? 40, color: '#f6ecd6' }); P.text(l, 0, ly, { font: FONT.caps, weight: 700, size: o.size ?? 40, color: 'charDk' }); });
+  const carve = (l, x0, ly) => { P.text(l, x0, ly + 2, { font: FONT.caps, weight: 700, size: o.size ?? 40, color: '#f6ecd6' }); P.text(l, x0, ly, { font: FONT.caps, weight: 700, size: o.size ?? 40, color: 'charDk' }); };
+  (o.lines ?? []).forEach((l, i) => carve(l, 0, (o.top ?? h * 0.36) + i * (o.lineH ?? 54)));
+  (o.left ?? []).forEach((l, i) => carve(l, -w / 4, (o.top ?? h * 0.36) + i * (o.lineH ?? 54)));
+  (o.right ?? []).forEach((l, i) => carve(l, w / 4, (o.top ?? h * 0.36) + i * (o.lineH ?? 54)));
   P.restore();
   if (o.cracks) P.line(svg(`M${w * 0.3} ${h * 0.2} L${w * 0.22} ${h * 0.34} L${w * 0.3} ${h * 0.42} L${w * 0.2} ${h * 0.56}`), lw * 0.7);
   end(P);
@@ -391,29 +395,57 @@ export function throne(P, x, y, s) {
   end(P);
 }
 
-/** a horse in profile, facing right, walking; (x, y) the ground under its belly; phase the gait */
+/**
+ * a horse in profile, facing right; (x, y) the ground under its belly; phase drives a walk (0 stands).
+ * Built like a horse: a barrel with chest and hindquarters, an arched neck with a mane, a wedge of a head;
+ * front legs bend at the knee, hind legs at the backward hock. o.color, o.dark (mane, far legs), o.harness.
+ */
 export function horse(P, x, y, s, phase = 0, o = {}) {
-  const lw = begin(P, x, y, s), col = o.color ?? 'sepiaDk', dk = o.dark ?? 'charDk';
-  const leg = (hx, hy, ph, front, near) => {
-    const a = 0.32 * Math.sin(ph), k = front ? Math.max(0, Math.sin(ph + 1.2)) * 0.9 : Math.max(0, -Math.sin(ph + 0.4)) * 0.8;
-    const kx = hx + Math.sin(a) * 120, ky = hy + Math.cos(a) * 120, b = front ? a - k : a + k, fx = kx + Math.sin(b) * 112, fy = ky + Math.cos(b) * 112;
-    const p = new Path2D(); p.moveTo(hx, hy); p.lineTo(kx, ky); p.lineTo(fx, fy - 10);
-    P.ctx.lineJoin = 'round'; P.ctx.lineCap = 'round'; P.line(p, 38 + 2 * lw, 'line'); P.line(p, 38, near ? col : dk);
-    P.both(svg(`M${fx - 22} ${fy - 14} L${fx + 22} ${fy - 14} L${fx + 26} ${fy + 6} L${fx - 24} ${fy + 6} Z`), 'charDk', lw * 0.8);
+  const lw = begin(P, x, y, s * 1.2), ctx = P.ctx, col = o.color ?? 'sepiaDk', dk = o.dark ?? 'charDk', walk = o.walk ?? (phase !== 0);
+  // a leg tapers: each segment is its own stroke, thinner towards the hoof; outlines first so the joints stay clean
+  const limb = (pts, ws, color) => { ctx.lineJoin = 'round'; ctx.lineCap = 'round'; const seg = (i) => svg(`M${pts[i][0]} ${pts[i][1]} L${pts[i + 1][0]} ${pts[i + 1][1]}`); for (let i = 0; i < pts.length - 1; i++) P.line(seg(i), ws[i] + 2 * lw, 'line'); for (let i = 0; i < pts.length - 1; i++) P.line(seg(i), ws[i], color); };
+  const pt = (o0, a, l) => [o0[0] + Math.sin(a) * l, o0[1] + Math.cos(a) * l];
+  const hoof = (f, color) => P.both(svg(`M${f[0] - 15} ${f[1] - 16} L${f[0] + 13} ${f[1] - 16} L${f[0] + 19} ${f[1] + 2} L${f[0] - 15} ${f[1] + 2} Z`), 'charDk', lw * 0.8);
+  // a front leg from the elbow: upper arm, knee, cannon, fetlock, pastern; it folds at the knee as it lifts
+  const front = (sh, ph, color) => {
+    const sw = walk ? 0.28 * Math.sin(ph) : 0, lift = walk ? Math.max(0, Math.sin(ph + 1.4)) : 0;
+    const kn = pt(sh, sw, 108), fe = pt(kn, sw - 0.9 * lift, 84), ho = pt(fe, sw - 0.5 * lift + 0.18, 30);
+    limb([sh, kn, fe, ho], [36, 22, 18], color); hoof([ho[0] + 4, ho[1] + 4]);
   };
-  const hy = -240;
-  leg(150, hy + 20, phase + Math.PI, true, false); leg(-150, hy + 20, phase, false, false);
-  // tail
-  P.both(svg(`M-210 ${hy - 70} C${-290 + Math.sin(phase) * 8} ${hy - 40} -300 ${hy + 60} ${-270 + Math.sin(phase * 0.5) * 10} ${hy + 140} C-250 ${hy + 60} -240 ${hy} -200 ${hy - 40} Z`), dk, lw);
-  // body, neck and head
-  const body = svg(`M-220 ${hy - 60} C-230 ${hy - 120} -150 ${hy - 140} -40 ${hy - 130} C60 ${hy - 124} 140 ${hy - 150} 190 ${hy - 190} C210 ${hy - 260} 250 ${hy - 330} 300 ${hy - 350} C330 ${hy - 362} 360 ${hy - 350} 380 ${hy - 320} L440 ${hy - 250} C456 ${hy - 228} 440 ${hy - 206} 414 ${hy - 210} L340 ${hy - 250} C300 ${hy - 230} 270 ${hy - 180} 240 ${hy - 110} C220 ${hy - 40} 190 ${hy + 30} 130 ${hy + 40} C40 ${hy + 54} -100 ${hy + 50} -170 ${hy + 30} C-210 ${hy + 16} -226 ${hy - 20} -220 ${hy - 60} Z`);
-  P.fill(body, col); P.tone(body, '#000', { from: [40, hy - 140, 0], to: [0, hy + 50, 0.45], bbox: [-230, hy - 360, 460, hy + 60] }, 6); P.line(body, lw * 1.3);
-  P.both(svg(`M300 ${hy - 350} L304 ${hy - 392} L326 ${hy - 356} Z`), col, lw);                 // ear
-  P.fill(ell(374, hy - 304, 7, 8), 'line');                                                     // eye
-  P.both(svg(`M200 ${hy - 200} C220 ${hy - 280} 250 ${hy - 340} 300 ${hy - 352} C280 ${hy - 300} 260 ${hy - 240} 236 ${hy - 160} C230 ${hy - 190} 214 ${hy - 196} 200 ${hy - 200} Z`), dk, lw);   // mane
-  P.line(svg(`M420 ${hy - 226} C426 ${hy - 222} 430 ${hy - 218} 434 ${hy - 214}`), lw * 0.8);
-  if (o.harness) { P.line(svg(`M330 ${hy - 330} L420 ${hy - 250} M250 ${hy - 140} C200 ${hy - 120} 120 ${hy - 110} -60 ${hy - 110}`), lw * 2.2, 'red'); P.both(svg(`M180 ${hy - 190} C200 ${hy - 130} 210 ${hy - 70} 200 ${hy - 20}`), 'black', lw * 3); }
-  leg(130, hy + 30, phase, true, true); leg(-170, hy + 20, phase + Math.PI, false, true);
+  // a hind leg from the stifle: gaskin back and down to the hock, cannon down, fetlock, pastern
+  const hind = (st, ph, color) => {
+    const sw = walk ? 0.25 * Math.sin(ph) : 0, lift = walk ? Math.max(0, Math.sin(ph + 1.4)) : 0;
+    const hk = pt(st, sw - 0.42 + 0.2 * lift, 108), fe = pt(hk, sw + 0.08 - 0.6 * lift, 90), ho = pt(fe, sw + 0.25 - 0.3 * lift, 30);
+    limb([st, hk, fe, ho], [40, 22, 18], color); hoof([ho[0] + 4, ho[1] + 4]);
+  };
+  const HY = -20;   // the whole horse sits on its hooves at y = 0
+  ctx.translate(0, HY);
+  // far legs first, in the darker colour
+  front([128, -212], phase + Math.PI, dk); hind([-150, -206], phase, dk);
+  // the tail
+  const tw = walk ? Math.sin(phase * 0.5) * 10 : 0;
+  P.both(svg(`M-206 -302 C-250 -300 -262 -250 ${-258 + tw} -190 C${-256 + tw} -140 ${-246 + tw} -100 ${-232 + tw} -78 C-224 -120 -222 -170 -226 -220 C-228 -250 -222 -280 -200 -290 Z`), dk, lw);
+  P.line(svg(`M-236 -270 C${-246 + tw} -220 ${-246 + tw} -160 ${-236 + tw} -110`), lw * 0.5, col);
+  // the body, neck and head as one silhouette
+  const body = svg('M-210 -300 C-200 -334 -150 -338 -100 -322 C-40 -306 40 -318 110 -336 C160 -360 200 -420 244 -462 C252 -470 262 -472 270 -466 C298 -446 334 -404 368 -366 C382 -352 374 -332 352 -332 C334 -332 316 -342 300 -358 C284 -372 266 -378 250 -370 C226 -338 208 -300 196 -262 C190 -232 170 -206 138 -196 L-128 -192 C-170 -194 -206 -232 -214 -268 Z');
+  P.fill(body, col);
+  P.tone(body, '#000', { from: [40, -330, 0], to: [10, -190, 0.42], bbox: [-220, -480, 380, -186] }, 6);
+  P.line(body, lw * 1.3);
+  // the mane along the crest, the forelock, an ear
+  P.both(svg('M108 -336 C150 -364 196 -424 242 -466 C248 -452 240 -436 228 -424 C214 -404 196 -380 172 -352 C154 -334 132 -324 112 -320 Z'), dk, lw);
+  P.both(svg('M262 -470 L262 -500 L280 -470 Z'), col, lw);
+  P.both(svg('M266 -462 C280 -456 286 -444 282 -432 C276 -440 270 -448 262 -452 Z'), dk, lw * 0.7);
+  // eye, nostril, mouth; muscle lines at shoulder, belly and hip
+  P.fill(ell(300, -420, 6.5, 7.5), 'line'); P.line(svg('M292 -432 C298 -436 306 -436 310 -430'), lw * 0.5);
+  P.line(svg('M356 -356 C360 -350 360 -344 356 -340'), lw * 0.7); P.line(svg('M346 -336 C340 -340 334 -342 326 -342'), lw * 0.6);
+  P.line(svg('M150 -300 C140 -268 136 -240 140 -214 M-120 -300 C-104 -270 -100 -240 -110 -206 M30 -200 C20 -210 -20 -212 -40 -204'), lw * 0.5);
+  if (o.harness) {
+    P.both(svg('M176 -364 C196 -330 206 -290 200 -256 L176 -258 C182 -290 176 -326 158 -352 Z'), 'charDk', lw);   // the collar
+    P.line(svg('M110 -330 C60 -322 -20 -316 -80 -322 M300 -428 L352 -370 M276 -446 L330 -398'), lw * 2.4, 'red');
+    P.line(svg('M190 -290 C120 -270 40 -262 -40 -262'), lw * 2.2, 'red');
+  }
+  // near legs over the body
+  front([150, -206], phase, col); hind([-138, -200], phase + Math.PI, col);
   end(P);
 }
 

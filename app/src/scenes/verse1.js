@@ -174,7 +174,6 @@ function creed(P, f, L, t) {
   const ctx = P.ctx;
   bg(P, 'rose', 'redDk', [440, 330, 0], [880, 650, 0.35]);
   // a Mucha mosaic ring behind
-  for (let i = 0; i < 28; i++) { const a = (i / 28) * Math.PI * 2 + t * 0.02; P.both(ell(440 + Math.cos(a) * 330, 300 + Math.sin(a) * 300, 16), i % 2 ? 'sage' : 'goldLt', 2.5); }
   // the halo; its keycaps turn over to Haskell one by one from "Haskell"
   const hk = at0(L, 1, 'haskell');
   const glyphs = CODE.map((g, i) => (t > hk + i * 0.06 ? HASKELL[i] : g));
@@ -188,7 +187,7 @@ function creed(P, f, L, t) {
   const please = at0(L, 1, 'please');
   heroFront(P, 440, 330, 0.6, { mouth: f.vocal > 0.18 ? 'sing' : 'smile', open: f.vocal, look: t > please - 0.3 ? [0, -0.8] : [0, 0], brow: t > please - 0.3 ? 1 : 0, blink: blinkAt(t) });
   const ph = ease.outBack(clamp((t - (please - 0.35)) / 0.5));
-  if (ph > 0) prayHands(P, 440, 690 - 110 * ph, 0.55);
+  if (ph > 0) { const py = 700 - 120 * ph; for (const sx of [-1, 1]) { const sl = svg(`M${440 + sx * 4} ${py + 20} L${440 + sx * 40} ${py + 20} L${440 + sx * 110} ${py + 200} L${440 + sx * 10} ${py + 200} Z`); P.fill(sl, 'teal'); P.tone(sl, 'hoodDot', { from: [440, py, 0.1], to: [440 + sx * 110, py + 200, 0.5], bbox: [300, py, 580, py + 210] }, 6); P.line(sl, 4); } prayHands(P, 440, py, 0.55); }
 }
 function pigeon(P, x, y, s, t) {
   const lw = begin(P, x, y, s);
@@ -207,9 +206,9 @@ function pilgrimage(P, f, L, t) {
   bg(P, 'goldLt', 'rose', [440, 0, 0.0], [440, 430, 0.6]);
   P.halo(150, 430, 150, ['', '', '', '', '', '', '', ''], t * 0.05, 0.45);
   // the bay with a bridge, far hills
-  P.both(svg('M-10 420 C120 380 240 400 360 410 C500 420 640 380 900 400 L900 520 L-10 520 Z'), 'plum', 3);
+  ctx.save(); ctx.translate(((scrollX * 0.12) % 900), 0); for (const ox of [-900, 0]) P.both(svg(`M${ox - 10} 420 C${ox + 120} 380 ${ox + 240} 400 ${ox + 360} 410 C${ox + 500} 420 ${ox + 640} 380 ${ox + 900} 400 L${ox + 900} 520 L${ox - 10} 520 Z`), 'plum', 3); ctx.restore();
   P.fill(rect(-10, 440, PW + 20, 80), 'mint'); P.tone(rect(-10, 440, PW + 20, 80), 'mintDk', { from: [0, 440, 0.4], to: [0, 520, 0], bbox: [0, 440, PW, 520] }, 6);
-  const bx = 300 + scrollX * 0.15;
+  const bx = 260 + scrollX * 0.42;
   ctx.save(); ctx.translate(bx, 0);
   P.line(svg('M-160 452 L240 452'), 5, 'red'); P.both(rect(-110, 330, 16, 124, 2), 'red', 2.5); P.both(rect(150, 330, 16, 124, 2), 'red', 2.5);
   P.line(svg('M-220 452 C-160 380 -130 335 -102 332 C-40 400 100 400 158 332 C190 340 220 390 290 452'), 2.5, 'redDk');
@@ -261,7 +260,6 @@ function dragon(P, f, L, t) {
     const r = rng(9); for (let i = 0; i < 6; i++) { const sx = -60 + r() * 1000, sy = 70 + r() * 230, rr = 70 + r() * 50; cloud(P, sx + Math.sin(t * 0.7 + i) * 14, sy, rr, i % 2 ? 'grey' : 'silver', i); }
     const war = at0(L, 0, 'war'), out = at0(L, 0, 'outage');
     if (t > out) { const u = clamp((t - out) / 0.5); for (let i = 0; i < 11; i++) flame(P, -60 + i * 100, 656, (110 + 50 * ((i * 5) % 3)) * u, 90, t, i, i % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
-    if (t > war - 0.2) { const u = ease.outBack(clamp((t - war + 0.2) / 0.4)); P.line(svg('M790 60 L790 330'), 6); P.both(svg(`M790 70 L${790 - 150 * u} ${90 + Math.sin(t * 6) * 6} L790 130 Z`), 'red', 3); if (u > 0.6) P.text('SEV 1', 742, 110, { font: FONT.caps, weight: 700, size: 22, color: 'cream' }); }
     const lunge = ease.outCubic(clamp((t - (L[0].words[0].start - 0.2)) / 0.7));
     bugDragon(P, 640, 560, 0.62, t, { mark: '?', rear: 0.3 + 0.2 * Math.sin(t * 2), color: 'ochre' });
     const rid = at0(L, 0, 'riddle');
@@ -269,7 +267,11 @@ function dragon(P, f, L, t) {
     heroPose(P, lerp(120, 230, lunge), 650, 0.5, {
       lean: 0.3, hipY: -430, legs: { near: { a: 0.75, b: 0.05 }, far: { a: -0.55, b: -0.55 } },
       arms: { near: { a: 1.25, e: 1.6 }, far: { a: 0.95, e: 1.55 } }, hands: { near: 'fist', far: 'fist' }, mouth: 'o', open: 0.8,
-      hold: (P2, which, w) => { if (which === 'far') { P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 14); P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 8, 'sepia'); P2.both(svg(`M${w[0] + 640} ${w[1] - 110} l-40 -22 l70 6 l-58 40 Z`), 'silver', 4); } },
+      hold: (P2, which, w) => { if (which === 'far') {
+        P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 14); P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 8, 'sepia'); P2.both(svg(`M${w[0] + 640} ${w[1] - 110} l-40 -22 l70 6 l-58 40 Z`), 'silver', 4);
+        // the SEV 1 pennant, tied to the lance below its point, streaming back
+        const sv = ease.outBack(clamp((t - at0(L, 0, 'bug') + 0.2) / 0.4)); if (sv > 0) { const px = w[0] + 470, py = w[1] - 80, fl = Math.sin(t * 7) * 8; P2.ctx.save(); P2.ctx.translate(px, py); P2.ctx.scale(sv * 1.35, sv * 1.35); P2.both(svg(`M0 0 L-190 ${18 + fl} L-170 ${50 + fl * 0.5} L-190 ${82 + fl} L0 64 Z`), 'red', 4); P2.ctx.translate(-92, 44); P2.ctx.rotate(0.06); P2.text('SEV 1', 0, 0, { font: FONT.caps, weight: 700, size: 34, color: 'cream' }); P2.ctx.restore(); }
+      } },
     });
   } else {
     // the postmortem: a calm morning; the bug on its back with a little halo; the scroll gets written
@@ -277,10 +279,13 @@ function dragon(P, f, L, t) {
     P.both(svg('M-10 520 C200 500 500 530 900 505 L900 660 L-10 660 Z'), 'sage', 3);
     const bl = at0(L, 1, 'blameless');
     bugDragon(P, 640, 560, 0.55, t * 0.3, { dead: 1, halo: t > bl + 0.3, color: 'ochre' });
-    lectern(P, 340, 630, 0.9);
+    lectern(P, 420, 630, 0.9);
     const lt = t - pm, u = ease.outCubic(clamp(lt / 0.8));
-    scroll(P, 360, 286, 230, 280, { unroll: u, title: 'POSTMORTEM', titleSize: 22, align: 'left', size: 19, lineH: 34,
-      lines: [typed('What happened', pm + 0.4, t, 18), typed('Why', pm + 1.2, t, 18), typed('What we learned', pm + 1.6, t, 18), typed('Who to blame:', pm + 2.4, t, 18), typed('  (nobody)', pm + 3.0, t, 18)] });
+    scroll(P, 440, 286, 250, 290, { unroll: u, title: 'POSTMORTEM', titleSize: 24, align: 'left', size: 21, lineH: 36,
+      lines: [typed('What happened', pm + 0.2, t, 24), typed('Why it happened', pm + 0.6, t, 24), typed('What we learned', pm + 1.0, t, 24), typed('Who to blame:', pm + 1.5, t, 24)] });
+    if (t > pm + 1.95) { const nb = ease.outBack(clamp((t - pm - 1.95) / 0.35)); ctx.save(); ctx.translate(490, 520); ctx.scale(nb, nb); ctx.rotate(-0.08); P.line(rect(-70, -26, 140, 46, 8), 4, 'red'); P.text('NOBODY', 0, 8, { font: FONT.caps, weight: 700, size: 26, color: 'red' }); ctx.restore(); }
+    const bn = ease.outCubic(clamp((t - pm) / 0.6)); if (bn > 0) { const bw = 470 * bn; P.banner(470 - bw / 2, 40, bw, 70, { tail: 'roseLt' }); P.ctx.save(); P.clip(rect(470 - bw / 2 + 10, 30, Math.max(0, bw - 20), 90)); P.text('LESSONS LEARNED', 470, 88, { font: FONT.caps, weight: 700, size: 30, tracking: 4 }); P.ctx.restore(); }
+    for (let i = 0; i < 2; i++) { const dx = 700 + i * 90 + Math.sin(t * 1.3 + i) * 20, dy = 170 + i * 40 + Math.cos(t * 1.7 + i) * 10, fl = Math.sin(t * 9 + i * 2) * 0.5; P.both(svg(`M${dx - 26} ${dy} C${dx - 10} ${dy - 10} ${dx + 10} ${dy - 10} ${dx + 26} ${dy} C${dx + 10} ${dy + 6} ${dx - 10} ${dy + 6} ${dx - 26} ${dy} Z`), 'ivory', 3); P.both(svg(`M${dx - 4} ${dy - 4} L${dx - 20} ${dy - 30 - 14 * fl} L${dx + 10} ${dy - 6} Z`), 'ivory', 3); }
     heroPose(P, 120, 650, 0.5, { lean: 0.1, legs: { near: { a: 0.05, b: 0.05 }, far: { a: -0.08, b: -0.08 } }, arms: { near: { a: 0.85, e: 1.55 + 0.08 * Math.sin(t * 9) }, far: { a: 0.5, e: 1.25 } }, look: [0, 0.6], hands: { near: 'fist' }, mouth: f.vocal > 0.18 ? 'sing' : 'neutral', open: f.vocal,
       hold: (P2, which, w) => { if (which === 'near') quill(P2, w[0] + 30, w[1] + 4, 0.5, 0.2); } });
   }
@@ -288,7 +293,7 @@ function dragon(P, f, L, t) {
 
 // ---- V · THE ELDERS: the org chart as clouds of empty dotted boxes; the reviewer rises like an icon ----------
 function elders(P, f, L, t) {
-  const ctx = P.ctx, rv = L[1].words[0].start - 0.15;
+  const ctx = P.ctx, rv = L[1].words[0].start;
   bg(P, 'ivory', 'sage', [440, 0, 0.0], [440, 650, 0.5]);
   const rise = ease.inOutCubic(clamp((t - rv) / 1.1));
   // the clouds of org chart: dotted boxes with no titles, drifting
@@ -300,8 +305,16 @@ function elders(P, f, L, t) {
   const rum = at0(L, 0, 'rumor'), ttl = at0(L, 0, 'title');
   person(P, 350, 500, 0.32, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', look: [0.9, 0], mouth: t > ttl ? 'o' : 'neutral', open: 0.4, crop: 700, blink: blinkAt(t + 1) });
   person(P, 560, 500, 0.32, { hair: 'side', top: 'tee', color: 'navy', look: [-0.6, 0], brow: t > rum ? 1 : 0, mouth: t > rum ? 'o' : 'neutral', open: 0.7, crop: 700, blink: blinkAt(t + 2) });
-  if (t > ttl) { ctx.save(); ctx.translate(404, 520); P.both(svg('M-6 30 C-12 0 -6 -26 10 -34 C22 -38 30 -30 30 -18 C30 0 26 20 20 34 Z'), 'skin', 3); P.line(svg('M2 -14 C10 -10 18 -10 24 -14 M0 0 C10 4 18 4 26 0'), 1.5); ctx.restore(); }   // a hand cupped to whisper
-  if (t > rum - 0.2) { const u = ease.outBack(clamp((t - rum + 0.2) / 0.4)); ctx.save(); ctx.translate(455, 370); ctx.scale(u, u); P.both(svg('M-170 -40 L170 -40 L170 30 L-20 30 L-60 64 L-50 30 L-170 30 Z'), 'cream', 3); P.text('psst… we have an org chart?', 0, 2, { size: 24, style: 'italic' }); ctx.restore(); }
+  if (t > ttl) {   // his hand cupped to whisper: a sleeve up from below, the palm curved towards his friend, a thumb
+    ctx.save(); ctx.translate(410, 540);
+    const sl = svg('M-30 30 C-40 80 -50 120 -60 180 L20 180 C18 120 14 80 10 30 Z'); P.fill(sl, 'plum'); P.tone(sl, '#000', { from: [-30, 40, 0.1], to: [10, 180, 0.4], bbox: [-60, 30, 20, 180] }, 5); P.line(sl, 3);
+    P.both(svg('M-34 34 C-44 0 -40 -36 -22 -50 C-8 -60 10 -56 16 -40 C20 -22 18 6 12 34 Z'), 'skin', 3);
+    P.both(svg('M-30 -10 C-46 -16 -54 -30 -48 -40 C-40 -44 -32 -34 -24 -24 Z'), 'skin', 2.5);
+    P.line(svg('M-18 -42 C-14 -20 -14 4 -16 26 M-2 -48 C2 -24 2 4 0 28'), 1.5);
+    P.both(rect(-38, 26, 52, 18, 5), 'plum', 3);
+    ctx.restore();
+  }
+  const bub = at0(L, 0, 'chart') - 0.3; if (t > bub) { const u = ease.outBack(clamp((t - bub) / 0.4)); ctx.save(); ctx.translate(455, 370); ctx.scale(u, u); P.both(svg('M-170 -40 L170 -40 L170 30 L-20 30 L-60 64 L-50 30 L-170 30 Z'), 'cream', 3); P.text('psst… we have an org chart?', 0, 2, { size: 24, style: 'italic' }); ctx.restore(); }
   ctx.restore();
   // the reviewer: an icon, rising; the red pen his sceptre, the LGTM seal held back
   if (rise > 0) {
@@ -311,10 +324,11 @@ function elders(P, f, L, t) {
     for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; P.line(svg(`M${440 + Math.cos(a) * 250} ${210 + Math.sin(a) * 250} L${440 + Math.cos(a) * 290} ${210 + Math.sin(a) * 290}`), 3, 'ochre'); }
     person(P, 440, 250, 0.62, { hair: 'bald', top: 'robe', color: 'navy', mantle: 'red', stern: true, mouth: 'flat', glasses: 'rect', beard: 'grey', fw: 1.06, crop: 900, blink: blinkAt(t + 3) });
     redPen(P, 700, 380, 0.75, 0.05);
-    seal(P, 200, 520, 0.9, 'LGTM', {});
+    fist(P, 702, 470, 0.9, 'red');   // his right hand round the pen
+    fist(P, 236, 520, 0.9, 'red', true); seal(P, 230, 462, 0.85, 'LGTM', {});   // the seal held up in his left hand   // and his left, holding the seal back
     ctx.restore();
     // the small hero below, holding up his change for review; it gets its first red nit
-    const nit = at0(L, 1, 'humor');
+    const nit = at0(L, 1, 'reviewer');
     ctx.save(); ctx.translate(0, (1 - rise) * 300);
     scroll(P, 640, 520, 120, 110, { unroll: 1, title: 'PR #1', titleSize: 16, lines: [0.7, 0.5], lineH: 22 });
     if (t > nit) { const u = clamp((t - nit) / 0.3); P.line(svg(`M590 590 L${590 + 100 * u} ${570}`), 5, 'red'); P.text('nit:', 600, 620, { size: 18, color: 'red', style: 'italic', align: 'left' }); }
@@ -333,7 +347,7 @@ function covenant(P, f, L, t) {
     const away = ease.inCubic(clamp((t - mo) / 0.9));
     moneybag(P, 440 + away * 520, 330 + away * 60, 1.0, away * 1.2);
     if (t > mo) for (let i = 0; i < 6; i++) { const u = clamp((t - mo - i * 0.12) / 0.9); if (u > 0 && u < 1) P.both(ell(470 + away * 500 + i * 14, 330 + u * 300, 16, 6), 'gold', 2.5); }
-    const fu = ease.outCubic(clamp((t - fr) / 0.5));
+    const fu = ease.outCubic(clamp((t - at0(L, 0, 'swear')) / 0.6));
     if (fu > 0) { const w = 520 * fu; P.banner(440 - w / 2, 470, w, 90, { tail: 'roseLt' }); if (fu > 0.9) P.text('FREE', 440, 534, { font: FONT.caps, weight: 700, size: 54, tracking: 8 }); }
     heroFront(P, 120, 420, 0.42, { mouth: t > mo ? 'smile' : 'neutral', look: [0.7, 0], blink: blinkAt(t) });
     const pu = ease.outBack(clamp((t - (mo - 0.25)) / 0.35));
@@ -341,7 +355,7 @@ function covenant(P, f, L, t) {
   } else {
     // the tablet of the mission; the believers below, each under a small halo, nod on "So did we"
     const u = ease.outCubic(clamp((t - mi) / 0.6));
-    tablet(P, 440, 40 + (1 - u) * -300, 400, 300, { lines: ['THE MISSION', 'CHANGE', 'THE WORLD'], size: 36, top: 140, lineH: 56 });
+    tablet(P, 440, 40 + (1 - u) * -300, 440, 300, { left: ['THE', 'MISSION'], right: ['CHANGE', 'THE WORLD'], size: 32, top: 150, lineH: 52 });
     const sw = at0(L, 1, 'so', 0);
     const nod = (k) => { const s0 = L[1].words.find((w, i) => i > 8 && w.w.toLowerCase().startsWith('so'))?.start ?? 56.5; return Math.sin(clamp((t - s0 - k * 0.04) / 0.45) * Math.PI) * 26; };
     const cast = [{ hair: 'short', top: 'tee', color: 'navy' }, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect' }, { hair: 'side', top: 'shirt', color: 'shirt' }, { hair: 'buzz', top: 'tee', color: 'ochre', glasses: 'round' }, { hair: 'long', top: 'tee', color: 'rose', skin: 'skin2' }];
@@ -373,5 +387,17 @@ export function palm(P, x, y, s, rot = 0, o = {}) {
   const lw = begin(P, x, y, s, rot);
   P.line(svg('M-40 -64 C-14 -50 14 -50 42 -70 M-30 -30 C-6 -40 20 -40 40 -30'), lw * 0.45);   // creases of the palm
   P.both(svg('M-58 34 L58 34 L60 62 L-60 62 Z'), 'tealLt', lw); for (let k = -48; k <= 48; k += 10) P.line(svg(`M${k} 36 L${k} 60`), lw * 0.35);
+  end(P);
+}
+
+/** a fist closed round something (a sleeve below it); o: the sleeve's colour, flip for the other hand */
+export function fist(P, x, y, s, sleeve = 'teal', flip = false) {
+  const lw = begin(P, x, y, s); if (flip) P.ctx.scale(-1, 1);
+  const sl = svg('M-34 40 C-40 90 -46 130 -54 200 L46 200 C40 130 36 90 30 40 Z'); P.fill(sl, sleeve); P.tone(sl, '#000', { from: [-30, 40, 0.1], to: [40, 200, 0.4], bbox: [-56, 40, 48, 200] }, 5); P.line(sl, lw * 1.2);
+  const f = svg('M-36 -34 C-38 -48 -24 -54 -10 -50 L26 -44 C40 -42 44 -28 40 -14 L36 30 C34 44 22 50 6 48 L-26 44 C-38 42 -42 30 -40 18 Z');
+  P.fill(f, 'skin'); P.tone(f, 'skinDot', { from: [0, -40, 0], to: [36, 40, 0.45], bbox: [-42, -56, 46, 50] }, 4); P.line(f, lw * 1.2);
+  for (let i = 0; i < 3; i++) P.line(svg(`M-30 ${-28 + i * 20} C-10 ${-24 + i * 20} 14 ${-24 + i * 20} 36 ${-30 + i * 20}`), lw * 0.5);
+  P.both(svg('M-36 -10 C-48 -6 -50 12 -40 22 C-32 28 -20 24 -14 14 Z'), 'skin', lw);   // the thumb across the front
+  P.both(rect(-36, 38, 70, 18, 5), 'gold', lw * 0.8);
   end(P);
 }

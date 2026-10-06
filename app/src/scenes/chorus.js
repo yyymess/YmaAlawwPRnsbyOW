@@ -140,16 +140,15 @@ const VARIANTS = {
         P.halo(320, 250, 210, undefined, f.beat * 0.025, 0.3 + 0.2 * f.kick);
         heroFront(P, 320, 330, 0.5, { uplit: 0.8, mouth: sing(f), open: f.vocal, look: [0, 0.5], blink: blinkAt(t) });
         oilLamp(P, 470, 640, 0.85, t, {});
-        clock(P, 540, 120, 52, lerp(0, 4, clamp(lt / 5)));
       } else if (c === 1) {   // the best idea wins: an A/B duel on a whiteboard
         fillBg(P, box, 'ivory', 'sepia', 0.3);
-        const r = rng(3); for (let i = 0; i < 12; i++) { const x = r() * box.w, y = 80 + r() * 480; P.line(svg(`M${x} ${y} l${40 + r() * 80} ${r() * 20 - 10} M${x} ${y + 20} l${30 + r() * 50} 0`), 2, 'mintDk'); }
+        for (let gx = 40; gx < box.w; gx += 60) P.line(svg(`M${gx} 0 L${gx} ${box.h}`), 1, '#e3dcc6'); for (let gy = 40; gy < box.h; gy += 60) P.line(svg(`M0 ${gy} L${box.w} ${gy}`), 1, '#e3dcc6');
         const wn = word(lines, 2, 'wins'), win = ease.outBack(clamp((t - wn) / 0.5));
         const spark = Math.sin(t * 20) > 0.3 && t < wn ? 1 : 0;
         if (spark) P.line(svg('M300 300 L330 270 L310 260 L350 220'), 6, 'gold');
-        bulb(P, 170, 560, 0.95, lerp(0.6, 0.15, win), {});
-        bulb(P, 470, 560, 0.95 + 0.15 * win, lerp(0.6, 1, win), { crown: win, spin: t * 0.3 });
-        P.text('A', 170, 640, { font: FONT.caps, weight: 700, size: 44 }); P.text('B', 470, 640, { font: FONT.caps, weight: 700, size: 44 });
+        bulb(P, 170, 500, 0.95, lerp(0.6, 0.15, win), {});
+        bulb(P, 470, 500, 0.95 + 0.15 * win, lerp(0.6, 1, win), { crown: win, spin: t * 0.3 });
+        P.text('A', 170, 610, { font: FONT.caps, weight: 700, size: 44 }); P.text('B', 470, 610, { font: FONT.caps, weight: 700, size: 44 });
       } else if (c === 2) {   // ship it to the world tonight
         fillBg(P, box, 'night', 'navy', 0.5);
         moon(P, 520, 120, 40);
@@ -164,21 +163,22 @@ const VARIANTS = {
         globe(P, 320, 300, 170, t * 0.06);
         // the world gets a diff: changes pop up on it like review tags
         const ch = word(lines, 6, 'change');
-        [['+ 1,024', 'sage', 210, 230], ['− 512', 'rose', 420, 260], ['+ 64', 'sage', 300, 410], ['+ 2,048', 'sage', 460, 380], ['− 7', 'rose', 190, 360]].forEach(([s2, c2, dx, dy], i) => { const u = ease.outBack(clamp((t - ch - i * 0.18) / 0.35)); if (u > 0) { P.ctx.save(); P.ctx.translate(dx, dy); P.ctx.scale(u, u); const w2 = P.measure(s2, { font: FONT.mono, size: 26, weight: 700 }) + 30; P.both(rect(-w2 / 2, -22, w2, 44, 22), c2, 3); P.text(s2, 0, 9, { font: FONT.mono, size: 26, weight: 700, color: 'cream' }); P.ctx.restore(); } });
+        [['+ 1,024', 'sage', 270, 230], ['− 512', 'rose', 380, 270], ['+ 64', 'sage', 300, 380], ['+ 2,048', 'sage', 380, 340], ['− 7', 'rose', 240, 310]].forEach(([s2, c2, dx, dy], i) => { const u = ease.outBack(clamp((t - ch - i * 0.18) / 0.35)); if (u > 0) { P.ctx.save(); P.ctx.translate(dx, dy); P.ctx.scale(u, u); const w2 = P.measure(s2, { font: FONT.mono, size: 22, weight: 700 }) + 24; P.both(rect(-w2 / 2, -19, w2, 38, 19), c2, 3); P.text(s2, 0, 8, { font: FONT.mono, size: 22, weight: 700, color: 'cream' }); P.ctx.restore(); } });
+        const lg = ease.outBack(clamp((t - lines[7].start) / 0.3)); if (lg > 0) { const sq = 1 + 2 * (1 - clamp((t - lines[7].start) / 0.15)); P.ctx.save(); P.ctx.translate(420, 420); P.ctx.rotate(-0.25); P.ctx.scale(sq, sq); P.alpha(0.9); P.line(ell(0, 0, 74, 46), 6, 'red'); P.line(ell(0, 0, 64, 38), 2, 'red'); P.text('LGTM', 0, 12, { font: FONT.caps, weight: 700, size: 34, color: 'red' }); P.ctx.restore(); }
         P.both(svg('M200 600 L440 600 L470 650 L170 650 Z'), 'gold', 4); P.line(svg('M220 616 L420 616'), 2);
         if (t > word(lines, 6, 'mind')) heart(P, 470, 150, 0.55 * ease.outBack(clamp((t - word(lines, 6, 'mind')) / 0.4)));
       }
     },
     left(P, f, c, lt, lines, box) {
       const t = f.t;
-      if (c === 0) { fillBg(P, box, 'tealDk', 'hoodDot', 0.5); const n = Math.min(6, Math.floor(lt / 0.75) + 1); for (let i = 0; i < n; i++) cup(P, 195 + (i % 2 ? 18 : -14), 500 - i * 74, 0.9, (i % 2 ? 0.08 : -0.06)); }
+      if (c === 0) { fillBg(P, box, 'tealDk', 'hoodDot', 0.5); P.both(rect(40, 500, 310, 24, 4), 'ochre', 4); for (const bx of [70, 320]) P.both(svg(`M${bx - 10} 524 L${bx + 10} 524 L${bx} 560 Z`), 'ochre', 3); const n = Math.min(6, Math.floor(lt / 0.75) + 1); for (let i = 0; i < n; i++) cup(P, 195 + (i % 2 ? 18 : -14), 500 - i * 74, 0.9, (i % 2 ? 0.08 : -0.06)); }
       else if (c === 1) { fillBg(P, box, 'teal', 'tealDk', 0.4); pennant(P, 195, 230, 'A', 'teal', 150 * ease.inOutCubic(clamp((t - lines[3].start) / 1.4))); bars(P, 95, 500, [0.5, 0.42, 0.38], 'cream'); }
       else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 120 + i * 90, 180 + i * 90, 80, ((t - i * 0.6) % 1.8) / 1.2, i % 2 ? 'roseLt' : 'goldLt'); champagne(P, 200, 520, 0.9, lt); }
       else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'side', top: 'tee', color: 'navy', acc: ['halo'], mouth: 'smile', look: [0.6, -0.3], crop: 900, blink: blinkAt(t) }); }
     },
     right(P, f, c, lt, lines, box) {
       const t = f.t;
-      if (c === 0) { fillBg(P, box, 'night', 'tealDk', 0.5); moon(P, lerp(90, 300, clamp(lt / 6)), lerp(160, 120, clamp(lt / 6)), 46); const r = rng(5); for (let i = 0; i < 10; i++) star(P, 30 + r() * 330, 220 + r() * 300, 6, t * 3 + i); }
+      if (c === 0) { fillBg(P, box, 'night', 'tealDk', 0.5); moon(P, lerp(90, 300, clamp(lt / 6)), lerp(160, 120, clamp(lt / 6)), 46); const r = rng(5); for (let i = 0; i < 8; i++) star(P, 30 + r() * 330, 200 + r() * 120, 6, t * 3 + i); clock(P, 195, 420, 74, lerp(0, 4, clamp(lt / 5.5))); }
       else if (c === 1) { fillBg(P, box, 'rose', 'redDk', 0.4); pennant(P, 195, 230, 'B', 'rose'); bars(P, 95, 500, [0.5, 0.72, 0.9], 'cream'); }
       else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 280 - i * 90, 160 + i * 100, 80, ((t - 0.3 - i * 0.5) % 1.8) / 1.2, i % 2 ? 'goldLt' : 'mint'); }
       else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', acc: ['halo'], mouth: 'smile', look: [-0.6, -0.3], crop: 900, blink: blinkAt(t + 2) }); }

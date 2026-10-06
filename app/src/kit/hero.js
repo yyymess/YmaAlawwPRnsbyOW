@@ -340,7 +340,12 @@ export function heroWalk(P, x, y, s, phase = 0, o = {}) {
   P.both(rect(-80, -4, 170, 30, 8), 'tealLt', lw); for (let k = -66; k < 84; k += 14) P.line(svg(`M${k} 0 L${k} 22`), lw * 0.4);
   P.line(svg('M96 -150 L40 -150 C30 -110 30 -60 36 -6'), lw * 0.8);
   ctx.restore();
-  if (o.carry === 'duffel') { P.both(rect(-190, hipY - 210, 170, 120, 40), 'rose', lw * 1.2); P.line(svg(`M-150 ${hipY - 210} C-120 ${hipY - 300} -40 ${hipY - 320} ${sh[0]} ${sh[1] + 10}`), lw * 2.2); }
+  if (o.carry === 'duffel') {   // a canvas duffel slung behind: a cylinder with round ends, a zip, the strap over the shoulder
+    const by = hipY - 160; P.line(svg(`M-170 ${by - 40} C-130 ${by - 150} -40 ${by - 180} ${sh[0]} ${sh[1] + 10}`), lw * 3.4); P.line(svg(`M-170 ${by - 40} C-130 ${by - 150} -40 ${by - 180} ${sh[0]} ${sh[1] + 10}`), lw * 1.8, 'ochre');
+    P.both(svg(`M-250 ${by - 52} L-60 ${by - 52} C-30 ${by - 52} -30 ${by + 52} -60 ${by + 52} L-250 ${by + 52} C-280 ${by + 52} -280 ${by - 52} -250 ${by - 52} Z`), 'navy', lw * 1.2);
+    P.tone(svg(`M-250 ${by - 52} L-60 ${by - 52} C-30 ${by - 52} -30 ${by + 52} -60 ${by + 52} L-250 ${by + 52} C-280 ${by + 52} -280 ${by - 52} -250 ${by - 52} Z`), '#000', { from: [-150, by - 52, 0], to: [-150, by + 52, 0.4], bbox: [-280, by - 56, -30, by + 56] }, 7);
+    P.both(ell(-250, by, 22, 50), 'navyDk', lw); P.line(svg(`M-240 ${by - 30} L-70 ${by - 30}`), lw * 0.8, 'silver'); P.both(rect(-120, by - 40, 12, 22, 3), 'silver', lw * 0.6);
+  }
   drawLeg(near, 'denim', 'cream');
   // the head, crown to chin 150 units: drawn in head space at half scale
   ctx.save(); ctx.translate(sh[0] + 26, sh[1] - 108); ctx.rotate(-(o.lookUp ?? 0) * 0.2); ctx.scale(0.5, 0.5);

@@ -49,7 +49,7 @@ function valley(P, f, end) {
   // the robo-taxi glides right-to-left on the lane as he sings "robo-taxis"
   const rt = f.L.get('robo-taxis').words.find((w) => w.w.startsWith('robo')).start;
   const rx = keys(t, [[rt - 2.2, 1900], [rt + 1.8, -500, ease.inOut]]);
-  if (rx > -480 && rx < 1880) robotaxi(P, rx, 728, 0.9, t, -1);
+  if (rx > -480 && rx < 1880) robotaxi(P, rx, 708, 0.74, t, -1);   // on the far half of the lane, behind him
   // the hero walks in from the left
   const hx = keys(t, [[0.4, -160], [end, 760]]), phase = (hx / 150) * Math.PI;
   heroWalk(P, hx - cam * 0.2, 760, 0.46, phase, { carry: null });
@@ -80,7 +80,7 @@ function chapel(P, f, archFill = 'rose') {
   return arch;
 }
 // the hero sits lower than the arch's centre so the point of his hood aims at the agent above it
-const HX = 800, HY = 430, HS = 0.8, AY = 100;
+const HX = 800, HY = 452, HS = 0.76, AY = 150;
 function angel(P, f, start, end) {
   const t = f.t, lt = t - start, push = keys(t, [[start, 1.0], [end, 1.07]]);
   P.save(); P.zoom(push, 800, 420);
@@ -94,7 +94,7 @@ function angel(P, f, start, end) {
   // the agent appears on "agent's", high above him like an angel
   const ag = f.L.get('I fear no outage').words.find((w) => w.w.startsWith('agent')).start;
   const a = ease.outBack(prog(t, ag - 0.3, ag + 0.5));
-  if (a > 0) { P.save(); P.ctx.globalAlpha = clamp(a); agentAngel(P, HX, lerp(40, AY, clamp(a)) + Math.sin(t * 1.6) * 5, 0.62 * a, t); P.restore(); }
+  if (a > 0) { P.save(); P.ctx.globalAlpha = clamp(a); agentAngel(P, HX, lerp(90, AY, clamp(a)) + Math.sin(t * 1.6) * 5, 0.74 * a, t); P.restore(); }
   P.restore();
   lyricBanner(P, f, f.L.get('I fear no outage'), 800, 812, { size: 40 });
 }
@@ -111,17 +111,17 @@ function blossoms(P, f, start) {
   const comfort = f.L.get('it comforts me').words.find((w) => w.w.startsWith('comforts')).start;
   const calm = prog(t, comfort - 0.3, comfort + 0.5);
   heroFront(P, HX, HY, HS, { uplit: 0.5, hold: 'phone', phoneY: 290, mouth: calm > 0.5 && !singing(f) ? 'smile' : singing(f) ? 'sing' : 'neutral', open: f.vocal, blink: calm > 0.5 ? 1 : blink(t) });
-  agentAngel(P, HX, AY + Math.sin(t * 1.6) * 5, 0.62, t);
+  agentAngel(P, HX, AY + Math.sin(t * 1.6) * 5, 0.74, t);
   // tokens drift down from the upper left like petals, starting on "tokens"
   const tk = f.L.get('with its tokens').words.find((w) => w.w.startsWith('tokens')).start;
   const r = rng(11);
-  for (let i = 0; i < 16; i++) {
-    // two streams, one down each side of the arch, so the face stays clear
-    const side = i % 2 ? 1 : -1, born = tk - 0.4 + r() * 5.5, life = 4.5 + r() * 2, u = (t - born) / life, txt = PIECES[i % PIECES.length], spin = r() * 6, sz = 0.95 + r() * 0.45;
-    const lane = 270 + r() * 230;
+  for (let i = 0; i < 12; i++) {
+    // two streams, one down each side of the arch, so the face stays clear; each token keeps its own lane
+    const side = i % 2 ? 1 : -1, k = i >> 1, born = tk - 0.4 + k * 0.9 + (i % 2) * 0.45, life = 5.2, u = (t - born) / life, txt = PIECES[i % PIECES.length], spin = r() * 6;
+    const lane = 300 + (k % 3) * 95;
     if (u < 0 || u > 1) continue;
-    const x = 800 + side * (lane + Math.sin(u * 6 + i) * 60), y = -60 + u * 980;
-    token(P, x, y, sz, Math.sin(u * 4 + spin) * 0.6, txt);
+    const x = 800 + side * (lane + Math.sin(u * 5 + i) * 30), y = -60 + u * 820;
+    token(P, x, y, 1.1, Math.sin(u * 4 + spin) * 0.5, txt);
   }
   P.restore();
   lyricBanner(P, f, f.L.get('with its tokens'), 800, 812, { size: 40 });

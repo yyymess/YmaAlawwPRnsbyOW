@@ -168,7 +168,8 @@ export function lyric(P, line, t, x, y, o = {}) {
   for (const it of words) { if (rw + it.wd > maxW && rows[rows.length - 1].length) { rows.push([]); rw = 0; } rows[rows.length - 1].push(it); rw += it.wd + gap; }
   if (rows.length === 2) {   // balance two rows: break where the longer row is shortest
     const ws = words.map((it) => it.wd + gap); let best = 1, bestW = Infinity;
-    for (let k = 1; k < words.length; k++) { const a = ws.slice(0, k).reduce((u, v) => u + v, 0), b = ws.slice(k).reduce((u, v) => u + v, 0); if (Math.max(a, b) < bestW && a <= maxW + gap && b <= maxW + gap) { bestW = Math.max(a, b); best = k; } }
+    const total = ws.reduce((u, v) => u + v, 0);
+    for (let k = 1; k < words.length; k++) { const a = ws.slice(0, k).reduce((u, v) => u + v, 0), b = total - a, punct = /[,;:—.!?]$/.test(words[k - 1].s.trim()), score = Math.max(a, b) - (punct ? total * 0.12 : 0); if (score < bestW && a <= maxW + gap && b <= maxW + gap) { bestW = score; best = k; } }
     rows = [words.slice(0, best), words.slice(best)];
   }
   const pre = o.lead ?? 0.4, visible = t >= line.start - pre;
