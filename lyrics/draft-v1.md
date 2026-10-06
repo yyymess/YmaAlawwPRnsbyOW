@@ -36,16 +36,16 @@ in the engineer's paradise.
 
 ## Verse 2 — the business model eats it
 
-Then the ad money came in like a river, then a flood,
-and the MBAs came after, smellin' margin in the blood.
-The mission on the wall picked up a footnote at the end,
-all-hands went monthly, then a pre-recorded friend.
+Then one Monday at the fridge there's a sign in Comic Sans:
+"Soda now fifty cents" — and a fella with a plan.
+He had more stock than the founders and conjoined triangles to show,
+and the mission on the wall got a footnote down below.
 Promo used to be a thesis, a committee of your peers —
 now they rate us once a year: it's cheaper, and nobody hears.
-There's a graveyard full of products, near three hundred stones in rows,
-every one bought someone a level — where the users went, God knows.
-Cut the staplers, cut the laptops, cut the snacks down to the bone,
-"durable savings" is an OKR, and the microkitchen's gone.
+Then the org chart got real, every box became a fiefdom,
+every box pointin' a gun at the box right beside 'em.
+Code yellow on the revenue, so we shrank the little "Ad"
+till the users couldn't tell — best quarter we ever had.
 Got an email Friday morning, so I drove in like before:
 badge reader blinked red — guess I don't work here anymore.
 
@@ -53,9 +53,9 @@ badge reader blinked red — guess I don't work here anymore.
 
 Revenue up and to the right
 in the engineer's paradise,
-calibration every night
+soda's fifty cents tonight
 in the engineer's paradise.
-Snacks are gone, the lights are dimmed
+Adult supervision's here, all right,
 in the engineer's paradise,
 badge turned red — goodnight
 in the engineer's paradise.
