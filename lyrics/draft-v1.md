@@ -15,7 +15,7 @@ read the MPEG spec on Friday nights — and honestly, I was fine.
 I believed in open standards, I could recite the RFCs,
 I'd rewrite your app in Haskell if you'd only let me, please.
 Came out west with a laptop, a duffel bag, a dream:
-build the thing a billion people use and never see.
+make the world a better place — with a middle-out compression scheme.
 Every bug was a riddle, every outage was a war,
 blameless postmortem after, so we'd learn what it was for.
 A junior with a benchmark could overrule a VP,

@@ -16,3 +16,10 @@ https://www.wheresyoured.at/the-men-who-killed-google/
 - 2020: the 20-year search veteran is moved to "SVP of Education"; the ads head becomes head of search. (Zitron's framing; characterizations of individuals are his.)
 - Generic archetypes for the song (no names): the founding engineer moved to a do-nothing role; the revenue alarm called on the product; ads dressed as results; "the revenue engine of the company".
 - Visual: a traffic-light "CODE YELLOW" siren on a dashboard; a green "Ad" badge fading into a tiny grey one.
+
+## Silicon Valley (HBO, 2014–2019) — usable references
+- "Making the world a better place" — the founders' montage of every startup's mission line (S1E1).
+- Middle-out compression / Weissman score — Pied Piper's tech (S1).
+- Hooli "rest and vest": unassigned employees drinking on the roof while their stock vests (S1–S2).
+- Jack Barker's "conjoined triangles of success" and "the Box": the business CEO shelves the engineers' platform for a VCR-looking appliance (S3). https://silicon-valley.fandom.com/wiki/Two_in_the_Box
+- "Son of Anton": Gilfoyle's AI deletes all the code to remove the bugs ("technically and statistically correct") and orders 4,000 lbs of beef while looking for a cheap burger (S6E6, Dec 2019). https://padailypost.com/2019/12/02/ai-can-get-you-hamburgers-thousands-of-them-if-youre-not-careful-silicon-valley-season-6-episode-6/
