@@ -10,7 +10,7 @@ Where each shot is in the video, to point at things during review. Times are m:s
 | 0:21 | verse 1 · I | The Calling: the teenager's room, CRT and modem, the spec glowing in his hands |
 | 0:27 | verse 1 · II | The Creed: the saint of open standards, RFC scrolls, the halo turns to Haskell, praying hands |
 | 0:33 | verse 1 · III | The Pilgrimage: walking west past the red bridge, the packing list, one commit per step |
-| 0:39 | verse 1 · IV | The Dragon: St George and the bug (SEV 1); then the blameless postmortem (NOBODY) |
+| 0:39 | verse 1 · IV | The Dragon: St George and the bug (P0); then the blameless postmortem (NOBODY) |
 | 0:45 | verse 1 · V | The Elders: the org chart as clouds, the whisper; the reviewer rises as an icon |
 | 0:51 | verse 1 · VI | The Covenant: the money waved off, FREE; the mission tablet, the believers nod |
 | 0:57 | chorus 1 | the triptych opens: midnight oil · A/B bulbs · the BETA ship · the world gets a diff, LGTM |

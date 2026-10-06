@@ -57,7 +57,7 @@ A frieze of six arched chapters on a long wall; the camera glides one chapter pe
 1. *I · The Calling*: a teenager's room at night: a beige CRT (`cc hello.c`, `hello, world`, `ATDT`, `CONNECT 56000`), a chattering modem, FRI circled on the calendar, a rubber duck on the shelf; he leans back with the spec (ISO/IEC 14496) glowing on his lap.
 2. *II · The Creed*: the saint portrait: RFC scrolls unfurl like ribbons (791, 2616; then 1149 with its pigeon, and 9559); the halo's keycaps turn over to Haskell; on "please" he prays.
 3. *III · The Pilgrimage*: walking west into the sun past a red bridge, a duffel bag; a packing list ticks off "a laptop, a duffel bag, a dream"; a thought cloud with the world and a heart; one commit dot per step.
-4. *IV · The Dragon*: St George and the Bug (a beetle with bat wings and a question mark); SEV 1 pennant, flames; then the postmortem at a lectern (Who to blame: nobody) while the bug lies on its back under a little halo.
+4. *IV · The Dragon*: St George and the Bug (a beetle with bat wings and a question mark); P0 pennant, flames; then the postmortem at a lectern (Who to blame: nobody) while the bug lies on its back under a little halo.
 5. *V · The Elders*: the org chart as clouds of empty dotted boxes ("psst… an org chart?"); the reviewer rises as a Byzantine icon: the Unix greybeard (long hair, a full salt-and-pepper beard over the mouth, bushy brows), and his halo is a hard-disk platter, as St IGNUcius wears his; a red pen for a sceptre, the LGTM seal held back; the hero's PR #1 gets its first red nit.
 6. *VI · The Covenant*: the hero waves the money off, FREE on a ribbon; the mission tablet (CHANGE THE WORLD); five believers under small halos nod on "So did we".
 

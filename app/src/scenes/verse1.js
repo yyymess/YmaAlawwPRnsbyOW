@@ -270,8 +270,8 @@ function dragon(P, f, L, t) {
       arms: { near: { a: 1.25, e: 1.6 }, far: { a: 0.95, e: 1.55 } }, hands: { near: 'fist', far: 'fist' }, mouth: 'o', open: 0.8,
       hold: (P2, which, w) => { if (which === 'far') {
         P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 14); P2.line(svg(`M${w[0] - 300} ${w[1] + 60} L${w[0] + 640} ${w[1] - 110}`), 8, 'sepia'); P2.both(svg(`M${w[0] + 640} ${w[1] - 110} l-40 -22 l70 6 l-58 40 Z`), 'silver', 4);
-        // the SEV 1 pennant, tied to the lance below its point, streaming back
-        const sv = ease.outBack(clamp((t - at0(L, 0, 'bug') + 0.2) / 0.4)); if (sv > 0) { const px = w[0] + 470, py = w[1] - 80, fl = Math.sin(t * 7) * 8; P2.ctx.save(); P2.ctx.translate(px, py); P2.ctx.scale(sv * 1.35, sv * 1.35); P2.both(svg(`M0 0 L-190 ${18 + fl} L-170 ${50 + fl * 0.5} L-190 ${82 + fl} L0 64 Z`), 'red', 4); P2.ctx.translate(-92, 44); P2.ctx.rotate(0.06); P2.text('SEV 1', 0, 0, { font: FONT.caps, weight: 700, size: 34, color: 'cream' }); P2.ctx.restore(); }
+        // the P0 pennant (in mono, so the zero reads as a zero), tied to the lance below its point, streaming back
+        const sv = ease.outBack(clamp((t - at0(L, 0, 'bug') + 0.2) / 0.4)); if (sv > 0) { const px = w[0] + 470, py = w[1] - 80, fl = Math.sin(t * 7) * 8; P2.ctx.save(); P2.ctx.translate(px, py); P2.ctx.scale(sv * 1.35, sv * 1.35); P2.both(svg(`M0 0 L-190 ${18 + fl} L-170 ${50 + fl * 0.5} L-190 ${82 + fl} L0 64 Z`), 'red', 4); P2.ctx.translate(-92, 44); P2.ctx.rotate(0.06); P2.text('P0', 0, 3, { font: FONT.mono, weight: 700, size: 42, color: 'cream' }); P2.ctx.restore(); }
       } },
     });
   } else {
