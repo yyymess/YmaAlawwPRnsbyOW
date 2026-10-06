@@ -8,37 +8,37 @@ Yea, though I commit through the valley of the shadow of deprecation,
 I will fear no outage, for my agent is with me;
 its tokens and its context, they comfort me.
 
-## Verse 1 — the paradise
+## Verse 1 — the dream
 
-Back in oh-four I got the badge and the propeller hat,
-free sushi on the second floor, a slide, a nap pod — imagine that.
-They hired me 'cause I could find a prime inside of *e*,
-gave me twenty percent of every week to build what I could be.
-Design doc in the morning, code review by noon,
-got my readability, I'm fluent in the house's tune.
-Testing on the Toilet taught me mocking in the stall,
-Friday all-hands, ask the founders anything — they answer all.
-No manager, no roadmap, just a whiteboard and a hunch,
-ship it to the world by Tuesday, label it beta, then lunch.
-We were the smart creatives, we were never gonna fall:
-"Don't be evil," written on the top line of it all.
+Seventeen with a compiler and a dial-up phone line,
+read the kernel source like scripture, every comment, every line.
+I believed in open source, I believed in RFCs,
+believed the best idea wins, no matter whose it be.
+Came out west with a laptop, a duffel bag, a dream:
+build the thing a billion people use and never see.
+Every bug was a riddle, every outage was a war,
+blameless postmortem after, so we'd learn what it was for.
+A junior with a benchmark could overrule a VP,
+'cause the data was the boss, and the user came before me.
+Didn't do it for the money — swear we'd do it all for free;
+we were gonna change the world. The mission said so. So did we.
 
 ## Chorus 1 (sung)
 
 Burned the midnight oil for life
 in the engineer's paradise,
-free food and an LGTM
+best idea wins the fight
 in the engineer's paradise.
-Coded through the night, it's fine
+Ship it to the world tonight
 in the engineer's paradise,
-twenty percent of our time
+change the world, we didn't mind
 in the engineer's paradise.
 
 ## Verse 2 — the business model eats it
 
 Then the ad money came in like a river, then a flood,
 and the MBAs came after, smellin' margin in the blood.
-"Don't be evil" took the stairs down to the footnote at the end,
+The mission on the wall picked up a footnote at the end,
 all-hands went monthly, then a pre-recorded friend.
 Perf is every season, gotta show 'em your *impact*:
 launch a thing, get promoted, and never come back.
