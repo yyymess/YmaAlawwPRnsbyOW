@@ -111,13 +111,18 @@ export function painter(ctx) {
       if (draw < 1) { ctx.save(); ctx.setLineDash([4000 * draw, 4000]); }
       P.line(p, w + 3); P.line(p, w - 1, 'sageDk');
       if (draw < 1) { ctx.restore(); return; }
-      if (plug) {   // an RJ45 plug in proportion to the cable: boot, clear body with gold contacts, latch
-        const [x, y] = pts[pts.length - 1], [px, py] = pts[pts.length - 2], cw = w + 3;
-        ctx.save(); ctx.translate(x, y); ctx.rotate(Math.atan2(y - py, x - px));
-        P.both(svg(`M-2 ${-cw / 2} L14 ${-cw * 0.95} L14 ${cw * 0.95} L-2 ${cw / 2} Z`), 'sageDk', 2.5);
-        P.both(rect(14, -cw * 1.15, cw * 2.2, cw * 2.3, 2), 'cream', 2.5);
-        for (let i = 0; i < 6; i++) P.line(svg(`M${14 + cw * 1.5} ${-cw * 0.8 + i * cw * 0.32} L${14 + cw * 2.1} ${-cw * 0.8 + i * cw * 0.32}`), 1.2, 'gold');
-        P.both(svg(`M18 ${-cw * 1.15} L${14 + cw * 1.4} ${-cw * 1.15} L${14 + cw * 1.1} ${-cw * 1.55} L24 ${-cw * 1.45} Z`), 'cream', 2);
+      if (plug) {   // a USB-C plug, big enough to read: strain relief, white overmold, the silver shell and
+                    // its pill-shaped opening with the tongue inside (the part people recognise)
+        const [x, y] = pts[pts.length - 1], [px, py] = pts[pts.length - 2], k = ((w + 3) / 8) * 1.3, silver = '#cfcac0';
+        ctx.save(); ctx.translate(x, y); ctx.rotate(Math.atan2(y - py, x - px)); ctx.scale(k, k);
+        P.both(svg('M-2 -4.5 L13 -8 L13 8 L-2 4.5 Z'), 'cream', 2.5 / k);
+        P.both(rect(11, -14, 38, 28, 8), 'cream', 2.5 / k);
+        P.line(svg('M17 -9 L17 9'), 1.4 / k, 'grey');
+        P.both(rect(48, -10, 20, 20, 4), silver, 2.2 / k);
+        P.line(svg('M51 -5.5 L64 -5.5'), 1.6 / k, '#f6f1e6');
+        P.both(rect(64, -10.5, 9, 21, 4.5), silver, 2.2 / k);
+        P.both(rect(66.5, -7.5, 4, 15, 2), 'black', 1 / k);
+        P.line(svg('M68.5 -4 L68.5 4'), 1.6 / k, silver);
         ctx.restore();
       }
     },

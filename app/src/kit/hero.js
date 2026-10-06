@@ -108,7 +108,7 @@ export function heroBack(P, x, y, s, o = {}) {
 /** Side bust facing right, same unit space as the front (eyes at y=-10, bust to y=690). */
 export function heroSide(P, x, y, s, o = {}) {
   const ctx = P.ctx, T = at(x, y, s), lw = Math.max(1.4, 4 * s), bb = [x - 440 * s, y - 280 * s, x + 440 * s, y + 700 * s], cell = Math.max(3, 7 * s), hood = o.hood ?? 'teal';
-  const torso = T('M-140 338 C-200 342 -256 360 -284 382 C-292 414 -296 470 -292 540 C-290 600 -288 650 -286 690 L190 690 C194 600 184 500 160 430 C146 396 132 372 124 356 C60 336 -60 334 -140 338 Z');
+  const torso = T('M124 356 C60 300 -60 236 -125 232 C-125 258 -160 276 -200 294 C-240 312 -276 350 -286 410 C-292 450 -292 560 -290 690 L190 690 C194 600 184 500 160 430 C146 396 132 372 124 356 Z');
   P.fill(torso, hood); P.tone(torso, 'hoodDot', { from: [x + 40 * s, y, 0], to: [x - 290 * s, y, 0.42], bbox: bb }, cell); P.line(torso, lw * 1.6);
   P.line(T('M128 600 C160 620 186 650 196 690'), lw * 0.7);                                                 // the pocket's edge
   ctx.save(); ctx.translate(x + 20 * s, y - 10 * s); ctx.scale(1.42 * s, 1.42 * s);
@@ -128,10 +128,10 @@ export function heroSide(P, x, y, s, o = {}) {
 function profileHead(P, lw, cell, o = {}) {
   const hood = o.hood ?? 'teal';
   const rimD = 'M114 -136 C74 -102 28 -40 20 30 C14 100 36 190 76 266';
-  const hoodP = svg('M114 -136 C110 -160 80 -178 30 -180 C-30 -182 -88 -184 -128 -192 C-148 -166 -156 -120 -156 -60 C-156 0 -152 46 -140 82 C-126 120 -106 150 -102 176 C-110 222 -160 254 -214 276 C-160 294 -100 296 -50 290 C-10 284 40 274 76 266 C36 190 14 100 20 30 C28 -40 74 -102 114 -136 Z');
+  const hoodP = svg('M114 -136 C110 -160 80 -178 30 -180 C-30 -182 -88 -184 -128 -192 C-148 -166 -156 -120 -156 -60 C-156 0 -152 46 -140 82 C-126 116 -104 146 -102 170 C-102 189 -127 201 -155 214 C-130 240 -90 252 -40 254 C0 256 40 262 76 266 C36 190 14 100 20 30 C28 -40 74 -102 114 -136 Z');
   P.fill(hoodP, hood); P.tone(hoodP, 'hoodDot', { from: [-40, -40, 0], to: [-200, 120, 0.42], bbox: [-215, -200, 120, 300] }, cell); P.line(hoodP, lw * 1.4);
   P.line(svg('M-122 -184 C-112 -100 -96 0 -64 120'), lw * 0.6);                                                                // the taut pull from the corner
-  P.line(svg('M-126 222 C-100 238 -76 246 -46 248 M-170 256 C-136 268 -100 274 -70 270'), lw * 0.5);                           // bunched where it lies on the back
+  P.line(svg('M-118 204 C-96 220 -72 230 -40 236'), lw * 0.5);                           // bunched where it lies on the back
   const face = svg('M114 -136 C114 -100 114 -56 110 -26 C108 -14 106 -6 108 2 L144 52 C146 58 138 64 126 63 C124 72 126 80 122 86 C118 90 118 94 122 100 C124 110 116 118 114 124 C122 140 112 158 92 162 C72 168 52 168 38 164 C40 200 50 236 70 262 L76 266 C36 190 14 100 20 30 C28 -40 74 -102 114 -136 Z');
   const fb = [16, -140, 150, 270];
   P.fill(face, 'skin'); P.tone(face, 'skinDot', { from: [104, -120, 0.75], to: [104, -50, 0], bbox: fb }, cell * 0.75);
@@ -268,7 +268,7 @@ export function heroWalk(P, x, y, s, phase = 0, o = {}) {
   drawLeg(far, 'denimDk', 'grey');
   // torso: hoodie with ribbed hem and a kangaroo pocket
   ctx.save(); ctx.translate(0, hipY);
-  const torso = svg('M-16 -320 C-34 -300 -56 -278 -73 -260 C-84 -230 -92 -190 -90 -120 C-86 -60 -80 -10 -76 24 L86 24 C98 -80 102 -200 88 -290 C60 -318 10 -330 -16 -320 Z');
+  const torso = svg('M-17 -313 C-17 -304 -29 -297 -43 -291 C-58 -285 -70 -271 -74 -250 C-77 -236 -79 -200 -79 -150 C-79 -80 -78 -20 -76 24 L86 24 C98 -80 102 -200 88 -290 C60 -318 10 -330 -17 -313 Z');
   P.fill(torso, hood); P.tone(torso, 'hoodDot', { from: [0, 0, 0], to: [-90, 0, 0.3], bbox: [-100, -335, 110, 30] }, 7); P.line(torso, lw * 1.4);
   P.both(rect(-80, -4, 170, 30, 8), 'tealLt', lw); for (let k = -66; k < 84; k += 14) P.line(svg(`M${k} 0 L${k} 22`), lw * 0.4);
   P.line(svg('M96 -150 L40 -150 C30 -110 30 -60 36 -6'), lw * 0.8);
