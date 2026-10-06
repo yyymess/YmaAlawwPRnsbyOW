@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Style lab, round 2</title>
+<style>
+  @font-face { font-family: Inter; src: url(fonts/Inter.ttf); font-weight: 100 900; }
+  @font-face { font-family: Fraunces; src: url(fonts/Fraunces.ttf); font-weight: 100 900; }
+  @font-face { font-family: Fraunces; src: url(fonts/Fraunces.ttf); font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: Nunito; src: url(fonts/Nunito.ttf); font-weight: 200 1000; }
+  @font-face { font-family: "Plex Mono"; src: url(fonts/PlexMono.ttf); }
+  body { margin: 0; background: #111; color: #ddd; font: 14px Inter, sans-serif; }
+  canvas { display: block; width: 100%; max-width: 1600px; } figure { margin: 0 0 24px; } figcaption { padding: 6px 0; }
+</style>
+<div id="out"></div>
+<script type="module">
+  import { W, H, makePrint } from './tone.js';
+  import { FRAMES2 } from './frames2.js';
+  await Promise.all(['300 20px Inter', '600 20px Inter', '800 20px Inter', '300 20px Fraunces', '500 20px Fraunces', 'italic 400 20px Fraunces',
+    '600 20px Nunito', '900 20px Nunito', '20px "Plex Mono"'].map((f) => document.fonts.load(f)));
+  const only = new URLSearchParams(location.search).get('frame');
+  for (const [name, fn] of Object.entries(FRAMES2)) {
+    if (only && only !== name) continue;
+    const f = document.createElement('figure'), c = document.createElement('canvas');
+    c.width = W; c.height = H; c.id = `r2-${name}`;
+    const cap = document.createElement('figcaption'); cap.textContent = name;
+    f.append(c, cap); document.getElementById('out').append(f);
+    const p = makePrint(); fn(p); p.compose(c.getContext('2d', { willReadFrequently: true }), name.length);
+  }
+  window.__done = true;
+</script>

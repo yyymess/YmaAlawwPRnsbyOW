@@ -8,7 +8,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const dir = path.dirname(new URL(import.meta.url).pathname);
-const types = { '.html': 'text/html', '.js': 'text/javascript' };
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.ttf': 'font/ttf' };
 const server = http.createServer(async (req, res) => {
   try {
     const f = path.join(dir, decodeURIComponent(new URL(req.url, 'http://x').pathname));
@@ -21,7 +21,7 @@ const port = server.address().port;
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
 page.on('pageerror', (e) => console.error('pageerror', e.message));
-await page.goto(`http://localhost:${port}/index.html`);
+await page.goto(`http://localhost:${port}/${process.argv[2] ?? 'index.html'}`);
 await page.waitForFunction(() => window.__done, null, { timeout: 120000 });
 await mkdir(path.join(dir, 'out'), { recursive: true });
 const ids = await page.$$eval('canvas', (cs) => cs.map((c) => c.id));
