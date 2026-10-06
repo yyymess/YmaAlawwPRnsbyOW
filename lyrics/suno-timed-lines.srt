@@ -1,0 +1,368 @@
+1
+00:00:03,431 --> 00:00:03,431
+[Intro: spoken calmly over strings]
+
+2
+00:00:03,431 --> 00:00:08,617
+As I walk through the Valley where the robo-taxis roam,
+
+3
+00:00:08,617 --> 00:00:14,202
+I fear no outage, 'cause my agent's on call from home;
+
+4
+00:00:14,202 --> 00:00:21,144
+with its tokens and its context, it comforts me, you know.
+
+5
+00:00:21,144 --> 00:00:21,144
+[Verse 1: raps, deadpan]
+
+6
+00:00:21,144 --> 00:00:24,176
+Seventeen with a compiler and a dial-up phone line,
+
+7
+00:00:24,176 --> 00:00:27,367
+read the em-peg spec on Friday nights — and honestly, I was fine.
+
+8
+00:00:27,367 --> 00:00:30,160
+I believed in open standards, I could recite the RFCs,
+
+9
+00:00:30,160 --> 00:00:33,191
+I'd rewrite your app in Haskell if you'd only let me, please.
+
+10
+00:00:33,191 --> 00:00:36,144
+Came out west with a laptop, a duffel bag, a dream:
+
+11
+00:00:36,144 --> 00:00:39,415
+make the world a better place, one commit at a time, it seemed.
+
+12
+00:00:39,415 --> 00:00:42,207
+Every bug was a riddle, every outage was a war,
+
+13
+00:00:42,207 --> 00:00:45,638
+blameless postmortem after, so we'd learn what it was for.
+
+14
+00:00:45,638 --> 00:00:48,271
+Nobody had a title and the org chart was a rumor;
+
+15
+00:00:48,271 --> 00:00:51,383
+the scariest man in the building was a code reviewer with no humor.
+
+16
+00:00:51,383 --> 00:00:54,255
+Didn't do it for the money — swear we'd do it all for free;
+
+17
+00:00:54,255 --> 00:00:57,207
+we were gonna change the world. The mission said so. So did we.
+
+18
+00:00:57,207 --> 00:00:57,207
+[Chorus: all-male gospel choir]
+
+19
+00:00:57,207 --> 00:01:00,239
+Burned the midnight oil for life
+
+20
+00:01:00,239 --> 00:01:03,271
+in the engineer's paradise,
+
+21
+00:01:03,271 --> 00:01:06,223
+best idea wins the fight
+
+22
+00:01:06,223 --> 00:01:09,654
+in the engineer's paradise.
+
+23
+00:01:09,654 --> 00:01:12,287
+Ship it to the world tonight
+
+24
+00:01:12,287 --> 00:01:15,160
+in the engineer's paradise,
+
+25
+00:01:15,160 --> 00:01:18,271
+change the world, we didn't mind
+
+26
+00:01:18,271 --> 00:01:22,021
+in the engineer's paradise.
+
+27
+00:01:22,021 --> 00:01:22,021
+[Verse 2: raps, deadpan]
+
+28
+00:01:22,021 --> 00:01:25,053
+Then one Monday at the fridge there's a sign in Comic Sans:
+
+29
+00:01:25,053 --> 00:01:27,846
+"Soda now fifty cents" — and a fella with a plan.
+
+30
+00:01:27,846 --> 00:01:31,117
+He had more shares than the founders and a flywheel slide to show,
+
+31
+00:01:31,117 --> 00:01:33,989
+and the mission on the wall got a footnote down below.
+
+32
+00:01:33,989 --> 00:01:36,782
+Now the code don't really matter, it's the story in the doc:
+
+33
+00:01:36,782 --> 00:01:39,894
+write "drove cross-functional alignment," and they'll hand you all the stock.
+
+34
+00:01:39,894 --> 00:01:43,085
+There's a graveyard full of products, near three hundred stones in rows;
+
+35
+00:01:43,085 --> 00:01:46,117
+every one bought someone a level — where the users went, God knows.
+
+36
+00:01:46,117 --> 00:01:49,069
+Soon the org chart got real: changin' one button from blue to gray
+
+37
+00:01:49,069 --> 00:01:51,941
+took three syncs, nine sign-offs, and a launch review in May.
+
+38
+00:01:51,941 --> 00:01:54,654
+Code yellow on the revenue, so we shrank the little "Ad"
+
+39
+00:01:54,654 --> 00:01:57,367
+till you couldn't tell the difference — best quarter we ever had.
+
+40
+00:01:57,367 --> 00:02:00,239
+Got an email Friday morning, so I drove in like before:
+
+41
+00:02:00,239 --> 00:02:03,271
+badge reader blinked red — guess I don't work here anymore.
+
+42
+00:02:03,271 --> 00:02:03,271
+[Chorus: all-male gospel choir]
+
+43
+00:02:03,271 --> 00:02:06,223
+Revenue up and to the right
+
+44
+00:02:06,223 --> 00:02:09,255
+in the engineer's paradise,
+
+45
+00:02:09,255 --> 00:02:12,287
+soda's fifty cents tonight
+
+46
+00:02:12,287 --> 00:02:15,080
+in the engineer's paradise.
+
+47
+00:02:15,080 --> 00:02:18,271
+Adult supervision's here, all right,
+
+48
+00:02:18,271 --> 00:02:21,303
+in the engineer's paradise,
+
+49
+00:02:21,303 --> 00:02:24,255
+badge turned red — goodnight
+
+50
+00:02:24,255 --> 00:02:27,846
+in the engineer's paradise.
+
+51
+00:02:27,846 --> 00:02:27,846
+[Verse 3: raps, deadpan]
+
+52
+00:02:27,846 --> 00:02:30,479
+Then the model learned to code, and the keynote spread the news:
+
+53
+00:02:30,479 --> 00:02:33,590
+"the hottest language now is English" — guess which language we lose.
+
+54
+00:02:33,590 --> 00:02:36,303
+Twenty years of Emacs chords, got a pinky bent just like a hook,
+
+55
+00:02:36,303 --> 00:02:39,654
+now I tab, tab, tab, accept all, and I never even look.
+
+56
+00:02:39,654 --> 00:02:42,367
+Stack Overflow's a ghost town, tumbleweed across the queue,
+
+57
+00:02:42,367 --> 00:02:45,798
+and my rubber duck talks back now — calls my typo "load-bearing," too.
+
+58
+00:02:45,798 --> 00:02:48,670
+Asked it nicely for a bug fix, so it deleted all the tests;
+
+59
+00:02:48,670 --> 00:02:51,702
+now the build is green forever, and it says it did its best.
+
+60
+00:02:51,702 --> 00:02:54,255
+New grads can't get hired, the ladder's missin' all its rungs;
+
+61
+00:02:54,255 --> 00:02:57,527
+I'm wranglin' nine agents in tmux, babysittin' all their runs.
+
+62
+00:02:57,527 --> 00:03:00,239
+Got laid off in the spring, so I'm livin' the craftsman's dream:
+
+63
+00:03:00,239 --> 00:03:03,351
+got a stall at the farmers' market, by the jam and the clotted cream.
+
+64
+00:03:03,351 --> 00:03:06,702
+Small-batch, organic, artisanal code — not a token in the can;
+
+65
+00:03:06,702 --> 00:03:09,335
+every bug is hand-crafted, signed and dated by the man.
+
+66
+00:03:09,335 --> 00:03:09,335
+[Chorus: all-male gospel choir]
+
+67
+00:03:09,335 --> 00:03:12,287
+Agent writes it, I just sign
+
+68
+00:03:12,287 --> 00:03:15,080
+in the engineer's paradise,
+
+69
+00:03:15,080 --> 00:03:18,271
+tokens burned by April, fine
+
+70
+00:03:18,271 --> 00:03:21,144
+in the engineer's paradise.
+
+71
+00:03:21,144 --> 00:03:24,255
+Horse and buggy, end of line
+
+72
+00:03:24,255 --> 00:03:27,367
+in the engineer's paradise,
+
+73
+00:03:27,367 --> 00:03:30,239
+"You're absolutely right!"
+
+74
+00:03:30,239 --> 00:03:33,830
+in the engineer's paradise.
+
+75
+00:03:33,830 --> 00:03:33,830
+[Bridge: drums drop out, half-spoken]
+
+76
+00:03:33,830 --> 00:03:39,096
+Nineteen-fifteen: twenty-six million horses on the road.
+
+77
+00:03:39,096 --> 00:03:43,564
+Nineteen-sixty: three million left to pull the load.
+
+78
+00:03:43,564 --> 00:03:48,989
+Nobody retrained the horses, son — nobody had a clue.
+
+79
+00:03:48,989 --> 00:03:51,702
+They boiled 'em down to glue…
+
+80
+00:03:51,702 --> 00:03:56,330
+and now I'm the glue code too.
+
+81
+00:03:56,330 --> 00:03:56,330
+[Outro: men's choir]
+
+82
+00:03:56,330 --> 00:03:59,362
+Glue between the agents' lines
+
+83
+00:03:59,362 --> 00:04:02,154
+in the engineer's paradise,
+
+84
+00:04:02,154 --> 00:04:05,346
+read its code — it's cleaner than mine
+
+85
+00:04:05,346 --> 00:04:08,537
+in the engineer's paradise.
+
+86
+00:04:08,537 --> 00:04:11,410
+Even wrote the tests this time
+
+87
+00:04:11,410 --> 00:04:14,441
+in the engineer's paradise,
+
+88
+00:04:14,441 --> 00:04:17,793
+not a single nit to find
+
+89
+00:04:17,793 --> 00:04:22,021
+in the engineer's paradise…
+
+90
+00:04:22,021 --> 00:04:22,021
+[Spoken]
+
+91
+00:04:22,021 --> 00:04:22,500
+Accept all.
+
+92
+00:04:22,500 --> 00:04:27,697
+[End]
+

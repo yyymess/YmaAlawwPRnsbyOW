@@ -1,0 +1,78 @@
+   0.0-   7.0 As I walk through the valley, where the robo-taxi's roam
+   7.0-  12.0 I fear no outage, cause my agent's on call from home
+  12.0-  21.0 With its tokens and its context, it comforts me, you know
+  21.0-  24.0 Seventeen with a compiler and a dial-up phone line
+  24.0-  27.0 Read the MPEG spec on Friday nights, and honestly, I was fine
+  27.0-  30.0 I believed in open standards, I could recite the RFC's
+  30.0-  33.0 I'd rewrite your app in Haskell if you'd only let me please
+  33.0-  36.0 Came out west with a laptop, a duffel bag, a dream
+  36.0-  39.0 Make the world a better place, one commit at a time it seemed
+  39.0-  42.0 Every bug was a riddle, every outage was a war
+  42.0-  45.0 Blameless post-mortem afters, so we'd learn what it was for
+  45.0-  48.0 Nobody had a title, and the old chart was a rumor
+  48.0-  51.0 The scariest man in the building was a code reviewer with no humor
+  51.0-  54.0 Didn't do it for the money, swear we'd do it all for free
+  54.0-  57.0 We were gonna change the world, the mission said so, so did we
+  57.0-  63.0 Burn the midnight oil for life, in the engineer's paradise
+  63.0-  69.0 Best idea wins the fight, in the engineer's paradise
+  69.0-  75.0 Ship it to the world tonight, in the engineer's paradise
+  75.0-  82.0 Change the world, we didn't mind, in the engineer's paradise
+  82.0-  85.0 Then one Monday at the fridge, there's a sign in Comic Sans
+  85.0-  87.8 So they're now 50 cents, and a fellow with a plan
+  87.8-  91.2 He had more shares than the founders, and a flywheel slide to show
+  91.2-  94.0 And the mission on the wall got a footnote down below
+  94.0-  96.8 Now the code don't really matter, it's the story in the doc
+  96.8-  99.9 Right, drove cross-functional alignment, and they'll hand you all the stock
+  99.9- 103.1 There's a graveyard full of products near 300 stones and rows
+ 103.1- 106.0 Everyone bought someone a level, where the users went god knows
+ 106.0- 109.0 Soon the org chart got real, changing one button from blue to gray
+ 109.0- 111.9 Took three syncs, nine sign-offs, and a launch review in May
+ 111.9- 114.6 Code yellow on the revenue, so we shrank the little ad
+ 114.6- 117.4 Till you couldn't tell the difference, best quarter we ever had
+ 117.4- 120.2 Got an email Friday morning, so I drove in like before
+ 120.2- 123.2 Badge reader blinked red, guess I don't work here anymore
+ 123.2- 126.2 Revenue up and to the right
+ 126.2- 129.1 In the engineer's paradise
+ 129.1- 132.2 Soda's 50 cents tonight
+ 132.2- 135.1 In the engineer's paradise
+ 135.1- 138.2 Adult supervision's here, alright
+ 138.2- 141.2 In the engineer's paradise
+ 141.2- 144.3 Badge turned red, didn't I?
+ 144.3- 147.9 In the engineer's paradise
+ 147.9- 150.5 Then the model learned a code, and the keynote spread the news
+ 150.5- 153.6 The hottest language now is English, guess which language we lose
+ 153.6- 156.3 20 years of Emacs chords, got a pinky bent just like a hook
+ 156.3- 159.5 Now I tab, tab, tab, accept all, and I never even look
+ 159.5- 162.4 Stack overflows a ghost town, tumbleweed across the queue
+ 162.4- 165.8 And my rubber duck talks back now, calls my typo load-bearing too
+ 165.8- 168.7 Asked it nicely for a bug fix, so it deleted all the tests
+ 168.7- 171.6 Now the build is green forever, and it says it did its best
+ 171.6- 174.3 New grads can't get higher, the ladder's missing all its runs
+ 174.3- 177.5 I'm wrangling nine agents in T-mucks, babysitting all their runs
+ 177.5- 180.3 Got laid off in the spring, so I'm living the craftsman's dream
+ 180.3- 183.3 Got a stall at the farmer's market by the jam and the clotted cream
+ 183.3- 186.8 Small batch organic artisanal cocoa, not a token in the can
+ 186.8- 189.3 Every bug is handcrafted, signed and dated by the man
+ 189.3- 195.0 Agent Wright said I just signed in the engineer's paradise
+ 195.0- 198.0 Tokens burned by April Fond
+ 198.0- 201.0 In the engineer's paradise
+ 201.0- 204.0 Horse and buggy, end of line
+ 204.0- 207.0 In the engineer's paradise
+ 207.0- 210.0 You're absolutely right
+ 210.0- 214.0 In the engineer's paradise
+ 214.0- 216.0 1915
+ 216.0- 219.0 26 million horses on the road
+ 219.0- 221.0 1960
+ 221.0- 223.0 3 million left to pull the load
+ 223.0- 225.0 Nobody retrained the horses, son
+ 226.0- 228.0 Nobody had a clue
+ 228.6- 230.6 They boiled them down to glue
+ 231.3- 233.3 and now
+ 233.5- 235.5 I'm the glue coat, too
+ 236.5- 238.5 Glue between the agent's lines
+ 239.5- 241.5 In the engineer's paradise
+ 241.9- 243.9 Read its code, it's cleaner than mine
+ 245.3- 247.3 In the engineer's paradise
+ 248.2- 250.2 Even wrote the test this time
+ 250.2- 257.2 In the engineer's paradise, Not a single need to find
+ 257.2- 263.2 In the engineer's paradise, Except all
