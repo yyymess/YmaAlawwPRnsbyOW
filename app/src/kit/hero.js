@@ -62,6 +62,14 @@ export function heroFront(P, x, y, s, o = {}) {
     P.line(str, lw * 2.2); P.line(str, lw * 1.1, 'cream');
     P.both(T(`M${sx * 40 - 7} 478 L${sx * 40 + 7} 478 L${sx * 40 + 6} 512 L${sx * 40 - 6} 512 Z`), 'grey', lw * 0.6);
   }
+  if (o.apron) {   // a canvas shop apron over the hoodie: straps round the neck, a bib, a pocket
+    for (const sx of [-1, 1]) P.line(T(`M${sx * 150} 392 C${sx * 120} 340 ${sx * 90} 310 ${sx * 60} 300`), lw * 3.2); 
+    for (const sx of [-1, 1]) P.line(T(`M${sx * 150} 392 C${sx * 120} 340 ${sx * 90} 310 ${sx * 60} 300`), lw * 1.8, 'sepia');
+    const bib = T('M-170 386 L170 386 C176 480 196 600 206 700 L-206 700 C-196 600 -176 480 -170 386 Z');
+    P.fill(bib, 'sepia'); P.tone(bib, 'sepiaDk', { from: [x, y + 386 * s, 0], to: [x + 200 * s, y + 700 * s, 0.5], bbox: bb }, cell); P.line(bib, lw * 1.2);
+    P.ctx.save(); P.ctx.setLineDash([lw * 2, lw * 2]); P.line(T('M-156 400 L156 400'), lw * 0.6); P.ctx.restore();
+    P.both(T(rect(-96, 540, 192, 120, 8)), 'sepia', lw); P.text('λ', x, y + 500 * s, { size: 54 * s, color: 'sepiaDk', weight: 700 });
+  }
   if (o.hold === 'phone') phoneInHands(P, x, y, s, o);
 }
 

@@ -431,3 +431,49 @@ export function codeScroll(P, x, y, w, h, t, o = {}) {
   P.both(rect(-w / 2 - 14, -12, w + 28, 24, 12), 'sepia', lw);
   end(P);
 }
+
+/**
+ * a finger along a quadratic curve from its base b through c to its tip e, tapering w0 -> w1, with a round
+ * tip; returns { p, L, R, tipDir } (L and R its edges, for the lines between fingers)
+ */
+export function curvedFinger(b, c, e, w0, w1) {
+  const N = 14, Lp = [], Rp = [];
+  let tx = 0, ty = 0;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, u = 1 - t;
+    const px = u * u * b[0] + 2 * u * t * c[0] + t * t * e[0], py = u * u * b[1] + 2 * u * t * c[1] + t * t * e[1];
+    tx = 2 * u * (c[0] - b[0]) + 2 * t * (e[0] - c[0]); ty = 2 * u * (c[1] - b[1]) + 2 * t * (e[1] - c[1]);
+    const l = Math.hypot(tx, ty) || 1, nx = -ty / l, ny = tx / l, w = (w0 + (w1 - w0) * t) / 2;
+    Lp.push([px + nx * w, py + ny * w]); Rp.push([px - nx * w, py - ny * w]);
+  }
+  const p = new Path2D(); p.moveTo(...Lp[0]); for (const q of Lp.slice(1)) p.lineTo(...q);
+  const a = Math.atan2(Lp[N][1] - e[1], Lp[N][0] - e[0]); p.arc(e[0], e[1], w1 / 2, a, a - Math.PI, true);
+  for (const q of Rp.slice().reverse()) p.lineTo(...q);
+  p.closePath();
+  const l = Math.hypot(tx, ty) || 1;
+  return { p, L: Lp, R: Rp, tipDir: [tx / l, ty / l], e };
+}
+
+/**
+ * A hand drawn as one silhouette (outlines under the fill), with fingers, nails and knuckle creases.
+ * fingers: [{b, c, e, w0, w1}] from the little finger to the index (and the thumb last), dorsum: path d.
+ */
+export function drawHand(P, x, y, s, rot, dorsum, fingers, o = {}) {
+  const lw = begin(P, x, y, s, rot);
+  const shapes = [svg(dorsum), ...fingers.map((F) => curvedFinger(F.b, F.c, F.e, F.w0, F.w1))];
+  const paths = [shapes[0], ...shapes.slice(1).map((F) => F.p)];
+  for (const q of paths) P.line(q, lw * 2.4);
+  for (const q of paths) P.fill(q, o.skin ?? 'skin');
+  const all = new Path2D(); for (const q of paths) all.addPath(q);
+  if (o.tone) P.tone(all, 'skinDot', o.tone, Math.max(2.5, 4 * s) / s);
+  shapes.slice(1).forEach((F, i) => {
+    if (i < fingers.length - 1 && !fingers[i].thumb) { const q = new Path2D(); F.R.slice(4).forEach((pt, k) => (k ? q.lineTo(...pt) : q.moveTo(...pt))); P.line(q, lw * 0.55); }
+    const d = F.tipDir, nb = [F.e[0] - d[0] * 12, F.e[1] - d[1] * 12], w = fingers[i].w1;
+    const nl = new Path2D(); nl.ellipse(nb[0], nb[1], w * 0.36, w * 0.3, Math.atan2(d[1], d[0]), 0, Math.PI * 2);
+    P.fill(nl, '#f7e0d0'); P.line(nl, lw * 0.4);
+    const mid = F.L.length >> 1, ml = F.L[mid], mr = F.R[mid];
+    P.line(svg(`M${ml[0] * 0.8 + mr[0] * 0.2} ${ml[1] * 0.8 + mr[1] * 0.2} L${ml[0] * 0.2 + mr[0] * 0.8} ${ml[1] * 0.2 + mr[1] * 0.8}`), lw * 0.4);
+  });
+  if (o.knuckles) for (const [kx, ky] of o.knuckles) P.line(svg(`M${kx - 9} ${ky} q9 -7 18 0`), lw * 0.5);
+  end(P);
+}
