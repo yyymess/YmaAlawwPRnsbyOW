@@ -5,7 +5,7 @@ its tokens and its context, they comfort me.
 
 [Verse 1: nerdy rap]
 Seventeen with a compiler and a dial-up phone line,
-read the MPEG spec on Friday nights — and honestly, I was fine.
+read the em-peg spec on Friday nights — and honestly, I was fine.
 I believed in open standards, I could recite the RFCs,
 I'd rewrite your app in Haskell if you'd only let me, please.
 Came out west with a laptop, a duffel bag, a dream:
