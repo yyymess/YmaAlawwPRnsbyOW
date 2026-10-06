@@ -130,7 +130,7 @@ The parody works like the 1996 one: the music is a straight, faithful re-creatio
 
 **Style (C4, tag list, 383 chars). Short tags work better than prose; keep the intro; C's rhythm was too strong:**
 
-nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, conversational rhymed verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
+geeky, dorky, quirky male vocal, adenoidal nasal tenor, thin and high, awkward and over-eager, occasional voice cracks, over-enunciated, wide-eyed, deadpan, conversational rhymed verses, relaxed and clear, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
 
 **Exclude styles:** deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
 
