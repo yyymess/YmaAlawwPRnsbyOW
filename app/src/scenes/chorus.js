@@ -9,7 +9,7 @@ import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, 
 import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
-import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll } from '../kit/things.js';
+import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll, flame } from '../kit/things.js';
 import { cloud, heart } from './verse1.js';
 
 const CEN = { x: 480, y: 30, w: 640, h: 640, rise: 250 };
@@ -243,7 +243,7 @@ const VARIANTS = {
         const fn = word(lines, 2, 'april') + 0.1, fu = ease.outCubic(clamp((t - fn) / 0.5));
         if (fu > 0) {
           P.ctx.save(); P.alpha(fu);
-          for (let k = 0; k < 9; k++) { const fx = -20 + k * 85, side = Math.abs(fx - 320) > 140 ? 1 : 0.35, fh = (230 + 90 * Math.sin(t * 6 + k * 1.9)) * side; P.both(svg(`M${fx - 52} 660 C${fx - 40} ${660 - fh * 0.6} ${fx - 10} ${660 - fh} ${fx} ${660 - fh * 1.3} C${fx + 14} ${660 - fh * 0.9} ${fx + 40} ${660 - fh * 0.6} ${fx + 52} 660 Z`), k % 2 ? 'gold' : 'red', 3); }
+          for (let k = 0; k < 9; k++) { const fx = -20 + k * 85, side = Math.abs(fx - 320) > 140 ? 1 : 0.35; flame(P, fx, 664, (280 + 60 * (k % 3)) * side, 120, t, k, k % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
           heroFront(P, 320, 330, 0.42, { mouth: 'smile', blink: t > word(lines, 2, 'fine') ? 1 : blinkAt(t), uplit: 0.6 });
           cup(P, 410, 610, 0.8, 0.05); P.line(svg(`M405 520 C${395 + Math.sin(t * 3) * 8} 490 ${415 + Math.sin(t * 3 + 1) * 8} 470 405 440`), 3, 'cream');
           P.ctx.restore();
@@ -309,7 +309,7 @@ function calPage(P, x, y, m, u, t, i) {
   P.both(rect(-150, -160, 300, 320, 10), 'ivory', lw); P.fill(rect(-150, -160, 300, 70, 10), 'red'); P.line(rect(-150, -160, 300, 320, 10), lw);
   P.text(m, 0, -108, { font: FONT.caps, weight: 700, size: 40, color: 'cream' });
   for (let r = 0; r < 4; r++) for (let k = 0; k < 6; k++) P.line(rect(-126 + k * 42, -70 + r * 52, 34, 40, 3), lw * 0.4);
-  if (u > 0) { const fh = 320 * u; for (let k = 0; k < 6; k++) P.both(svg(`M${-150 + k * 50} 160 C${-140 + k * 50} ${160 - fh * 0.6} ${-130 + k * 50} ${160 - fh} ${-125 + k * 50 + Math.sin(t * 9 + k) * 6} ${160 - fh * 1.1} C${-118 + k * 50} ${160 - fh * 0.7} ${-104 + k * 50} ${160 - fh * 0.4} ${-100 + k * 50} 160 Z`), k % 2 ? 'gold' : 'red', lw * 0.6); }
+  if (u > 0) { const fh = 330 * u; for (let k = 0; k < 6; k++) flame(P, -125 + k * 50, 166, fh * (0.8 + 0.3 * ((k * 7) % 3) / 2), 70, t, k, k % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
   P.restore(); end(P);
 }
 function gauge(P, x, y, v) {

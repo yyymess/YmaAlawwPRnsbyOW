@@ -477,3 +477,12 @@ export function drawHand(P, x, y, s, rot, dorsum, fingers, o = {}) {
   if (o.knuckles) for (const [kx, ky] of o.knuckles) P.line(svg(`M${kx - 9} ${ky} q9 -7 18 0`), lw * 0.5);
   end(P);
 }
+
+/** a flame: a teardrop with a wavering tip and a bright core; (x, y) its base centre */
+export function flame(P, x, y, h, w, t, seed = 0, colors = ['red', 'gold']) {
+  const sw = Math.sin(t * 7 + seed * 1.7) * w * 0.22, sw2 = Math.sin(t * 9.3 + seed) * w * 0.12, hh = h * (0.9 + 0.12 * Math.sin(t * 8 + seed * 2.3));
+  const outer = svg(`M${x - w / 2} ${y} C${x - w * 0.62} ${y - hh * 0.35} ${x - w * 0.18} ${y - hh * 0.62} ${x + sw} ${y - hh} C${x + w * 0.3 + sw2} ${y - hh * 0.6} ${x + w * 0.62} ${y - hh * 0.36} ${x + w / 2} ${y} Z`);
+  P.both(outer, colors[0], 3);
+  const ih = hh * 0.62, iw = w * 0.5;
+  P.fill(svg(`M${x - iw / 2} ${y} C${x - iw * 0.6} ${y - ih * 0.35} ${x - iw * 0.1} ${y - ih * 0.6} ${x + sw * 0.6} ${y - ih} C${x + iw * 0.3} ${y - ih * 0.6} ${x + iw * 0.6} ${y - ih * 0.35} ${x + iw / 2} ${y} Z`), colors[1]);
+}

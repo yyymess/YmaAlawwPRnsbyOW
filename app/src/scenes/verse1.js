@@ -4,7 +4,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end } from '../kit/things.js';
+import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end, flame } from '../kit/things.js';
 
 const PW = 1080, PH = 640, TOP = 46, SP = 1300, RISE = 200, INSET = 100;   // panels; content is drawn in an 880x650 space inset by INSET
 const CHAPTERS = [
@@ -260,7 +260,7 @@ function dragon(P, f, L, t) {
     bg(P, 'ochre', 'red', [440, 650, 0.7], [440, 0, 0.1]);
     const r = rng(9); for (let i = 0; i < 6; i++) { const sx = -60 + r() * 1000, sy = 70 + r() * 230, rr = 70 + r() * 50; cloud(P, sx + Math.sin(t * 0.7 + i) * 14, sy, rr, i % 2 ? 'grey' : 'silver', i); }
     const war = at0(L, 0, 'war'), out = at0(L, 0, 'outage');
-    if (t > out) { const u = clamp((t - out) / 0.5); for (let i = 0; i < 9; i++) { const fx = 40 + i * 100, fh = (60 + 40 * Math.sin(t * 7 + i * 1.7)) * u; P.both(svg(`M${fx - 40} 650 C${fx - 30} ${650 - fh} ${fx - 10} ${650 - fh * 1.4} ${fx} ${650 - fh * 1.8} C${fx + 10} ${650 - fh * 1.3} ${fx + 30} ${650 - fh} ${fx + 40} 650 Z`), i % 2 ? 'gold' : 'red', 3); } }
+    if (t > out) { const u = clamp((t - out) / 0.5); for (let i = 0; i < 11; i++) flame(P, -60 + i * 100, 656, (110 + 50 * ((i * 5) % 3)) * u, 90, t, i, i % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
     if (t > war - 0.2) { const u = ease.outBack(clamp((t - war + 0.2) / 0.4)); P.line(svg('M790 60 L790 330'), 6); P.both(svg(`M790 70 L${790 - 150 * u} ${90 + Math.sin(t * 6) * 6} L790 130 Z`), 'red', 3); if (u > 0.6) P.text('SEV 1', 742, 110, { font: FONT.caps, weight: 700, size: 22, color: 'cream' }); }
     const lunge = ease.outCubic(clamp((t - (L[0].words[0].start - 0.2)) / 0.7));
     bugDragon(P, 640, 560, 0.62, t, { mark: '?', rear: 0.3 + 0.2 * Math.sin(t * 2), color: 'ochre' });
