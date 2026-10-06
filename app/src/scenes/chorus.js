@@ -172,14 +172,14 @@ const VARIANTS = {
       if (c === 0) { fillBg(P, box, 'tealDk', 'hoodDot', 0.5); P.both(rect(40, 500, 310, 24, 4), 'ochre', 4); for (const bx of [70, 320]) P.both(svg(`M${bx - 10} 524 L${bx + 10} 524 L${bx} 560 Z`), 'ochre', 3); const n = Math.min(6, Math.floor(lt / 0.75) + 1); for (let i = 0; i < n; i++) cup(P, 195 + (i % 2 ? 18 : -14), 500 - i * 74, 0.9, (i % 2 ? 0.08 : -0.06)); }
       else if (c === 1) { fillBg(P, box, 'teal', 'tealDk', 0.4); pennant(P, 195, 230, 'A', 'teal', 150 * ease.inOutCubic(clamp((t - lines[3].start) / 1.4))); bars(P, 95, 500, [0.5, 0.42, 0.38], 'cream'); }
       else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 120 + i * 90, 180 + i * 90, 80, ((t - i * 0.6) % 1.8) / 1.2, i % 2 ? 'roseLt' : 'goldLt'); champagne(P, 200, 520, 0.9, lt); }
-      else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'side', top: 'tee', color: 'navy', acc: ['halo'], mouth: 'smile', look: [0.6, -0.3], crop: 900, blink: blinkAt(t) }); }
+      else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'bob', skin: 'skin4', fem: true, top: 'tee', color: 'navy', acc: ['halo'], mouth: 'smile', look: [0.6, -0.3], crop: 900, blink: blinkAt(t) }); }
     },
     right(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'night', 'tealDk', 0.5); moon(P, lerp(90, 300, clamp(lt / 6)), lerp(160, 120, clamp(lt / 6)), 46); const r = rng(5); for (let i = 0; i < 8; i++) star(P, 30 + r() * 330, 200 + r() * 120, 6, t * 3 + i); clock(P, 195, 420, 74, lerp(0, 4, clamp(lt / 5.5))); }
       else if (c === 1) { fillBg(P, box, 'rose', 'redDk', 0.4); pennant(P, 195, 230, 'B', 'rose'); bars(P, 95, 500, [0.5, 0.72, 0.9], 'cream'); }
       else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 280 - i * 90, 160 + i * 100, 80, ((t - 0.3 - i * 0.5) % 1.8) / 1.2, i % 2 ? 'goldLt' : 'mint'); }
-      else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', acc: ['halo'], mouth: 'smile', look: [-0.6, -0.3], crop: 900, blink: blinkAt(t + 2) }); }
+      else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'messy', hairColor: 'hairAu', top: 'hoodie', color: 'plum', glasses: 'rect', acc: ['halo'], mouth: 'smile', look: [-0.6, -0.3], crop: 900, blink: blinkAt(t + 2) }); }
     },
   },
   2: {
@@ -217,7 +217,7 @@ const VARIANTS = {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(8, Math.floor(lt / 0.5) + 1)); }
       else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); heroFront(P, 180, 210, 0.38, { mouth: 'frown', look: [0.3, 0.9], brow: 1, blink: blinkAt(t) }); palm(P, 250, 560, 0.95, -0.2, { sleeve: 300 }); for (const [cx, cy, v] of [[236, 446, '10¢'], [276, 470, '5¢']]) { P.both(ell(cx, cy, 26), 'gold', 3); P.line(ell(cx, cy, 20), 1.2, 'ochre'); P.text(v, cx, cy + 7, { font: FONT.caps, weight: 700, size: 17 }); } }
-      else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'slick', top: 'vest', color: 'navy', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 1), look: [0.5, 0] }); }
+      else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'slick', hairColor: 'hairBr', top: 'vest', color: 'navy', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 1), look: [0.5, 0] }); }
       else {   // his desk, cleared: an empty chair, a box with the plant and the duck
         fillBg(P, box, 'cream', 'sepia', 0.4);
         P.both(rect(40, 420, 310, 22, 4), 'ochre', 4); P.line(svg('M60 442 L60 560 M330 442 L330 560'), 8, 'sepiaDk');
@@ -229,7 +229,7 @@ const VARIANTS = {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(10, Math.floor(lt / 0.4) + 1)); }
       else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); priceTag(P, 195, 160, 1.4, '50¢', 0.1); }
-      else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'side', top: 'vest', color: 'char', shirt: 'roseLt', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 2), look: [-0.5, 0] }); }
+      else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'bob', hairColor: 'hairBl', skin: 'skin2', fem: true, glasses: 'rect', top: 'vest', color: 'char', shirt: 'roseLt', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 2), look: [-0.5, 0] }); }
       else {   // the way out
         fillBg(P, box, 'cream', 'sepia', 0.4);
         P.both(rect(90, 200, 210, 380, 6), 'sepiaDk', 5); P.both(rect(110, 220, 170, 360, 4), 'ochre', 3); P.both(ell(256, 400, 10), 'gold', 3);

@@ -32,10 +32,16 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 - Shade a hand like the face (screentone away from the light); a hand on top casts a soft tone shadow on the one below.
 - Holding things: fingers wrap over the object's edge; a fist round a pen shows three finger creases and the thumb across the front (`fist`).
 
+## The supporting cast
+- One parametric bust (`person` in `app/src/kit/people.js`) in the hero's construction; only hair, clothes, skin and props vary.
+- Variety comes quietly, as in a real office: skins `skin`..`skin5` (fair to light brown), hair `hair`/`hairBr`/`hairBl`/`hairAu`/`hairGr`, and about one woman in three. Never a single "token" figure set apart from the rest.
+- Women (`fem: true`): a slightly narrower face, a lash flicked out at each eye's corner, a touch of rose on the lower lip, gold drop earrings when the ears show. Hair `bob`, `ponytail` (the tail over her right shoulder), `wavy` (the long Mucha fall, one shape over the shoulders behind the face) or `bun`.
+- The code reviewer is the Unix greybeard: `hair: 'unix'` (receding, parted, long to the shoulders) with `beard: 'unix'` (full, salt and pepper, a walrus moustache over the mouth, ragged bushy brows), and a hard-disk platter for a halo (`platter`).
+
 ## Animals
 - The horse (`horse`): a barrel with chest and hindquarters, an arched neck with a mane along the crest, a wedge of a head with an ear and a forelock; front legs bend at the knee, hind legs at the backward hock; legs taper towards dark hooves.
 
 ## Line, colour, tone
 - Heavier contour on the outer silhouette, lighter for folds and features. A fold is one long curved line, not many.
 - Clothes: one flat colour, one lighter shade for edges (rim, cuffs), screentone for the shadow side.
-- Skin: flat light tone, screentone on the side away from the light; a touch of rose on the cheek in daylight.
+- Skin: flat light tone, screentone on the side away from the light; a touch of rose on the cheek in daylight. The hero's tone is fixed; the supporting cast uses `skin`..`skin5` (fair to light brown), each with its own dot colour.

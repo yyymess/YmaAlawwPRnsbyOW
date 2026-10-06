@@ -98,7 +98,13 @@ function keynote(P, f, L, t, w, h) {
   person(P, 230, 300, 0.36, { hair: 'buzz', top: 'tee', color: 'black', mouth: f.t < en ? 'smile' : 'grin', crop: 1250, look: [0.6, 0], blink: blinkAt(t), glasses: 'rect' });
   P.line(svg('M180 290 C170 330 190 360 220 352'), 3);
   // the audience, backs of heads, phones up
-  for (let i = 0; i < 9; i++) { const x = 70 + i * 150, y = 560 + (i % 2) * 20; P.both(ell(x, y, 54, 60), i === 4 ? 'teal' : ['hair', 'charDk', '#4a3426'][i % 3], 4); P.both(rect(x - 90, y + 40, 180, 80, 30), ['navy', 'plum', 'char', 'teal'][i % 4], 4); if (i % 3 === 1) { P.both(rect(x + 30, y - 70, 40, 74, 6), 'black', 3); P.fill(rect(x + 34, y - 66, 32, 66, 4), 'mint'); } }
+  const crowd = [['hair'], ['hairBr', 'long'], ['hairBl'], ['charDk'], ['teal'], ['hairAu', 'long'], ['hairGr'], ['hair'], ['hair', 'tail']];
+  for (let i = 0; i < 9; i++) {
+    const x = 70 + i * 150, y = 560 + (i % 2) * 20, [hc, cut] = crowd[i];
+    P.both(ell(x, y, 54, 60), hc, 4); P.both(rect(x - 90, y + 40, 180, 80, 30), ['navy', 'plum', 'char', 'teal'][i % 4], 4);
+    if (cut === 'long') P.both(svg(`M${x - 54} ${y} C${x - 54} ${y - 80} ${x + 54} ${y - 80} ${x + 54} ${y} L${x + 48} ${y + 92} C${x + 20} ${y + 102} ${x - 20} ${y + 102} ${x - 48} ${y + 92} Z`), hc, 4);   // long hair down her back
+    if (cut === 'tail') P.both(svg(`M${x - 12} ${y + 30} C${x - 18} ${y + 60} ${x - 10} ${y + 90} ${x} ${y + 104} C${x + 10} ${y + 90} ${x + 18} ${y + 60} ${x + 12} ${y + 30} Z`), hc, 3);
+    if (i % 3 === 1) { P.both(rect(x + 30, y - 70, 40, 74, 6), 'black', 3); P.fill(rect(x + 34, y - 66, 32, 66, 4), 'mint'); } }
 }
 
 // ---- 2. Emacs: the pinky hooked on Control; then TAB, TAB, TAB, and Accept all, revealed like a relic --------------
@@ -141,7 +147,7 @@ function emacs(P, f, L, t, w, h) {
     P.both(rect(-130, -46 + press, 260, 92, 46), 'teal', 5); P.text('Accept all', 0, 14 + press, { size: 44, color: 'cream' });
     ctx.restore();
     heroFront(P, 260, 300, 0.45, { blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile' });
-    person(P, 1100, 300, 0.45, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile', crop: 1250 });
+    person(P, 1100, 300, 0.45, { hair: 'ponytail', hairColor: 'hairBr', fem: true, top: 'hoodie', color: 'plum', glasses: 'rect', blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile', crop: 1250 });
     for (const hx of [260, 1100]) { P.both(ell(hx, 82, 110, 24), 'gold', 4); P.line(ell(hx, 82, 88, 15), 1.5); }
   }
 }
@@ -238,9 +244,9 @@ function ladder(P, f, L, t, w, h) {
     P.line(svg('M600 640 L640 110 M760 640 L720 110'), 16); P.line(svg('M600 640 L640 110 M760 640 L720 110'), 10, 'ochre');
     for (const y of [140, 190, 240]) P.line(svg(`M${600 + (640 - y) * 0.0755 + 6} ${y} L${760 - (640 - y) * 0.0755 - 6} ${y}`), 10, 'ochre');
     for (const y of [300, 380, 460, 540]) { P.ctx.save(); P.ctx.setLineDash([6, 10]); P.line(svg(`M${600 + (640 - y) * 0.0755 + 6} ${y} L${760 - (640 - y) * 0.0755 - 6} ${y}`), 3, 'sepiaDk'); P.ctx.restore(); }
-    const grads = [[300, 'skin', 'long'], [470, 'skin3', 'short'], [900, 'skin2', 'bun'], [1070, 'skin', 'messy']];
+    const grads = [[300, 'skin', 'wavy', 'hairAu', true], [470, 'skin5', 'short', 'hair'], [900, 'skin2', 'bun', 'hairBl', true], [1070, 'skin', 'messy', 'hairBr']];
     const toss = wd(L, 0, 'hired'), u = clamp((t - toss) / 1.3);
-    grads.forEach(([x, sk, hr], i) => person(P, x, 420 + (i % 2) * 20, 0.34, { hair: hr, top: 'gown', color: 'black', acc: i === 3 && t > toss ? [] : ['mortar'], skin: sk, mouth: 'frown', look: i === 3 && t > toss ? [0.6, -1] : [x < 680 ? 0.5 : -0.5, -0.8], crop: 900, blink: blinkAt(t + i) }));
+    grads.forEach(([x, sk, hr, hc, fem], i) => person(P, x, 420 + (i % 2) * 20, 0.34, { hair: hr, hairColor: hc, fem, top: 'gown', color: 'black', acc: i === 3 && t > toss ? [] : ['mortar'], skin: sk, mouth: 'frown', look: i === 3 && t > toss ? [0.6, -1] : [x < 680 ? 0.5 : -0.5, -0.8], crop: 900, blink: blinkAt(t + i) }));
     if (u > 0 && u < 1) { ctx.save(); ctx.translate(1070 + u * 260, 332 - Math.sin(u * Math.PI) * 250 + u * 70); ctx.rotate(u * 2.4); ctx.scale(0.34, 0.34); mortarboard(P, t); ctx.restore(); }
   } else {
     // a stained-glass window of nine panes, an agent in each; he herds them with a crook
@@ -323,7 +329,7 @@ function market(P, f, L, t, w, h) {
     marketStall(P, f, t, w, h, L, true);
     // the tourists arrive at the stall
     const og = wd(L, 0, 'organic'), tu = ease.outCubic(clamp((t - og + 0.3) / 0.8));
-    if (tu > 0) { person(P, lerp(-200, 290, tu), 470, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: tu >= 1 ? ['shoot', 'sunhat'] : ['sunhat'], skin: 'skin3', mouth: 'o', crop: 700, look: [0.7, -0.2], blink: blinkAt(t) }); person(P, lerp(w + 200, w - 290, tu), 480, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 700, look: [-0.7, -0.2], blink: blinkAt(t + 1) }); }
+    if (tu > 0) { person(P, lerp(-200, 290, tu), 470, 0.34, { hair: 'side', hairColor: 'hairBl', flush: 1, top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: tu >= 1 ? ['shoot', 'sunhat'] : ['sunhat'], mouth: 'o', crop: 700, look: [0.7, -0.2], blink: blinkAt(t) }); person(P, lerp(w + 200, w - 290, tu), 480, 0.34, { hair: 'bun', hairColor: 'hairAu', fem: true, top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 700, look: [-0.7, -0.2], blink: blinkAt(t + 1) }); }
     const nt = wd(L, 0, 'not') - 0.1, u = ease.outBack(clamp((t - nt) / 0.4));
     if (u > 0) { ctx.save(); ctx.translate(462, 400); ctx.scale(0.7 * u, 0.7 * u); P.both(svg('M-60 0 L-60 -140 C-60 -150 60 -150 60 -140 L60 0 Z'), 'silver', 4); P.both(rect(-60, -110, 120, 70, 4), 'ivory', 3); P.text('NO', 0, -82, { font: FONT.caps, weight: 700, size: 22 }); P.text('TOKENS', 0, -54, { font: FONT.caps, weight: 700, size: 20 }); ctx.restore(); }
   } else {
@@ -340,8 +346,8 @@ function market(P, f, L, t, w, h) {
     if (t > sg) { const u = clamp((t - sg) / 0.8), pp = new Path2D(); pp.moveTo(-34, -12); for (let i = 0; i <= 20 * u; i++) pp.lineTo(-34 + i * 2.6, -12 + Math.sin(i * 1.5) * 2.5); P.line(pp, 1.2, 'navy'); if (u > 0.9) P.text('2026', 30, -8, { size: 9, color: 'navy' }); }
     ctx.restore();
     // tourists with cameras at the sides, flashing
-    person(P, 170, 250, 0.36, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['shoot', 'sunhat'], skin: 'skin3', mouth: 'o', crop: 900, look: [0.6, 0] });
-    person(P, 1200, 260, 0.36, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 900, look: [-0.6, 0] });
+    person(P, 170, 250, 0.36, { hair: 'side', hairColor: 'hairBl', flush: 1, top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['shoot', 'sunhat'], mouth: 'o', crop: 900, look: [0.6, 0] });
+    person(P, 1200, 260, 0.36, { hair: 'bun', hairColor: 'hairAu', fem: true, top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 900, look: [-0.6, 0] });
     for (const [fx, fy, ph] of [[174, 249, 0], [1227, 476, 0.45]]) { const k = ((t * 1.1 + ph) % 1); if (k < 0.12) { ctx.save(); P.alpha(1 - k / 0.12); P.tone(ell(fx, fy, 200), 'cream', { from: [fx, fy, 1], to: [fx + 200, fy, 0], radial: true, bbox: [fx - 200, fy - 200, fx + 200, fy + 200] }, 5); for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2; P.line(svg(`M${fx + Math.cos(a) * 40} ${fy + Math.sin(a) * 40} L${fx + Math.cos(a) * 110} ${fy + Math.sin(a) * 110}`), 5, 'cream'); } ctx.restore(); } }
   }
 }

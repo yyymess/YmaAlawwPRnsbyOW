@@ -9,7 +9,7 @@ A parody of "Gangsta's Paradise" by way of "Amish Paradise", about the engineer'
 - Straight-faced and devotional. Halos, arches, banners, gold. The singer is proud of every absurd line.
 - Funny through objects: a soda can held like a chalice, a flywheel as the Wheel of Fortune, a tombstone per killed product, a rubber duck with a halo, a bug in a jar "signed and dated".
 - Never mean to individuals; no real logos, no real product UIs, no real people. Company idioms are referenced through composition and type only.
-- Characters are de-racialised: light skin tones between East Asian and white; dark brown/black hair when visible. The hero is clean-shaven. The choir is all men (the Valley stereotype is part of the joke).
+- The hero is fixed: light skin between East Asian and white, dark hair, clean-shaven. The supporting cast varies the way a real office does, without making a point of it: skin from fair to light tan and light brown, hair black, brown, blond, auburn or grey, and roughly one woman in three (long or bobbed hair, a ponytail, earrings, a touch of colour on the lip). All in the same drawing, line and shading as everyone else.
 
 ## Style bible
 
@@ -58,7 +58,7 @@ A frieze of six arched chapters on a long wall; the camera glides one chapter pe
 2. *II · The Creed*: the saint portrait: RFC scrolls unfurl like ribbons (791, 2616; then 1149 with its pigeon, and 9559); the halo's keycaps turn over to Haskell; on "please" he prays.
 3. *III · The Pilgrimage*: walking west into the sun past a red bridge, a duffel bag; a packing list ticks off "a laptop, a duffel bag, a dream"; a thought cloud with the world and a heart; one commit dot per step.
 4. *IV · The Dragon*: St George and the Bug (a beetle with bat wings and a question mark); SEV 1 pennant, flames; then the postmortem at a lectern (Who to blame: nobody) while the bug lies on its back under a little halo.
-5. *V · The Elders*: the org chart as clouds of empty dotted boxes ("psst… an org chart?"); the reviewer rises as a Byzantine icon (bald, grey beard, a red pen for a sceptre, the LGTM seal held back); the hero's PR #1 gets its first red nit.
+5. *V · The Elders*: the org chart as clouds of empty dotted boxes ("psst… an org chart?"); the reviewer rises as a Byzantine icon: the Unix greybeard (long hair, a full salt-and-pepper beard over the mouth, bushy brows), and his halo is a hard-disk platter, as St IGNUcius wears his; a red pen for a sceptre, the LGTM seal held back; the hero's PR #1 gets its first red nit.
 6. *VI · The Covenant*: the hero waves the money off, FREE on a ribbon; the mission tablet (CHANGE THE WORLD); five believers under small halos nod on "So did we".
 
 ### Choruses — one triptych altarpiece, three times

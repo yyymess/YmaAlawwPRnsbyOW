@@ -528,3 +528,16 @@ export function flame(P, x, y, h, w, t, seed = 0, colors = ['red', 'gold']) {
   const ih = hh * 0.62, iw = w * 0.5;
   P.fill(svg(`M${x - iw / 2} ${y} C${x - iw * 0.6} ${y - ih * 0.35} ${x - iw * 0.1} ${y - ih * 0.6} ${x + sw * 0.6} ${y - ih} C${x + iw * 0.3} ${y - ih * 0.6} ${x + iw * 0.6} ${y - ih * 0.35} ${x + iw / 2} ${y} Z`), colors[1]);
 }
+
+/** a hard-disk platter worn as a halo, as St IGNUcius wears his: polished, finely tracked, a clamp at the hub, a gilt edge */
+export function platter(P, x, y, r) {
+  const ctx = P.ctx, d = ell(x, y, r), bb = [x - r, y - r, x + r, y + r];
+  P.fill(d, 'silver'); P.tone(d, '#8c877e', { from: [x - r * 0.7, y - r * 0.7, 0.4], to: [x + r * 0.7, y + r * 0.7, 0], bbox: bb }, 7);
+  ctx.save(); P.clip(d);
+  for (const a of [-2.55, 0.59]) { const p = new Path2D(); p.moveTo(x, y); p.arc(x, y, r, a, a + 0.46); p.closePath(); P.alpha(0.75); P.fill(p, 'cream'); }   // the light it catches
+  P.alpha(1);
+  for (let k = 0.36; k < 0.96; k += 0.045) P.line(ell(x, y, r * k), Math.max(0.8, r / 280), '#a29d94');                                   // the tracks
+  ctx.restore();
+  P.both(ell(x, y, r * 0.3), 'silver', Math.max(1.5, r / 110)); P.line(ell(x, y, r * 0.2), Math.max(1, r / 200)); P.fill(ell(x, y, r * 0.07), 'line');
+  P.line(d, r * 0.05 + 4); P.line(d, r * 0.05, 'gold'); P.line(ell(x, y, r * 0.975), Math.max(1, r / 260), 'goldLt');
+}

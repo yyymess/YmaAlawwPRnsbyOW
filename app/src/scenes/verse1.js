@@ -4,7 +4,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end, flame, drawHand } from '../kit/things.js';
+import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end, flame, drawHand, platter } from '../kit/things.js';
 
 const PW = 1080, PH = 640, TOP = 46, SP = 1300, RISE = 200, INSET = 100;   // panels; content is drawn in an 880x650 space inset by INSET
 const CHAPTERS = [
@@ -304,8 +304,8 @@ function elders(P, f, L, t) {
   boxes.forEach(([bx, by, bw, bh, q], i) => orgCloud(P, bx + Math.sin(t * 0.5 + i) * 12, by + Math.cos(t * 0.4 + i * 2) * 6, bw, bh, { q }));
   // the rumor: two engineers below, one whispering behind his hand
   const rum = at0(L, 0, 'rumor'), ttl = at0(L, 0, 'title');
-  person(P, 350, 500, 0.32, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', look: [0.9, 0], mouth: t > ttl ? 'o' : 'neutral', open: 0.4, crop: 700, blink: blinkAt(t + 1) });
-  person(P, 560, 500, 0.32, { hair: 'side', top: 'tee', color: 'navy', look: [-0.6, 0], brow: t > rum ? 1 : 0, mouth: t > rum ? 'o' : 'neutral', open: 0.7, crop: 700, blink: blinkAt(t + 2) });
+  person(P, 350, 500, 0.32, { hair: 'messy', hairColor: 'hairBr', top: 'hoodie', color: 'plum', glasses: 'rect', look: [0.9, 0], mouth: t > ttl ? 'o' : 'neutral', open: 0.4, crop: 700, blink: blinkAt(t + 1) });
+  person(P, 560, 500, 0.32, { hair: 'ponytail', hairColor: 'hairAu', skin: 'skin4', fem: true, top: 'tee', color: 'navy', look: [-0.6, 0], brow: t > rum ? 1 : 0, mouth: t > rum ? 'o' : 'neutral', open: 0.7, crop: 700, blink: blinkAt(t + 2) });
   if (t > ttl) {   // his hand cupped to whisper: a sleeve up from below, the palm curved towards his friend, a thumb
     ctx.save(); ctx.translate(410, 540);
     const sl = svg('M-30 30 C-40 80 -50 120 -60 180 L20 180 C18 120 14 80 10 30 Z'); P.fill(sl, 'plum'); P.tone(sl, '#000', { from: [-30, 40, 0.1], to: [10, 180, 0.4], bbox: [-60, 30, 20, 180] }, 5); P.line(sl, 3);
@@ -320,10 +320,8 @@ function elders(P, f, L, t) {
   // the reviewer: an icon, rising; the red pen his sceptre, the LGTM seal held back
   if (rise > 0) {
     ctx.save(); ctx.translate(0, (1 - rise) * 700);
-    P.both(ell(440, 210, 300, 300), 'gold', 4);
-    P.tone(ell(440, 210, 300, 300), 'goldLt', { from: [440, 210, 0.7], to: [740, 210, 0], radial: true, bbox: [140, -90, 740, 510] }, 7);
-    for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; P.line(svg(`M${440 + Math.cos(a) * 250} ${210 + Math.sin(a) * 250} L${440 + Math.cos(a) * 290} ${210 + Math.sin(a) * 290}`), 3, 'ochre'); }
-    person(P, 440, 250, 0.62, { hair: 'bald', top: 'robe', color: 'navy', mantle: 'red', stern: true, mouth: 'flat', glasses: 'rect', beard: 'grey', fw: 1.06, crop: 900, blink: blinkAt(t + 3) });
+    platter(P, 440, 210, 300);   // his halo a disk platter, as St IGNUcius wears it
+    person(P, 440, 250, 0.62, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: true, mouth: 'flat', glasses: 'rect', fw: 1.06, crop: 900, blink: blinkAt(t + 3) });
     redPen(P, 700, 380, 0.75, 0.05);
     fist(P, 702, 470, 0.9, 'red');   // his right hand round the pen
     fist(P, 236, 520, 0.9, 'red', true); seal(P, 230, 462, 0.85, 'LGTM', {});   // the seal held up in his left hand   // and his left, holding the seal back
@@ -359,7 +357,7 @@ function covenant(P, f, L, t) {
     tablet(P, 440, 40 + (1 - u) * -300, 440, 300, { left: ['THE', 'MISSION'], right: ['CHANGE', 'THE WORLD'], size: 32, top: 150, lineH: 52 });
     const sw = at0(L, 1, 'so', 0);
     const nod = (k) => { const s0 = L[1].words.find((w, i) => i > 8 && w.w.toLowerCase().startsWith('so'))?.start ?? 56.5; return Math.sin(clamp((t - s0 - k * 0.04) / 0.45) * Math.PI) * 26; };
-    const cast = [{ hair: 'short', top: 'tee', color: 'navy' }, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect' }, { hair: 'side', top: 'shirt', color: 'shirt' }, { hair: 'buzz', top: 'tee', color: 'ochre', glasses: 'round' }, { hair: 'long', top: 'tee', color: 'rose', skin: 'skin2' }];
+    const cast = [{ hair: 'short', hairColor: 'hairBr', top: 'tee', color: 'navy' }, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect' }, { hair: 'bob', skin: 'skin4', fem: true, top: 'shirt', color: 'shirt' }, { hair: 'buzz', skin: 'skin5', top: 'tee', color: 'ochre', glasses: 'round' }, { hair: 'wavy', hairColor: 'hairBl', fem: true, top: 'tee', color: 'rose', skin: 'skin2' }];
     cast.forEach((c, i) => person(P, 120 + i * 160, 470 + nod(i) + (i % 2) * 12, 0.26, { ...c, acc: ['halo'], mouth: 'smile', crop: 900, blink: blinkAt(t + i) }));
   }
 }

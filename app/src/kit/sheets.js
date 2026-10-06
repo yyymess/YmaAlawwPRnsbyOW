@@ -30,18 +30,34 @@ export function closeup(P) {
 }
 
 import { person } from './people.js';
+import { platter } from './things.js';
 // the supporting cast
 export function cast(P) {
   person(P, 200, 230, 0.34, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'] });
-  person(P, 520, 230, 0.34, { hair: 'bald', top: 'robe', color: 'teal', mantle: 'rose', stern: true, mouth: 'flat', glasses: 'rect', acc: ['halo'], beard: 'grey', fw: 1.06 });
-  person(P, 840, 230, 0.34, { hair: 'messy', top: 'hoodie', color: 'plum', mouth: 'smile', glasses: 'rect', fw: 0.94 });
-  person(P, 1160, 230, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], skin: 'skin3', hairColor: '#4a3426' });
-  person(P, 1460, 230, 0.34, { hair: 'long', top: 'gown', color: 'black', acc: ['mortar'], skin: 'skin2', mouth: 'smile' });
-  person(P, 200, 640, 0.34, { hair: 'short', top: 'shirt', color: 'shirt', glasses: 'round', acc: ['halo'] });
-  person(P, 520, 640, 0.34, { hair: 'buzz', top: 'turtleneck', color: 'black', mouth: 'neutral' });
-  person(P, 840, 640, 0.34, { hair: 'short', top: 'hoodie', color: 'navy', arms: 'phone', uplit: 0.6, look: [0, 0.6] });
-  person(P, 1160, 640, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'o', seed: 3 });
-  person(P, 1460, 640, 0.34, { hair: 'side', top: 'tee', color: 'ochre', acc: ['headphones', 'lanyard'], lanyardColor: 'teal', mouth: 'grin' });
+  platter(P, 520, 200, 165);
+  person(P, 520, 230, 0.34, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: true, glasses: 'rect', fw: 1.06 });
+  person(P, 840, 230, 0.34, { hair: 'messy', top: 'hoodie', color: 'plum', mouth: 'smile', glasses: 'rect', fw: 0.94, hairColor: 'hairBr' });
+  person(P, 1160, 230, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], hairColor: 'hairBl', flush: 1 });
+  person(P, 1460, 230, 0.34, { hair: 'wavy', top: 'gown', color: 'black', acc: ['mortar'], skin: 'skin2', hairColor: 'hairAu', fem: true, mouth: 'smile' });
+  person(P, 200, 640, 0.34, { hair: 'bob', top: 'shirt', color: 'shirt', glasses: 'round', acc: ['halo'], skin: 'skin4', fem: true, mouth: 'smile' });
+  person(P, 520, 640, 0.34, { hair: 'buzz', top: 'turtleneck', color: 'black', mouth: 'neutral', skin: 'skin5' });
+  person(P, 840, 640, 0.34, { hair: 'ponytail', top: 'hoodie', color: 'navy', arms: 'phone', uplit: 0.6, look: [0, 0.6], fem: true, hairColor: 'hairBr' });
+  person(P, 1160, 640, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'o', seed: 3, fem: true, hairColor: 'hairAu' });
+  person(P, 1460, 640, 0.34, { hair: 'side', top: 'tee', color: 'ochre', acc: ['headphones', 'lanyard'], lanyardColor: 'teal', mouth: 'grin', skin: 'skin3' });
+}
+
+// faces: the reviewer close, and a grid of heads in every hair style, hair colour and skin
+export function faces(P) {
+  platter(P, 330, 300, 300);
+  person(P, 330, 340, 0.62, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: true, glasses: 'rect', fw: 1.06, crop: 900, still: true });
+  const heads = [
+    { hair: 'bob', skin: 'skin4', fem: true, mouth: 'smile' }, { hair: 'ponytail', hairColor: 'hairBr', fem: true, glasses: 'round' },
+    { hair: 'wavy', hairColor: 'hairBl', skin: 'skin2', fem: true, mouth: 'sing', open: 0.5 }, { hair: 'wavy', hairColor: 'hairAu', skin: 'skin3', fem: true },
+    { hair: 'bob', hairColor: 'hairBl', skin: 'skin2', fem: true, glasses: 'rect', mouth: 'smirk' }, { hair: 'short', hairColor: 'hairBr', skin: 'skin5' },
+    { hair: 'messy', hairColor: 'hairAu' }, { hair: 'side', hairColor: 'hairBl', skin: 'skin2', flush: 1, mouth: 'o' },
+    { hair: 'ponytail', skin: 'skin5', fem: true, mouth: 'smile' }, { hair: 'slick', hairColor: 'hairGr', glasses: 'rect' },
+  ];
+  heads.forEach((h, i) => person(P, 760 + (i % 5) * 190, 230 + Math.floor(i / 5) * 420, 0.3, { top: ['tee', 'shirt', 'hoodie', 'turtleneck', 'vest'][i % 5], color: ['navy', 'roseLt', 'plum', 'char', 'sage'][i % 5], still: true, ...h }));
 }
 
 import { heroPose } from './hero.js';

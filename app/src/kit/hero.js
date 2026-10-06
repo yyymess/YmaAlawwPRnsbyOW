@@ -76,6 +76,11 @@ export function heroFront(P, x, y, s, o = {}) {
 }
 
 /** the face's features in front-bust units (brows, eyes, glasses, nose, mouth, cheek); shared with the cast */
+const LIP = {   // the lower lip under each closed mouth
+  neutral: 'M-16 130 C-6 141 8 141 18 129 C8 134 -6 134 -16 130 Z', smile: 'M-18 137 C-6 148 8 148 20 136 C8 141 -6 141 -18 137 Z',
+  frown: 'M-14 130 C-6 137 6 137 14 130 C6 132 -6 132 -14 130 Z', flat: 'M-16 129 C-6 138 8 138 18 129 C8 132 -6 132 -16 129 Z',
+  smirk: 'M-12 134 C-2 143 12 141 20 130 C10 135 -2 136 -12 134 Z',
+};
 export function features(P, x, y, s, T, lw, o) {
   const browUp = (o.brow ?? 0) * 10;
   if (o.stern) P.line(T('M-92 -78 C-70 -76 -48 -68 -26 -54 M26 -54 C48 -68 70 -76 92 -78'), lw * 1.3);   // brows drawn down hard
@@ -85,6 +90,7 @@ export function features(P, x, y, s, T, lw, o) {
     const ex = x + (sx * 67 + lx * 14) * s, ey = y + (-10 + ly * 10) * s;
     if (blink > 0.6) P.line(svg(`M${ex - 12 * s} ${ey} C${ex - 4 * s} ${ey + 5 * s} ${ex + 4 * s} ${ey + 5 * s} ${ex + 12 * s} ${ey}`), lw * 0.9);
     else P.fill(ell(ex, ey, 9 * s + 1, (9 * s + 1) * (1 - blink)), 'line');
+    if (o.fem) P.line(blink > 0.6 ? svg(`M${ex + sx * 11 * s} ${ey + 1 * s} L${ex + sx * 20 * s} ${ey + 7 * s}`) : svg(`M${ex + sx * 7 * s} ${ey - 7 * s} L${ex + sx * 19 * s} ${ey - 15 * s}`), lw * 0.85);   // a lash flicked out at the corner
   }
   const gl = o.glasses ?? 'round';
   if (gl !== 'none') {
@@ -98,7 +104,8 @@ export function features(P, x, y, s, T, lw, o) {
   }
   P.line(T('M6 30 C-4 62 -8 74 8 80'), lw * 0.6);
   const m = o.mouth ?? 'neutral';
-  if (m === 'sing' || m === 'o') { const op = m === 'o' ? 1 : clamp(o.open ?? 0.6); P.both(ell(x, y + 122 * s, (16 + 6 * op) * s, (6 + 18 * op) * s), 'tealDk', lw * 0.7); }
+  if (o.fem && LIP[m]) P.fill(T(LIP[m]), 'rose');   // a touch of colour on the lower lip
+  if (m === 'sing' || m === 'o') { const op = m === 'o' ? 1 : clamp(o.open ?? 0.6); P.both(ell(x, y + 122 * s, (16 + 6 * op) * s, (6 + 18 * op) * s), 'tealDk', lw * 0.7); if (o.fem) { const by = 128 + 18 * op; P.line(T(`M-12 ${by + 3} C-4 ${by + 8} 4 ${by + 8} 12 ${by + 3}`), lw * 1.1, 'rose'); } }
   else if (m === 'smile') P.line(T('M-34 116 C-14 140 14 140 34 116'), lw * 0.9);
   else if (m === 'frown') P.line(T('M-28 132 C-10 118 10 118 28 132'), lw * 0.9);
   else if (m === 'flat') P.line(T('M-30 126 L30 126'), lw * 0.9);

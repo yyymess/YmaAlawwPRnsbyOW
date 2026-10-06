@@ -7,7 +7,7 @@ import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, 
 import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame, beatCut } from '../kit/props.js';
-import { redPen, scroll, begin, end, star } from '../kit/things.js';
+import { redPen, scroll, begin, end, star, platter } from '../kit/things.js';
 import { fist, sleeveArm } from './verse1.js';
 
 const blinkAt = (t, k = 0) => { const v = (t * 0.41 + k * 0.13) % 1; return v > 0.965 ? 1 - Math.abs(v - 0.982) / 0.017 : 0; };
@@ -65,7 +65,12 @@ function choir(P, f, t, o = {}) {
   ];
   const tops = ['hoodie', 'tee', 'shirt', 'hoodie', 'tee', 'vest', 'hoodie', 'turtleneck', 'tee'];
   const cols = ['navy', 'plum', 'shirt', 'teal', 'ochre', 'char', 'rose', 'black', 'sage'];
-  const hairs = ['short', 'messy', 'side', 'buzz', 'short', 'slick', 'side', 'bald', 'messy'];
+  // who sings, row by row (k = row * 9 + seat): [hair, colour, skin, a woman]
+  const cast = [
+    ['short', 'hair', 'skin'], ['wavy', 'hairBr', 'skin2', true], ['messy', 'hairBl', 'skin'], ['buzz', 'hair', 'skin5'], ['bob', 'hair', 'skin4', true], ['side', 'hairBr', 'skin3'], ['slick', 'hairGr', 'skin'], ['ponytail', 'hairAu', 'skin2', true], ['short', 'hair', 'skin3'],
+    ['side', 'hairBl', 'skin2'], ['bun', 'hair', 'skin3', true], ['buzz', 'hairBr', 'skin4'], null, ['messy', 'hair', 'skin'], ['side', 'hairAu', 'skin'], ['bald', 'hair', 'skin3'], null, null,
+    ['short', 'hairBr', 'skin'], ['ponytail', 'hair', 'skin4', true], ['side', 'hair', 'skin5'], ['bob', 'hairAu', 'skin2', true], ['messy', 'hairBr', 'skin3'], ['short', 'hairBl', 'skin2'],
+  ];
   const phones = [];
   rows.forEach((r, ri) => {
     const row = [];
@@ -73,7 +78,8 @@ function choir(P, f, t, o = {}) {
       const x = 800 + (i - (r.n - 1) / 2) * r.dx, k = ri * 9 + i;
       if (ri >= 1 && Math.abs(x - 800) < 60) continue;   // the hero's place (and the seat behind his hood)
       const sway = Math.sin(t * 1.5 + k) * 4;
-      person(P, x + sway, r.y, r.s, { hair: hairs[k % 9], top: tops[(k + ri) % 9], color: cols[(k * 3 + ri) % 9], arms: 'phone', uplit: 0.75, look: [0, 0.6], mouth: f.vocal > 0.18 && (k % 3) ? 'sing' : 'neutral', open: f.vocal, crop: 700, blink: blinkAt(t, k), glasses: ['none', 'round', 'rect'][k % 3], skin: ['skin', 'skin2', 'skin3'][k % 3], screen: o.screen, press: false });
+      const [hair, hairColor, skin, fem] = cast[k];
+      person(P, x + sway, r.y, r.s, { hair, hairColor, skin, fem, top: tops[(k + ri) % 9], color: cols[(k * 3 + ri) % 9], arms: 'phone', uplit: 0.75, look: [0, 0.6], mouth: f.vocal > 0.18 && (k % 3) ? 'sing' : 'neutral', open: f.vocal, crop: 700, blink: blinkAt(t, k), glasses: ['none', 'round', 'rect'][k % 3], screen: o.screen, press: false });
       row.push([x + sway, r.y + 290 * r.s, r.s]);
     }
     if (ri === 2 && o.hero) { o.hero(); if (o.heroPhone) { row.push(o.heroPhone); row.sort((a, b) => a[0] - b[0]); } }
@@ -145,8 +151,8 @@ function testsScroll(P, f, t, lt, L) {
 function reviewer(P, f, t, lt, L) {
   chapel(P, f, t, 1, false);
   const fd = L[3].words.find((w) => w.w.startsWith('find')).start;
-  P.both(ell(800, 260, 300), 'gold', 4); P.tone(ell(800, 260, 300), 'goldLt', { from: [800, 260, 0.7], to: [1100, 260, 0], radial: true, bbox: [500, -40, 1100, 560] }, 7);
-  person(P, 800, 300, 0.62, { hair: 'bald', top: 'robe', color: 'navy', mantle: 'red', stern: t < fd + 0.4, mouth: t > fd + 0.4 ? 'flat' : 'frown', glasses: 'rect', beard: 'grey', fw: 1.06, crop: 900, look: [Math.sin(lt * 2.4) * 0.8, 0.5], blink: blinkAt(t) });
+  platter(P, 800, 260, 300);
+  person(P, 800, 300, 0.62, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: t < fd + 0.4, mouth: t > fd + 0.4 ? 'flat' : 'frown', glasses: 'rect', fw: 1.06, crop: 900, look: [Math.sin(lt * 2.4) * 0.8, 0.5], blink: blinkAt(t) });
   // the magnifying glass sweeps over the code, finding nothing
   const mx = 640 + Math.sin(lt * 2.4) * 220, my = 600 + Math.cos(lt * 1.7) * 20;
   P.both(rect(380, 560, 840, 200, 8), 'ivory', 4);
