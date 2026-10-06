@@ -1,0 +1,19 @@
+Round 2: five short style prompts, one idea each. Lyrics: lyrics/suno.txt (or suno-rap-tags.txt). Same Exclude for all. Sliders: Weirdness ~30%, Style Influence ~75%.
+
+EXCLUDE STYLES (all)
+deep voice, baritone, gravelly, gangsta, street slang, aggressive, sung verses, crooning, melodic verses, musical theater, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
+
+==================== S1 — rap tag up front, geeky leads (233 chars)
+geeky male rap vocal, nasal tenor, clean diction, steady rap flow, deadpan, 90s hip-hop ballad, 80 bpm, c minor, cm ab fm g string loop, church organ, soft boom bap, all-male gospel choir chorus, minor-key hymn, polished late-90s mix
+
+==================== S2 — nerdcore (224 chars)
+nerdcore, geeky nasal male rap, clean-cut, crisp diction, deadpan, 90s hip-hop ballad, 80 bpm, c minor, cm ab fm g string loop, church organ, soft boom bap, all-male gospel choir chorus, minor-key hymn, polished late-90s mix
+
+==================== S3 — 90s clean pop-rap (246 chars)
+90s clean pop-rap vocal, radio-friendly, geeky nasal male tenor, crisp diction, deadpan, 90s hip-hop ballad, 80 bpm, c minor, cm ab fm g string loop, church organ, soft boom bap, all-male gospel choir chorus, minor-key hymn, polished late-90s mix
+
+==================== S4 — novelty-rap voice over a serious beat (236 chars)
+novelty rap vocal, geeky nasal male tenor, earnest and deadpan, over a serious 90s hip-hop ballad, 80 bpm, c minor, cm ab fm g string loop, church organ, soft boom bap, all-male gospel choir chorus, minor-key hymn, polished late-90s mix
+
+==================== S5 — minimal (88 chars)
+geeky nasal rap, 80 bpm c minor string-loop hip-hop ballad, all-male gospel choir chorus
