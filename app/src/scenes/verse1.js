@@ -292,12 +292,16 @@ function elders(P, f, L, t) {
   bg(P, 'ivory', 'sage', [440, 0, 0.0], [440, 650, 0.5]);
   const rise = ease.inOutCubic(clamp((t - rv) / 1.1));
   // the clouds of org chart: dotted boxes with no titles, drifting
-  const boxes = [[160, 140, 170, 74], [420, 100, 190, 80, true], [680, 160, 170, 74], [280, 300, 160, 70, true], [580, 320, 170, 74], [150, 470, 150, 66], [720, 470, 160, 70, true], [430, 510, 170, 74]];
+  const boxes = [[440, 80, 190, 76, true], [170, 150, 170, 70], [700, 150, 170, 70, true], [60, 270, 150, 64], [300, 270, 150, 64, true], [580, 270, 150, 64], [820, 270, 150, 64]];
   ctx.save(); ctx.translate(0, rise * 760); P.alpha(1 - rise * 0.6);
-  P.ctx.save(); P.ctx.setLineDash([3, 14]); P.line(svg('M245 177 L420 140 M510 140 L680 197 M420 140 L360 300 M510 140 L580 357 M280 335 L160 470'), 3, 'sepiaDk'); P.ctx.restore();
+  P.ctx.save(); P.ctx.setLineDash([3, 14]); P.line(svg('M400 100 L230 140 M480 100 L650 140 M150 185 L80 240 M200 185 L300 240 M680 185 L590 240 M730 185 L820 240'), 3, 'sepiaDk'); P.ctx.restore();
   boxes.forEach(([bx, by, bw, bh, q], i) => orgCloud(P, bx + Math.sin(t * 0.5 + i) * 12, by + Math.cos(t * 0.4 + i * 2) * 6, bw, bh, { q }));
-  const rum = at0(L, 0, 'rumor');
-  if (t > rum - 0.2) { const u = ease.outBack(clamp((t - rum + 0.2) / 0.4)); ctx.save(); ctx.translate(700, 580); ctx.scale(u, u); P.both(svg('M-120 -40 L120 -40 L120 30 L-40 30 L-70 60 L-60 30 L-120 30 Z'), 'cream', 3); P.text('psst… an org chart?', 0, 2, { size: 20, style: 'italic' }); ctx.restore(); }
+  // the rumor: two engineers below, one whispering behind his hand
+  const rum = at0(L, 0, 'rumor'), ttl = at0(L, 0, 'title');
+  person(P, 350, 500, 0.32, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', look: [0.9, 0], mouth: t > ttl ? 'o' : 'neutral', open: 0.4, crop: 700, blink: blinkAt(t + 1) });
+  person(P, 560, 500, 0.32, { hair: 'side', top: 'tee', color: 'navy', look: [-0.6, 0], brow: t > rum ? 1 : 0, mouth: t > rum ? 'o' : 'neutral', open: 0.7, crop: 700, blink: blinkAt(t + 2) });
+  if (t > ttl) { ctx.save(); ctx.translate(404, 520); P.both(svg('M-6 30 C-12 0 -6 -26 10 -34 C22 -38 30 -30 30 -18 C30 0 26 20 20 34 Z'), 'skin', 3); P.line(svg('M2 -14 C10 -10 18 -10 24 -14 M0 0 C10 4 18 4 26 0'), 1.5); ctx.restore(); }   // a hand cupped to whisper
+  if (t > rum - 0.2) { const u = ease.outBack(clamp((t - rum + 0.2) / 0.4)); ctx.save(); ctx.translate(455, 370); ctx.scale(u, u); P.both(svg('M-170 -40 L170 -40 L170 30 L-20 30 L-60 64 L-50 30 L-170 30 Z'), 'cream', 3); P.text('psst… we have an org chart?', 0, 2, { size: 24, style: 'italic' }); ctx.restore(); }
   ctx.restore();
   // the reviewer: an icon, rising; the red pen his sceptre, the LGTM seal held back
   if (rise > 0) {

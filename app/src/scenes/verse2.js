@@ -286,14 +286,19 @@ function codeYellow(P, f, L, t, w, h) {
   P.text('CODE', 160, 270, { font: FONT.caps, weight: 700, size: 34 }); P.text('YELLOW', 160, 306, { font: FONT.caps, weight: 700, size: 34 });
   // the results, the first an ad whose label shrinks to nothing
   const sk = wd(L, 0, 'shrank'), u = ease.inOutCubic(clamp((t - sk) / 2.4));
-  ctx.save(); ctx.translate(330, 40);
-  P.both(rect(0, 0, 820, 440, 10), 'ivory', 4);
-  P.both(rect(20, 18, 780, 46, 23), 'cream', 3); P.text('the best soda near me', 50, 50, { size: 24, align: 'left', color: 'charDk' });
-  for (let i = 0; i < 4; i++) {
-    const y = 96 + i * 86;
-    if (i === 0) { const s2 = lerp(1, 0.15, u); ctx.save(); ctx.translate(46, y + 8); ctx.scale(s2, s2); P.both(rect(-22, -18, 64, 34, 6), lerp(1, 0, u) > 0.3 ? 'sage' : 'ivory', 2); P.text('Ad', 10, 8, { font: FONT.caps, weight: 700, size: 22, color: 'cream' }); ctx.restore(); }
-    P.text(['FIZZ™ — Best Soda, 50¢', 'Soda — Wikipedia', 'Why is soda 50¢ now?', 'Soda prices explained'][i], i === 0 ? 46 + lerp(60, 10, u) : 46, y + 16, { size: 26, align: 'left', color: 'navy' });
-    P.line(svg(`M46 ${y + 36} l${560 - i * 60} 0 M46 ${y + 56} l${420 + i * 40} 0`), 6, 'silver');
+  ctx.save(); ctx.translate(330, 30);
+  P.both(rect(0, 0, 840, 480, 12), 'ivory', 4);
+  P.both(rect(24, 20, 792, 56, 28), 'cream', 3); P.text('the best soda near me', 60, 58, { size: 30, align: 'left', color: 'charDk' }); P.line(ell(770, 48, 13), 3); P.line(svg('M779 57 L792 70'), 4);
+  // the first result: an ad; its label shrinks to a dot and the ad melts into the results
+  const s2 = lerp(1, 0.06, u), ad = lerp(1, 0, u);
+  if (u < 0.2) { P.ctx.save(); P.alpha(1 - u * 5); P.fill(rect(24, 94, 792, 84, 10), 'goldLt'); P.ctx.restore(); }
+  ctx.save(); ctx.translate(70, 128); ctx.scale(s2, s2); P.both(rect(-40, -26, 84, 52, 10), ad > 0.4 ? 'sage' : 'grey', 3); P.text('Ad', 2, 13, { font: FONT.caps, weight: 700, size: 34, color: 'cream' }); ctx.restore();
+  P.text('FIZZ™ — The Best Soda, now 50¢', lerp(130, 40, u), 140, { size: 34, align: 'left', color: 'navy' });
+  P.line(svg(`M${lerp(130, 40, u)} 166 l480 0`), 6, 'silver');
+  for (let i = 1; i < 4; i++) {
+    const y = 128 + i * 94;
+    P.text(['Soda — Wikipedia', 'Why is soda 50¢ now?', 'Soda prices, explained'][i - 1], 40, y + 12, { size: 30, align: 'left', color: 'navy' });
+    P.line(svg(`M40 ${y + 38} l${560 - i * 60} 0 M40 ${y + 58} l${420 + i * 40} 0`), 6, 'silver');
   }
   ctx.restore();
   // best quarter we ever had: an arrow up and confetti
