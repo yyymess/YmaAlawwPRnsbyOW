@@ -1,0 +1,25 @@
+Three alternative style prompts. Lyrics stay lyrics/suno.txt. Same sliders: Weirdness ~30%, Style Influence ~75%.
+
+==================== B — corporate training video (723 chars)
+
+STYLE OF MUSIC
+A 1990s corporate training video in which the earnest IT manager raps. Lead vocal: a thin, nasal, high male tenor, clean-cut, pocket-protector nerd, smiling and proud, rapping very squarely on the beat with crisp textbook diction, like he rehearsed it in front of the mirror. No swagger, no slang, no vocal fry. Backing: a faithful re-creation of a slow mid-90s hip-hop ballad, 80 BPM, C minor, 4/4; one two-bar loop Cm – Ab – Fm – G, a chord every two beats, on sustained synth strings, church organ and low synth bass; sparse drum machine, snare on 2 and 4. Chorus: a big gospel choir sings a slow minor-key hymn-like melody. Bridge: drums drop out. Outro: choir fades in a big hall. Polished, bright late-90s studio mix.
+
+EXCLUDE STYLES
+deep voice, baritone, gravelly voice, gangsta rap vocal, street slang delivery, laid-back flow, melodic rap, musical theater, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, female lead vocal
+
+==================== C — tag list (short keywords, no prose) (410 chars)
+
+STYLE OF MUSIC
+nerdy male rap vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, square on-beat flow, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, spoken intro, drums drop out in bridge, choir outro fade, polished late-90s mix
+
+EXCLUDE STYLES
+deep voice, baritone, gravelly, gangsta rap, street slang, laid-back, swing, melodic rap, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
+
+==================== D — a cappella geek (702 chars)
+
+STYLE OF MUSIC
+Lead vocal: the high tenor from a college a cappella group who also raps: thin, bright, nasal head-voice resonance with little chest, boyish, bookish, very precise consonants, perfectly even sixteenth-note flow locked to the click, sincere and slightly too eager. He raps the verses; he never croons. Backing: a faithful re-creation of a slow mid-90s hip-hop ballad, 80 BPM, C minor, 4/4; one two-bar loop Cm – Ab – Fm – G, a chord every two beats, on sustained synth strings, church organ and low synth bass; sparse drum machine, snare on 2 and 4. Chorus: a big gospel choir sings a slow minor-key hymn-like melody. Bridge: drums drop out. Outro: choir fades in a big hall. Clean, glossy late-90s mix.
+
+EXCLUDE STYLES
+deep voice, baritone, gravelly voice, gangsta rap vocal, street slang delivery, laid-back flow, swing, melodic rap, crooning, musical theater, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, female lead vocal
