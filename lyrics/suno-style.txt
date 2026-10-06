@@ -1,11 +1,11 @@
 TITLE
 Engineer's Paradise
 
-STYLE OF MUSIC (961 characters)
-Lead vocal first: NOT a typical rap voice. A thin, bright, nasal, high male tenor, a nerdy suburban accordion-and-glasses type who raps like a spelling-bee champion: over-precise diction, every consonant crisp, square and unhip, theatrical and wide-eyed, sincerely proud of every line. 80 BPM, C minor, 4/4, a faithful re-creation of a slow mid-90s hip-hop ballad instrumental. One repeating two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through the whole song, played by sustained legato synth strings over a soft church-organ pad and a low synth bass on the roots. Sparse drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat, lots of space. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody. Spoken intro over the strings. Bridge: drums drop out, strings and organ only. Outro: the choir repeats the chorus in a big reverberant hall and fades out. Polished, bright late-90s studio mix.
+STYLE OF MUSIC (990 characters)
+Lead vocal: a Broadway character actor doing a rhythmic patter song, in the tradition of comic-opera patter and musical theater. Thin, bright, nasal, high male tenor; nerdy, square, bookish; glasses-and-cardigan energy. Speaks the verses in fast, perfectly even patter locked to the beat, over-precise diction like a spelling-bee champion, wide-eyed and sincerely proud of every line. Choir-boy clean, no swagger. Backing track: a faithful re-creation of a slow mid-90s hip-hop ballad instrumental, 80 BPM, C minor, 4/4. One two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through the whole song, on sustained legato synth strings over a soft church-organ pad and a low synth bass on the roots. Sparse drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody. Spoken intro over strings. Bridge: drums drop out. Outro: choir fades out in a big hall. Polished late-90s mix.
 
 EXCLUDE STYLES
-deep voice, baritone, gravelly voice, gangsta rap vocal, street slang delivery, melodic rap, mumble rap, comedy, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
+rapper, rap vocal, hip-hop vocal, deep voice, baritone, gravelly voice, swagger, street slang delivery, melodic rap, comedy, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
 
 MORE OPTIONS
 Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
