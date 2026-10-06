@@ -64,8 +64,8 @@ in the engineer's paradise.
 
 Then the model learned to code, and the keynote spread the news:
 "the hottest language now is English" — guess which language we lose.
-Ten years memorizin' tar flags, regular expressions, Vim,
-now I tab, tab, tab, accept all, and I hope the odds aren't slim.
+Twenty years of Emacs chords, got a pinky bent just like a hook,
+now I tab, tab, tab, accept all, and I never even look.
 Stack Overflow's a ghost town, tumbleweed across the queue,
 my rubber duck talks back now — says I'm absolutely right, too.
 New grads can't get hired, the ladder's missin' all its rungs,
