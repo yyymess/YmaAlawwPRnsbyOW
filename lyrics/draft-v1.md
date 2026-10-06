@@ -17,7 +17,7 @@ I'd rewrite your app in Haskell if you'd only let me, please.
 Came out west with a laptop, a duffel bag, a dream:
 build the thing a billion people use and never see.
 Every bug was a riddle, every outage was a war,
-did a blameless postmortem when I burned my toast at four.
+blameless postmortem after, so we'd learn what it was for.
 A junior with a benchmark could overrule a VP,
 'cause the data was the boss — and the boss was mostly me.
 Didn't do it for the money — swear we'd do it all for free;
