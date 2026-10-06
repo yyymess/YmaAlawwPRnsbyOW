@@ -107,6 +107,18 @@ in the engineer's paradise…
 
 ---
 
-## Suno style prompt (no artist names)
+## Suno style prompt
 
-1995 West Coast hip-hop ballad, 80 BPM, C minor, somber orchestral string loop, choir pads, heavy kick and snare, deep male baritone rap verses, soulful male tenor sung hook, candlelit cinematic mood, dark and grave.
+Measured from the reference track: ~80 BPM, 4/4, C minor, a two-bar loop **Cm – Ab – Fm – G** (i–VI–iv–V), one chord every two beats.
+
+**Style (full, for the long style field):**
+
+Mid-90s West Coast gangsta-rap ballad, slow and grave, 80 BPM, C minor. A looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, played by a mournful synthesized string section with a 1970s soul feel, doubled by a dark church-organ pad. Sparse boom-bap drums: deep round kick, dry crisp snare on 2 and 4, soft closed hi-hat in straight 8ths, no trap rolls. Warm sub bass following the chord roots. Verses: one deep, deliberate male baritone rapper, menacing and calm, precise on-beat 16th-note flow with clear diction, slightly dry vocal. Hook: a soaring soulful male R&B tenor, sung legato with melismatic runs, backed by a massive gospel choir and layered "ooh" harmonies. Spoken-word intro over strings. Cinematic, candlelit, ominous, sorrowful but anthemic. Analog 1995 mix, wide strings, vinyl warmth.
+
+**Style (short, ≤ 200 chars):**
+
+90s West Coast rap ballad, 80 BPM, C minor, i-VI-iv-V string loop, boom-bap, deep baritone rap, soulful tenor hook, gospel choir, grave, cinematic
+
+**Exclude styles:** trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, upbeat, happy, comedic voice
+
+**Structure tags to put in the lyrics field:** `[Intro: spoken word, strings]`, `[Verse 1: baritone rap]`, `[Chorus: tenor + gospel choir]`, `[Verse 2]`, `[Chorus]`, `[Verse 3]`, `[Chorus]`, `[Bridge: half-sung, sparse, drums drop out]`, `[Outro: choir, fading]`, `[Spoken: "Accept all."]`, `[End]`.
