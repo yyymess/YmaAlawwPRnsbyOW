@@ -11,15 +11,15 @@ its tokens and its context, they comfort me.
 ## Verse 1 — the dream
 
 Seventeen with a compiler and a dial-up phone line,
-read the kernel source like scripture, every comment, every line.
-I believed in open source, I believed in RFCs,
-believed the best idea wins, no matter whose it be.
+read the kernel source on Friday nights — and honestly, I was fine.
+I believed in open source, I could recite the RFCs,
+I'd rewrite your app in Haskell if you'd only let me, please.
 Came out west with a laptop, a duffel bag, a dream:
 build the thing a billion people use and never see.
 Every bug was a riddle, every outage was a war,
-blameless postmortem after, so we'd learn what it was for.
+did a blameless postmortem when I burned my toast at four.
 A junior with a benchmark could overrule a VP,
-'cause the data was the boss, and the user came before me.
+'cause the data was the boss — and the boss was mostly me.
 Didn't do it for the money — swear we'd do it all for free;
 we were gonna change the world. The mission said so. So did we.
 
@@ -109,16 +109,16 @@ in the engineer's paradise…
 
 ## Suno style prompt
 
-Measured from the reference track: ~80 BPM, 4/4, C minor, a two-bar loop **Cm – Ab – Fm – G** (i–VI–iv–V), one chord every two beats.
+Target: the comedic parody take (lighter, brighter, sillier), not the grave original. Same groove, measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop **Cm – Ab – Fm – G** (i–VI–iv–V), one chord every two beats. The parody's mix is about 20% brighter (spectral centroid ~2.7 kHz vs ~2.2 kHz).
 
-**Style (full, for the long style field):**
+**Style (full):**
 
-Mid-90s West Coast gangsta-rap ballad, slow and grave, 80 BPM, C minor. A looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, played by a mournful synthesized string section with a 1970s soul feel, doubled by a dark church-organ pad. Sparse boom-bap drums: deep round kick, dry crisp snare on 2 and 4, soft closed hi-hat in straight 8ths, no trap rolls. Warm sub bass following the chord roots. Verses: one deep, deliberate male baritone rapper, menacing and calm, precise on-beat 16th-note flow with clear diction, slightly dry vocal. Hook: a soaring soulful male R&B tenor, sung legato with melismatic runs, backed by a massive gospel choir and layered "ooh" harmonies. Spoken-word intro over strings. Cinematic, candlelit, ominous, sorrowful but anthemic. Analog 1995 mix, wide strings, vinyl warmth.
+Comedy parody of a mid-90s West Coast rap ballad, 80 BPM, C minor. Faithful, polished re-creation of the groove: looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, on a lush synthesized string section with a 1970s soul feel and a church-organ pad; boom-bap drums with a round kick, crisp snare on 2 and 4, straight 8th hi-hats. Lead vocal: a nerdy, slightly nasal male tenor rapper, wide-eyed and earnest, theatrical over-enunciation, proud deadpan delivery that plays every absurd line completely straight, little comic vocal inflections and ad-libs. Hook: a sincere, overly pious church choir singing it big and holy, with a soulful lead on top. Spoken-word intro read like a solemn sermon. Bright, clean, glossy late-90s mix; mock-epic, cheerful underneath the gravity.
 
 **Style (short, ≤ 200 chars):**
 
-90s West Coast rap ballad, 80 BPM, C minor, i-VI-iv-V string loop, boom-bap, deep baritone rap, soulful tenor hook, gospel choir, grave, cinematic
+comedy parody, 90s West Coast rap ballad, 80 BPM, C minor string loop, boom-bap, nerdy nasal tenor rap, earnest deadpan, pious gospel choir hook, bright
 
-**Exclude styles:** trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, upbeat, happy, comedic voice
+**Exclude styles:** trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, menacing, gritty, lo-fi
 
-**Structure tags to put in the lyrics field:** `[Intro: spoken word, strings]`, `[Verse 1: baritone rap]`, `[Chorus: tenor + gospel choir]`, `[Verse 2]`, `[Chorus]`, `[Verse 3]`, `[Chorus]`, `[Bridge: half-sung, sparse, drums drop out]`, `[Outro: choir, fading]`, `[Spoken: "Accept all."]`, `[End]`.
+**Structure tags to put in the lyrics field:** `[Intro: solemn spoken sermon, strings]`, `[Verse 1: nerdy rap]`, `[Chorus: pious gospel choir]`, `[Verse 2]`, `[Chorus]`, `[Verse 3]`, `[Chorus]`, `[Bridge: half-sung, sparse, drums drop out]`, `[Outro: choir, fading]`, `[Spoken: "Accept all."]`, `[End]`.
