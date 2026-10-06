@@ -240,10 +240,19 @@ export function phoneInHands(P, x, y, s, o) {
   // the phone
   const ph = Q(`M${-hw + 18} ${-hh} L${hw - 18} ${-hh} Q${hw} ${-hh} ${hw} ${-hh + 18} L${hw} ${hh - 18} Q${hw} ${hh} ${hw - 18} ${hh} L${-hw + 18} ${hh} Q${-hw} ${hh} ${-hw} ${hh - 18} L${-hw} ${-hh + 18} Q${-hw} ${-hh} ${-hw + 18} ${-hh} Z`);
   if (o.uplit) P.line(ph, 12 * s + 2, 'goldLt');
+  if (o.screen) {   // turned round to face us: a glowing screen with one button on it
+    P.both(ph, 'black', lw * 1.1);
+    const scr = Q(rect(-hw + 8, -hh + 10, 2 * hw - 16, 2 * hh - 20, 12)); P.fill(scr, 'cream');
+    P.tone(scr, 'goldLt', { from: [x, y + py * s, 0.7], to: [x + hw * s, y + (py - hh) * s, 0], radial: true, bbox: [x - hw * s, y + (py - hh) * s, x + hw * s, y + (py + hh) * s] }, Math.max(2.5, 4 * s));
+    const pr = o.press ? 3 : 0;
+    P.both(Q(rect(-hw + 14, -30 + pr, 2 * hw - 28, 60, 30)), o.press ? 'tealDk' : 'teal', lw * 0.8);
+    P.text('Accept all', x, y + (py + 8 + pr) * s, { size: 19 * s * 1.0, color: 'cream' });
+  } else {
   P.both(ph, 'tealDk', lw * 1.1);
   P.tone(ph, '#0f1c1b', { from: [x - hw * s, y + (py - hh) * s, 0], to: [x + hw * s, y + (py + hh) * s, 0.5], bbox: [x - (hw + 4) * s, y + (py - hh - 4) * s, x + (hw + 4) * s, y + (py + hh + 4) * s] }, Math.max(3, 5 * s));
   P.both(Q(`M${-hw + 18} ${-hh + 12} L${-hw + 58} ${-hh + 12} Q${-hw + 66} ${-hh + 12} ${-hw + 66} ${-hh + 20} L${-hw + 66} ${-hh + 66} Q${-hw + 66} ${-hh + 74} ${-hw + 58} ${-hh + 74} L${-hw + 18} ${-hh + 74} Q${-hw + 10} ${-hh + 74} ${-hw + 10} ${-hh + 66} L${-hw + 10} ${-hh + 20} Q${-hw + 10} ${-hh + 12} ${-hw + 18} ${-hh + 12} Z`), 'teal', lw * 0.8);
   for (const [cx, cy] of [[-hw + 25, -hh + 28], [-hw + 51, -hh + 28], [-hw + 25, -hh + 56]]) P.both(ell(x + cx * s, y + (py + cy) * s, 10 * s), 'black', lw * 0.5);
+  }
   // the hands, the underneath one first. Each hand is one silhouette: outlines under the fill, so only
   // the outer edge shows; thin lines part the fingers; shade like the face; the top hand casts a shadow
   const shapes = (g) => [g.back, ...g.fingers.map((F) => Q(F.p))];
