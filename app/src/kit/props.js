@@ -6,6 +6,12 @@ export function cut(f, q, nth = 0, tol = 0.03) {
   const s = f.L.get(q, nth).words[0].start;
   return f.A.timeOfBeat(Math.floor(f.A.beatAt(s + tol)));
 }
+/** a cut for a line: on the last beat before its first word, but never before the previous line has ended */
+export function beatCut(f, line) {
+  const i = f.L.lines.indexOf(line), prev = i > 0 ? f.L.lines[i - 1] : null;
+  const b = f.A.timeOfBeat(Math.floor(f.A.beatAt(line.words[0].start + 0.03)));
+  return Math.min(line.words[0].start - 0.05, Math.max(b, prev ? prev.end : 0));
+}
 /** the downbeat nearest to time t */
 export function nearestBar(f, t) { return f.A.timeOfBar(Math.round(f.A.barAt(t))); }
 

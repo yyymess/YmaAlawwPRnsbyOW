@@ -22,6 +22,7 @@ const FRONT = {
  *    uplit 0..1 (screen light from below), hold 'phone' (+ phoneY), hood colour, cheek.
  */
 export function heroFront(P, x, y, s, o = {}) {
+  if (o.still !== true) y += Math.sin((P.t ?? 0) * 1.9 + x * 0.013) * 3.2 * s;   // breathing
   const ctx = P.ctx, T = at(x, y, s), lw = Math.max(1.4, 4 * s), lo = lw * 1.6, bb = [x - 440 * s, y - 280 * s, x + 440 * s, y + 700 * s];
   const cell = Math.max(3, 7 * s), fc = Math.max(2.5, 5 * s), hood = o.hood ?? 'teal';
   const sil = T(FRONT.sil);

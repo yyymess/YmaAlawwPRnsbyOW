@@ -31,6 +31,7 @@ const HAIR = {
  *    crop (bottom of the figure, default 690), ear (default true).
  */
 export function person(P, x, y, s, o = {}) {
+  if (o.still !== true) y += Math.sin((P.t ?? 0) * (1.7 + ((x * 0.37) % 0.5)) + x * 0.029) * 3.2 * s;   // breathing, out of step with the others
   const ctx = P.ctx, T = at(x, y, s), lw = Math.max(1.3, 4 * s), cell = Math.max(3, 7 * s), fc = Math.max(2.5, 5 * s);
   const skin = o.skin ?? 'skin', dot = DOT[skin] ?? 'skinDot', hc = o.hairColor ?? 'hair', top = o.top ?? 'tee', col = o.color ?? 'teal';
   const acc = new Set(o.acc ?? []), crop = o.crop ?? 690, bb = [x - 460 * s, y - 320 * s, x + 460 * s, y + (crop + 20) * s];

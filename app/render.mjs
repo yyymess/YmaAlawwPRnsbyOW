@@ -3,6 +3,7 @@
 //   node app/render.mjs stills --t 3.5,25,61 [--only intro] [--out out/stills]
 //   node app/render.mjs sheet  --from 0 --to 21.6 --n 12 [--cols 4] [--only intro] [--out out/sheet.jpg]
 //   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--out out/engineers-paradise.mp4]
+//   node app/render.mjs check  [--step 0.2] [--from] [--to]   (draws every step; reports scene errors, exit 2 if any)
 //   node app/render.mjs serve  [--port 5173]          (preview: http://localhost:5173/app/?t=0)
 import { createRequire } from 'node:module';
 import { execSync, spawn } from 'node:child_process';
@@ -49,8 +50,13 @@ if (mode === 'serve') { console.log(`preview: http://localhost:${server.address(
 else {
   const { browser, page, logs } = await open(server);
   const duration = await page.evaluate(() => window.__ep.duration);
+  const workerErrs = [];
   try {
-    if (mode === 'stills') {
+    if (mode === 'check') {   // step through the song drawing every frame (no encoding) and report scene errors
+      const step = +opt('step', 0.2), from = +opt('from', 0), to = +opt('to', duration);
+      const n = await page.evaluate(({ from, to, step }) => { let n = 0; for (let t = from; t < to; t += step) { window.__ep.frame(t); n++; } return n; }, { from, to, step });
+      console.log(`checked ${n} frames from ${from}s to ${to.toFixed(1)}s`);
+    } else if (mode === 'stills') {
       const out = path.resolve(ROOT, opt('out', 'out/stills')); await mkdir(out, { recursive: true });
       for (const t of opt('t', '1').split(',').map(Number)) { const f = path.join(out, `t${t.toFixed(2).padStart(7, '0')}.png`); await writeFile(f, await shot(page, t)); console.log(f); }
     } else if (mode === 'sheet') {
@@ -94,10 +100,11 @@ else {
       })();
       await Promise.all([...pages.map(work), writer]);
       await closed;
+      for (const pg of pages.slice(1)) for (const e of await errors(pg)) if (!workerErrs.includes(e)) workerErrs.push(e);
       await Promise.all(extra.map((b) => b.close()));
       console.log(`\n${out}  (${((Date.now() - t0) / 60000).toFixed(1)} min)`);
     }
-    const errs = await errors(page); if (errs.length) console.error('SCENE ERRORS:\n' + errs.join('\n'));
+    const errs = [...new Set([...(await errors(page)), ...workerErrs])]; if (errs.length) { console.error('SCENE ERRORS:\n' + errs.join('\n')); process.exitCode = 2; }
     if (logs.length) console.error('BROWSER:\n' + [...new Set(logs)].slice(0, 20).join('\n'));
   } finally { await browser.close(); server.closeAllConnections?.(); server.close(); }
 }

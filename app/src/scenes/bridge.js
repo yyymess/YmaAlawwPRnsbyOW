@@ -6,13 +6,14 @@ import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, 
 import { heroFront } from '../kit/hero.js';
 import { horse, begin, end } from '../kit/things.js';
 import { cloud } from './verse1.js';
+import { beatCut } from '../kit/props.js';
 
 const INK = 'sepiaDk';
 
 export default function bridge(P, f) {
   const t = f.t, ctx = P.ctx;
   const Ls = [f.L.get('Nineteen-fifteen'), f.L.get('Nineteen-sixty'), f.L.get('Nobody retrained'), f.L.get('boiled'), f.L.get('glue code too')];
-  const cutB = Ls[2].start - 0.3, cutC = Ls[3].start - 0.3, cutD = Ls[4].start - 0.3;
+  const cutB = beatCut(f, Ls[2]), cutC = beatCut(f, Ls[3]), cutD = beatCut(f, Ls[4]);
   page(P, f);
   const sub = t < cutB ? f.start : t < cutC ? cutB : t < cutD ? cutC : cutD, zb = 1 + 0.04 * ease.out(clamp((t - sub) / 6));
   ctx.save(); P.clip(rect(110, 150, 1380, 560)); ctx.translate(800, 430); ctx.scale(zb, zb); ctx.translate(-800, -430);

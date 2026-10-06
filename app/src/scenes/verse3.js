@@ -140,7 +140,8 @@ function emacs(P, f, L, t, w, h) {
     P.both(rect(-130, -46 + press, 260, 92, 46), 'teal', 5); P.text('Accept all', 0, 14 + press, { size: 44, color: 'cream' });
     ctx.restore();
     heroFront(P, 260, 300, 0.45, { blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile' });
-    heroFront(P, 1100, 300, 0.45, { blink: 1, mouth: 'smile' });
+    person(P, 1100, 300, 0.45, { hair: 'messy', top: 'hoodie', color: 'plum', glasses: 'rect', blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile', crop: 1250 });
+    for (const hx of [260, 1100]) { P.both(ell(hx, 82, 110, 24), 'gold', 4); P.line(ell(hx, 82, 88, 15), 1.5); }
   }
 }
 /** his left hand on the keys, from above: one silhouette, the little finger hooked onto Control (or reaching Tab) */

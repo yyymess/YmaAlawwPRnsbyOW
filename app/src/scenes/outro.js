@@ -6,7 +6,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame } from '../kit/props.js';
+import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame, beatCut } from '../kit/props.js';
 import { redPen, scroll, begin, end, star } from '../kit/things.js';
 
 const blinkAt = (t, k = 0) => { const v = (t * 0.41 + k * 0.13) % 1; return v > 0.965 ? 1 - Math.abs(v - 0.982) / 0.017 : 0; };
@@ -15,7 +15,7 @@ const sing = (f) => (f.vocal > 0.18 ? 'sing' : 'neutral');
 export default function outro(P, f) {
   const t = f.t, ctx = P.ctx;
   const L = ['Glue between', 'cleaner than mine', 'Even wrote the tests', 'not a single nit', 'paradise…', 'Accept all.'].map((q) => f.L.get(q));
-  const cuts = [f.start, L[1].start - 0.3, L[2].start - 0.3, L[3].start - 0.3, L[4].start - 0.3, L[5].start - 0.25, L[5].end + 3.3];
+  const cuts = [f.start, beatCut(f, L[1]), beatCut(f, L[2]), beatCut(f, L[3]), beatCut(f, L[4]), beatCut(f, L[5]), f.A.timeOfBeat(Math.ceil(f.A.beatAt(L[5].end + 2.4)))];
   let k = 0; for (let i = 1; i < cuts.length; i++) if (t >= cuts[i]) k = i;
   const lt = t - cuts[k];
   const zo = k < 4 ? 1 + 0.04 * ease.out(clamp(lt / 6)) : 1;
@@ -25,12 +25,12 @@ export default function outro(P, f) {
   else if (k === 2) testsScroll(P, f, t, lt, L);
   else if (k === 3) reviewer(P, f, t, lt, L);
   else if (k === 4) nave(P, f, t, lt, L);
-  else if (k === 5) cardStunt(P, f, t, lt, L);
+  else if (k === 5) cardStunt(P, f, t, lt, L, cuts[6] - cuts[5]);
   else { ctx.restore(); valleyEnd(P, f, t, lt); return; }
   ctx.restore();
   // the ribbon banner, as in the choruses
   const line = f.L.at(t) && f.L.at(t).start >= L[0].start - 0.5 ? f.L.at(t) : L[0];
-  if (k < 6 && !(k === 5 && lt > 2.4)) { const refrain = /paradise/i.test(line.text); lyricBanner(P, f, line, 800, 806, { size: 46, tail: refrain ? 'goldLt' : 'roseLt' }); }
+  if (k < 6 && !(k === 5 && lt > cuts[6] - cuts[5] - 1.0)) { const refrain = /paradise/i.test(line.text); lyricBanner(P, f, line, 800, 806, { size: 46, tail: refrain ? 'goldLt' : 'roseLt' }); }
 }
 
 // ---- the chapel and the choir ------------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ function nave(P, f, t, lt, L) {
 }
 
 // ---- Accept all.: every phone turns round to show the same button; he presses his ---------------------------------------
-function cardStunt(P, f, t, lt, L) {
+function cardStunt(P, f, t, lt, L, dur) {
   chapel(P, f, t, 1.4);
   const ac = L[5].words[0].start, turned = t > ac - 0.05, press = t > L[5].words[1].start;
   const zz = 1 + 0.65 * ease.outCubic(clamp((t - ac + 0.15) / 0.5));
@@ -149,7 +149,7 @@ function cardStunt(P, f, t, lt, L) {
   P.ctx.restore();
   if (press) { const k = clamp((t - L[5].words[1].start) / 0.5); P.ctx.save(); P.alpha((1 - k) * 0.8); P.fill(rect(0, 0, W, H), 'cream'); P.ctx.restore(); }
   // then the arch closes in on the light
-  const cl = clamp((lt - 2.4) / 1.0);
+  const cl = clamp((lt - (dur - 1.0)) / 0.9);
   if (cl > 0) { P.ctx.save(); P.alpha(ease.inOutCubic(cl)); P.fill(rect(0, 0, W, H), 'night'); P.ctx.restore(); }
 }
 

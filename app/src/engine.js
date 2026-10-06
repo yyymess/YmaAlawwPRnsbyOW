@@ -23,6 +23,7 @@ export class Engine {
       kick: A.hit('kick', t), snare: A.hit('snare', t), vocal: A.level('vocal', t), rms: A.level('rms', t),
     };
     f.beatPhase = f.beat - Math.floor(f.beat); f.barPhase = f.bar - Math.floor(f.bar);
+    P.t = t;   // song time, for idle motion inside characters
     try { ctx.save(); e.scene(P, f); ctx.restore(); }
     catch (err) { ctx.restore(); const msg = `${e.id}: ${err.stack ?? err}`; if (!this.errors.includes(msg)) { this.errors.push(msg); console.error(msg); } }
   }
