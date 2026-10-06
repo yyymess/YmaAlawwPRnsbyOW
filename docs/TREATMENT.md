@@ -53,47 +53,34 @@ Times are from `data/audio.json` / `data/lyrics.json` (bars are 3.0 s; bar 0 is 
 Amish's opening shot, rebuilt: a Mucha landscape poster of a fenced lane through golden hills at dawn. "As I walk through the Valley where the robo-taxis roam": the hero walks the lane in profile; a robo-taxi glides past, its roof sensor spinning like a small halo. "I fear no outage, 'cause my agent's on call from home": he lifts his phone (back to us, camera bump), a tiny halo-bearing cursor answers. "with its tokens and its context, it comforts me": tokens drift past like blossoms. On the last bar the arch frame closes in and the banner letters **ENGINEER'S PARADISE**.
 
 ### Verse 1 — The Book of the Engineer (0:21–0:57)
-A long frieze of arched panels; the camera trucks along it one panel per couplet, moving on the downbeat.
-1. *Seventeen with a compiler… MPEG spec…*: a teenager at a CRT with a dial-up modem; the spec on his lap glows (its cover reads ISO/IEC 14496, a pinned page RFC 9559; easter eggs only).
-2. *open standards… RFCs… Haskell*: the saint portrait (round 6): keycap halo, RFC scrolls unrolling; a λ in the halo.
-3. *Came out west… one commit at a time*: walking west with a duffel and a laptop toward a sunrise; his footsteps are commit dots on a git graph.
-4. *Every bug was a riddle… blameless postmortem*: St. George and the Bug: the hero spears a beetle-dragon; then writes the postmortem on a lectern scroll.
-5. *Nobody had a title… code reviewer with no humor*: an org chart of empty dotted boxes drifting like clouds; a towering reviewer with a red pen for a sceptre; the LGTM seal stays in his hand.
-6. *Didn't do it for the money… The mission said so. So did we.*: the mission carved on a stone tablet; a row of engineers under small halos nods along.
+A frieze of six arched chapters on a long wall; the camera glides one chapter per couplet, landing with the first word. Each couplet is lettered on the chapter's plaque under a small title tab.
+1. *I · The Calling*: a teenager's room at night: a beige CRT (`cc hello.c`, `hello, world`, `ATDT`, `CONNECT 56000`), a chattering modem, FRI circled on the calendar, a rubber duck on the shelf; he leans back with the spec (ISO/IEC 14496) glowing on his lap.
+2. *II · The Creed*: the saint portrait: RFC scrolls unfurl like ribbons (791, 2616; then 1149 with its pigeon, and 9559); the halo's keycaps turn over to Haskell; on "please" he prays.
+3. *III · The Pilgrimage*: walking west into the sun past a red bridge, a duffel bag; a packing list ticks off "a laptop, a duffel bag, a dream"; a thought cloud with the world and a heart; one commit dot per step.
+4. *IV · The Dragon*: St George and the Bug (a beetle with bat wings and a question mark); SEV 1 pennant, flames; then the postmortem at a lectern (Who to blame: nobody) while the bug lies on its back under a little halo.
+5. *V · The Elders*: the org chart as clouds of empty dotted boxes ("psst… an org chart?"); the reviewer rises as a Byzantine icon (bald, grey beard, a red pen for a sceptre, the LGTM seal held back); the hero's PR #1 gets its first red nit.
+6. *VI · The Covenant*: the hero waves the money off, FREE on a ribbon; the mission tablet (CHANGE THE WORLD); five believers under small halos nod on "So did we".
 
-### Chorus 1 — Paradise (0:57–1:21)
-A triptych that fills in panel by panel, two bars per sung line: the midnight oil lamp; two ideas as light bulbs in a duel; a ship launched into the world; the world itself. Every "in the engineer's paradise" is lettered on the ribbon banner under the centre arch; the halo above it turns a few degrees per beat.
+### Choruses — one triptych altarpiece, three times
+Header plaques over the wings: PARADISE · MMIV, PARADISE · REVISED, INTRODUCING · ACCEPT ALL. Every line is lettered on the same ribbon banner; the refrain flashes gold. Panels flip like cards to their next couplet.
+- **1 Paradise**: the wings swing open; the midnight oil (lamp, clock, cups, moon); an A/B duel of light bulbs, B crowned; a v1.0 ship launched with fireworks and a champagne bottle; the world under a halo getting a diff (+1,024, −512…).
+- **2 Paradise, Revised**: a revenue arrow for a halo; the fridge become a vending machine at 50¢; the Manager enthroned between two clones in vests; the badge reader's red light, the panels going dark one by one, the wings closing on Α and Ω.
+- **3 Introducing Accept All**: a launch stage with spotlights; the agent writes a scroll and he signs; the calendar burns to April while he sits it out with coffee amid flames, an invoice for four billion tokens (PAID); the robo-taxi passes the horse and buggy at END OF LINE; "You're absolutely right!" with "Great question!" and "Certainly!" in the wings.
 
 ### Verse 2 — The Poster Campaign (1:21–2:03)
-The posters stop being devotional and start selling. Each couplet is an advertising poster in the same Mucha language, each an homage to a big-tech ad idiom.
-1. *Then one Monday at the fridge… "Soda now fifty cents"… a fella with a plan*: the fridge, its hand-written sign in Comic Sans; the SODA poster (round 6). The Manager enters: slick hair, a slide clicker for a sceptre.
-2. *more shares than the founders and a flywheel slide… footnote*: the flat-corporate-illustration homage as a Mucha frieze: long-limbed workers turning a giant flywheel (SHIP · GROW · REORG · ALIGN) like the Wheel of Fortune; the verse-1 tablet gets an asterisk and a tiny footnote.
-3. *the story in the doc… cross-functional alignment*: the promo packet as an illuminated manuscript, "drove cross-functional alignment" in gold capitals; stock certificates drift down.
-4. *a graveyard full of products… God knows*: rows of ornamented tombstones receding to the horizon, each with a level badge (L5→L6).
-5. *the org chart got real… launch review in May*: the org chart is now a Mucha tree of life, all boxes; one button turns from blue to gray after nine stamps come down one by one, one per beat.
-6. *Code yellow… shrank the little "Ad"*: a yellow alarm halo; the green "Ad" label shrinks to a dot and the ad melts into the list of results.
-7. *Got an email Friday morning… badge reader blinked red*: the hero at the door; the reader blinks red; his halo goes out, gold to grey. Hard cut on the downbeat.
-
-### Chorus 2 — Paradise, Revised (2:03–2:27)
-The chorus-1 triptych, corrupted: the halo is replaced by a gold up-and-to-the-right chart arrow; the soda is priced; the Manager sits enthroned in the centre arch ("adult supervision"); on "badge turned red — goodnight" the panels go dark one by one.
+Seven ad posters pasted over each other on a wall, one per couplet (dropped and slapped on with a stroke of paste), each with its slogan band carrying the lyric: MONDAY (the fridge, the Comic Sans sign, the Manager and THE PLAN); THE FLYWHEEL (flat-corporate-illustration workers turning SHIP · GROW · REORG · ALIGN, the Manager riding it with his shares, the mission tablet footnoted *subject to quarterly results*); THE DOC (the code crossed out; DROVE CROSS-FUNCTIONAL ALIGNMENT illuminated; stock raining); THE GRAVEYARD (rows of R.I.P. stones with product glyphs and L6 medals; the users floating up into a cloud); THE ORG CHART (a tree of boxes, a Submit button gone grey under nine APPROVED stamps, three syncs, MAY 31); CODE YELLOW (the beacon, search results whose "Ad" label shrinks to nothing, confetti); FRIDAY (the email, the walk to the door; the badge reader blinks red and the halo goes grey).
 
 ### Verse 3 — The Horseless Carriage (2:27–3:09)
-The AI era; the homage is the AI launch film and the chat product.
-1. *the model learned to code… English*: a keynote stage under an arch; code on the giant screen dissolves into plain English letters.
-2. *Twenty years of Emacs chords… accept all*: close-up of a hand, the pinky bent like a hook over C-x C-s keycaps; then TAB, TAB, TAB, and the Accept all button revealed like a relic.
-3. *Stack Overflow's a ghost town… rubber duck… load-bearing*: a deserted street, a tumbleweed rolling across an empty queue; on the desk a rubber duck under a halo, its speech banner: "load-bearing".
-4. *deleted all the tests… green forever*: test files fall like autumn leaves; the build badge glows green as a halo.
-5. *New grads… nine agents in tmux*: a ladder with missing rungs, graduation caps at its foot; the hero wrangles nine panes arranged like stained-glass windows.
-6. *laid off… farmers' market… signed and dated by the man*: Amish's QUILTS stand becomes a Mucha market poster: **HAND-TYPED CODE · small batch · organic**; jams, clotted cream, and jars with a bug in each, labelled and signed; tourists with cameras.
-
-### Chorus 3 — Introducing Accept All (3:09–3:33)
-A launch-poster homage. "Agent writes it, I just sign": the hero signs with a quill. "tokens burned by April": calendar pages curl and burn. "Horse and buggy, end of line": the intro's robo-taxi passes a horse at the end of the lane. "You're absolutely right!": a giant glowing speech banner under a halo. The ribbon banner still says "in the engineer's paradise".
+A theatre: a Mucha proscenium (velvet curtains, gold fringe, footlights) whose curtains close and open between couplets like a keynote changing slides; the lyric on the apron's plaque. The keynote (code dissolving into English, the braces falling off the screen); the Emacs hand with its little finger hooked on Control, then TAB TAB TAB and Accept all in a reliquary; a ghost town (HOTEL · STACK · OVERFLOW · SALOON) with a tumbleweed across an empty roped queue, then the rubber duck under a spotlight answering in a chat bubble with typing dots: "Ah, that typo is load-bearing."; test files falling like leaves under a green build badge, "I did my best! ✨"; grads under a ladder missing its rungs, then nine agents in a stained-glass tmux herded with a crook; laid off in spring (the duck in the layoff box), the HAND-TYPED CODE stall with jam, cream and bug jars, NO TOKENS; a signed bug jar and tourists' flashes (I ♥ ENGINEERS).
 
 ### Bridge — Glue (3:33–3:57)
-Drums drop out. A sepia almanac page: the horse population, 26 million in 1915 to 3 million in 1960, drawn as a column of horses that thins out year by year. The horses file into a factory; out comes a bottle labelled **GLUE CODE** with the hero's face in the cartouche.
+A sepia almanac page (THE ALMANAC OF PROGRESS) in the isotype manner: 1915, twenty-six horse figures; 1960, three, the rest walking off as motor cars take their places; an empty retraining schoolroom (Lesson 1: Driving — CANCELLED) and one puzzled horse in a dunce cap; the glue works with the horses filing in; a GLUE CODE bottle with the hero's face in the cartouche.
 
 ### Outro — The Choir (3:57–4:38)
-A chapel of arches; a men's choir of engineers, each holding his phone up to his face (backs and camera bumps to us), lit from below by the screens. "Glue between the agents' lines": cables join the phones. "Read its code — it's cleaner than mine", "Even wrote the tests this time", "not a single nit to find": the camera pulls back and the arches multiply into an endless nave. On "Accept all." every screen turns to the same button; the hero presses his; the arch closes into the title.
+A chapel choir of engineers holding their phones up, lit from below; cables join the phones on "Glue between the agents' lines"; its code beside his (ITS vs MINE); the tests scroll (10 passed); the old reviewer searches with a magnifying glass, finds nothing and caps his red pen (LGTM); the arches multiply into a nave; on "Accept all." every phone turns round to show the same button and he presses his. Then the Valley at dusk: the robo-taxi (★★★★★) passes, he walks off towards the sun, the title returns with a credit line, fade to black.
+
+### Between sections
+The new section opens through a growing gold-rimmed arch over the old one (0.6 s), cut in on the vocal's pickup beat.
 
 ## Amish Paradise, used as inspiration
 the opening lane (intro), the quilt stand (verse 3), the tourists with cameras (verse 3), the barn raising (the flywheel, verse 2), the candle choir (outro, with phones instead of candles), the dark close-ups (the saint portrait).
