@@ -149,9 +149,10 @@ function calling(P, f, L, t) {
   heroPose(P, 280, 650, 0.6, {
     seat: 250, lean: lerp(0.2, -0.12, rd),
     legs: { near: { a: 1.5, b: lerp(0.05, -0.15, rd) }, far: { a: 1.42, b: -0.1 } },
-    arms: { near: { a: lerp(0.55, 0.3, rd), e: lerp(1.5, 1.05, rd) }, far: { a: lerp(0.45, 0.2, rd), e: lerp(1.45, 0.95, rd) } },
-    uplit: 0.55, glow: rd > 0.5 ? 'goldLt' : 'mint', lookUp: lerp(0, -0.35, rd), mouth: t > fine ? 'smile' : f.vocal > 0.18 ? 'sing' : 'neutral', open: f.vocal, blink: blinkAt(t),
-    hold: (P2, which, w) => { if (which === 'far' && rd > 0.02) { P2.ctx.save(); P2.alpha(clamp(rd * 3)); specBook(P2, w[0] + 30, w[1] - 70, 0.62, -0.45, { glow, t }); P2.ctx.restore(); } },
+    arms: { near: { a: lerp(0.55, 0.45, rd), e: lerp(1.5, 2.15, rd) }, far: { a: lerp(0.45, 0.35, rd), e: lerp(1.45, 2.0, rd) } },
+    uplit: 0.55, glow: rd > 0.5 ? 'goldLt' : 'mint', lookUp: lerp(0, -0.18, rd), mouth: t > fine ? 'smile' : f.vocal > 0.18 ? 'sing' : 'neutral', open: f.vocal, blink: blinkAt(t),
+    // the spec, held up in front of him in both hands, glowing
+    hold: (P2, which, w) => { if (which === 'near' && rd > 0.02) { P2.ctx.save(); P2.alpha(clamp(rd * 3)); specBook(P2, w[0] + 70, w[1] - 60, 0.95, -0.12, { glow, t }); P2.ctx.restore(); } },
   });
 }
 
@@ -183,7 +184,7 @@ function creed(P, f, L, t) {
   const u1 = ease.outCubic(clamp((t - os) / 0.8)), u2 = ease.outCubic(clamp((t - rf) / 0.6));
   scroll(P, 120, 80, 150, 330, { unroll: u1, title: 'RFC 791', lines: [0.8, 0.6, 0.9, 0.5, 0.7, 0.8, 0.4], titleSize: 22, lineH: 30 });
   scroll(P, 760, 80, 150, 330, { unroll: u1, title: 'RFC 2616', lines: [0.7, 0.9, 0.6, 0.8, 0.5, 0.9, 0.6], titleSize: 22, lineH: 30 });
-  if (u2 > 0) { scroll(P, 130, 450, 130, 150, { unroll: u2, title: 'RFC 1149', lines: [0.6, 0.8], titleSize: 18, lineH: 26 }); pigeon(P, 130, 590 - 30 * (1 - u2), 0.5 * u2, t); scroll(P, 750, 450, 130, 150, { unroll: u2, title: 'RFC 9559', lines: [0.7, 0.5], titleSize: 18, lineH: 26 }); }
+  if (u2 > 0) { scroll(P, 130, 450, 130, 150, { unroll: u2, title: 'RFC 1149', lines: [0.6, 0.8], titleSize: 18, lineH: 26 }); pigeon(P, 120, 432 - 40 * (1 - u2), 0.85 * u2, t); scroll(P, 750, 450, 130, 150, { unroll: u2, title: 'RFC 9559', lines: [0.7, 0.5], titleSize: 18, lineH: 26 }); }
   const please = at0(L, 1, 'please');
   heroFront(P, 440, 330, 0.6, { mouth: f.vocal > 0.18 ? 'sing' : 'smile', open: f.vocal, look: t > please - 0.3 ? [0, -0.8] : [0, 0], brow: t > please - 0.3 ? 1 : 0, blink: blinkAt(t) });
   const ph = ease.outBack(clamp((t - (please - 0.35)) / 0.5));
