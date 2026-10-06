@@ -88,12 +88,13 @@ function choir(p) {
     p.beads(cx, 270, 104, 22, 4.5);
     p.halo(cx, 270, 92, ['<', '/', '>', '{', '}', ';']);
     hero(p, cx, 320, 0.36, { sing: true, uplit: true, noStrings: true });
-    // two hands holding a phone up, screen toward us
-    p.both(ell(cx - 36, 488, 15, 18), 'skin', 2.5); p.both(ell(cx + 36, 488, 15, 18), 'skin', 2.5);
-    p.both(rect(cx - 30, 430, 60, 104, 10), 'line', 2.5);
-    p.fill(rect(cx - 24, 438, 48, 88, 6), 'cream');
-    p.tone(rect(cx - 24, 438, 48, 88, 6), 'gold', { from: [cx, 438, 0.0], to: [cx, 526, 0.5] }, 4);
-    p.fill(rect(cx - 7, 470, 14, 26, 2), 'line');                                             // a cursor on the screen
+    // two hands holding a phone up, screen toward the face: we see its back and the camera bump
+    p.fill(rect(cx - 36, 426, 72, 112, 14), 'goldLt');                                        // screen light leaking round the edges
+    p.both(rect(cx - 30, 430, 60, 104, 10), 'tealDk', 2.5);
+    p.tone(rect(cx - 30, 430, 60, 104, 10), '#0f1c1b', { from: [cx - 30, 430, 0.0], to: [cx + 30, 534, 0.5] }, 4);
+    p.both(rect(cx - 22, 438, 26, 30, 7), 'teal', 2);                                         // camera bump
+    p.both(ell(cx - 15, 446, 4.5), 'line', 1.5); p.both(ell(cx - 4, 446, 4.5), 'line', 1.5); p.both(ell(cx - 15, 459, 4.5), 'line', 1.5);
+    p.both(ell(cx - 36, 498, 15, 18), 'skin', 2.5); p.both(ell(cx + 36, 498, 15, 18), 'skin', 2.5);
   }
   banner(p, 330, 748, 940, 100, 'in the engineer’s paradise', { size: 60, tail: 'sage' });
   p.grain(7);
