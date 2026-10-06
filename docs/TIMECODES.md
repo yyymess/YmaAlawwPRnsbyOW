@@ -13,7 +13,7 @@ Where each shot is in the video, to point at things during review. Times are m:s
 | 0:39 | verse 1 · IV | The Dragon: St George and the bug (SEV 1); then the blameless postmortem (NOBODY) |
 | 0:45 | verse 1 · V | The Elders: the org chart as clouds, the whisper; the reviewer rises as an icon |
 | 0:51 | verse 1 · VI | The Covenant: the money waved off, FREE; the mission tablet, the believers nod |
-| 0:57 | chorus 1 | the triptych opens: midnight oil · A/B bulbs · the v1.0 ship · the world gets a diff, LGTM |
+| 0:57 | chorus 1 | the triptych opens: midnight oil · A/B bulbs · the BETA ship · the world gets a diff, LGTM |
 | 1:21 | verse 2 | MONDAY: the fridge's Comic Sans sign, the Manager and THE PLAN |
 | 1:27 | verse 2 | THE FLYWHEEL: workers push, the Manager rides on top with his shares; the footnote |
 | 1:34 | verse 2 | THE DOC: the code crossed out, DROVE CROSS-FUNCTIONAL ALIGNMENT, stock raining |

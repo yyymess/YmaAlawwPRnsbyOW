@@ -63,7 +63,7 @@ A frieze of six arched chapters on a long wall; the camera glides one chapter pe
 
 ### Choruses — one triptych altarpiece, three times
 Header plaques over the wings: PARADISE · MMIV, PARADISE · REVISED, INTRODUCING · ACCEPT ALL. Every line is lettered on the same ribbon banner; the refrain flashes gold. Panels flip like cards to their next couplet.
-- **1 Paradise**: the wings swing open; the midnight oil (lamp, clock, cups, moon); an A/B duel of light bulbs, B crowned; a v1.0 ship launched with fireworks and a champagne bottle; the world under a halo getting a diff (+1,024, −512…).
+- **1 Paradise**: the wings swing open; the midnight oil (lamp, clock, cups, moon); an A/B duel of light bulbs, B crowned; a ship with BETA on its sail (everything launched as a public beta then) sent off with fireworks and a champagne bottle; the world under a halo getting a diff (+1,024, −512…).
 - **2 Paradise, Revised**: a revenue arrow for a halo; the fridge become a vending machine at 50¢; the Manager enthroned between two clones in vests; the badge reader's red light, the panels going dark one by one, the wings closing on Α and Ω.
 - **3 Introducing Accept All**: a launch stage with spotlights; the agent writes a scroll and he signs; the calendar burns to April while he sits it out with coffee amid flames, an invoice for four billion tokens (PAID); the robo-taxi passes the horse and buggy at END OF LINE; "You're absolutely right!" with "Great question!" and "Certainly!" in the wings.
 

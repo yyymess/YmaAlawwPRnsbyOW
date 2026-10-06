@@ -153,7 +153,7 @@ const VARIANTS = {
         const sh = word(lines, 4, 'ship'), u = ease.inOutCubic(clamp((t - sh) / 1.6));
         for (let i = 0; i < 6; i++) firework(P, 120 + ((i * 197) % 420), 120 + ((i * 89) % 160), 90, ((t - sh - i * 0.37) % 2.2) / 1.2, i % 2 ? 'goldLt' : 'roseLt');
         P.fill(rect(-10, 470, box.w + 20, 200), 'navyDk');
-        ship(P, lerp(150, 330, u), 520 + lerp(-40, 0, u), 0.62, t, { sail: 'v1.0' });
+        ship(P, lerp(150, 330, u), 520 + lerp(-40, 0, u), 0.62, t, { sail: 'BETA' });   // the public beta, as everything once launched
         for (let i = 0; i < 6; i++) P.line(svg(`M${-40 + i * 130 + Math.sin(t * 2 + i) * 20} ${540 + (i % 2) * 40} q30 -14 60 0 q30 14 60 0`), 4, 'mint');
       } else {   // change the world: the globe lifted up under a halo
         fillBg(P, box, 'goldLt', 'gold', 0.4);
