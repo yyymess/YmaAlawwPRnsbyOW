@@ -105,14 +105,15 @@ function fridge(P, f, L, t, w, h) {
     if (t > wd(L, 1, 'fifty') - 0.1) P.text('50¢ !!', 0, 38, { font: FONT.comic, size: 44, weight: 700, color: 'red' });
     ctx.restore();
   }
-  // a fella with a plan: the Manager slides in with his clicker; a slide behind him
-  const fl = wd(L, 1, 'fella'), mu = ease.outCubic(clamp((t - fl + 0.4) / 0.6));
+  // the hero at the fridge, reaching for a soda; he reads the sign, then turns to the fella with a plan
+  const fl = wd(L, 1, 'fella'), mu = ease.outCubic(clamp((t - fl + 0.4) / 0.6)), sg2 = wd(L, 0, 'sign');
+  heroFront(P, 650, 330, 0.42, { look: t > fl ? [0.9, 0] : [-0.9, -0.2], mouth: t > wd(L, 1, 'fifty') ? 'o' : f.vocal > 0.18 ? 'sing' : 'neutral', open: f.vocal, brow: t > sg2 ? 1 : 0, blink: blinkAt(t) });
   if (mu > 0) {
     ctx.save(); ctx.translate((1 - mu) * 500, 0);
-    P.both(rect(640, 60, 540, 300, 8), 'ivory', 4); P.text('THE PLAN', 910, 110, { font: FONT.caps, weight: 700, size: 34, tracking: 6 });
-    [0.3, 0.45, 0.4, 0.7, 0.9].forEach((v, i) => P.both(rect(690 + i * 90, 330 - 190 * v, 56, 190 * v, 3), i === 4 ? 'gold' : 'sage', 3));
-    P.line(svg('M680 320 L1130 140'), 6, 'red');
-    person(P, 920, 400, 0.42, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 900, look: [-0.4, 0], blink: blinkAt(t) });
+    P.both(rect(840, 40, 360, 250, 8), 'ivory', 4); P.text('THE PLAN', 1020, 86, { font: FONT.caps, weight: 700, size: 30, tracking: 6 });
+    [0.3, 0.45, 0.4, 0.7, 0.9].forEach((v, i) => P.both(rect(870 + i * 62, 270 - 150 * v, 42, 150 * v, 3), i === 4 ? 'gold' : 'sage', 3));
+    P.line(svg('M860 260 L1180 110'), 6, 'red');
+    person(P, 1030, 400, 0.4, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 900, look: [-0.6, 0], blink: blinkAt(t) });
     ctx.restore();
   }
 }
@@ -188,7 +189,8 @@ function theDoc(P, f, L, t, w, h) {
   const dv = wd(L, 1, 'drove'), al = wd(L, 1, 'alignment');
   const words = ['rove', 'cross-', 'functional', 'alignment'];
   words.forEach((s2, i) => { const t0 = dv + (i === 0 ? 0 : (al - dv) * (i / 3)), u = clamp((t - t0) / 0.35); if (u > 0) { ctx.save(); P.alpha(u); P.text(s2.toUpperCase(), i === 0 ? 205 : 220, i === 0 ? 150 : 150 + i * 70, { font: FONT.caps, weight: 700, size: i === 0 ? 64 : 56, color: 'gold', stroke: 'line', strokeW: 3, align: 'left' }); ctx.restore(); } });
-  for (let i = 0; i < 3; i++) P.line(svg(`M220 ${400 + i * 20} l${360 - i * 60} 0`), 3, 'sepiaDk');
+  const st = wd(L, 0, 'story'), su = clamp((t - st) / 0.8);
+  if (su > 0) { P.text('THE STORY OF MY IMPACT', 410, 96, { font: FONT.caps, weight: 700, size: 26, color: 'red' }); for (let i = 0; i < 5; i++) { const w = [380, 340, 390, 300, 360][i] * clamp(su * 5 - i); if (w > 0) P.line(svg(`M220 ${400 + i * 16} l${w * 0.95} 0`), 3, 'sepiaDk'); } }
   ctx.restore();
   // the stock, handed down from above
   const sk = wd(L, 1, 'stock') - 0.6;
@@ -303,7 +305,14 @@ function codeYellow(P, f, L, t, w, h) {
   ctx.restore();
   // best quarter we ever had: an arrow up and confetti
   const bq = wd(L, 1, 'best');
-  if (t > bq) { const v = ease.outCubic(clamp((t - bq) / 0.6)); P.line(svg(`M900 500 L${900 + 200 * v} ${500 - 300 * v}`), 18); P.line(svg(`M900 500 L${900 + 200 * v} ${500 - 300 * v}`), 10, 'gold'); for (let i = 0; i < 26; i++) { const k = ((t - bq) * 0.6 + i * 0.04) % 1; P.fill(rect(60 + ((i * 113) % 1100), -20 + k * 560, 14, 8), ['red', 'teal', 'gold', 'rose'][i % 4]); } }
+  if (t > bq) {
+    const v = ease.outCubic(clamp((t - bq) / 0.7));
+    P.both(rect(40, 350, 240, 170, 8), 'ivory', 3); P.text('Q3', 76, 384, { font: FONT.caps, weight: 700, size: 22 });
+    [0.3, 0.45, 0.6, 1.0].forEach((h, i) => P.both(rect(70 + i * 50, 500 - 110 * h * v, 34, 110 * h * v, 3), i === 3 ? 'gold' : 'sage', 2.5));
+    const ah = new Path2D(); ah.moveTo(70, 470); ah.lineTo(70 + 190 * v, 470 - 100 * v); P.line(ah, 12); P.line(ah, 6, 'red');
+    P.ctx.save(); P.ctx.translate(70 + 190 * v, 470 - 100 * v); P.ctx.rotate(-0.48); P.both(svg('M-4 -16 L24 0 L-4 16 Z'), 'red', 3); P.ctx.restore();
+    for (let i = 0; i < 26; i++) { const k = ((t - bq) * 0.6 + i * 0.04) % 1; P.fill(rect(60 + ((i * 113) % 1100), -20 + k * 560, 14, 8), ['red', 'teal', 'gold', 'rose'][i % 4]); }
+  }
 }
 
 // ---- 7. FRIDAY: an email; he drives in like before; the badge reader blinks red; the halo goes grey -----------------

@@ -71,9 +71,9 @@ function isotype(P, f, Ls, t) {
     for (let i = 0; i < 26; i++) {
       const stay = i < 3, walk = clamp((t - b1 - (i % 13) * 0.04) / 1.4);
       const x = 340 + (i % 13) * 84 + (stay ? 0 : ease.in(walk) * 1200), y = y2 - 10 + Math.floor(i / 13) * 76;
+      if (!stay && walk > 0.3) carIcon(P, 340 + (i % 13) * 84, y, 0.72, clamp((walk - 0.3) / 0.4));
       if (!stay && walk >= 1) continue;
       horseIcon(P, x, y, 0.78, stay ? 1 : 1 - walk * 0.5);
-      if (!stay && walk > 0.3) carIcon(P, 340 + (i % 13) * 84, y, 0.72, clamp((walk - 0.3) / 0.4));
     }
     if (t > b1) P.text('3,000,000', 1350, y2 - 90, { font: FONT.caps, weight: 700, size: 30, color: INK, align: 'right' });
   }

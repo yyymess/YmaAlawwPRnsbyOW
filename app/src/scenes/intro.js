@@ -57,8 +57,7 @@ function valley(P, f, end) {
   // the title unfurls on the first bars, then the lyric
   const unfurl = ease.outCubic(prog(t, 0.6, 3.0));
   P.save(); P.ctx.translate(800, 96);
-  if (unfurl > 0) { const w = 760 * unfurl; P.banner(-w / 2, -50, w, 100, { tail: 'roseLt' }); }
-  if (unfurl > 0.95) P.text('ENGINEER’S PARADISE', 0, 22, { size: 60, tracking: 2 });
+  if (unfurl > 0) { const w = 760 * unfurl; P.banner(-w / 2, -50, w, 100, { tail: 'roseLt' }); P.save(); P.clip(rect(-w / 2 + 14, -60, Math.max(0, w - 28), 120)); P.text('ENGINEER’S PARADISE', 0, 22, { size: 60, tracking: 2 }); P.restore(); }
   P.restore();
   lyricBanner(P, f, f.L.get('As I walk through'), 800, 822, { size: 40, unfurl: ease.outCubic(prog(t, 2.9, 3.5)) });
 }
@@ -114,10 +113,10 @@ function blossoms(P, f, start) {
   // tokens drift down from the upper left like petals, starting on "tokens"
   const tk = f.L.get('with its tokens').words.find((w) => w.w.startsWith('tokens')).start;
   const r = rng(11);
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 16; i++) {
     // two streams, one down each side of the arch, so the face stays clear
     const side = i % 2 ? 1 : -1, born = tk - 0.4 + r() * 5.5, life = 4.5 + r() * 2, u = (t - born) / life, txt = PIECES[i % PIECES.length], spin = r() * 6, sz = 0.95 + r() * 0.45;
-    const lane = 200 + r() * 260;
+    const lane = 270 + r() * 230;
     if (u < 0 || u > 1) continue;
     const x = 800 + side * (lane + Math.sin(u * 6 + i) * 60), y = -60 + u * 980;
     token(P, x, y, sz, Math.sin(u * 4 + spin) * 0.6, txt);

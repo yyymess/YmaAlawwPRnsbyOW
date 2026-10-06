@@ -10,7 +10,7 @@ import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
 import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll, flame } from '../kit/things.js';
-import { cloud, heart } from './verse1.js';
+import { cloud, heart, palm } from './verse1.js';
 
 const CEN = { x: 480, y: 30, w: 640, h: 640, rise: 250 };
 const WING = [{ x: 70, y: 110, w: 390, h: 540, rise: 160 }, { x: 1140, y: 110, w: 390, h: 540, rise: 160 }];
@@ -52,8 +52,12 @@ export default function chorus(P, f) {
   };
   panel(1, CEN, V.centre);
   WING.forEach((box, j) => wing(P, f, box, j, open, () => panel(j === 0 ? 0 : 2, box, j === 0 ? V.left : V.right)));
-  // the dark: at the end of chorus 2 the lights go out panel by panel
-  if (n === 2) darkness(P, f, lines);
+  // the dark: at the end of chorus 2 the lights go out panel by panel, then a sign is hung on the closed wings
+  if (n === 2) {
+    darkness(P, f, lines);
+    const hs = ease.outBack(clamp((t - lines[7].start - 1.0) / 0.5));
+    if (hs > 0) { const sw = Math.sin((t - lines[7].start) * 3) * 0.06 * (1 - clamp((t - lines[7].start - 1.0) / 2.5)); ctx.save(); ctx.translate(800, 120 - (1 - hs) * 200); ctx.rotate(sw); P.line(svg('M-90 0 L0 -70 L90 0'), 4); P.both(ell(0, -72, 8), 'gold', 3); P.both(rect(-170, 0, 340, 140, 10), 'ivory', 5); P.line(rect(-160, 10, 320, 120, 6), 1.5); P.text('CLOSED', 0, 68, { font: FONT.caps, weight: 700, size: 52, tracking: 6, color: 'red' }); P.text('FOR REORG', 0, 112, { font: FONT.caps, weight: 700, size: 28, tracking: 6 }); ctx.restore(); }
+  }
   // the ribbon banner: every line, the refrain in gold
   const line = f.L.at(t) && f.L.at(t).start >= lines[0].start - 0.5 ? f.L.at(t) : lines[0];
   const refrain = /paradise/i.test(line.text);
@@ -168,7 +172,7 @@ const VARIANTS = {
     left(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'tealDk', 'hoodDot', 0.5); const n = Math.min(6, Math.floor(lt / 0.75) + 1); for (let i = 0; i < n; i++) cup(P, 195 + (i % 2 ? 18 : -14), 500 - i * 74, 0.9, (i % 2 ? 0.08 : -0.06)); }
-      else if (c === 1) { fillBg(P, box, 'teal', 'tealDk', 0.4); pennant(P, 195, 230, 'A', 'teal'); bars(P, 95, 500, [0.5, 0.42, 0.38], 'cream'); }
+      else if (c === 1) { fillBg(P, box, 'teal', 'tealDk', 0.4); pennant(P, 195, 230, 'A', 'teal', 150 * ease.inOutCubic(clamp((t - lines[3].start) / 1.4))); bars(P, 95, 500, [0.5, 0.42, 0.38], 'cream'); }
       else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 120 + i * 90, 180 + i * 90, 80, ((t - i * 0.6) % 1.8) / 1.2, i % 2 ? 'roseLt' : 'goldLt'); champagne(P, 200, 520, 0.9, lt); }
       else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'side', top: 'tee', color: 'navy', acc: ['halo'], mouth: 'smile', look: [0.6, -0.3], crop: 900, blink: blinkAt(t) }); }
     },
@@ -187,9 +191,10 @@ const VARIANTS = {
         fillBg(P, box, 'cream', 'sepia', 0.4);
         const u = ease.outCubic(clamp(lt / 1.6));
         [0.25, 0.35, 0.3, 0.5, 0.62, 0.8].forEach((h, i) => { const bh = 380 * h * u; P.both(rect(90 + i * 80, 580 - bh, 56, bh, 4), i === 5 ? 'gold' : 'sage', 3); });
-        const ar = new Path2D(); ar.moveTo(80, 520); ar.lineTo(80 + 160 * u, 470 - 40 * u); ar.lineTo(80 + 300 * u, 500 - 120 * u); ar.lineTo(80 + 470 * u, 300 - 200 * u);
-        P.line(ar, 30); P.line(ar, 20, 'gold');
-        if (u > 0.95) { P.ctx.save(); P.ctx.translate(550, 100); P.ctx.rotate(-0.8); P.both(svg('M0 -40 L50 0 L0 40 Z'), 'gold', 5); P.ctx.restore(); }
+        const pts = [[80, 540], [230, 480], [350, 470], [470, 200]], k = u * 3, ar = new Path2D(); ar.moveTo(...pts[0]);
+        let tip = pts[0], dir = 0; for (let i = 1; i <= 3; i++) { const a = pts[i - 1], b = pts[i], v = clamp(k - (i - 1)); if (v <= 0) break; tip = [lerp(a[0], b[0], v), lerp(a[1], b[1], v)]; dir = Math.atan2(b[1] - a[1], b[0] - a[0]); ar.lineTo(...tip); }
+        P.line(ar, 32); P.line(ar, 20, 'gold');
+        P.ctx.save(); P.ctx.translate(...tip); P.ctx.rotate(dir); P.both(svg('M-6 -34 L48 0 L-6 34 Z'), 'gold', 5); P.ctx.restore();
         P.text('$', 140, 160, { size: 90, weight: 700, color: 'gold', stroke: 'line', strokeW: 6 });
       } else if (c === 1) {   // soda's fifty cents: the fridge became a vending machine
         fillBg(P, box, 'char', 'charDk', 0.5);
@@ -213,7 +218,7 @@ const VARIANTS = {
     left(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(8, Math.floor(lt / 0.5) + 1)); }
-      else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); for (let i = 0; i < 5; i++) { const u = ((lt * 0.8 + i * 0.2) % 1); P.both(ell(195, 120 + u * 420, 22, 8), 'gold', 3); } }
+      else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); heroFront(P, 180, 210, 0.38, { mouth: 'frown', look: [0.3, 0.9], brow: 1, blink: blinkAt(t) }); palm(P, 250, 560, 1.05, -0.2); for (const [cx, cy, v] of [[236, 446, '10¢'], [276, 470, '5¢']]) { P.both(ell(cx, cy, 26), 'gold', 3); P.line(ell(cx, cy, 20), 1.2, 'ochre'); P.text(v, cx, cy + 7, { font: FONT.caps, weight: 700, size: 17 }); } }
       else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'slick', top: 'vest', color: 'navy', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 1), look: [0.5, 0] }); }
       else { fillBg(P, box, 'cream', 'sepia', 0.4); }
     },
@@ -263,6 +268,7 @@ const VARIANTS = {
         agentAngel(P, 320, 180 + Math.sin(t * 1.6) * 5, 0.75, t);
         const u = ease.outBack(clamp((t - word(lines, 6, 'you')) / 0.5));
         if (u > 0) { P.ctx.save(); P.ctx.translate(320, 470); P.ctx.scale(u, u); P.both(svg('M-280 -70 L280 -70 L280 70 L40 70 L0 120 L-10 70 L-280 70 Z'), 'cream', 6); P.text('You’re absolutely', 0, -10, { size: 48 }); P.text('right!', 0, 48, { size: 54, color: 'red' }); P.ctx.restore(); }
+        cascade(P, f, lines, [['Spot on!', 130, 330], ['Brilliant!', 510, 330], ['So true!', 150, 590], ['Exactly!', 490, 590]], 0);
       }
     },
     left(P, f, c, lt, lines, box) {
@@ -270,23 +276,28 @@ const VARIANTS = {
       if (c === 0) { fillBg(P, box, 'night', 'navy', 0.3); for (let i = 0; i < 7; i++) { const u = ((t * 0.4 + i / 7) % 1); token(P, 195 + Math.sin(i * 2 + t) * 80, 560 - u * 440, 0.85, 0, ['tok', 'en', 'agent', '…', 'LGTM', 'ok', 'ship'][i]); } }
       else if (c === 1) { fillBg(P, box, 'night', 'redDk', 0.4); gauge(P, 195, 360, 1 - clamp(lt / 2.2)); }
       else if (c === 2) { fillBg(P, box, 'sky', 'gold', 0.4); P.both(svg('M-10 430 C150 400 300 420 400 410 L400 560 L-10 560 Z'), 'sage', 3); hay(P, 195, 520, 1); }
-      else { fillBg(P, box, 'night', 'navy', 0.3); agentAngel(P, 195, 200, 0.42, t + 1); speech(P, 195, 430, 'Great question!'); }
+      else { fillBg(P, box, 'night', 'navy', 0.3); agentAngel(P, 195, 200, 0.42, t + 1); speech(P, 195, 430, 'Great question!'); cascade(P, f, lines, [['Great catch!', 195, 320]], 1); }
     },
     right(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'night', 'navy', 0.3); for (let i = 0; i < 7; i++) { const u = ((t * 0.4 + i / 7 + 0.5) % 1); token(P, 195 + Math.sin(i * 3 + t) * 80, 560 - u * 440, 0.85, 0, ['code', '##ing', 'diff', '+42', '-0', 'done', '✓'][i]); } }
       else if (c === 1) { fillBg(P, box, 'night', 'redDk', 0.4); scroll(P, 195, 120, 260, 360, { unroll: ease.outCubic(clamp(lt / 0.8)), title: 'INVOICE', titleSize: 26, lines: ['tokens', '4,000,000,000', '', 'due: April', 'PAID ✓'], size: 26, lineH: 44 }); }
-      else if (c === 2) { fillBg(P, box, 'sky', 'gold', 0.4); P.both(svg('M-10 430 C150 400 300 420 400 410 L400 560 L-10 560 Z'), 'sage', 3); charger(P, 195, 520, 1); }
-      else { fillBg(P, box, 'night', 'navy', 0.3); agentAngel(P, 195, 200, 0.42, t + 2); speech(P, 195, 430, 'Certainly!'); }
+      else if (c === 2) {
+        fillBg(P, box, 'sky', 'gold', 0.4); P.both(svg('M-10 430 C150 400 300 420 400 410 L400 560 L-10 560 Z'), 'sage', 3); charger(P, 300, 520, 0.9);
+        const arr = word(lines, 4, 'horse') + 2.2, u = ease.outCubic(clamp((t - arr) / 1.0));
+        if (u > 0) { robotaxi(P, lerp(-200, 120, u), 540, 0.36, t * (1 - u), 1); if (u >= 1) { P.line(svg('M245 470 C220 500 200 500 190 470'), 7); P.line(svg('M245 470 C220 500 200 500 190 470'), 4, 'char'); const g = 0.5 + 0.5 * Math.sin(t * 6); P.ctx.save(); P.alpha(g); P.text('⚡', 120, 380, { size: 40, color: 'gold' }); P.ctx.restore(); } }
+      }
+      else { fillBg(P, box, 'night', 'navy', 0.3); agentAngel(P, 195, 200, 0.42, t + 2); speech(P, 195, 430, 'Certainly!'); cascade(P, f, lines, [['Love this!', 195, 320]], 3); }
     },
   },
 };
 
 // ---- small things for the panels -------------------------------------------------------------------------
-function pennant(P, x, y, letter, color) {
-  P.line(svg(`M${x - 120} ${y - 120} L${x - 120} ${y + 200}`), 6);
-  P.both(svg(`M${x - 120} ${y - 110} L${x + 140} ${y - 60} L${x - 120} ${y - 10} Z`), color === 'teal' ? 'cream' : 'ivory', 4);
-  P.text(letter, x - 60, y - 44, { font: FONT.caps, weight: 700, size: 56 });
+function pennant(P, x, y, letter, color, drop = 0) {
+  P.line(svg(`M${x - 120} ${y - 120} L${x - 120} ${y + 200}`), 6); P.both(ell(x - 120, y - 124, 9), 'gold', 3);
+  const droop = drop / 150;
+  P.both(svg(`M${x - 120} ${y - 110 + drop} L${x + 140 - 60 * droop} ${y - 60 + drop + 40 * droop} L${x - 120} ${y - 10 + drop} Z`), color === 'teal' ? 'cream' : 'ivory', 4);
+  P.text(letter, x - 60, y - 44 + drop + 6 * droop, { font: FONT.caps, weight: 700, size: 56 });
 }
 function bars(P, x, y, hs, color) { hs.forEach((h, i) => P.both(rect(x + i * 70, y - 300 * h, 50, 300 * h, 4), color, 3)); P.line(svg(`M${x - 20} ${y} L${x + 220} ${y}`), 4); }
 function champagne(P, x, y, s, lt) {
@@ -333,6 +344,11 @@ function charger(P, x, y, s) {
   P.both(rect(-50, -260, 100, 260, 14), 'mint', lw); P.both(rect(-34, -230, 68, 80, 8), 'black', lw); P.text('⚡', 0, -172, { size: 48, color: 'gold' });
   P.line(svg('M50 -120 C110 -110 120 -40 90 0'), lw * 2.4); P.line(svg('M50 -120 C110 -110 120 -40 90 0'), lw * 1.2, 'char');
   end(P);
+}
+/** compliments popping one per beat during the last refrain */
+function cascade(P, f, lines, items, k0) {
+  const t0 = lines[7].start;
+  items.forEach(([s, x, y], i) => { const u = ease.outBack(clamp((f.t - t0 - (k0 + i * 2) * f.A.P * 0.5) / 0.3)); if (u > 0) { P.ctx.save(); P.ctx.translate(x, y); P.ctx.scale(u * 0.8, u * 0.8); P.ctx.rotate((i % 2 ? -1 : 1) * 0.06); speech(P, 0, 0, s); P.ctx.restore(); } });
 }
 function speech(P, x, y, text) {
   const w = P.measure(text, { size: 34 }) + 50;

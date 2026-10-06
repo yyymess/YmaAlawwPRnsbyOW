@@ -170,7 +170,7 @@ function ghostTown(P, f, L, t, w, h) {
     P.both(rect(1060, 470, 180, 110, 6), 'ivory', 3); P.text('QUEUE', 1150, 510, { font: FONT.caps, weight: 700, size: 28 }); P.text('0 answers', 1150, 556, { size: 26, color: 'red' });
     // the tumbleweed rolls across the queue
     const tw = wd(L, 0, 'tumbleweed') - 0.4, u = clamp((t - tw) / 2.4);
-    if (u > 0) { const x = lerp(-120, w + 120, u), y = 520 - Math.abs(Math.sin(u * 14)) * 50; ctx.save(); ctx.translate(x, y); ctx.rotate(u * 18); for (let i = 0; i < 10; i++) { const a = i * 0.63; P.line(svg(`M0 0 C${Math.cos(a) * 40} ${Math.sin(a) * 40} ${Math.cos(a + 1) * 60} ${Math.sin(a + 1) * 60} ${Math.cos(a + 2) * 50} ${Math.sin(a + 2) * 50}`), 4, 'sepiaDk'); } P.line(ell(0, 0, 56), 3, 'sepiaDk'); ctx.restore(); }
+    if (u > 0) { const x = lerp(-150, w + 150, u), y = 500 - Math.abs(Math.sin(u * 12)) * 60; ctx.save(); ctx.translate(x, y); ctx.rotate(u * 16); P.ctx.save(); P.alpha(0.5); P.fill(ell(0, 0, 84), 'ochre'); P.ctx.restore(); for (let i = 0; i < 14; i++) { const a = i * 0.45; P.line(svg(`M${Math.cos(a) * 20} ${Math.sin(a) * 20} C${Math.cos(a) * 60} ${Math.sin(a) * 60} ${Math.cos(a + 1) * 90} ${Math.sin(a + 1) * 90} ${Math.cos(a + 2) * 74} ${Math.sin(a + 2) * 74}`), 6, 'sepiaDk'); } P.line(ell(0, 0, 84), 4, 'sepiaDk'); ctx.restore(); }
   } else {
     // the duck under a spotlight, its words in a chat bubble with typing dots first
     backdrop(P, w, h, 'night', 'tealDk');
@@ -305,6 +305,9 @@ function market(P, f, L, t, w, h) {
   const ctx = P.ctx, l2 = L[1].words[0].start - 0.1;
   if (t < l2) {
     marketStall(P, f, t, w, h, L, true);
+    // the tourists arrive at the stall
+    const og = wd(L, 0, 'organic'), tu = ease.outCubic(clamp((t - og + 0.3) / 0.8));
+    if (tu > 0) { person(P, lerp(-200, 290, tu), 470, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], skin: 'skin3', mouth: 'o', crop: 700, look: [0.7, -0.2], blink: blinkAt(t) }); person(P, lerp(w + 200, w - 290, tu), 480, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 700, look: [-0.7, -0.2], blink: blinkAt(t + 1) }); }
     const nt = wd(L, 0, 'not') - 0.1, u = ease.outBack(clamp((t - nt) / 0.4));
     if (u > 0) { ctx.save(); ctx.translate(1080, 470); ctx.scale(u, u); P.both(svg('M-60 0 L-60 -140 C-60 -150 60 -150 60 -140 L60 0 Z'), 'silver', 4); P.both(rect(-60, -110, 120, 70, 4), 'ivory', 3); P.text('NO', 0, -82, { font: FONT.caps, weight: 700, size: 22 }); P.text('TOKENS', 0, -54, { font: FONT.caps, weight: 700, size: 20 }); ctx.restore(); }
   } else {

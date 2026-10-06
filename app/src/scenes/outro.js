@@ -162,13 +162,13 @@ function valleyEnd(P, f, t, lt) {
   P.halo(1120, 520, 230, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.35);
   P.both(svg('M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520 L1700 900 L-100 900 Z'), 'ochre', 4);
   campus(P, 380, 532, 0.5);
+  // the robo-taxi glides along the far ridge road the other way, rated five stars
+  const rx = lerp(1750, -250, clamp((lt - 0.8) / 5.0));
+  if (rx > -240 && rx < 1740) { robotaxi(P, rx, 556, 0.36, t, -1); ctx.save(); ctx.translate(rx, 430); P.both(rect(-80, -22, 160, 44, 10), 'cream', 3); P.text('★★★★★', 0, 10, { size: 26, color: 'gold' }); P.line(svg('M0 22 L0 34'), 2); ctx.restore(); }
   P.both(svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z'), 'sageDk', 4);
   P.tone(svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z'), 'hoodDot', { from: [800, 620, 0.1], to: [800, 900, 0.5], bbox: [0, 580, W, H] }, 7);
   tree(P, 150, 650, 0.9, 2); cypress(P, 250, 655, 0.8); cypress(P, 1290, 640, 0.7); tree(P, 1420, 645, 0.8, 5);
   P.both(rect(-20, 700, W + 40, 70), 'sepia', 4);
-  // the robo-taxi glides past the other way, rated five stars
-  const rx = lerp(1900, -500, clamp((lt - 1.0) / 4.0));
-  if (rx > -480 && rx < 1880) { robotaxi(P, rx, 728, 0.9, t, -1); ctx.save(); ctx.translate(rx, 600); P.both(rect(-90, -26, 180, 52, 10), 'cream', 3); P.text('★★★★★', 0, 12, { size: 30, color: 'gold' }); ctx.restore(); }
   // he walks off towards the sun, smaller as he goes
   const w = clamp(lt / (dur - 2)), hs = lerp(0.42, 0.16, w);
   heroWalk(P, lerp(520, 1080, w), lerp(760, 690, w), hs, lt * 6, { hood: 'teal' });
@@ -178,7 +178,7 @@ function valleyEnd(P, f, t, lt) {
   posterFrame(P);
   // the title, unfurling; the credit
   const un = ease.outCubic(clamp((lt - 1.2) / 2.0));
-  if (un > 0) { ctx.save(); ctx.translate(800, 110); const bw = 900 * un; P.banner(-bw / 2, -56, bw, 112, { tail: 'goldLt' }); if (un > 0.95) P.text('ENGINEER’S PARADISE', 0, 24, { size: 68, tracking: 2 }); ctx.restore(); }
+  if (un > 0) { ctx.save(); ctx.translate(800, 110); const bw = 900 * un; P.banner(-bw / 2, -56, bw, 112, { tail: 'goldLt' }); P.clip(rect(-bw / 2 + 14, -70, Math.max(0, bw - 28), 140)); P.text('ENGINEER’S PARADISE', 0, 24, { size: 68, tracking: 2 }); ctx.restore(); }
   if (lt > 3.6) { ctx.save(); P.alpha(clamp((lt - 3.6) / 1.0)); const cr = 'after “Gangsta’s Paradise” (Coolio), by way of “Amish Paradise” (“Weird Al” Yankovic)', cw = P.measure(cr, { size: 26, style: 'italic' }) + 50; P.both(rect(800 - cw / 2, 186, cw, 46, 8), 'cream', 3); P.text(cr, 800, 218, { size: 26, style: 'italic' }); ctx.restore(); }
   // fade to black at the very end
   const fo = clamp((t - (f.end - 2.2)) / 2.0);
