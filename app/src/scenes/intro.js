@@ -125,6 +125,16 @@ function blossoms(P, f, start) {
   }
   P.restore();
   lyricBanner(P, f, f.L.get('with its tokens'), 800, 812, { size: 40 });
+  // on 'you know' the arch frame closes in (verse 1 then opens through its own arch)
+  const ln = f.L.get('it comforts me'), yu = ln.words[ln.words.length - 2].start, yk = ln.words[ln.words.length - 1].end, k = ease.inOutCubic(clamp((t - yu) / (yk - yu + 0.3)));
+  if (k > 0) {
+    const w = lerp(2200, 1180, k), h = w * 0.86, x = 800 - w / 2, y = 470 - h / 2;
+    const frame = new Path2D(); frame.rect(-50, -50, W + 100, H + 100);
+    frame.moveTo(x, y + h); frame.lineTo(x, y + w / 2); frame.arc(800, y + w / 2, w / 2, Math.PI, 0); frame.lineTo(x + w, y + h); frame.closePath();
+    P.save(); P.ctx.fillStyle = C.paper; P.ctx.fill(frame, 'evenodd'); P.restore();
+    const ap = new Path2D(); ap.moveTo(x, y + h); ap.lineTo(x, y + w / 2); ap.arc(800, y + w / 2, w / 2, Math.PI, 0); ap.lineTo(x + w, y + h);
+    P.line(ap, 24); P.line(ap, 16, 'gold');
+  }
 }
 
 // ---- small performance helpers -----------------------------------------------------------------------
