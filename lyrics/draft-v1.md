@@ -18,8 +18,8 @@ Came out west with a laptop, a duffel bag, a dream:
 make the world a better place — with a middle-out compression scheme.
 Every bug was a riddle, every outage was a war,
 blameless postmortem after, so we'd learn what it was for.
-A junior with a benchmark could overrule a VP,
-'cause the data was the boss — and the boss was mostly me.
+Nobody had a title and the org chart was a rumor;
+the scariest man in the building was a code reviewer with no humor.
 Didn't do it for the money — swear we'd do it all for free;
 we were gonna change the world. The mission said so. So did we.
 
