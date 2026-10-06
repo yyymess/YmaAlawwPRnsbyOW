@@ -169,25 +169,54 @@ const GRIP = [
   { w: [-110, 120], d: [0.86, -0.5] },    // his right hand (viewer's left), underneath: its fingers the upper band
   { w: [110, 186], d: [-0.86, -0.5] },    // his left hand, over it: the lower band
 ];
-const FINGERS = [118, 128, 118, 96];      // index .. little, from the knuckle
+// index .. little: length from the knuckle, width at the base and at the tip, a slight bend
+const FINGERS = [{ len: 116, w0: 30, w1: 24, bend: 0.5 }, { len: 126, w0: 31, w1: 25, bend: 0.3 }, { len: 116, w0: 29, w1: 23, bend: 0.1 }, { len: 94, w0: 26, w1: 21, bend: -0.2 }];
+const add = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k];
+const rot = (d, a) => [d[0] * Math.cos(a) - d[1] * Math.sin(a), d[0] * Math.sin(a) + d[1] * Math.cos(a)];
+
+/** a finger: a tapered, slightly bent shape from base b along unit d, with a round tip; returns the path and its edges */
+function fingerShape(b, d, len, w0, w1, bend) {
+  const n = [-d[1], d[0]], N = 12, Lp = [], Rp = [], C = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, off = bend * Math.sin(Math.PI * t) * len * 0.05, w = (w0 + (w1 - w0) * t) / 2;
+    const c = add(add(b, d, len * t), n, off); C.push(c); Lp.push(add(c, n, w)); Rp.push(add(c, n, -w));
+  }
+  const p = new Path2D(); p.moveTo(...Lp[0]); for (const q of Lp.slice(1)) p.lineTo(...q);
+  const a = Math.atan2(n[1], n[0]); p.arc(C[N][0], C[N][1], w1 / 2, a, a - Math.PI, true);
+  for (const q of Rp.slice().reverse()) p.lineTo(...q);
+  p.closePath();
+  return { p, Lp, Rp, C, tip: add(C[N], d, w1 / 2) };
+}
+const pathOf = (pts) => { const p = new Path2D(); pts.forEach((q, i) => (i ? p.lineTo(...q) : p.moveTo(...q))); return p; };
+
 function phoneInHands(P, x, y, s, o) {
-  const lw = Math.max(1.4, 4 * s), hood = o.hood ?? 'teal', py = o.phoneY ?? 290, hw = 64, hh = 136;
+  const ctx = P.ctx, lw = Math.max(1.4, 4 * s), hood = o.hood ?? 'teal', py = o.phoneY ?? 290, hw = 64, hh = 136;
   const Q = at(x, y + py * s, s), cell = Math.max(3, 6 * s), fc = Math.max(2.5, 4 * s);
-  const pt = (p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`, add = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k];
+  const pt = (p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
   const G = GRIP.map((g) => {
     const side = Math.sign(g.w[0]), d = g.d, f = [side * 0.26, 0.97];   // f: the forearm, from the wrist down and out
     const u = side < 0 ? [d[1], -d[0]] : [-d[1], d[0]];                 // across the knuckles, towards the index
     const p = side < 0 ? [-f[1], f[0]] : [f[1], -f[0]];                 // across the wrist, towards the thumb side
-    return { ...g, side, d, u, f, p, K: add(g.w, d, 100) };
+    const K = add(g.w, d, 100);
+    // the hand as shapes: the back of the hand from the wrist to the knuckles, and four fingers
+    const up = [-f[0], -f[1]];
+    const back = Q(`M${pt(add(g.w, p, 40))} C${pt(add(add(g.w, p, 40), up, 44))} ${pt(add(add(K, u, 60), d, -40))} ${pt(add(K, u, 58))} L${pt(add(add(K, u, -58), d, 6))} C${pt(add(add(K, u, -60), d, -44))} ${pt(add(add(g.w, p, -42), up, 40))} ${pt(add(g.w, p, -40))} Z`);
+    const fingers = FINGERS.map((F, i) => {
+      const fd = rot(d, (i - 1.5) * 0.05 * side), b = add(add(K, u, (1.5 - i) * 28), fd, -18);
+      const len = Math.min(F.len + 18, (76 + side * b[0]) / Math.abs(fd[0]));     // a fingertip may just reach the far edge
+      return { ...fingerShape(b, fd, len, F.w0, F.w1, F.bend * -side), fd, i };
+    });
+    return { ...g, side, d, u, f, p, K, back, fingers };
   });
-  // forearms in their sleeves, from below the bust's edge up to the wrists
+  // forearms in their sleeves, from below the bust's edge up to the wrists, gathering into the cuffs
   P.save(); P.clip(at(x, y, s)(rect(-440, -300, 880, 990)));
   for (const g of G) {
-    const a = add(g.w, g.f, 12), b = add(g.w, g.f, Math.max(60, (700 - py - g.w[1]) / g.f[1] + 20));
-    const sl = Q(`M${pt(add(a, g.p, 50))} L${pt(add(b, g.p, 68))} L${pt(add(b, g.p, -68))} L${pt(add(a, g.p, -50))} Z`);
+    const a = add(g.w, g.f, 30), b = add(g.w, g.f, Math.max(60, (700 - py - g.w[1]) / g.f[1] + 20));
+    const sl = Q(`M${pt(add(a, g.p, 52))} C${pt(add(add(a, g.p, 62), g.f, 40))} ${pt(add(add(b, g.p, 70), g.f, -80))} ${pt(add(b, g.p, 70))} L${pt(add(b, g.p, -70))} C${pt(add(add(b, g.p, -66), g.f, -80))} ${pt(add(add(a, g.p, -60), g.f, 40))} ${pt(add(a, g.p, -52))} Z`);
     P.fill(sl, hood);
-    P.tone(sl, 'hoodDot', { from: [x + a[0] * s, y + (py + a[1]) * s, 0.1], to: [x + b[0] * s, y + (py + b[1]) * s, 0.5], bbox: [x - 440 * s, y + (py + a[1] - 60) * s, x + 440 * s, y + (py + b[1] + 10) * s] }, cell);
+    P.tone(sl, 'hoodDot', { from: [x + (a[0] + g.p[0] * 50) * s, y + (py + a[1]) * s, 0.05], to: [x + (a[0] - g.p[0] * 70) * s, y + (py + a[1] + 60) * s, 0.55], bbox: [x - 440 * s, y + (py + a[1] - 70) * s, x + 440 * s, y + (py + b[1] + 10) * s] }, cell);
     P.line(sl, lw * 1.3);
+    for (const [k, l] of [[18, 0.55], [52, 0.45]]) P.line(Q(`M${pt(add(add(a, g.f, k), g.p, 40))} C${pt(add(add(a, g.f, k + 14), g.p, 14))} ${pt(add(add(a, g.f, k + 4), g.p, -14))} ${pt(add(add(a, g.f, k + 18), g.p, -38))}`), lw * l);   // folds gathering into the cuff
   }
   P.restore();
   // the phone
@@ -197,29 +226,35 @@ function phoneInHands(P, x, y, s, o) {
   P.tone(ph, '#0f1c1b', { from: [x - hw * s, y + (py - hh) * s, 0], to: [x + hw * s, y + (py + hh) * s, 0.5], bbox: [x - (hw + 4) * s, y + (py - hh - 4) * s, x + (hw + 4) * s, y + (py + hh + 4) * s] }, Math.max(3, 5 * s));
   P.both(Q(`M${-hw + 18} ${-hh + 12} L${-hw + 58} ${-hh + 12} Q${-hw + 66} ${-hh + 12} ${-hw + 66} ${-hh + 20} L${-hw + 66} ${-hh + 66} Q${-hw + 66} ${-hh + 74} ${-hw + 58} ${-hh + 74} L${-hw + 18} ${-hh + 74} Q${-hw + 10} ${-hh + 74} ${-hw + 10} ${-hh + 66} L${-hw + 10} ${-hh + 20} Q${-hw + 10} ${-hh + 12} ${-hw + 18} ${-hh + 12} Z`), 'teal', lw * 0.8);
   for (const [cx, cy] of [[-hw + 25, -hh + 28], [-hw + 51, -hh + 28], [-hw + 25, -hh + 56]]) P.both(ell(x + cx * s, y + (py + cy) * s, 10 * s), 'black', lw * 0.5);
-  // each hand, the underneath one first: it leaves the cuff along the forearm and bends at the wrist
-  // towards the phone; the back of the hand, then the fingers over its knuckle edge, then the cuff
-  for (const g of G) {
-    const up = [-g.f[0], -g.f[1]];
-    const back = Q(`M${pt(add(g.w, g.p, 40))} C${pt(add(add(g.w, g.p, 40), up, 44))} ${pt(add(add(g.K, g.u, 58), g.d, -40))} ${pt(add(g.K, g.u, 58))} L${pt(add(g.K, g.u, -58))} C${pt(add(add(g.K, g.u, -58), g.d, -44))} ${pt(add(add(g.w, g.p, -40), up, 40))} ${pt(add(g.w, g.p, -40))} Z`);
-    P.both(back, 'skin', lw);
-    P.tone(back, 'skinDot', { from: [x + g.K[0] * s, y + (py + g.K[1]) * s, 0], to: [x + g.w[0] * s, y + (py + g.w[1]) * s, 0.5], bbox: [x - 220 * s, y + (py - 60) * s, x + 220 * s, y + (py + 280) * s] }, fc);
-    P.line(Q(`M${pt(add(add(g.K, g.d, -50), g.u, 30))} C${pt(add(add(g.K, g.d, -30), g.u, 20))} ${pt(add(add(g.K, g.d, -26), g.u, 0))} ${pt(add(add(g.K, g.d, -40), g.u, -20))}`), lw * 0.45);   // a tendon
-    for (let i = 3; i >= 0; i--) {
-      const fd = [g.d[0] * Math.cos((i - 1.5) * 0.05 * g.side) - g.d[1] * Math.sin((i - 1.5) * 0.05 * g.side), g.d[0] * Math.sin((i - 1.5) * 0.05 * g.side) + g.d[1] * Math.cos((i - 1.5) * 0.05 * g.side)];   // a slight fan
-      const b = add(g.K, g.u, (1.5 - i) * 29);
-      const len = Math.min(FINGERS[i], (72 + g.side * b[0]) / Math.abs(fd[0]));   // a fingertip may just reach the far edge
-      const tip = add(b, fd, len), fpath = Q(`M${pt(add(b, fd, -16))} L${pt(tip)}`);
-      P.line(fpath, 29 * s + 2 * lw * 0.9); P.line(fpath, 29 * s, 'skin');
-      P.line(Q(`M${pt(add(add(b, fd, -6), g.u, 10))} Q${pt(add(b, fd, 2))} ${pt(add(add(b, fd, -6), g.u, -10))}`), lw * 0.5);   // knuckle
-      for (const k of [0.45, 0.72]) { const c = add(b, fd, len * k); P.line(Q(`M${pt(add(c, g.u, 8))} Q${pt(add(c, fd, 3))} ${pt(add(c, g.u, -8))}`), lw * 0.45); }   // joints
-      const nail = new Path2D(), nc = add(tip, fd, -11); nail.ellipse(nc[0], nc[1], 9, 7, Math.atan2(fd[1], fd[0]), 0, Math.PI * 2);
-      P.both(Q(nail), 'roseLt', lw * 0.5);
+  // the hands, the underneath one first. Each hand is one silhouette: outlines under the fill, so only
+  // the outer edge shows; thin lines part the fingers; shade like the face; the top hand casts a shadow
+  const shapes = (g) => [g.back, ...g.fingers.map((F) => Q(F.p))];
+  const union = (ps) => { const u = new Path2D(); for (const q of ps) u.addPath(q); return u; };
+  const bbox = [x - 240 * s, y + (py - 80) * s, x + 240 * s, y + (py + 300) * s];
+  G.forEach((g, gi) => {
+    const ps = shapes(g);
+    for (const q of ps) P.line(q, lw * 2.2);
+    for (const q of ps) P.fill(q, 'skin');
+    const all = union(ps);
+    P.tone(all, 'skinDot', { from: [x + g.K[0] * s, y + (py + g.K[1] - 30) * s, 0], to: [x + g.w[0] * s, y + (py + g.w[1]) * s, 0.42], bbox }, fc);
+    if (gi === 0) {   // the shadow of the hand on top, a little down and in
+      const top = G[1]; P.save(); P.clip(all); ctx.translate(-4 * s, 9 * s);
+      P.tone(union(shapes(top)), 'skinDot', { from: [x, y, 0.5], to: [x + 1, y, 0.5], bbox }, fc); P.restore();
     }
-    const c0 = add(g.w, g.f, -6), c1 = add(g.w, g.f, 30);
-    P.both(Q(`M${pt(add(c0, g.p, 52))} L${pt(add(c1, g.p, 54))} L${pt(add(c1, g.p, -54))} L${pt(add(c0, g.p, -52))} Z`), 'tealLt', lw);
-    for (let k = -36; k <= 36; k += 12) P.line(Q(`M${pt(add(add(c0, g.p, k), g.f, 4))} L${pt(add(add(c1, g.p, k), g.f, -4))}`), lw * 0.4);
-  }
+    for (const F of g.fingers) {
+      // the edge towards the next finger, as a thin line from just past the knuckle to the tip
+      if (F.i < 3) P.line(Q(pathOf(F.Rp.slice(3))), lw * 0.55);
+      const c40 = F.C[5], c70 = F.C[9], n = [-F.fd[1], F.fd[0]], w5 = 13;
+      P.line(Q(`M${pt(add(add(c40, n, w5 * 0.55), F.fd, -2))} Q${pt(add(c40, F.fd, 3))} ${pt(add(add(c40, n, -w5 * 0.55), F.fd, -2))}`), lw * 0.4);   // the middle joint
+      const nb = add(F.C[12], F.fd, -15), nl = new Path2D(); nl.ellipse(nb[0] + F.fd[0] * 6, nb[1] + F.fd[1] * 6, 9, 7, Math.atan2(F.fd[1], F.fd[0]), 0, Math.PI * 2);
+      P.fill(Q(nl), '#f7e0d0'); P.line(Q(nl), lw * 0.4);   // the nail
+    }
+    for (let i = 0; i < 4; i++) { const k = add(add(g.K, g.u, (1.5 - i) * 28), g.d, -22); P.line(Q(`M${pt(add(k, g.u, 9))} Q${pt(add(k, g.d, 5))} ${pt(add(k, g.u, -9))}`), lw * 0.4); }   // knuckles
+    // the cuff over the wrist: ribbed, hugging it
+    const c0 = add(g.w, g.f, -4), c1 = add(g.w, g.f, 32);
+    P.both(Q(`M${pt(add(c0, g.p, 47))} C${pt(add(add(c0, g.p, 47), g.f, -5))} ${pt(add(add(c0, g.p, -47), g.f, -5))} ${pt(add(c0, g.p, -47))} L${pt(add(c1, g.p, -54))} C${pt(add(add(c1, g.p, -54), g.f, 4))} ${pt(add(add(c1, g.p, 54), g.f, 4))} ${pt(add(c1, g.p, 54))} Z`), 'tealLt', lw);
+    for (let k = -36; k <= 36; k += 9) P.line(Q(`M${pt(add(add(c0, g.p, k * 0.95), g.f, 3))} L${pt(add(add(c1, g.p, k * 1.08), g.f, -3))}`), lw * 0.35);
+  });
 }
 
 /**
