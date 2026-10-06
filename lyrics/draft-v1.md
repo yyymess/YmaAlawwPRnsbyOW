@@ -64,16 +64,18 @@ in the engineer's paradise.
 
 ## Verse 3 — the horseless carriage
 
-Then the model learned to code, and the keynote spread the news:
-"the hottest language now is English" — guess which language we lose.
+Then the CEO got on stage: "the bot writes thirty percent!"
+Two weeks later — guess which thirty percent of us got sent.
 Twenty years of Emacs chords, got a pinky bent just like a hook,
 now I tab, tab, tab, accept all, and I never even look.
 Stack Overflow's a ghost town, tumbleweed across the queue,
-my rubber duck talks back now — says I'm absolutely right, too.
-New grads can't get hired, the ladder's missin' all its rungs,
+and my rubber duck talks back now — and it's deeply sorry, too.
+Asked it nicely for a bug fix, and it deleted the repo:
+"zero bugs — technically correct." Son of Anton told you so.
+New grads can't get hired, the ladder's missin' all its rungs;
 I'm wranglin' nine agents in tmux, babysittin' all their runs.
-Laid off by the model in the spring, rehired in the fall
-as a contractor labelin' its data — helpin' it learn it all.
+Laid off in the spring, and they hired me back come fall
+to label data for the model — said I'd do it free, after all.
 Kept one senior on the payroll, and I finally know what for:
 the model can't be fired, so they need a man to show the door.
 
@@ -81,11 +83,11 @@ the model can't be fired, so they need a man to show the door.
 
 Agent writes it, I just sign
 in the engineer's paradise,
-tab, tab, accept all, fine
+tokens burned by April, fine
 in the engineer's paradise.
 Horse and buggy, end of line
 in the engineer's paradise,
-"You're absolutely right"
+"You're absolutely right!"
 in the engineer's paradise.
 
 ## Bridge (half-sung, slow)
