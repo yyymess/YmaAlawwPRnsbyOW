@@ -77,7 +77,7 @@ I'm wranglin' nine agents in tmux, babysittin' all their runs.
 Got laid off in the spring, so I'm livin' the craftsman's dream:
 got a stall at the farmers' market, by the jam and the clotted cream.
 Small-batch, organic, artisanal code — not a token in the can;
-tourists stop to take a picture of the man who types by hand.
+every bug is hand-crafted, signed and dated by the man.
 
 ## Chorus 3 (sung)
 
