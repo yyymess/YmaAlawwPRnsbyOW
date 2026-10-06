@@ -1,0 +1,4813 @@
+{
+ "lines": [
+  {
+   "i": 0,
+   "text": "As I walk through the Valley where the robo-taxis roam,",
+   "section": "Intro",
+   "start": 3.452,
+   "end": 6.775,
+   "words": [
+    {
+     "w": "As",
+     "start": 3.452,
+     "end": 3.652,
+     "conf": 0.5
+    },
+    {
+     "w": "I",
+     "start": 3.652,
+     "end": 3.692,
+     "conf": 0.5
+    },
+    {
+     "w": "walk",
+     "start": 3.692,
+     "end": 3.932,
+     "conf": 0.47
+    },
+    {
+     "w": "through",
+     "start": 3.932,
+     "end": 4.072,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 4.072,
+     "end": 4.172,
+     "conf": 0.49
+    },
+    {
+     "w": "Valley",
+     "start": 4.172,
+     "end": 4.493,
+     "conf": 0.48
+    },
+    {
+     "w": "where",
+     "start": 5.494,
+     "end": 5.634,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 5.634,
+     "end": 5.734,
+     "conf": 0.48
+    },
+    {
+     "w": "robo-taxis",
+     "start": 5.734,
+     "end": 6.515,
+     "conf": 0.45
+    },
+    {
+     "w": "roam,",
+     "start": 6.515,
+     "end": 6.775,
+     "conf": 0.35
+    }
+   ]
+  },
+  {
+   "i": 1,
+   "text": "I fear no outage, 'cause my agent's on call from home;",
+   "section": "Intro",
+   "start": 8.737,
+   "end": 12.08,
+   "words": [
+    {
+     "w": "I",
+     "start": 8.737,
+     "end": 8.777,
+     "conf": 0.5
+    },
+    {
+     "w": "fear",
+     "start": 8.777,
+     "end": 8.997,
+     "conf": 0.47
+    },
+    {
+     "w": "no",
+     "start": 8.997,
+     "end": 9.198,
+     "conf": 0.44
+    },
+    {
+     "w": "outage,",
+     "start": 9.198,
+     "end": 9.738,
+     "conf": 0.43
+    },
+    {
+     "w": "'cause",
+     "start": 9.738,
+     "end": 10.679,
+     "conf": 0.16
+    },
+    {
+     "w": "my",
+     "start": 10.679,
+     "end": 10.859,
+     "conf": 0.5
+    },
+    {
+     "w": "agent's",
+     "start": 10.859,
+     "end": 11.219,
+     "conf": 0.42
+    },
+    {
+     "w": "on",
+     "start": 11.219,
+     "end": 11.359,
+     "conf": 0.49
+    },
+    {
+     "w": "call",
+     "start": 11.359,
+     "end": 11.62,
+     "conf": 0.48
+    },
+    {
+     "w": "from",
+     "start": 11.62,
+     "end": 11.8,
+     "conf": 0.5
+    },
+    {
+     "w": "home;",
+     "start": 11.8,
+     "end": 12.08,
+     "conf": 0.47
+    }
+   ]
+  },
+  {
+   "i": 2,
+   "text": "with its tokens and its context, it comforts me, you know.",
+   "section": "Intro",
+   "start": 14.263,
+   "end": 20.582,
+   "words": [
+    {
+     "w": "with",
+     "start": 14.263,
+     "end": 14.423,
+     "conf": 0.49
+    },
+    {
+     "w": "its",
+     "start": 14.423,
+     "end": 14.584,
+     "conf": 0.49
+    },
+    {
+     "w": "tokens",
+     "start": 15.647,
+     "end": 16.189,
+     "conf": 0.46
+    },
+    {
+     "w": "and",
+     "start": 16.67,
+     "end": 16.79,
+     "conf": 0.45
+    },
+    {
+     "w": "its",
+     "start": 16.79,
+     "end": 16.931,
+     "conf": 0.48
+    },
+    {
+     "w": "context,",
+     "start": 16.931,
+     "end": 17.533,
+     "conf": 0.44
+    },
+    {
+     "w": "it",
+     "start": 19.278,
+     "end": 19.418,
+     "conf": 0.48
+    },
+    {
+     "w": "comforts",
+     "start": 19.418,
+     "end": 19.839,
+     "conf": 0.49
+    },
+    {
+     "w": "me,",
+     "start": 19.839,
+     "end": 19.92,
+     "conf": 0.44
+    },
+    {
+     "w": "you",
+     "start": 20.301,
+     "end": 20.401,
+     "conf": 0.01
+    },
+    {
+     "w": "know.",
+     "start": 20.401,
+     "end": 20.582,
+     "conf": 0.21
+    }
+   ]
+  },
+  {
+   "i": 3,
+   "text": "Seventeen with a compiler and a dial-up phone line,",
+   "section": "Verse 1",
+   "start": 21.185,
+   "end": 23.975,
+   "words": [
+    {
+     "w": "Seventeen",
+     "start": 21.185,
+     "end": 21.807,
+     "conf": 0.39
+    },
+    {
+     "w": "with",
+     "start": 21.807,
+     "end": 22.008,
+     "conf": 0.45
+    },
+    {
+     "w": "a",
+     "start": 22.008,
+     "end": 22.108,
+     "conf": 0.02
+    },
+    {
+     "w": "compiler",
+     "start": 22.108,
+     "end": 22.891,
+     "conf": 0.46
+    },
+    {
+     "w": "and",
+     "start": 22.891,
+     "end": 22.991,
+     "conf": 0.45
+    },
+    {
+     "w": "a",
+     "start": 22.991,
+     "end": 23.071,
+     "conf": 0.48
+    },
+    {
+     "w": "dial-up",
+     "start": 23.071,
+     "end": 23.453,
+     "conf": 0.23
+    },
+    {
+     "w": "phone",
+     "start": 23.453,
+     "end": 23.774,
+     "conf": 0.32
+    },
+    {
+     "w": "line,",
+     "start": 23.774,
+     "end": 23.975,
+     "conf": 0.16
+    }
+   ]
+  },
+  {
+   "i": 4,
+   "text": "read the MPEG spec on Friday nights — and honestly, I was fine.",
+   "section": "Verse 1",
+   "start": 24.237,
+   "end": 27.106,
+   "words": [
+    {
+     "w": "read",
+     "start": 24.237,
+     "end": 24.397,
+     "conf": 0.46
+    },
+    {
+     "w": "the",
+     "start": 24.397,
+     "end": 24.558,
+     "conf": 0.48
+    },
+    {
+     "w": "MPEG",
+     "start": 24.558,
+     "end": 24.919,
+     "conf": 0.3
+    },
+    {
+     "w": "spec",
+     "start": 24.919,
+     "end": 25.18,
+     "conf": 0.09
+    },
+    {
+     "w": "on",
+     "start": 25.18,
+     "end": 25.28,
+     "conf": 0.5
+    },
+    {
+     "w": "Friday",
+     "start": 25.28,
+     "end": 25.621,
+     "conf": 0.48
+    },
+    {
+     "w": "nights —",
+     "start": 25.621,
+     "end": 26.002,
+     "conf": 0.43
+    },
+    {
+     "w": "and",
+     "start": 26.002,
+     "end": 26.123,
+     "conf": 0.42
+    },
+    {
+     "w": "honestly,",
+     "start": 26.123,
+     "end": 26.664,
+     "conf": 0.45
+    },
+    {
+     "w": "I",
+     "start": 26.664,
+     "end": 26.704,
+     "conf": 0.47
+    },
+    {
+     "w": "was",
+     "start": 26.704,
+     "end": 26.885,
+     "conf": 0.46
+    },
+    {
+     "w": "fine.",
+     "start": 26.885,
+     "end": 27.106,
+     "conf": 0.11
+    }
+   ]
+  },
+  {
+   "i": 5,
+   "text": "I believed in open standards, I could recite the RFCs,",
+   "section": "Verse 1",
+   "start": 27.488,
+   "end": 29.838,
+   "words": [
+    {
+     "w": "I",
+     "start": 27.488,
+     "end": 27.528,
+     "conf": 0.5
+    },
+    {
+     "w": "believed",
+     "start": 27.528,
+     "end": 27.85,
+     "conf": 0.46
+    },
+    {
+     "w": "in",
+     "start": 27.85,
+     "end": 27.97,
+     "conf": 0.47
+    },
+    {
+     "w": "open",
+     "start": 27.97,
+     "end": 28.231,
+     "conf": 0.5
+    },
+    {
+     "w": "standards,",
+     "start": 28.231,
+     "end": 28.753,
+     "conf": 0.48
+    },
+    {
+     "w": "I",
+     "start": 28.753,
+     "end": 28.794,
+     "conf": 0.44
+    },
+    {
+     "w": "could",
+     "start": 28.794,
+     "end": 28.934,
+     "conf": 0.45
+    },
+    {
+     "w": "recite",
+     "start": 28.934,
+     "end": 29.276,
+     "conf": 0.4
+    },
+    {
+     "w": "the",
+     "start": 29.276,
+     "end": 29.537,
+     "conf": 0.46
+    },
+    {
+     "w": "RFCs,",
+     "start": 29.537,
+     "end": 29.838,
+     "conf": 0.24
+    }
+   ]
+  },
+  {
+   "i": 6,
+   "text": "I'd rewrite your app in Haskell if you'd only let me, please.",
+   "section": "Verse 1",
+   "start": 30.321,
+   "end": 32.99,
+   "words": [
+    {
+     "w": "I'd",
+     "start": 30.321,
+     "end": 30.421,
+     "conf": 0.3
+    },
+    {
+     "w": "rewrite",
+     "start": 30.421,
+     "end": 30.783,
+     "conf": 0.38
+    },
+    {
+     "w": "your",
+     "start": 30.783,
+     "end": 30.983,
+     "conf": 0.19
+    },
+    {
+     "w": "app",
+     "start": 30.983,
+     "end": 31.144,
+     "conf": 0.45
+    },
+    {
+     "w": "in",
+     "start": 31.144,
+     "end": 31.264,
+     "conf": 0.23
+    },
+    {
+     "w": "Haskell",
+     "start": 31.264,
+     "end": 31.766,
+     "conf": 0.31
+    },
+    {
+     "w": "if",
+     "start": 31.766,
+     "end": 31.886,
+     "conf": 0.49
+    },
+    {
+     "w": "you'd",
+     "start": 31.886,
+     "end": 32.087,
+     "conf": 0.36
+    },
+    {
+     "w": "only",
+     "start": 32.087,
+     "end": 32.308,
+     "conf": 0.47
+    },
+    {
+     "w": "let",
+     "start": 32.308,
+     "end": 32.468,
+     "conf": 0.49
+    },
+    {
+     "w": "me,",
+     "start": 32.468,
+     "end": 32.588,
+     "conf": 0.49
+    },
+    {
+     "w": "please.",
+     "start": 32.588,
+     "end": 32.99,
+     "conf": 0.3
+    }
+   ]
+  },
+  {
+   "i": 7,
+   "text": "Came out west with a laptop, a duffel bag, a dream:",
+   "section": "Verse 1",
+   "start": 33.192,
+   "end": 36.083,
+   "words": [
+    {
+     "w": "Came",
+     "start": 33.192,
+     "end": 33.433,
+     "conf": 0.49
+    },
+    {
+     "w": "out",
+     "start": 33.433,
+     "end": 33.613,
+     "conf": 0.46
+    },
+    {
+     "w": "west",
+     "start": 33.613,
+     "end": 34.055,
+     "conf": 0.5
+    },
+    {
+     "w": "with",
+     "start": 34.055,
+     "end": 34.196,
+     "conf": 0.47
+    },
+    {
+     "w": "a",
+     "start": 34.196,
+     "end": 34.276,
+     "conf": 0.46
+    },
+    {
+     "w": "laptop,",
+     "start": 34.276,
+     "end": 34.698,
+     "conf": 0.39
+    },
+    {
+     "w": "a",
+     "start": 34.959,
+     "end": 35.059,
+     "conf": 0.47
+    },
+    {
+     "w": "duffel",
+     "start": 35.059,
+     "end": 35.34,
+     "conf": 0.3
+    },
+    {
+     "w": "bag,",
+     "start": 35.34,
+     "end": 35.661,
+     "conf": 0.48
+    },
+    {
+     "w": "a",
+     "start": 35.661,
+     "end": 35.742,
+     "conf": 0.03
+    },
+    {
+     "w": "dream:",
+     "start": 35.742,
+     "end": 36.083,
+     "conf": 0.42
+    }
+   ]
+  },
+  {
+   "i": 8,
+   "text": "make the world a better place, one commit at a time, it seemed.",
+   "section": "Verse 1",
+   "start": 36.205,
+   "end": 38.973,
+   "words": [
+    {
+     "w": "make",
+     "start": 36.205,
+     "end": 36.385,
+     "conf": 0.46
+    },
+    {
+     "w": "the",
+     "start": 36.385,
+     "end": 36.506,
+     "conf": 0.43
+    },
+    {
+     "w": "world",
+     "start": 36.506,
+     "end": 36.807,
+     "conf": 0.47
+    },
+    {
+     "w": "a",
+     "start": 36.807,
+     "end": 36.867,
+     "conf": 0.48
+    },
+    {
+     "w": "better",
+     "start": 36.867,
+     "end": 37.087,
+     "conf": 0.49
+    },
+    {
+     "w": "place,",
+     "start": 37.087,
+     "end": 37.569,
+     "conf": 0.49
+    },
+    {
+     "w": "one",
+     "start": 37.569,
+     "end": 37.689,
+     "conf": 0.45
+    },
+    {
+     "w": "commit",
+     "start": 37.689,
+     "end": 38.03,
+     "conf": 0.48
+    },
+    {
+     "w": "at",
+     "start": 38.03,
+     "end": 38.131,
+     "conf": 0.02
+    },
+    {
+     "w": "a",
+     "start": 38.131,
+     "end": 38.211,
+     "conf": 0.34
+    },
+    {
+     "w": "time,",
+     "start": 38.211,
+     "end": 38.532,
+     "conf": 0.4
+    },
+    {
+     "w": "it",
+     "start": 38.532,
+     "end": 38.692,
+     "conf": 0.19
+    },
+    {
+     "w": "seemed.",
+     "start": 38.692,
+     "end": 38.973,
+     "conf": 0.11
+    }
+   ]
+  },
+  {
+   "i": 9,
+   "text": "Every bug was a riddle, every outage was a war,",
+   "section": "Verse 1",
+   "start": 39.396,
+   "end": 41.785,
+   "words": [
+    {
+     "w": "Every",
+     "start": 39.396,
+     "end": 39.637,
+     "conf": 0.35
+    },
+    {
+     "w": "bug",
+     "start": 39.637,
+     "end": 39.958,
+     "conf": 0.43
+    },
+    {
+     "w": "was",
+     "start": 39.958,
+     "end": 40.118,
+     "conf": 0.41
+    },
+    {
+     "w": "a",
+     "start": 40.118,
+     "end": 40.199,
+     "conf": 0.31
+    },
+    {
+     "w": "riddle,",
+     "start": 40.199,
+     "end": 40.379,
+     "conf": 0.16
+    },
+    {
+     "w": "every",
+     "start": 40.841,
+     "end": 41.122,
+     "conf": 0.44
+    },
+    {
+     "w": "outage",
+     "start": 41.122,
+     "end": 41.403,
+     "conf": 0.36
+    },
+    {
+     "w": "was",
+     "start": 41.403,
+     "end": 41.544,
+     "conf": 0.42
+    },
+    {
+     "w": "a",
+     "start": 41.544,
+     "end": 41.644,
+     "conf": 0.4
+    },
+    {
+     "w": "war,",
+     "start": 41.644,
+     "end": 41.785,
+     "conf": 0.28
+    }
+   ]
+  },
+  {
+   "i": 10,
+   "text": "blameless postmortem after, so we'd learn what it was for.",
+   "section": "Verse 1",
+   "start": 42.208,
+   "end": 44.855,
+   "words": [
+    {
+     "w": "blameless",
+     "start": 42.208,
+     "end": 42.649,
+     "conf": 0.42
+    },
+    {
+     "w": "postmortem",
+     "start": 42.649,
+     "end": 43.291,
+     "conf": 0.36
+    },
+    {
+     "w": "after,",
+     "start": 43.291,
+     "end": 43.712,
+     "conf": 0.46
+    },
+    {
+     "w": "so",
+     "start": 43.712,
+     "end": 43.852,
+     "conf": 0.49
+    },
+    {
+     "w": "we'd",
+     "start": 43.852,
+     "end": 44.053,
+     "conf": 0.24
+    },
+    {
+     "w": "learn",
+     "start": 44.053,
+     "end": 44.294,
+     "conf": 0.46
+    },
+    {
+     "w": "what",
+     "start": 44.294,
+     "end": 44.434,
+     "conf": 0.44
+    },
+    {
+     "w": "it",
+     "start": 44.434,
+     "end": 44.494,
+     "conf": 0.46
+    },
+    {
+     "w": "was",
+     "start": 44.494,
+     "end": 44.675,
+     "conf": 0.47
+    },
+    {
+     "w": "for.",
+     "start": 44.675,
+     "end": 44.855,
+     "conf": 0.25
+    }
+   ]
+  },
+  {
+   "i": 11,
+   "text": "Nobody had a title and the org chart was a rumor;",
+   "section": "Verse 1",
+   "start": 45.458,
+   "end": 48.069,
+   "words": [
+    {
+     "w": "Nobody",
+     "start": 45.458,
+     "end": 45.88,
+     "conf": 0.49
+    },
+    {
+     "w": "had",
+     "start": 45.88,
+     "end": 46.041,
+     "conf": 0.47
+    },
+    {
+     "w": "a",
+     "start": 46.041,
+     "end": 46.121,
+     "conf": 0.41
+    },
+    {
+     "w": "title",
+     "start": 46.121,
+     "end": 46.422,
+     "conf": 0.31
+    },
+    {
+     "w": "and",
+     "start": 46.824,
+     "end": 46.904,
+     "conf": 0.37
+    },
+    {
+     "w": "the",
+     "start": 46.904,
+     "end": 47.085,
+     "conf": 0.43
+    },
+    {
+     "w": "org",
+     "start": 47.085,
+     "end": 47.286,
+     "conf": 0.14
+    },
+    {
+     "w": "chart",
+     "start": 47.286,
+     "end": 47.567,
+     "conf": 0.39
+    },
+    {
+     "w": "was",
+     "start": 47.567,
+     "end": 47.708,
+     "conf": 0.46
+    },
+    {
+     "w": "a",
+     "start": 47.708,
+     "end": 47.808,
+     "conf": 0.46
+    },
+    {
+     "w": "rumor;",
+     "start": 47.808,
+     "end": 48.069,
+     "conf": 0.28
+    }
+   ]
+  },
+  {
+   "i": 12,
+   "text": "the scariest man in the building was a code reviewer with no humor.",
+   "section": "Verse 1",
+   "start": 48.232,
+   "end": 51.101,
+   "words": [
+    {
+     "w": "the",
+     "start": 48.232,
+     "end": 48.352,
+     "conf": 0.43
+    },
+    {
+     "w": "scariest",
+     "start": 48.352,
+     "end": 48.894,
+     "conf": 0.33
+    },
+    {
+     "w": "man",
+     "start": 48.894,
+     "end": 49.115,
+     "conf": 0.5
+    },
+    {
+     "w": "in",
+     "start": 49.115,
+     "end": 49.175,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 49.175,
+     "end": 49.295,
+     "conf": 0.47
+    },
+    {
+     "w": "building",
+     "start": 49.295,
+     "end": 49.596,
+     "conf": 0.46
+    },
+    {
+     "w": "was",
+     "start": 49.596,
+     "end": 49.717,
+     "conf": 0.49
+    },
+    {
+     "w": "a",
+     "start": 49.717,
+     "end": 49.797,
+     "conf": 0.49
+    },
+    {
+     "w": "code",
+     "start": 49.797,
+     "end": 50.078,
+     "conf": 0.35
+    },
+    {
+     "w": "reviewer",
+     "start": 50.078,
+     "end": 50.439,
+     "conf": 0.35
+    },
+    {
+     "w": "with",
+     "start": 50.439,
+     "end": 50.6,
+     "conf": 0.49
+    },
+    {
+     "w": "no",
+     "start": 50.6,
+     "end": 50.82,
+     "conf": 0.49
+    },
+    {
+     "w": "humor.",
+     "start": 50.82,
+     "end": 51.101,
+     "conf": 0.3
+    }
+   ]
+  },
+  {
+   "i": 13,
+   "text": "Didn't do it for the money — swear we'd do it all for free;",
+   "section": "Verse 1",
+   "start": 51.424,
+   "end": 53.913,
+   "words": [
+    {
+     "w": "Didn't",
+     "start": 51.424,
+     "end": 51.665,
+     "conf": 0.45
+    },
+    {
+     "w": "do",
+     "start": 51.665,
+     "end": 51.825,
+     "conf": 0.48
+    },
+    {
+     "w": "it",
+     "start": 51.825,
+     "end": 51.946,
+     "conf": 0.5
+    },
+    {
+     "w": "for",
+     "start": 51.946,
+     "end": 52.066,
+     "conf": 0.33
+    },
+    {
+     "w": "the",
+     "start": 52.066,
+     "end": 52.167,
+     "conf": 0.48
+    },
+    {
+     "w": "money —",
+     "start": 52.167,
+     "end": 52.568,
+     "conf": 0.48
+    },
+    {
+     "w": "swear",
+     "start": 52.568,
+     "end": 52.949,
+     "conf": 0.31
+    },
+    {
+     "w": "we'd",
+     "start": 52.949,
+     "end": 53.15,
+     "conf": 0.37
+    },
+    {
+     "w": "do",
+     "start": 53.15,
+     "end": 53.271,
+     "conf": 0.25
+    },
+    {
+     "w": "it",
+     "start": 53.271,
+     "end": 53.391,
+     "conf": 0.49
+    },
+    {
+     "w": "all",
+     "start": 53.391,
+     "end": 53.532,
+     "conf": 0.36
+    },
+    {
+     "w": "for",
+     "start": 53.532,
+     "end": 53.692,
+     "conf": 0.33
+    },
+    {
+     "w": "free;",
+     "start": 53.692,
+     "end": 53.913,
+     "conf": 0.47
+    }
+   ]
+  },
+  {
+   "i": 14,
+   "text": "we were gonna change the world. The mission said so. So did we.",
+   "section": "Verse 1",
+   "start": 54.356,
+   "end": 56.985,
+   "words": [
+    {
+     "w": "we",
+     "start": 54.356,
+     "end": 54.456,
+     "conf": 0.49
+    },
+    {
+     "w": "were",
+     "start": 54.456,
+     "end": 54.577,
+     "conf": 0.46
+    },
+    {
+     "w": "gonna",
+     "start": 54.577,
+     "end": 54.798,
+     "conf": 0.32
+    },
+    {
+     "w": "change",
+     "start": 54.798,
+     "end": 55.079,
+     "conf": 0.48
+    },
+    {
+     "w": "the",
+     "start": 55.079,
+     "end": 55.199,
+     "conf": 0.48
+    },
+    {
+     "w": "world.",
+     "start": 55.199,
+     "end": 55.601,
+     "conf": 0.3
+    },
+    {
+     "w": "The",
+     "start": 55.601,
+     "end": 55.721,
+     "conf": 0.49
+    },
+    {
+     "w": "mission",
+     "start": 55.721,
+     "end": 56.062,
+     "conf": 0.49
+    },
+    {
+     "w": "said",
+     "start": 56.062,
+     "end": 56.303,
+     "conf": 0.5
+    },
+    {
+     "w": "so.",
+     "start": 56.303,
+     "end": 56.504,
+     "conf": 0.5
+    },
+    {
+     "w": "So",
+     "start": 56.504,
+     "end": 56.704,
+     "conf": 0.5
+    },
+    {
+     "w": "did",
+     "start": 56.704,
+     "end": 56.885,
+     "conf": 0.5
+    },
+    {
+     "w": "we.",
+     "start": 56.885,
+     "end": 56.985,
+     "conf": 0.49
+    }
+   ]
+  },
+  {
+   "i": 15,
+   "text": "Burned the midnight oil for life",
+   "section": "Chorus",
+   "start": 57.208,
+   "end": 59.476,
+   "words": [
+    {
+     "w": "Burned",
+     "start": 57.208,
+     "end": 57.449,
+     "conf": 0.06
+    },
+    {
+     "w": "the",
+     "start": 57.449,
+     "end": 57.569,
+     "conf": 0.08
+    },
+    {
+     "w": "midnight",
+     "start": 57.569,
+     "end": 58.472,
+     "conf": 0.11
+    },
+    {
+     "w": "oil",
+     "start": 58.472,
+     "end": 58.733,
+     "conf": 0.07
+    },
+    {
+     "w": "for",
+     "start": 58.733,
+     "end": 58.934,
+     "conf": 0.04
+    },
+    {
+     "w": "life",
+     "start": 58.934,
+     "end": 59.476,
+     "conf": 0.04
+    }
+   ]
+  },
+  {
+   "i": 16,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 60.28,
+   "end": 62.046,
+   "words": [
+    {
+     "w": "in",
+     "start": 60.28,
+     "end": 60.4,
+     "conf": 0.16
+    },
+    {
+     "w": "the",
+     "start": 60.4,
+     "end": 60.681,
+     "conf": 0.07
+    },
+    {
+     "w": "engineer's",
+     "start": 60.681,
+     "end": 61.364,
+     "conf": 0.14
+    },
+    {
+     "w": "paradise,",
+     "start": 61.364,
+     "end": 62.046,
+     "conf": 0.11
+    }
+   ]
+  },
+  {
+   "i": 17,
+   "text": "best idea wins the fight",
+   "section": "Chorus",
+   "start": 63.232,
+   "end": 65.54,
+   "words": [
+    {
+     "w": "best",
+     "start": 63.232,
+     "end": 63.633,
+     "conf": 0.33
+    },
+    {
+     "w": "idea",
+     "start": 63.894,
+     "end": 64.336,
+     "conf": 0.13
+    },
+    {
+     "w": "wins",
+     "start": 64.336,
+     "end": 64.757,
+     "conf": 0.21
+    },
+    {
+     "w": "the",
+     "start": 64.757,
+     "end": 64.918,
+     "conf": 0.04
+    },
+    {
+     "w": "fight",
+     "start": 64.918,
+     "end": 65.54,
+     "conf": 0.1
+    }
+   ]
+  },
+  {
+   "i": 18,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 66.284,
+   "end": 67.768,
+   "words": [
+    {
+     "w": "in",
+     "start": 66.284,
+     "end": 66.424,
+     "conf": 0.22
+    },
+    {
+     "w": "the",
+     "start": 66.424,
+     "end": 66.625,
+     "conf": 0.07
+    },
+    {
+     "w": "engineer's",
+     "start": 66.625,
+     "end": 67.347,
+     "conf": 0.17
+    },
+    {
+     "w": "paradise.",
+     "start": 67.347,
+     "end": 67.768,
+     "conf": 0.09
+    }
+   ]
+  },
+  {
+   "i": 19,
+   "text": "Ship it to the world tonight",
+   "section": "Chorus",
+   "start": 69.575,
+   "end": 71.543,
+   "words": [
+    {
+     "w": "Ship",
+     "start": 69.575,
+     "end": 69.856,
+     "conf": 0.21
+    },
+    {
+     "w": "it",
+     "start": 69.856,
+     "end": 69.976,
+     "conf": 0.08
+    },
+    {
+     "w": "to",
+     "start": 69.976,
+     "end": 70.197,
+     "conf": 0.14
+    },
+    {
+     "w": "the",
+     "start": 70.197,
+     "end": 70.378,
+     "conf": 0.11
+    },
+    {
+     "w": "world",
+     "start": 70.378,
+     "end": 70.94,
+     "conf": 0.34
+    },
+    {
+     "w": "tonight",
+     "start": 70.94,
+     "end": 71.543,
+     "conf": 0.04
+    }
+   ]
+  },
+  {
+   "i": 20,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 72.308,
+   "end": 74.075,
+   "words": [
+    {
+     "w": "in",
+     "start": 72.308,
+     "end": 72.428,
+     "conf": 0.14
+    },
+    {
+     "w": "the",
+     "start": 72.428,
+     "end": 72.669,
+     "conf": 0.15
+    },
+    {
+     "w": "engineer's",
+     "start": 72.669,
+     "end": 73.372,
+     "conf": 0.11
+    },
+    {
+     "w": "paradise,",
+     "start": 73.372,
+     "end": 74.075,
+     "conf": 0.04
+    }
+   ]
+  },
+  {
+   "i": 21,
+   "text": "change the world, we didn't mind",
+   "section": "Chorus",
+   "start": 75.04,
+   "end": 77.588,
+   "words": [
+    {
+     "w": "change",
+     "start": 75.04,
+     "end": 75.462,
+     "conf": 0.42
+    },
+    {
+     "w": "the",
+     "start": 75.462,
+     "end": 75.602,
+     "conf": 0.42
+    },
+    {
+     "w": "world,",
+     "start": 75.602,
+     "end": 76.204,
+     "conf": 0.39
+    },
+    {
+     "w": "we",
+     "start": 76.204,
+     "end": 76.565,
+     "conf": 0.42
+    },
+    {
+     "w": "didn't",
+     "start": 76.565,
+     "end": 76.946,
+     "conf": 0.23
+    },
+    {
+     "w": "mind",
+     "start": 76.946,
+     "end": 77.588,
+     "conf": 0.21
+    }
+   ]
+  },
+  {
+   "i": 22,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 78.312,
+   "end": 81.158,
+   "words": [
+    {
+     "w": "in",
+     "start": 78.312,
+     "end": 78.432,
+     "conf": 0.14
+    },
+    {
+     "w": "the",
+     "start": 78.432,
+     "end": 78.692,
+     "conf": 0.06
+    },
+    {
+     "w": "engineer's",
+     "start": 78.692,
+     "end": 80.116,
+     "conf": 0.11
+    },
+    {
+     "w": "paradise.",
+     "start": 80.116,
+     "end": 81.158,
+     "conf": 0.06
+    }
+   ]
+  },
+  {
+   "i": 23,
+   "text": "Then one Monday at the fridge there's a sign in Comic Sans:",
+   "section": "Verse 2",
+   "start": 81.841,
+   "end": 84.952,
+   "words": [
+    {
+     "w": "Then",
+     "start": 81.841,
+     "end": 82.222,
+     "conf": 0.2
+    },
+    {
+     "w": "one",
+     "start": 82.222,
+     "end": 82.363,
+     "conf": 0.47
+    },
+    {
+     "w": "Monday",
+     "start": 82.363,
+     "end": 82.764,
+     "conf": 0.43
+    },
+    {
+     "w": "at",
+     "start": 82.764,
+     "end": 82.905,
+     "conf": 0.25
+    },
+    {
+     "w": "the",
+     "start": 82.905,
+     "end": 83.025,
+     "conf": 0.0
+    },
+    {
+     "w": "fridge",
+     "start": 83.025,
+     "end": 83.527,
+     "conf": 0.45
+    },
+    {
+     "w": "there's",
+     "start": 83.527,
+     "end": 83.728,
+     "conf": 0.16
+    },
+    {
+     "w": "a",
+     "start": 83.728,
+     "end": 83.828,
+     "conf": 0.47
+    },
+    {
+     "w": "sign",
+     "start": 83.828,
+     "end": 84.089,
+     "conf": 0.33
+    },
+    {
+     "w": "in",
+     "start": 84.089,
+     "end": 84.209,
+     "conf": 0.35
+    },
+    {
+     "w": "Comic",
+     "start": 84.209,
+     "end": 84.571,
+     "conf": 0.39
+    },
+    {
+     "w": "Sans:",
+     "start": 84.571,
+     "end": 84.952,
+     "conf": 0.31
+    }
+   ]
+  },
+  {
+   "i": 24,
+   "text": "\"Soda now fifty cents\" — and a fella with a plan.",
+   "section": "Verse 2",
+   "start": 85.094,
+   "end": 87.624,
+   "words": [
+    {
+     "w": "\"Soda",
+     "start": 85.094,
+     "end": 85.395,
+     "conf": 0.3
+    },
+    {
+     "w": "now",
+     "start": 85.395,
+     "end": 85.757,
+     "conf": 0.4
+    },
+    {
+     "w": "fifty",
+     "start": 85.757,
+     "end": 86.098,
+     "conf": 0.31
+    },
+    {
+     "w": "cents\" —",
+     "start": 86.098,
+     "end": 86.399,
+     "conf": 0.14
+    },
+    {
+     "w": "and",
+     "start": 86.68,
+     "end": 86.781,
+     "conf": 0.27
+    },
+    {
+     "w": "a",
+     "start": 86.781,
+     "end": 86.861,
+     "conf": 0.44
+    },
+    {
+     "w": "fella",
+     "start": 86.861,
+     "end": 87.142,
+     "conf": 0.39
+    },
+    {
+     "w": "with",
+     "start": 87.142,
+     "end": 87.303,
+     "conf": 0.45
+    },
+    {
+     "w": "a",
+     "start": 87.303,
+     "end": 87.343,
+     "conf": 0.39
+    },
+    {
+     "w": "plan.",
+     "start": 87.343,
+     "end": 87.624,
+     "conf": 0.44
+    }
+   ]
+  },
+  {
+   "i": 25,
+   "text": "He had more shares than the founders and a flywheel slide to show,",
+   "section": "Verse 2",
+   "start": 87.927,
+   "end": 90.815,
+   "words": [
+    {
+     "w": "He",
+     "start": 87.927,
+     "end": 88.007,
+     "conf": 0.49
+    },
+    {
+     "w": "had",
+     "start": 88.007,
+     "end": 88.168,
+     "conf": 0.49
+    },
+    {
+     "w": "more",
+     "start": 88.168,
+     "end": 88.368,
+     "conf": 0.49
+    },
+    {
+     "w": "shares",
+     "start": 88.368,
+     "end": 88.809,
+     "conf": 0.42
+    },
+    {
+     "w": "than",
+     "start": 88.809,
+     "end": 88.93,
+     "conf": 0.47
+    },
+    {
+     "w": "the",
+     "start": 88.93,
+     "end": 89.03,
+     "conf": 0.47
+    },
+    {
+     "w": "founders",
+     "start": 89.03,
+     "end": 89.532,
+     "conf": 0.43
+    },
+    {
+     "w": "and",
+     "start": 89.532,
+     "end": 89.612,
+     "conf": 0.4
+    },
+    {
+     "w": "a",
+     "start": 89.612,
+     "end": 89.692,
+     "conf": 0.48
+    },
+    {
+     "w": "flywheel",
+     "start": 89.692,
+     "end": 90.214,
+     "conf": 0.27
+    },
+    {
+     "w": "slide",
+     "start": 90.214,
+     "end": 90.474,
+     "conf": 0.22
+    },
+    {
+     "w": "to",
+     "start": 90.474,
+     "end": 90.595,
+     "conf": 0.12
+    },
+    {
+     "w": "show,",
+     "start": 90.595,
+     "end": 90.815,
+     "conf": 0.47
+    }
+   ]
+  },
+  {
+   "i": 26,
+   "text": "and the mission on the wall got a footnote down below.",
+   "section": "Verse 2",
+   "start": 91.218,
+   "end": 93.607,
+   "words": [
+    {
+     "w": "and",
+     "start": 91.218,
+     "end": 91.318,
+     "conf": 0.31
+    },
+    {
+     "w": "the",
+     "start": 91.318,
+     "end": 91.419,
+     "conf": 0.06
+    },
+    {
+     "w": "mission",
+     "start": 91.419,
+     "end": 91.901,
+     "conf": 0.33
+    },
+    {
+     "w": "on",
+     "start": 91.901,
+     "end": 92.001,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 92.001,
+     "end": 92.101,
+     "conf": 0.07
+    },
+    {
+     "w": "wall",
+     "start": 92.101,
+     "end": 92.483,
+     "conf": 0.42
+    },
+    {
+     "w": "got",
+     "start": 92.483,
+     "end": 92.643,
+     "conf": 0.37
+    },
+    {
+     "w": "a",
+     "start": 92.643,
+     "end": 92.744,
+     "conf": 0.48
+    },
+    {
+     "w": "footnote",
+     "start": 92.744,
+     "end": 93.145,
+     "conf": 0.34
+    },
+    {
+     "w": "down",
+     "start": 93.145,
+     "end": 93.386,
+     "conf": 0.44
+    },
+    {
+     "w": "below.",
+     "start": 93.386,
+     "end": 93.607,
+     "conf": 0.23
+    }
+   ]
+  },
+  {
+   "i": 27,
+   "text": "Now the code don't really matter, it's the story in the doc:",
+   "section": "Verse 2",
+   "start": 94.07,
+   "end": 96.56,
+   "words": [
+    {
+     "w": "Now",
+     "start": 94.07,
+     "end": 94.191,
+     "conf": 0.5
+    },
+    {
+     "w": "the",
+     "start": 94.191,
+     "end": 94.311,
+     "conf": 0.46
+    },
+    {
+     "w": "code",
+     "start": 94.311,
+     "end": 94.592,
+     "conf": 0.28
+    },
+    {
+     "w": "don't",
+     "start": 94.592,
+     "end": 94.773,
+     "conf": 0.33
+    },
+    {
+     "w": "really",
+     "start": 94.773,
+     "end": 94.994,
+     "conf": 0.45
+    },
+    {
+     "w": "matter,",
+     "start": 94.994,
+     "end": 95.235,
+     "conf": 0.35
+    },
+    {
+     "w": "it's",
+     "start": 95.516,
+     "end": 95.616,
+     "conf": 0.24
+    },
+    {
+     "w": "the",
+     "start": 95.616,
+     "end": 95.777,
+     "conf": 0.48
+    },
+    {
+     "w": "story",
+     "start": 95.777,
+     "end": 96.199,
+     "conf": 0.5
+    },
+    {
+     "w": "in",
+     "start": 96.199,
+     "end": 96.279,
+     "conf": 0.46
+    },
+    {
+     "w": "the",
+     "start": 96.279,
+     "end": 96.38,
+     "conf": 0.47
+    },
+    {
+     "w": "doc:",
+     "start": 96.38,
+     "end": 96.56,
+     "conf": 0.23
+    }
+   ]
+  },
+  {
+   "i": 28,
+   "text": "write \"drove cross-functional alignment,\" and they'll hand you all the stock.",
+   "section": "Verse 2",
+   "start": 96.803,
+   "end": 99.673,
+   "words": [
+    {
+     "w": "write",
+     "start": 96.803,
+     "end": 97.003,
+     "conf": 0.31
+    },
+    {
+     "w": "\"drove",
+     "start": 97.003,
+     "end": 97.304,
+     "conf": 0.49
+    },
+    {
+     "w": "cross-functional",
+     "start": 97.304,
+     "end": 98.067,
+     "conf": 0.49
+    },
+    {
+     "w": "alignment,\"",
+     "start": 98.067,
+     "end": 98.589,
+     "conf": 0.33
+    },
+    {
+     "w": "and",
+     "start": 98.589,
+     "end": 98.669,
+     "conf": 0.32
+    },
+    {
+     "w": "they'll",
+     "start": 98.669,
+     "end": 98.85,
+     "conf": 0.11
+    },
+    {
+     "w": "hand",
+     "start": 98.85,
+     "end": 99.071,
+     "conf": 0.35
+    },
+    {
+     "w": "you",
+     "start": 99.071,
+     "end": 99.191,
+     "conf": 0.45
+    },
+    {
+     "w": "all",
+     "start": 99.191,
+     "end": 99.271,
+     "conf": 0.48
+    },
+    {
+     "w": "the",
+     "start": 99.271,
+     "end": 99.392,
+     "conf": 0.32
+    },
+    {
+     "w": "stock.",
+     "start": 99.392,
+     "end": 99.673,
+     "conf": 0.44
+    }
+   ]
+  },
+  {
+   "i": 29,
+   "text": "There's a graveyard full of products, near three hundred stones in rows;",
+   "section": "Verse 2",
+   "start": 99.935,
+   "end": 102.864,
+   "words": [
+    {
+     "w": "There's",
+     "start": 99.935,
+     "end": 100.095,
+     "conf": 0.38
+    },
+    {
+     "w": "a",
+     "start": 100.095,
+     "end": 100.175,
+     "conf": 0.49
+    },
+    {
+     "w": "graveyard",
+     "start": 100.175,
+     "end": 100.777,
+     "conf": 0.5
+    },
+    {
+     "w": "full",
+     "start": 100.777,
+     "end": 100.958,
+     "conf": 0.48
+    },
+    {
+     "w": "of",
+     "start": 100.958,
+     "end": 101.018,
+     "conf": 0.43
+    },
+    {
+     "w": "products,",
+     "start": 101.018,
+     "end": 101.439,
+     "conf": 0.37
+    },
+    {
+     "w": "near",
+     "start": 101.439,
+     "end": 101.62,
+     "conf": 0.48
+    },
+    {
+     "w": "three",
+     "start": 101.62,
+     "end": 101.821,
+     "conf": 0.22
+    },
+    {
+     "w": "hundred",
+     "start": 101.821,
+     "end": 102.101,
+     "conf": 0.2
+    },
+    {
+     "w": "stones",
+     "start": 102.101,
+     "end": 102.442,
+     "conf": 0.49
+    },
+    {
+     "w": "in",
+     "start": 102.442,
+     "end": 102.543,
+     "conf": 0.25
+    },
+    {
+     "w": "rows;",
+     "start": 102.543,
+     "end": 102.864,
+     "conf": 0.36
+    }
+   ]
+  },
+  {
+   "i": 30,
+   "text": "every one bought someone a level — where the users went, God knows.",
+   "section": "Verse 2",
+   "start": 103.126,
+   "end": 105.855,
+   "words": [
+    {
+     "w": "every",
+     "start": 103.126,
+     "end": 103.367,
+     "conf": 0.46
+    },
+    {
+     "w": "one",
+     "start": 103.367,
+     "end": 103.507,
+     "conf": 0.48
+    },
+    {
+     "w": "bought",
+     "start": 103.507,
+     "end": 103.728,
+     "conf": 0.39
+    },
+    {
+     "w": "someone",
+     "start": 103.728,
+     "end": 104.009,
+     "conf": 0.39
+    },
+    {
+     "w": "a",
+     "start": 104.009,
+     "end": 104.089,
+     "conf": 0.25
+    },
+    {
+     "w": "level —",
+     "start": 104.089,
+     "end": 104.551,
+     "conf": 0.42
+    },
+    {
+     "w": "where",
+     "start": 104.551,
+     "end": 104.671,
+     "conf": 0.22
+    },
+    {
+     "w": "the",
+     "start": 104.671,
+     "end": 104.832,
+     "conf": 0.27
+    },
+    {
+     "w": "users",
+     "start": 104.832,
+     "end": 105.093,
+     "conf": 0.32
+    },
+    {
+     "w": "went,",
+     "start": 105.093,
+     "end": 105.293,
+     "conf": 0.34
+    },
+    {
+     "w": "God",
+     "start": 105.293,
+     "end": 105.514,
+     "conf": 0.5
+    },
+    {
+     "w": "knows.",
+     "start": 105.514,
+     "end": 105.855,
+     "conf": 0.41
+    }
+   ]
+  },
+  {
+   "i": 31,
+   "text": "Soon the org chart got real: changin' one button from blue to gray",
+   "section": "Verse 2",
+   "start": 106.078,
+   "end": 108.827,
+   "words": [
+    {
+     "w": "Soon",
+     "start": 106.078,
+     "end": 106.278,
+     "conf": 0.48
+    },
+    {
+     "w": "the",
+     "start": 106.278,
+     "end": 106.439,
+     "conf": 0.45
+    },
+    {
+     "w": "org",
+     "start": 106.439,
+     "end": 106.64,
+     "conf": 0.15
+    },
+    {
+     "w": "chart",
+     "start": 106.64,
+     "end": 106.941,
+     "conf": 0.4
+    },
+    {
+     "w": "got",
+     "start": 106.941,
+     "end": 107.161,
+     "conf": 0.48
+    },
+    {
+     "w": "real:",
+     "start": 107.161,
+     "end": 107.463,
+     "conf": 0.45
+    },
+    {
+     "w": "changin'",
+     "start": 107.463,
+     "end": 107.804,
+     "conf": 0.35
+    },
+    {
+     "w": "one",
+     "start": 107.804,
+     "end": 107.924,
+     "conf": 0.49
+    },
+    {
+     "w": "button",
+     "start": 107.924,
+     "end": 108.185,
+     "conf": 0.39
+    },
+    {
+     "w": "from",
+     "start": 108.185,
+     "end": 108.326,
+     "conf": 0.47
+    },
+    {
+     "w": "blue",
+     "start": 108.326,
+     "end": 108.506,
+     "conf": 0.37
+    },
+    {
+     "w": "to",
+     "start": 108.506,
+     "end": 108.607,
+     "conf": 0.4
+    },
+    {
+     "w": "gray",
+     "start": 108.607,
+     "end": 108.827,
+     "conf": 0.25
+    }
+   ]
+  },
+  {
+   "i": 32,
+   "text": "took three syncs, nine sign-offs, and a launch review in May.",
+   "section": "Verse 2",
+   "start": 109.03,
+   "end": 111.619,
+   "words": [
+    {
+     "w": "took",
+     "start": 109.03,
+     "end": 109.17,
+     "conf": 0.24
+    },
+    {
+     "w": "three",
+     "start": 109.17,
+     "end": 109.451,
+     "conf": 0.44
+    },
+    {
+     "w": "syncs,",
+     "start": 109.451,
+     "end": 109.752,
+     "conf": 0.22
+    },
+    {
+     "w": "nine",
+     "start": 109.752,
+     "end": 110.053,
+     "conf": 0.3
+    },
+    {
+     "w": "sign-offs,",
+     "start": 110.053,
+     "end": 110.555,
+     "conf": 0.37
+    },
+    {
+     "w": "and",
+     "start": 110.555,
+     "end": 110.676,
+     "conf": 0.43
+    },
+    {
+     "w": "a",
+     "start": 110.676,
+     "end": 110.736,
+     "conf": 0.47
+    },
+    {
+     "w": "launch",
+     "start": 110.736,
+     "end": 111.037,
+     "conf": 0.4
+    },
+    {
+     "w": "review",
+     "start": 111.037,
+     "end": 111.358,
+     "conf": 0.11
+    },
+    {
+     "w": "in",
+     "start": 111.358,
+     "end": 111.458,
+     "conf": 0.24
+    },
+    {
+     "w": "May.",
+     "start": 111.458,
+     "end": 111.619,
+     "conf": 0.37
+    }
+   ]
+  },
+  {
+   "i": 33,
+   "text": "Code yellow on the revenue, so we shrank the little \"Ad\"",
+   "section": "Verse 2",
+   "start": 111.962,
+   "end": 114.472,
+   "words": [
+    {
+     "w": "Code",
+     "start": 111.962,
+     "end": 112.243,
+     "conf": 0.26
+    },
+    {
+     "w": "yellow",
+     "start": 112.243,
+     "end": 112.544,
+     "conf": 0.46
+    },
+    {
+     "w": "on",
+     "start": 112.544,
+     "end": 112.645,
+     "conf": 0.48
+    },
+    {
+     "w": "the",
+     "start": 112.645,
+     "end": 112.765,
+     "conf": 0.42
+    },
+    {
+     "w": "revenue,",
+     "start": 112.765,
+     "end": 113.328,
+     "conf": 0.46
+    },
+    {
+     "w": "so",
+     "start": 113.328,
+     "end": 113.448,
+     "conf": 0.49
+    },
+    {
+     "w": "we",
+     "start": 113.448,
+     "end": 113.569,
+     "conf": 0.48
+    },
+    {
+     "w": "shrank",
+     "start": 113.569,
+     "end": 113.91,
+     "conf": 0.44
+    },
+    {
+     "w": "the",
+     "start": 113.91,
+     "end": 114.031,
+     "conf": 0.37
+    },
+    {
+     "w": "little",
+     "start": 114.031,
+     "end": 114.332,
+     "conf": 0.42
+    },
+    {
+     "w": "\"Ad\"",
+     "start": 114.332,
+     "end": 114.472,
+     "conf": 0.17
+    }
+   ]
+  },
+  {
+   "i": 34,
+   "text": "till you couldn't tell the difference — best quarter we ever had.",
+   "section": "Verse 2",
+   "start": 114.695,
+   "end": 117.045,
+   "words": [
+    {
+     "w": "till",
+     "start": 114.695,
+     "end": 114.836,
+     "conf": 0.0
+    },
+    {
+     "w": "you",
+     "start": 114.836,
+     "end": 114.956,
+     "conf": 0.5
+    },
+    {
+     "w": "couldn't",
+     "start": 114.956,
+     "end": 115.217,
+     "conf": 0.46
+    },
+    {
+     "w": "tell",
+     "start": 115.217,
+     "end": 115.398,
+     "conf": 0.5
+    },
+    {
+     "w": "the",
+     "start": 115.398,
+     "end": 115.498,
+     "conf": 0.49
+    },
+    {
+     "w": "difference —",
+     "start": 115.498,
+     "end": 115.96,
+     "conf": 0.47
+    },
+    {
+     "w": "best",
+     "start": 115.96,
+     "end": 116.161,
+     "conf": 0.43
+    },
+    {
+     "w": "quarter",
+     "start": 116.161,
+     "end": 116.482,
+     "conf": 0.43
+    },
+    {
+     "w": "we",
+     "start": 116.482,
+     "end": 116.623,
+     "conf": 0.48
+    },
+    {
+     "w": "ever",
+     "start": 116.623,
+     "end": 116.804,
+     "conf": 0.3
+    },
+    {
+     "w": "had.",
+     "start": 116.804,
+     "end": 117.045,
+     "conf": 0.44
+    }
+   ]
+  },
+  {
+   "i": 35,
+   "text": "Got an email Friday morning, so I drove in like before:",
+   "section": "Verse 2",
+   "start": 117.428,
+   "end": 120.017,
+   "words": [
+    {
+     "w": "Got",
+     "start": 117.428,
+     "end": 117.568,
+     "conf": 0.18
+    },
+    {
+     "w": "an",
+     "start": 117.568,
+     "end": 117.689,
+     "conf": 0.48
+    },
+    {
+     "w": "email",
+     "start": 117.689,
+     "end": 118.05,
+     "conf": 0.42
+    },
+    {
+     "w": "Friday",
+     "start": 118.05,
+     "end": 118.351,
+     "conf": 0.46
+    },
+    {
+     "w": "morning,",
+     "start": 118.351,
+     "end": 118.853,
+     "conf": 0.41
+    },
+    {
+     "w": "so",
+     "start": 118.853,
+     "end": 118.994,
+     "conf": 0.48
+    },
+    {
+     "w": "I",
+     "start": 118.994,
+     "end": 119.094,
+     "conf": 0.0
+    },
+    {
+     "w": "drove",
+     "start": 119.094,
+     "end": 119.355,
+     "conf": 0.28
+    },
+    {
+     "w": "in",
+     "start": 119.355,
+     "end": 119.496,
+     "conf": 0.21
+    },
+    {
+     "w": "like",
+     "start": 119.496,
+     "end": 119.656,
+     "conf": 0.45
+    },
+    {
+     "w": "before:",
+     "start": 119.656,
+     "end": 120.017,
+     "conf": 0.16
+    }
+   ]
+  },
+  {
+   "i": 36,
+   "text": "badge reader blinked red — guess I don't work here anymore.",
+   "section": "Verse 2",
+   "start": 120.28,
+   "end": 122.889,
+   "words": [
+    {
+     "w": "badge",
+     "start": 120.28,
+     "end": 120.601,
+     "conf": 0.3
+    },
+    {
+     "w": "reader",
+     "start": 120.601,
+     "end": 120.882,
+     "conf": 0.29
+    },
+    {
+     "w": "blinked",
+     "start": 120.882,
+     "end": 121.203,
+     "conf": 0.36
+    },
+    {
+     "w": "red —",
+     "start": 121.203,
+     "end": 121.625,
+     "conf": 0.5
+    },
+    {
+     "w": "guess",
+     "start": 121.625,
+     "end": 121.885,
+     "conf": 0.16
+    },
+    {
+     "w": "I",
+     "start": 121.885,
+     "end": 121.926,
+     "conf": 0.5
+    },
+    {
+     "w": "don't",
+     "start": 121.926,
+     "end": 122.086,
+     "conf": 0.28
+    },
+    {
+     "w": "work",
+     "start": 122.086,
+     "end": 122.327,
+     "conf": 0.5
+    },
+    {
+     "w": "here",
+     "start": 122.327,
+     "end": 122.548,
+     "conf": 0.45
+    },
+    {
+     "w": "anymore.",
+     "start": 122.548,
+     "end": 122.889,
+     "conf": 0.49
+    }
+   ]
+  },
+  {
+   "i": 37,
+   "text": "Revenue up and to the right",
+   "section": "Chorus",
+   "start": 123.272,
+   "end": 125.46,
+   "words": [
+    {
+     "w": "Revenue",
+     "start": 123.272,
+     "end": 124.095,
+     "conf": 0.2
+    },
+    {
+     "w": "up",
+     "start": 124.095,
+     "end": 124.255,
+     "conf": 0.0
+    },
+    {
+     "w": "and",
+     "start": 124.255,
+     "end": 124.677,
+     "conf": 0.24
+    },
+    {
+     "w": "to",
+     "start": 124.677,
+     "end": 124.797,
+     "conf": 0.03
+    },
+    {
+     "w": "the",
+     "start": 124.797,
+     "end": 125.219,
+     "conf": 0.01
+    },
+    {
+     "w": "right",
+     "start": 125.219,
+     "end": 125.46,
+     "conf": 0.04
+    }
+   ]
+  },
+  {
+   "i": 38,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 126.304,
+   "end": 128.291,
+   "words": [
+    {
+     "w": "in",
+     "start": 126.304,
+     "end": 126.444,
+     "conf": 0.4
+    },
+    {
+     "w": "the",
+     "start": 126.444,
+     "end": 126.665,
+     "conf": 0.14
+    },
+    {
+     "w": "engineer's",
+     "start": 126.665,
+     "end": 127.368,
+     "conf": 0.28
+    },
+    {
+     "w": "paradise,",
+     "start": 127.368,
+     "end": 128.291,
+     "conf": 0.17
+    }
+   ]
+  },
+  {
+   "i": 39,
+   "text": "soda's fifty cents tonight",
+   "section": "Chorus",
+   "start": 129.236,
+   "end": 131.042,
+   "words": [
+    {
+     "w": "soda's",
+     "start": 129.236,
+     "end": 129.657,
+     "conf": 0.29
+    },
+    {
+     "w": "fifty",
+     "start": 129.657,
+     "end": 130.199,
+     "conf": 0.4
+    },
+    {
+     "w": "cents",
+     "start": 130.199,
+     "end": 130.741,
+     "conf": 0.2
+    },
+    {
+     "w": "tonight",
+     "start": 130.741,
+     "end": 131.042,
+     "conf": 0.1
+    }
+   ]
+  },
+  {
+   "i": 40,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 132.308,
+   "end": 133.754,
+   "words": [
+    {
+     "w": "in",
+     "start": 132.308,
+     "end": 132.448,
+     "conf": 0.11
+    },
+    {
+     "w": "the",
+     "start": 132.448,
+     "end": 132.629,
+     "conf": 0.11
+    },
+    {
+     "w": "engineer's",
+     "start": 132.629,
+     "end": 133.372,
+     "conf": 0.18
+    },
+    {
+     "w": "paradise.",
+     "start": 133.372,
+     "end": 133.754,
+     "conf": 0.08
+    }
+   ]
+  },
+  {
+   "i": 41,
+   "text": "Adult supervision's here, all right,",
+   "section": "Chorus",
+   "start": 135.121,
+   "end": 137.408,
+   "words": [
+    {
+     "w": "Adult",
+     "start": 135.121,
+     "end": 135.602,
+     "conf": 0.42
+    },
+    {
+     "w": "supervision's",
+     "start": 135.602,
+     "end": 136.445,
+     "conf": 0.44
+    },
+    {
+     "w": "here,",
+     "start": 136.445,
+     "end": 136.826,
+     "conf": 0.43
+    },
+    {
+     "w": "all",
+     "start": 136.826,
+     "end": 136.966,
+     "conf": 0.07
+    },
+    {
+     "w": "right,",
+     "start": 136.966,
+     "end": 137.408,
+     "conf": 0.2
+    }
+   ]
+  },
+  {
+   "i": 42,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 138.292,
+   "end": 139.636,
+   "words": [
+    {
+     "w": "in",
+     "start": 138.292,
+     "end": 138.432,
+     "conf": 0.2
+    },
+    {
+     "w": "the",
+     "start": 138.432,
+     "end": 138.653,
+     "conf": 0.09
+    },
+    {
+     "w": "engineer's",
+     "start": 138.653,
+     "end": 139.355,
+     "conf": 0.08
+    },
+    {
+     "w": "paradise,",
+     "start": 139.355,
+     "end": 139.636,
+     "conf": 0.05
+    }
+   ]
+  },
+  {
+   "i": 43,
+   "text": "badge turned red — goodnight",
+   "section": "Chorus",
+   "start": 141.223,
+   "end": 143.492,
+   "words": [
+    {
+     "w": "badge",
+     "start": 141.223,
+     "end": 141.605,
+     "conf": 0.1
+    },
+    {
+     "w": "turned",
+     "start": 141.605,
+     "end": 142.006,
+     "conf": 0.32
+    },
+    {
+     "w": "red —",
+     "start": 142.006,
+     "end": 142.267,
+     "conf": 0.38
+    },
+    {
+     "w": "goodnight",
+     "start": 142.95,
+     "end": 143.492,
+     "conf": 0.06
+    }
+   ]
+  },
+  {
+   "i": 44,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 144.316,
+   "end": 147.003,
+   "words": [
+    {
+     "w": "in",
+     "start": 144.316,
+     "end": 144.637,
+     "conf": 0.16
+    },
+    {
+     "w": "the",
+     "start": 144.637,
+     "end": 144.877,
+     "conf": 0.02
+    },
+    {
+     "w": "engineer's",
+     "start": 144.877,
+     "end": 146.161,
+     "conf": 0.13
+    },
+    {
+     "w": "paradise.",
+     "start": 146.161,
+     "end": 147.003,
+     "conf": 0.08
+    }
+   ]
+  },
+  {
+   "i": 45,
+   "text": "Then the model learned to code, and the keynote spread the news:",
+   "section": "Verse 3",
+   "start": 147.867,
+   "end": 150.438,
+   "words": [
+    {
+     "w": "Then",
+     "start": 147.867,
+     "end": 148.008,
+     "conf": 0.5
+    },
+    {
+     "w": "the",
+     "start": 148.008,
+     "end": 148.108,
+     "conf": 0.49
+    },
+    {
+     "w": "model",
+     "start": 148.108,
+     "end": 148.409,
+     "conf": 0.5
+    },
+    {
+     "w": "learned",
+     "start": 148.409,
+     "end": 148.59,
+     "conf": 0.49
+    },
+    {
+     "w": "to",
+     "start": 148.59,
+     "end": 148.67,
+     "conf": 0.01
+    },
+    {
+     "w": "code,",
+     "start": 148.67,
+     "end": 149.112,
+     "conf": 0.27
+    },
+    {
+     "w": "and",
+     "start": 149.112,
+     "end": 149.213,
+     "conf": 0.44
+    },
+    {
+     "w": "the",
+     "start": 149.213,
+     "end": 149.333,
+     "conf": 0.45
+    },
+    {
+     "w": "keynote",
+     "start": 149.333,
+     "end": 149.775,
+     "conf": 0.3
+    },
+    {
+     "w": "spread",
+     "start": 149.775,
+     "end": 150.016,
+     "conf": 0.39
+    },
+    {
+     "w": "the",
+     "start": 150.016,
+     "end": 150.117,
+     "conf": 0.39
+    },
+    {
+     "w": "news:",
+     "start": 150.117,
+     "end": 150.438,
+     "conf": 0.34
+    }
+   ]
+  },
+  {
+   "i": 46,
+   "text": "\"the hottest language now is English\" — guess which language we lose.",
+   "section": "Verse 3",
+   "start": 150.48,
+   "end": 153.329,
+   "words": [
+    {
+     "w": "\"the",
+     "start": 150.48,
+     "end": 150.6,
+     "conf": 0.43
+    },
+    {
+     "w": "hottest",
+     "start": 150.6,
+     "end": 150.941,
+     "conf": 0.32
+    },
+    {
+     "w": "language",
+     "start": 150.941,
+     "end": 151.302,
+     "conf": 0.5
+    },
+    {
+     "w": "now",
+     "start": 151.302,
+     "end": 151.543,
+     "conf": 0.39
+    },
+    {
+     "w": "is",
+     "start": 151.543,
+     "end": 151.703,
+     "conf": 0.25
+    },
+    {
+     "w": "English\" —",
+     "start": 151.703,
+     "end": 152.125,
+     "conf": 0.46
+    },
+    {
+     "w": "guess",
+     "start": 152.125,
+     "end": 152.345,
+     "conf": 0.34
+    },
+    {
+     "w": "which",
+     "start": 152.345,
+     "end": 152.546,
+     "conf": 0.47
+    },
+    {
+     "w": "language",
+     "start": 152.546,
+     "end": 152.887,
+     "conf": 0.49
+    },
+    {
+     "w": "we",
+     "start": 152.887,
+     "end": 153.008,
+     "conf": 0.24
+    },
+    {
+     "w": "lose.",
+     "start": 153.008,
+     "end": 153.329,
+     "conf": 0.31
+    }
+   ]
+  },
+  {
+   "i": 47,
+   "text": "Twenty years of Emacs chords, got a pinky bent just like a hook,",
+   "section": "Verse 3",
+   "start": 153.651,
+   "end": 156.282,
+   "words": [
+    {
+     "w": "Twenty",
+     "start": 153.651,
+     "end": 153.912,
+     "conf": 0.4
+    },
+    {
+     "w": "years",
+     "start": 153.912,
+     "end": 154.133,
+     "conf": 0.5
+    },
+    {
+     "w": "of",
+     "start": 154.133,
+     "end": 154.254,
+     "conf": 0.49
+    },
+    {
+     "w": "Emacs",
+     "start": 154.254,
+     "end": 154.635,
+     "conf": 0.29
+    },
+    {
+     "w": "chords,",
+     "start": 154.635,
+     "end": 154.997,
+     "conf": 0.36
+    },
+    {
+     "w": "got",
+     "start": 154.997,
+     "end": 155.137,
+     "conf": 0.45
+    },
+    {
+     "w": "a",
+     "start": 155.137,
+     "end": 155.218,
+     "conf": 0.49
+    },
+    {
+     "w": "pinky",
+     "start": 155.218,
+     "end": 155.499,
+     "conf": 0.42
+    },
+    {
+     "w": "bent",
+     "start": 155.499,
+     "end": 155.72,
+     "conf": 0.48
+    },
+    {
+     "w": "just",
+     "start": 155.72,
+     "end": 155.86,
+     "conf": 0.29
+    },
+    {
+     "w": "like",
+     "start": 155.86,
+     "end": 156.041,
+     "conf": 0.35
+    },
+    {
+     "w": "a",
+     "start": 156.041,
+     "end": 156.121,
+     "conf": 0.37
+    },
+    {
+     "w": "hook,",
+     "start": 156.121,
+     "end": 156.282,
+     "conf": 0.29
+    }
+   ]
+  },
+  {
+   "i": 48,
+   "text": "now I tab, tab, tab, accept all, and I never even look.",
+   "section": "Verse 3",
+   "start": 156.364,
+   "end": 159.332,
+   "words": [
+    {
+     "w": "now",
+     "start": 156.364,
+     "end": 156.544,
+     "conf": 0.25
+    },
+    {
+     "w": "I",
+     "start": 156.544,
+     "end": 156.604,
+     "conf": 0.11
+    },
+    {
+     "w": "tab,",
+     "start": 156.604,
+     "end": 156.986,
+     "conf": 0.3
+    },
+    {
+     "w": "tab,",
+     "start": 156.986,
+     "end": 157.347,
+     "conf": 0.33
+    },
+    {
+     "w": "tab,",
+     "start": 157.347,
+     "end": 157.688,
+     "conf": 0.38
+    },
+    {
+     "w": "accept",
+     "start": 157.688,
+     "end": 158.149,
+     "conf": 0.19
+    },
+    {
+     "w": "all,",
+     "start": 158.149,
+     "end": 158.49,
+     "conf": 0.2
+    },
+    {
+     "w": "and",
+     "start": 158.49,
+     "end": 158.65,
+     "conf": 0.19
+    },
+    {
+     "w": "I",
+     "start": 158.65,
+     "end": 158.711,
+     "conf": 0.06
+    },
+    {
+     "w": "never",
+     "start": 158.711,
+     "end": 158.951,
+     "conf": 0.36
+    },
+    {
+     "w": "even",
+     "start": 158.951,
+     "end": 159.192,
+     "conf": 0.38
+    },
+    {
+     "w": "look.",
+     "start": 159.192,
+     "end": 159.332,
+     "conf": 0.19
+    }
+   ]
+  },
+  {
+   "i": 49,
+   "text": "Stack Overflow's a ghost town, tumbleweed across the queue,",
+   "section": "Verse 3",
+   "start": 159.595,
+   "end": 162.185,
+   "words": [
+    {
+     "w": "Stack",
+     "start": 159.595,
+     "end": 159.876,
+     "conf": 0.4
+    },
+    {
+     "w": "Overflow's",
+     "start": 159.876,
+     "end": 160.338,
+     "conf": 0.44
+    },
+    {
+     "w": "a",
+     "start": 160.338,
+     "end": 160.398,
+     "conf": 0.42
+    },
+    {
+     "w": "ghost",
+     "start": 160.398,
+     "end": 160.679,
+     "conf": 0.21
+    },
+    {
+     "w": "town,",
+     "start": 160.679,
+     "end": 161.081,
+     "conf": 0.46
+    },
+    {
+     "w": "tumbleweed",
+     "start": 161.081,
+     "end": 161.543,
+     "conf": 0.45
+    },
+    {
+     "w": "across",
+     "start": 161.543,
+     "end": 161.844,
+     "conf": 0.5
+    },
+    {
+     "w": "the",
+     "start": 161.844,
+     "end": 161.944,
+     "conf": 0.46
+    },
+    {
+     "w": "queue,",
+     "start": 161.944,
+     "end": 162.185,
+     "conf": 0.14
+    }
+   ]
+  },
+  {
+   "i": 50,
+   "text": "and my rubber duck talks back now — calls my typo \"load-bearing,\" too.",
+   "section": "Verse 3",
+   "start": 162.428,
+   "end": 165.356,
+   "words": [
+    {
+     "w": "and",
+     "start": 162.428,
+     "end": 162.528,
+     "conf": 0.43
+    },
+    {
+     "w": "my",
+     "start": 162.528,
+     "end": 162.688,
+     "conf": 0.48
+    },
+    {
+     "w": "rubber",
+     "start": 162.688,
+     "end": 162.929,
+     "conf": 0.39
+    },
+    {
+     "w": "duck",
+     "start": 162.929,
+     "end": 163.15,
+     "conf": 0.21
+    },
+    {
+     "w": "talks",
+     "start": 163.15,
+     "end": 163.431,
+     "conf": 0.49
+    },
+    {
+     "w": "back",
+     "start": 163.431,
+     "end": 163.631,
+     "conf": 0.5
+    },
+    {
+     "w": "now —",
+     "start": 163.631,
+     "end": 163.892,
+     "conf": 0.47
+    },
+    {
+     "w": "calls",
+     "start": 163.892,
+     "end": 164.113,
+     "conf": 0.28
+    },
+    {
+     "w": "my",
+     "start": 164.113,
+     "end": 164.253,
+     "conf": 0.5
+    },
+    {
+     "w": "typo",
+     "start": 164.253,
+     "end": 164.654,
+     "conf": 0.21
+    },
+    {
+     "w": "\"load-bearing,\"",
+     "start": 164.654,
+     "end": 165.176,
+     "conf": 0.39
+    },
+    {
+     "w": "too.",
+     "start": 165.176,
+     "end": 165.356,
+     "conf": 0.37
+    }
+   ]
+  },
+  {
+   "i": 51,
+   "text": "Asked it nicely for a bug fix, so it deleted all the tests;",
+   "section": "Verse 3",
+   "start": 165.819,
+   "end": 168.609,
+   "words": [
+    {
+     "w": "Asked",
+     "start": 165.819,
+     "end": 166.02,
+     "conf": 0.12
+    },
+    {
+     "w": "it",
+     "start": 166.02,
+     "end": 166.12,
+     "conf": 0.45
+    },
+    {
+     "w": "nicely",
+     "start": 166.12,
+     "end": 166.541,
+     "conf": 0.47
+    },
+    {
+     "w": "for",
+     "start": 166.541,
+     "end": 166.702,
+     "conf": 0.48
+    },
+    {
+     "w": "a",
+     "start": 166.702,
+     "end": 166.782,
+     "conf": 0.48
+    },
+    {
+     "w": "bug",
+     "start": 166.782,
+     "end": 167.043,
+     "conf": 0.47
+    },
+    {
+     "w": "fix,",
+     "start": 167.043,
+     "end": 167.304,
+     "conf": 0.49
+    },
+    {
+     "w": "so",
+     "start": 167.304,
+     "end": 167.445,
+     "conf": 0.09
+    },
+    {
+     "w": "it",
+     "start": 167.445,
+     "end": 167.525,
+     "conf": 0.27
+    },
+    {
+     "w": "deleted",
+     "start": 167.525,
+     "end": 167.906,
+     "conf": 0.25
+    },
+    {
+     "w": "all",
+     "start": 167.906,
+     "end": 168.027,
+     "conf": 0.48
+    },
+    {
+     "w": "the",
+     "start": 168.027,
+     "end": 168.167,
+     "conf": 0.33
+    },
+    {
+     "w": "tests;",
+     "start": 168.167,
+     "end": 168.609,
+     "conf": 0.33
+    }
+   ]
+  },
+  {
+   "i": 52,
+   "text": "now the build is green forever, and it says it did its best.",
+   "section": "Verse 3",
+   "start": 168.711,
+   "end": 171.28,
+   "words": [
+    {
+     "w": "now",
+     "start": 168.711,
+     "end": 168.831,
+     "conf": 0.47
+    },
+    {
+     "w": "the",
+     "start": 168.831,
+     "end": 168.932,
+     "conf": 0.47
+    },
+    {
+     "w": "build",
+     "start": 168.932,
+     "end": 169.193,
+     "conf": 0.42
+    },
+    {
+     "w": "is",
+     "start": 169.193,
+     "end": 169.293,
+     "conf": 0.44
+    },
+    {
+     "w": "green",
+     "start": 169.293,
+     "end": 169.574,
+     "conf": 0.39
+    },
+    {
+     "w": "forever,",
+     "start": 169.574,
+     "end": 170.176,
+     "conf": 0.48
+    },
+    {
+     "w": "and",
+     "start": 170.176,
+     "end": 170.256,
+     "conf": 0.4
+    },
+    {
+     "w": "it",
+     "start": 170.256,
+     "end": 170.377,
+     "conf": 0.46
+    },
+    {
+     "w": "says",
+     "start": 170.377,
+     "end": 170.618,
+     "conf": 0.47
+    },
+    {
+     "w": "it",
+     "start": 170.618,
+     "end": 170.698,
+     "conf": 0.41
+    },
+    {
+     "w": "did",
+     "start": 170.698,
+     "end": 170.838,
+     "conf": 0.45
+    },
+    {
+     "w": "its",
+     "start": 170.838,
+     "end": 171.059,
+     "conf": 0.28
+    },
+    {
+     "w": "best.",
+     "start": 171.059,
+     "end": 171.28,
+     "conf": 0.15
+    }
+   ]
+  },
+  {
+   "i": 53,
+   "text": "New grads can't get hired, the ladder's missin' all its rungs;",
+   "section": "Verse 3",
+   "start": 171.683,
+   "end": 174.234,
+   "words": [
+    {
+     "w": "New",
+     "start": 171.683,
+     "end": 171.843,
+     "conf": 0.4
+    },
+    {
+     "w": "grads",
+     "start": 171.843,
+     "end": 172.265,
+     "conf": 0.46
+    },
+    {
+     "w": "can't",
+     "start": 172.265,
+     "end": 172.466,
+     "conf": 0.4
+    },
+    {
+     "w": "get",
+     "start": 172.466,
+     "end": 172.627,
+     "conf": 0.5
+    },
+    {
+     "w": "hired,",
+     "start": 172.627,
+     "end": 172.948,
+     "conf": 0.35
+    },
+    {
+     "w": "the",
+     "start": 172.948,
+     "end": 173.069,
+     "conf": 0.14
+    },
+    {
+     "w": "ladder's",
+     "start": 173.069,
+     "end": 173.39,
+     "conf": 0.19
+    },
+    {
+     "w": "missin'",
+     "start": 173.39,
+     "end": 173.672,
+     "conf": 0.17
+    },
+    {
+     "w": "all",
+     "start": 173.672,
+     "end": 173.812,
+     "conf": 0.28
+    },
+    {
+     "w": "its",
+     "start": 173.812,
+     "end": 173.973,
+     "conf": 0.13
+    },
+    {
+     "w": "rungs;",
+     "start": 173.973,
+     "end": 174.234,
+     "conf": 0.2
+    }
+   ]
+  },
+  {
+   "i": 54,
+   "text": "I'm wranglin' nine agents in tmux, babysittin' all their runs.",
+   "section": "Verse 3",
+   "start": 174.316,
+   "end": 177.265,
+   "words": [
+    {
+     "w": "I'm",
+     "start": 174.316,
+     "end": 174.456,
+     "conf": 0.15
+    },
+    {
+     "w": "wranglin'",
+     "start": 174.456,
+     "end": 174.878,
+     "conf": 0.35
+    },
+    {
+     "w": "nine",
+     "start": 174.878,
+     "end": 175.159,
+     "conf": 0.31
+    },
+    {
+     "w": "agents",
+     "start": 175.159,
+     "end": 175.5,
+     "conf": 0.4
+    },
+    {
+     "w": "in",
+     "start": 175.5,
+     "end": 175.62,
+     "conf": 0.28
+    },
+    {
+     "w": "tmux,",
+     "start": 175.62,
+     "end": 176.122,
+     "conf": 0.24
+    },
+    {
+     "w": "babysittin'",
+     "start": 176.122,
+     "end": 176.724,
+     "conf": 0.26
+    },
+    {
+     "w": "all",
+     "start": 176.724,
+     "end": 176.804,
+     "conf": 0.39
+    },
+    {
+     "w": "their",
+     "start": 176.804,
+     "end": 176.944,
+     "conf": 0.28
+    },
+    {
+     "w": "runs.",
+     "start": 176.944,
+     "end": 177.265,
+     "conf": 0.34
+    }
+   ]
+  },
+  {
+   "i": 55,
+   "text": "Got laid off in the spring, so I'm livin' the craftsman's dream:",
+   "section": "Verse 3",
+   "start": 177.528,
+   "end": 180.258,
+   "words": [
+    {
+     "w": "Got",
+     "start": 177.528,
+     "end": 177.729,
+     "conf": 0.5
+    },
+    {
+     "w": "laid",
+     "start": 177.729,
+     "end": 177.949,
+     "conf": 0.41
+    },
+    {
+     "w": "off",
+     "start": 177.949,
+     "end": 178.15,
+     "conf": 0.45
+    },
+    {
+     "w": "in",
+     "start": 178.15,
+     "end": 178.21,
+     "conf": 0.45
+    },
+    {
+     "w": "the",
+     "start": 178.21,
+     "end": 178.331,
+     "conf": 0.42
+    },
+    {
+     "w": "spring,",
+     "start": 178.331,
+     "end": 178.853,
+     "conf": 0.49
+    },
+    {
+     "w": "so",
+     "start": 178.853,
+     "end": 178.973,
+     "conf": 0.31
+    },
+    {
+     "w": "I'm",
+     "start": 178.973,
+     "end": 179.094,
+     "conf": 0.01
+    },
+    {
+     "w": "livin'",
+     "start": 179.094,
+     "end": 179.315,
+     "conf": 0.31
+    },
+    {
+     "w": "the",
+     "start": 179.315,
+     "end": 179.415,
+     "conf": 0.33
+    },
+    {
+     "w": "craftsman's",
+     "start": 179.415,
+     "end": 179.977,
+     "conf": 0.32
+    },
+    {
+     "w": "dream:",
+     "start": 179.977,
+     "end": 180.258,
+     "conf": 0.46
+    }
+   ]
+  },
+  {
+   "i": 56,
+   "text": "got a stall at the farmers' market, by the jam and the clotted cream.",
+   "section": "Verse 3",
+   "start": 180.32,
+   "end": 182.949,
+   "words": [
+    {
+     "w": "got",
+     "start": 180.32,
+     "end": 180.44,
+     "conf": 0.33
+    },
+    {
+     "w": "a",
+     "start": 180.44,
+     "end": 180.521,
+     "conf": 0.47
+    },
+    {
+     "w": "stall",
+     "start": 180.521,
+     "end": 180.842,
+     "conf": 0.43
+    },
+    {
+     "w": "at",
+     "start": 180.842,
+     "end": 180.922,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 180.922,
+     "end": 181.022,
+     "conf": 0.48
+    },
+    {
+     "w": "farmers'",
+     "start": 181.022,
+     "end": 181.404,
+     "conf": 0.34
+    },
+    {
+     "w": "market,",
+     "start": 181.404,
+     "end": 181.745,
+     "conf": 0.44
+    },
+    {
+     "w": "by",
+     "start": 181.745,
+     "end": 181.865,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 181.865,
+     "end": 181.966,
+     "conf": 0.48
+    },
+    {
+     "w": "jam",
+     "start": 181.966,
+     "end": 182.267,
+     "conf": 0.49
+    },
+    {
+     "w": "and",
+     "start": 182.267,
+     "end": 182.327,
+     "conf": 0.2
+    },
+    {
+     "w": "the",
+     "start": 182.327,
+     "end": 182.407,
+     "conf": 0.42
+    },
+    {
+     "w": "clotted",
+     "start": 182.407,
+     "end": 182.708,
+     "conf": 0.15
+    },
+    {
+     "w": "cream.",
+     "start": 182.708,
+     "end": 182.949,
+     "conf": 0.3
+    }
+   ]
+  },
+  {
+   "i": 57,
+   "text": "Small-batch, organic, artisanal code — not a token in the can;",
+   "section": "Verse 3",
+   "start": 183.372,
+   "end": 186.14,
+   "words": [
+    {
+     "w": "Small-batch,",
+     "start": 183.372,
+     "end": 183.953,
+     "conf": 0.45
+    },
+    {
+     "w": "organic,",
+     "start": 183.953,
+     "end": 184.395,
+     "conf": 0.48
+    },
+    {
+     "w": "artisanal",
+     "start": 184.395,
+     "end": 184.896,
+     "conf": 0.4
+    },
+    {
+     "w": "code —",
+     "start": 184.896,
+     "end": 185.297,
+     "conf": 0.18
+    },
+    {
+     "w": "not",
+     "start": 185.297,
+     "end": 185.438,
+     "conf": 0.39
+    },
+    {
+     "w": "a",
+     "start": 185.438,
+     "end": 185.518,
+     "conf": 0.43
+    },
+    {
+     "w": "token",
+     "start": 185.518,
+     "end": 185.819,
+     "conf": 0.41
+    },
+    {
+     "w": "in",
+     "start": 185.819,
+     "end": 185.899,
+     "conf": 0.35
+    },
+    {
+     "w": "the",
+     "start": 185.899,
+     "end": 186.019,
+     "conf": 0.03
+    },
+    {
+     "w": "can;",
+     "start": 186.019,
+     "end": 186.14,
+     "conf": 0.15
+    }
+   ]
+  },
+  {
+   "i": 58,
+   "text": "every bug is hand-crafted, signed and dated by the man.",
+   "section": "Verse 3",
+   "start": 186.763,
+   "end": 189.133,
+   "words": [
+    {
+     "w": "every",
+     "start": 186.763,
+     "end": 186.984,
+     "conf": 0.5
+    },
+    {
+     "w": "bug",
+     "start": 186.984,
+     "end": 187.205,
+     "conf": 0.46
+    },
+    {
+     "w": "is",
+     "start": 187.205,
+     "end": 187.305,
+     "conf": 0.4
+    },
+    {
+     "w": "hand-crafted,",
+     "start": 187.305,
+     "end": 188.069,
+     "conf": 0.44
+    },
+    {
+     "w": "signed",
+     "start": 188.069,
+     "end": 188.35,
+     "conf": 0.37
+    },
+    {
+     "w": "and",
+     "start": 188.35,
+     "end": 188.43,
+     "conf": 0.34
+    },
+    {
+     "w": "dated",
+     "start": 188.43,
+     "end": 188.732,
+     "conf": 0.43
+    },
+    {
+     "w": "by",
+     "start": 188.732,
+     "end": 188.852,
+     "conf": 0.49
+    },
+    {
+     "w": "the",
+     "start": 188.852,
+     "end": 188.953,
+     "conf": 0.48
+    },
+    {
+     "w": "man.",
+     "start": 188.953,
+     "end": 189.133,
+     "conf": 0.38
+    }
+   ]
+  },
+  {
+   "i": 59,
+   "text": "Agent writes it, I just sign",
+   "section": "Chorus",
+   "start": 189.316,
+   "end": 191.222,
+   "words": [
+    {
+     "w": "Agent",
+     "start": 189.316,
+     "end": 189.737,
+     "conf": 0.13
+    },
+    {
+     "w": "writes",
+     "start": 189.737,
+     "end": 190.319,
+     "conf": 0.06
+    },
+    {
+     "w": "it,",
+     "start": 190.319,
+     "end": 190.5,
+     "conf": 0.01
+    },
+    {
+     "w": "I",
+     "start": 190.5,
+     "end": 190.6,
+     "conf": 0.0
+    },
+    {
+     "w": "just",
+     "start": 190.6,
+     "end": 190.901,
+     "conf": 0.12
+    },
+    {
+     "w": "sign",
+     "start": 190.901,
+     "end": 191.222,
+     "conf": 0.09
+    }
+   ]
+  },
+  {
+   "i": 60,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 192.308,
+   "end": 194.055,
+   "words": [
+    {
+     "w": "in",
+     "start": 192.308,
+     "end": 192.428,
+     "conf": 0.02
+    },
+    {
+     "w": "the",
+     "start": 192.428,
+     "end": 192.649,
+     "conf": 0.14
+    },
+    {
+     "w": "engineer's",
+     "start": 192.649,
+     "end": 193.352,
+     "conf": 0.11
+    },
+    {
+     "w": "paradise,",
+     "start": 193.352,
+     "end": 194.055,
+     "conf": 0.08
+    }
+   ]
+  },
+  {
+   "i": 61,
+   "text": "tokens burned by April, fine",
+   "section": "Chorus",
+   "start": 195.04,
+   "end": 197.568,
+   "words": [
+    {
+     "w": "tokens",
+     "start": 195.04,
+     "end": 195.662,
+     "conf": 0.34
+    },
+    {
+     "w": "burned",
+     "start": 195.662,
+     "end": 196.144,
+     "conf": 0.23
+    },
+    {
+     "w": "by",
+     "start": 196.144,
+     "end": 196.545,
+     "conf": 0.28
+    },
+    {
+     "w": "April,",
+     "start": 196.545,
+     "end": 197.006,
+     "conf": 0.43
+    },
+    {
+     "w": "fine",
+     "start": 197.006,
+     "end": 197.568,
+     "conf": 0.1
+    }
+   ]
+  },
+  {
+   "i": 62,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 198.292,
+   "end": 199.838,
+   "words": [
+    {
+     "w": "in",
+     "start": 198.292,
+     "end": 198.392,
+     "conf": 0.06
+    },
+    {
+     "w": "the",
+     "start": 198.392,
+     "end": 198.673,
+     "conf": 0.06
+    },
+    {
+     "w": "engineer's",
+     "start": 198.673,
+     "end": 199.336,
+     "conf": 0.13
+    },
+    {
+     "w": "paradise.",
+     "start": 199.336,
+     "end": 199.838,
+     "conf": 0.16
+    }
+   ]
+  },
+  {
+   "i": 63,
+   "text": "Horse and buggy, end of line",
+   "section": "Chorus",
+   "start": 201.105,
+   "end": 203.913,
+   "words": [
+    {
+     "w": "Horse",
+     "start": 201.105,
+     "end": 201.566,
+     "conf": 0.32
+    },
+    {
+     "w": "and",
+     "start": 201.566,
+     "end": 201.706,
+     "conf": 0.16
+    },
+    {
+     "w": "buggy,",
+     "start": 201.706,
+     "end": 202.047,
+     "conf": 0.22
+    },
+    {
+     "w": "end",
+     "start": 202.649,
+     "end": 202.93,
+     "conf": 0.28
+    },
+    {
+     "w": "of",
+     "start": 202.93,
+     "end": 203.091,
+     "conf": 0.01
+    },
+    {
+     "w": "line",
+     "start": 203.091,
+     "end": 203.913,
+     "conf": 0.11
+    }
+   ]
+  },
+  {
+   "i": 64,
+   "text": "in the engineer's paradise,",
+   "section": "Chorus",
+   "start": 204.296,
+   "end": 206.062,
+   "words": [
+    {
+     "w": "in",
+     "start": 204.296,
+     "end": 204.396,
+     "conf": 0.31
+    },
+    {
+     "w": "the",
+     "start": 204.396,
+     "end": 204.617,
+     "conf": 0.18
+    },
+    {
+     "w": "engineer's",
+     "start": 204.617,
+     "end": 205.339,
+     "conf": 0.16
+    },
+    {
+     "w": "paradise,",
+     "start": 205.339,
+     "end": 206.062,
+     "conf": 0.08
+    }
+   ]
+  },
+  {
+   "i": 65,
+   "text": "\"You're absolutely right!\"",
+   "section": "Chorus",
+   "start": 207.428,
+   "end": 209.756,
+   "words": [
+    {
+     "w": "\"You're",
+     "start": 207.428,
+     "end": 207.749,
+     "conf": 0.25
+    },
+    {
+     "w": "absolutely",
+     "start": 207.749,
+     "end": 208.913,
+     "conf": 0.49
+    },
+    {
+     "w": "right!\"",
+     "start": 208.913,
+     "end": 209.756,
+     "conf": 0.22
+    }
+   ]
+  },
+  {
+   "i": 66,
+   "text": "in the engineer's paradise.",
+   "section": "Chorus",
+   "start": 210.28,
+   "end": 213.328,
+   "words": [
+    {
+     "w": "in",
+     "start": 210.28,
+     "end": 210.42,
+     "conf": 0.44
+    },
+    {
+     "w": "the",
+     "start": 210.42,
+     "end": 210.661,
+     "conf": 0.23
+    },
+    {
+     "w": "engineer's",
+     "start": 210.661,
+     "end": 212.085,
+     "conf": 0.28
+    },
+    {
+     "w": "paradise.",
+     "start": 212.085,
+     "end": 213.328,
+     "conf": 0.15
+    }
+   ]
+  },
+  {
+   "i": 67,
+   "text": "Nineteen-fifteen: twenty-six million horses on the road.",
+   "section": "Bridge",
+   "start": 213.85,
+   "end": 217.935,
+   "words": [
+    {
+     "w": "Nineteen-fifteen:",
+     "start": 213.85,
+     "end": 214.791,
+     "conf": 0.0
+    },
+    {
+     "w": "twenty-six",
+     "start": 216.153,
+     "end": 216.693,
+     "conf": 0.25
+    },
+    {
+     "w": "million",
+     "start": 216.693,
+     "end": 217.014,
+     "conf": 0.48
+    },
+    {
+     "w": "horses",
+     "start": 217.014,
+     "end": 217.454,
+     "conf": 0.49
+    },
+    {
+     "w": "on",
+     "start": 217.454,
+     "end": 217.574,
+     "conf": 0.5
+    },
+    {
+     "w": "the",
+     "start": 217.574,
+     "end": 217.694,
+     "conf": 0.5
+    },
+    {
+     "w": "road.",
+     "start": 217.694,
+     "end": 217.935,
+     "conf": 0.5
+    }
+   ]
+  },
+  {
+   "i": 68,
+   "text": "Nineteen-sixty: three million left to pull the load.",
+   "section": "Bridge",
+   "start": 219.096,
+   "end": 222.402,
+   "words": [
+    {
+     "w": "Nineteen-sixty:",
+     "start": 219.096,
+     "end": 219.938,
+     "conf": 0.03
+    },
+    {
+     "w": "three",
+     "start": 220.659,
+     "end": 220.959,
+     "conf": 0.39
+    },
+    {
+     "w": "million",
+     "start": 220.959,
+     "end": 221.38,
+     "conf": 0.45
+    },
+    {
+     "w": "left",
+     "start": 221.38,
+     "end": 221.64,
+     "conf": 0.49
+    },
+    {
+     "w": "to",
+     "start": 221.64,
+     "end": 221.781,
+     "conf": 0.48
+    },
+    {
+     "w": "pull",
+     "start": 221.781,
+     "end": 222.001,
+     "conf": 0.21
+    },
+    {
+     "w": "the",
+     "start": 222.001,
+     "end": 222.121,
+     "conf": 0.43
+    },
+    {
+     "w": "load.",
+     "start": 222.121,
+     "end": 222.402,
+     "conf": 0.47
+    }
+   ]
+  },
+  {
+   "i": 69,
+   "text": "Nobody retrained the horses, son — nobody had a clue.",
+   "section": "Bridge",
+   "start": 223.424,
+   "end": 227.067,
+   "words": [
+    {
+     "w": "Nobody",
+     "start": 223.424,
+     "end": 223.744,
+     "conf": 0.5
+    },
+    {
+     "w": "retrained",
+     "start": 223.744,
+     "end": 224.145,
+     "conf": 0.36
+    },
+    {
+     "w": "the",
+     "start": 224.145,
+     "end": 224.245,
+     "conf": 0.39
+    },
+    {
+     "w": "horses,",
+     "start": 224.245,
+     "end": 224.665,
+     "conf": 0.44
+    },
+    {
+     "w": "son —",
+     "start": 224.665,
+     "end": 224.865,
+     "conf": 0.49
+    },
+    {
+     "w": "nobody",
+     "start": 226.146,
+     "end": 226.587,
+     "conf": 0.49
+    },
+    {
+     "w": "had",
+     "start": 226.587,
+     "end": 226.747,
+     "conf": 0.5
+    },
+    {
+     "w": "a",
+     "start": 226.747,
+     "end": 226.827,
+     "conf": 0.49
+    },
+    {
+     "w": "clue.",
+     "start": 226.827,
+     "end": 227.067,
+     "conf": 0.29
+    }
+   ]
+  },
+  {
+   "i": 70,
+   "text": "They boiled 'em down to glue…",
+   "section": "Bridge",
+   "start": 229.01,
+   "end": 230.155,
+   "words": [
+    {
+     "w": "They",
+     "start": 229.01,
+     "end": 229.171,
+     "conf": 0.46
+    },
+    {
+     "w": "boiled",
+     "start": 229.171,
+     "end": 229.452,
+     "conf": 0.41
+    },
+    {
+     "w": "'em",
+     "start": 229.452,
+     "end": 229.592,
+     "conf": 0.32
+    },
+    {
+     "w": "down",
+     "start": 229.592,
+     "end": 229.813,
+     "conf": 0.49
+    },
+    {
+     "w": "to",
+     "start": 229.813,
+     "end": 229.914,
+     "conf": 0.0
+    },
+    {
+     "w": "glue…",
+     "start": 229.914,
+     "end": 230.155,
+     "conf": 0.3
+    }
+   ]
+  },
+  {
+   "i": 71,
+   "text": "and now I'm the glue code too.",
+   "section": "Bridge",
+   "start": 231.762,
+   "end": 234.947,
+   "words": [
+    {
+     "w": "and",
+     "start": 231.762,
+     "end": 231.863,
+     "conf": 0.27
+    },
+    {
+     "w": "now",
+     "start": 231.863,
+     "end": 232.103,
+     "conf": 0.45
+    },
+    {
+     "w": "I'm",
+     "start": 233.946,
+     "end": 234.066,
+     "conf": 0.14
+    },
+    {
+     "w": "the",
+     "start": 234.066,
+     "end": 234.186,
+     "conf": 0.14
+    },
+    {
+     "w": "glue",
+     "start": 234.186,
+     "end": 234.447,
+     "conf": 0.33
+    },
+    {
+     "w": "code",
+     "start": 234.447,
+     "end": 234.747,
+     "conf": 0.12
+    },
+    {
+     "w": "too.",
+     "start": 234.747,
+     "end": 234.947,
+     "conf": 0.28
+    }
+   ]
+  },
+  {
+   "i": 72,
+   "text": "Glue between the agents' lines",
+   "section": "Outro",
+   "start": 236.331,
+   "end": 238.779,
+   "words": [
+    {
+     "w": "Glue",
+     "start": 236.331,
+     "end": 236.572,
+     "conf": 0.03
+    },
+    {
+     "w": "between",
+     "start": 236.572,
+     "end": 237.093,
+     "conf": 0.29
+    },
+    {
+     "w": "the",
+     "start": 237.093,
+     "end": 237.435,
+     "conf": 0.05
+    },
+    {
+     "w": "agents'",
+     "start": 237.435,
+     "end": 238.077,
+     "conf": 0.16
+    },
+    {
+     "w": "lines",
+     "start": 238.077,
+     "end": 238.779,
+     "conf": 0.15
+    }
+   ]
+  },
+  {
+   "i": 73,
+   "text": "in the engineer's paradise,",
+   "section": "Outro",
+   "start": 239.443,
+   "end": 241.43,
+   "words": [
+    {
+     "w": "in",
+     "start": 239.443,
+     "end": 239.584,
+     "conf": 0.16
+    },
+    {
+     "w": "the",
+     "start": 239.584,
+     "end": 239.804,
+     "conf": 0.08
+    },
+    {
+     "w": "engineer's",
+     "start": 239.804,
+     "end": 240.487,
+     "conf": 0.22
+    },
+    {
+     "w": "paradise,",
+     "start": 240.487,
+     "end": 241.43,
+     "conf": 0.14
+    }
+   ]
+  },
+  {
+   "i": 74,
+   "text": "read its code — it's cleaner than mine",
+   "section": "Outro",
+   "start": 242.195,
+   "end": 244.402,
+   "words": [
+    {
+     "w": "read",
+     "start": 242.195,
+     "end": 242.436,
+     "conf": 0.4
+    },
+    {
+     "w": "its",
+     "start": 242.436,
+     "end": 242.576,
+     "conf": 0.26
+    },
+    {
+     "w": "code —",
+     "start": 242.576,
+     "end": 243.158,
+     "conf": 0.31
+    },
+    {
+     "w": "it's",
+     "start": 243.158,
+     "end": 243.298,
+     "conf": 0.28
+    },
+    {
+     "w": "cleaner",
+     "start": 243.298,
+     "end": 243.88,
+     "conf": 0.41
+    },
+    {
+     "w": "than",
+     "start": 243.88,
+     "end": 244.081,
+     "conf": 0.37
+    },
+    {
+     "w": "mine",
+     "start": 244.081,
+     "end": 244.402,
+     "conf": 0.12
+    }
+   ]
+  },
+  {
+   "i": 75,
+   "text": "in the engineer's paradise.",
+   "section": "Outro",
+   "start": 245.427,
+   "end": 246.992,
+   "words": [
+    {
+     "w": "in",
+     "start": 245.427,
+     "end": 245.547,
+     "conf": 0.18
+    },
+    {
+     "w": "the",
+     "start": 245.547,
+     "end": 245.828,
+     "conf": 0.07
+    },
+    {
+     "w": "engineer's",
+     "start": 245.828,
+     "end": 246.53,
+     "conf": 0.16
+    },
+    {
+     "w": "paradise.",
+     "start": 246.53,
+     "end": 246.992,
+     "conf": 0.1
+    }
+   ]
+  },
+  {
+   "i": 76,
+   "text": "Even wrote the tests this time",
+   "section": "Outro",
+   "start": 248.457,
+   "end": 251.148,
+   "words": [
+    {
+     "w": "Even",
+     "start": 248.457,
+     "end": 248.759,
+     "conf": 0.34
+    },
+    {
+     "w": "wrote",
+     "start": 248.759,
+     "end": 249.12,
+     "conf": 0.17
+    },
+    {
+     "w": "the",
+     "start": 249.12,
+     "end": 249.301,
+     "conf": 0.18
+    },
+    {
+     "w": "tests",
+     "start": 249.301,
+     "end": 249.702,
+     "conf": 0.29
+    },
+    {
+     "w": "this",
+     "start": 249.702,
+     "end": 250.044,
+     "conf": 0.25
+    },
+    {
+     "w": "time",
+     "start": 250.044,
+     "end": 251.148,
+     "conf": 0.1
+    }
+   ]
+  },
+  {
+   "i": 77,
+   "text": "in the engineer's paradise,",
+   "section": "Outro",
+   "start": 251.451,
+   "end": 253.397,
+   "words": [
+    {
+     "w": "in",
+     "start": 251.451,
+     "end": 251.571,
+     "conf": 0.15
+    },
+    {
+     "w": "the",
+     "start": 251.571,
+     "end": 251.812,
+     "conf": 0.06
+    },
+    {
+     "w": "engineer's",
+     "start": 251.812,
+     "end": 252.514,
+     "conf": 0.09
+    },
+    {
+     "w": "paradise,",
+     "start": 252.514,
+     "end": 253.397,
+     "conf": 0.05
+    }
+   ]
+  },
+  {
+   "i": 78,
+   "text": "not a single nit to find",
+   "section": "Outro",
+   "start": 254.422,
+   "end": 256.448,
+   "words": [
+    {
+     "w": "not",
+     "start": 254.422,
+     "end": 254.662,
+     "conf": 0.17
+    },
+    {
+     "w": "a",
+     "start": 254.662,
+     "end": 254.763,
+     "conf": 0.05
+    },
+    {
+     "w": "single",
+     "start": 254.763,
+     "end": 255.164,
+     "conf": 0.26
+    },
+    {
+     "w": "nit",
+     "start": 255.565,
+     "end": 255.926,
+     "conf": 0.17
+    },
+    {
+     "w": "to",
+     "start": 255.926,
+     "end": 256.087,
+     "conf": 0.39
+    },
+    {
+     "w": "find",
+     "start": 256.087,
+     "end": 256.448,
+     "conf": 0.13
+    }
+   ]
+  },
+  {
+   "i": 79,
+   "text": "in the engineer's paradise…",
+   "section": "Outro",
+   "start": 258.454,
+   "end": 259.997,
+   "words": [
+    {
+     "w": "in",
+     "start": 258.454,
+     "end": 258.495,
+     "conf": 0.01
+    },
+    {
+     "w": "the",
+     "start": 258.495,
+     "end": 258.635,
+     "conf": 0.03
+    },
+    {
+     "w": "engineer's",
+     "start": 258.635,
+     "end": 259.496,
+     "conf": 0.04
+    },
+    {
+     "w": "paradise…",
+     "start": 259.496,
+     "end": 259.997,
+     "conf": 0.02
+    }
+   ]
+  },
+  {
+   "i": 80,
+   "text": "Accept all.",
+   "section": "Spoken",
+   "start": 262.105,
+   "end": 262.694,
+   "words": [
+    {
+     "w": "Accept",
+     "start": 262.105,
+     "end": 262.552,
+     "conf": 0.43
+    },
+    {
+     "w": "all.",
+     "start": 262.552,
+     "end": 262.694,
+     "conf": 0.04
+    }
+   ]
+  }
+ ]
+}
