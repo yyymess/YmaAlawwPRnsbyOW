@@ -68,6 +68,36 @@ export function painter(ctx) {
         ctx.restore();
       }
     },
+    /** screentone for light and shadow: dots whose size follows a linear or radial gradient */
+    tone(path, color, g, cell = 6) {
+      ctx.save(); ctx.clip(path); ctx.fillStyle = C[color] ?? color;
+      const [ax, ay, at] = g.from, [bx, by, bt] = g.to, dx = bx - ax, dy = by - ay, L2 = dx * dx + dy * dy, D = Math.sqrt(L2);
+      const bb = g.bbox ?? [0, 0, W, H]; ctx.beginPath();
+      for (let y = bb[1]; y < bb[3]; y += cell * 0.866) {
+        const row = Math.round((y - bb[1]) / (cell * 0.866));
+        for (let x = bb[0] + (row % 2 ? cell / 2 : 0); x < bb[2]; x += cell) {
+          const u = g.radial ? Math.min(1, Math.hypot(x - ax, y - ay) / D) : Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / L2));
+          const t = at + (bt - at) * u; if (t < 0.04) continue;
+          const r = cell * 0.55 * Math.sqrt(t); ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, Math.PI * 2);
+        }
+      }
+      ctx.fill(); ctx.restore();
+    },
+    /** a ring of beads */
+    beads(cx, cy, R, n, r, color = 'goldLt') { for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; P.both(ell(cx + Math.cos(a) * R, cy + Math.sin(a) * R, r), color, 2); } },
+    /** a simple five-petal blossom */
+    flower(x, y, s = 1, color = 'rose') {
+      for (let i = 0; i < 5; i++) { ctx.save(); ctx.translate(x, y); ctx.rotate((i / 5) * Math.PI * 2); P.both(new Path2D(`M0 0 C${-14 * s} ${-12 * s} ${-12 * s} ${-34 * s} 0 ${-38 * s} C${12 * s} ${-34 * s} ${14 * s} ${-12 * s} 0 0 Z`), color, 2.5); ctx.restore(); }
+      P.both(ell(x, y, 8 * s), 'gold', 2.5);
+    },
+    /** corner ornament: a fan of arcs */
+    corner(x, y, rot, s = 1) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+      for (const r of [70, 52, 34]) { const p = new Path2D(); p.arc(0, 0, r * s, 0, Math.PI / 2); P.line(p, 3); }
+      P.both(new Path2D(`M0 0 L${78 * s} 0 A${78 * s} ${78 * s} 0 0 1 0 ${78 * s} Z`), 'goldLt', 3);
+      for (const r of [60, 40]) { const p = new Path2D(); p.arc(0, 0, r * s, 0, Math.PI / 2); P.line(p, 2.5); }
+      ctx.restore();
+    },
     /** an almond leaf on a vine */
     leaf(x, y, a, s = 1, color = 'sageDk') {
       ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.scale(s, s);

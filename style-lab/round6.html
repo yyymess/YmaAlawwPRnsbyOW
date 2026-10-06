@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Style lab, round 6</title>
+<style>
+  @font-face { font-family: Federant; src: url(fonts/Federant.ttf); }
+  @font-face { font-family: Cinzel; src: url(fonts/Cinzel.ttf); font-weight: 400 900; }
+  @font-face { font-family: "Plex Mono"; src: url(fonts/PlexMono.ttf); }
+  body { margin: 0; background: #111; color: #ddd; font: 14px sans-serif; }
+  canvas { display: block; width: 100%; max-width: 1600px; } figure { margin: 0 0 24px; } figcaption { padding: 6px 0; }
+</style>
+<div id="out"></div>
+<script type="module">
+  import { W, H, painter } from './nouveau.js';
+  import { FRAMES6 } from './frames6.js';
+  await Promise.all(['20px Federant', '600 20px Cinzel', '700 20px Cinzel', '600 20px "Plex Mono"'].map((f) => document.fonts.load(f)));
+  for (const [name, fn] of Object.entries(FRAMES6)) {
+    const f = document.createElement('figure'), c = document.createElement('canvas');
+    c.width = W; c.height = H; c.id = `r6-${name}`;
+    const cap = document.createElement('figcaption'); cap.textContent = name;
+    f.append(c, cap); document.getElementById('out').append(f);
+    fn(painter(c.getContext('2d', { willReadFrequently: true })));
+  }
+  window.__done = true;
+</script>
