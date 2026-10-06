@@ -3,7 +3,7 @@ Yea, though I commit through the valley of the shadow of deprecation,
 I will fear no outage, for my agent is with me;
 its tokens and its context, they comfort me.
 
-[Verse 1: nerdy rap]
+[Verse 1: rhythmic patter, nerdy tenor]
 Seventeen with a compiler and a dial-up phone line,
 read the em-peg spec on Friday nights — and honestly, I was fine.
 I believed in open standards, I could recite the RFCs,
@@ -27,7 +27,7 @@ in the engineer's paradise,
 change the world, we didn't mind
 in the engineer's paradise.
 
-[Verse 2: nerdy rap]
+[Verse 2: rhythmic patter, nerdy tenor]
 Then one Monday at the fridge there's a sign in Comic Sans:
 "Soda now fifty cents" — and a fella with a plan.
 He had more shares than the founders and a flywheel slide to show,
@@ -53,7 +53,7 @@ in the engineer's paradise,
 badge turned red — goodnight
 in the engineer's paradise.
 
-[Verse 3: nerdy rap]
+[Verse 3: rhythmic patter, nerdy tenor]
 Then the model learned to code, and the keynote spread the news:
 "the hottest language now is English" — guess which language we lose.
 Twenty years of Emacs chords, got a pinky bent just like a hook,
