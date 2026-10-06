@@ -246,12 +246,23 @@ export function commits(P, pts, n, o = {}) {
 /** two hands pressed together in prayer, fingertips up; (x, y) the wrists' centre */
 export function prayHands(P, x, y, s, rot = 0) {
   const lw = begin(P, x, y, s, rot);
-  for (const sx of [-1, 1]) {
-    const h = svg(`M0 0 C${sx * 40} -10 ${sx * 56} -80 ${sx * 40} -150 C${sx * 30} -200 ${sx * 10} -230 0 -236 Z`);
-    P.fill(h, 'skin'); P.tone(h, 'skinDot', { from: [0, -200, 0], to: [sx * 56, 0, 0.45], bbox: [-60, -240, 60, 10] }, 4); P.line(h, lw * 1.1);
-    P.line(svg(`M${sx * 40} -150 C${sx * 30} -160 ${sx * 20} -168 ${sx * 6} -170`), lw * 0.5);
+  for (const sx of [1, -1]) {   // each hand: a pointed silhouette, fingers laid along it, the heel of the palm at the wrist
+    P.ctx.save(); P.ctx.scale(sx, 1);
+    const h = svg('M0 -246 C22 -230 46 -196 56 -146 C66 -96 64 -44 52 0 L0 0 Z');
+    P.line(h, lw * 2.2); P.fill(h, 'skin');
+    P.tone(h, 'skinDot', { from: [10, -120, 0], to: [64, -60, 0.5], bbox: [0, -250, 70, 4] }, 4);
+    P.line(svg('M4 -232 C24 -206 38 -176 46 -136 M8 -206 C26 -182 36 -158 42 -124 M12 -176 C26 -158 32 -140 36 -116'), lw * 0.5);   // the fingers' edges
+    P.line(svg('M52 -40 C40 -30 30 -24 20 -22'), lw * 0.45);   // a crease at the heel
+    P.ctx.restore();
   }
-  for (const sx of [-1, 1]) P.both(rect(sx * 46 - 34, 0, 68, 50, 10), 'tealLt', lw);
+  P.line(svg('M0 -246 L0 -60'), lw * 0.7);
+  for (const sx of [1, -1]) {   // the thumbs, crossed in front, the left over the right
+    P.ctx.save(); P.ctx.scale(sx, 1);
+    const th = svg('M-2 -24 C-6 -64 0 -100 16 -116 C28 -126 40 -118 38 -102 C36 -80 30 -52 26 -26 Z');
+    P.both(th, 'skin', lw * 1.1); P.line(svg('M14 -102 C22 -98 28 -98 32 -104'), lw * 0.45);
+    P.ctx.restore();
+  }
+  for (const sx of [-1, 1]) { P.both(rect(sx * 30 - 34, -4, 68, 54, 10), 'tealLt', lw); for (let k = -24; k <= 24; k += 8) P.line(svg(`M${sx * 30 + k} 0 L${sx * 30 + k} 46`), lw * 0.35); }
   end(P);
 }
 
@@ -469,8 +480,7 @@ export function drawHand(P, x, y, s, rot, dorsum, fingers, o = {}) {
   shapes.slice(1).forEach((F, i) => {
     if (i < fingers.length - 1 && !fingers[i].thumb) { const q = new Path2D(); F.R.slice(4).forEach((pt, k) => (k ? q.lineTo(...pt) : q.moveTo(...pt))); P.line(q, lw * 0.55); }
     const d = F.tipDir, nb = [F.e[0] - d[0] * 12, F.e[1] - d[1] * 12], w = fingers[i].w1;
-    const nl = new Path2D(); nl.ellipse(nb[0], nb[1], w * 0.36, w * 0.3, Math.atan2(d[1], d[0]), 0, Math.PI * 2);
-    P.fill(nl, '#f7e0d0'); P.line(nl, lw * 0.4);
+    if (o.nails !== false) { const nl = new Path2D(); nl.ellipse(nb[0], nb[1], w * 0.36, w * 0.3, Math.atan2(d[1], d[0]), 0, Math.PI * 2); P.fill(nl, '#f7e0d0'); P.line(nl, lw * 0.4); }
     const mid = F.L.length >> 1, ml = F.L[mid], mr = F.R[mid];
     P.line(svg(`M${ml[0] * 0.8 + mr[0] * 0.2} ${ml[1] * 0.8 + mr[1] * 0.2} L${ml[0] * 0.2 + mr[0] * 0.8} ${ml[1] * 0.2 + mr[1] * 0.8}`), lw * 0.4);
   });

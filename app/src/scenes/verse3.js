@@ -112,7 +112,7 @@ function emacs(P, f, L, t, w, h) {
     ctx.save(); ctx.translate(680, 330); ctx.rotate(-0.06);
     P.both(rect(-560, -200, 1120, 400, 26), 'cream', 5); P.tone(rect(-560, -200, 1120, 400, 26), 'sepia', { from: [0, -200, 0], to: [0, 200, 0.4], bbox: [-560, -200, 560, 200] }, 6);
     const rows = [['Esc', '1', '2', '3', '4', '5', '6', '7', '8', '9'], ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O'], ['Ctrl', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'], ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>'], ['Fn', 'Meta', 'Alt', 'Space']];
-    const chord = Math.floor((t - L[0].words[0].start) * 2.7) % 3;
+    const chord = ((Math.floor((t - L[0].words[0].start) * 2.7) % 3) + 3) % 3;
     const lit = t < l2 ? [['Ctrl', 'X', 'S'], ['Ctrl', 'X', 'F'], ['Meta', 'X']][chord] : ['Tab'];
     rows.forEach((row, ri) => {
       let x = -520 + ri * 18;

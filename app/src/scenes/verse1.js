@@ -4,7 +4,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end, flame } from '../kit/things.js';
+import { crt, keyboard, modem, specBook, scroll, lectern, quill, bugDragon, orgCloud, redPen, seal, tablet, moneybag, globe, thought, commits, prayHands, moon, star, begin, end, flame, drawHand } from '../kit/things.js';
 
 const PW = 1080, PH = 640, TOP = 46, SP = 1300, RISE = 200, INSET = 100;   // panels; content is drawn in an 880x650 space inset by INSET
 const CHAPTERS = [
@@ -337,7 +337,7 @@ function covenant(P, f, L, t) {
     if (fu > 0) { const w = 520 * fu; P.banner(440 - w / 2, 470, w, 90, { tail: 'roseLt' }); if (fu > 0.9) P.text('FREE', 440, 534, { font: FONT.caps, weight: 700, size: 54, tracking: 8 }); }
     heroFront(P, 120, 420, 0.42, { mouth: t > mo ? 'smile' : 'neutral', look: [0.7, 0], blink: blinkAt(t) });
     const pu = ease.outBack(clamp((t - (mo - 0.25)) / 0.35));
-    if (pu > 0) palm(P, 300, 470 - 70 * pu, 0.62 * pu, 0.25);
+    if (pu > 0) palm(P, 330, 520 - 90 * pu, 0.68, 0.22, { sleeve: 400 });
   } else {
     // the tablet of the mission; the believers below, each under a small halo, nod on "So did we"
     const u = ease.outCubic(clamp((t - mi) / 0.6));
@@ -359,12 +359,19 @@ export function cloud(P, x, y, r, color = 'silver', seed = 1) {
   P.line(svg(`M${-r * 0.7} ${-r * 0.3} C${-r * 0.4} ${-r * 0.55} ${-r * 0.1} ${-r * 0.5} 0 ${-r * 0.3}`), lw * 0.6);
   end(P);
 }
-/** an open hand, palm out, fingers up: "no thanks" */
-export function palm(P, x, y, s, rot = 0) {
+/** an open hand, palm out, fingers up ("no thanks"); o.sleeve draws the forearm's sleeve down to y = o.sleeve */
+export function palm(P, x, y, s, rot = 0, o = {}) {
+  if (o.sleeve) { const lw = begin(P, x, y, s, rot); const sl = svg(`M-52 50 C-60 140 -70 ${o.sleeve * 0.6} -84 ${o.sleeve} L84 ${o.sleeve} C70 ${o.sleeve * 0.6} 60 140 52 50 Z`); P.fill(sl, 'teal'); P.tone(sl, 'hoodDot', { from: [-60, 60, 0], to: [80, o.sleeve, 0.5], bbox: [-90, 40, 90, o.sleeve] }, 6); P.line(sl, lw * 1.2); end(P); }
+  const fingers = [
+    { b: [40, -96], c: [52, -150], e: [60, -194], w0: 30, w1: 25 },   // little
+    { b: [14, -104], c: [18, -170], e: [22, -228], w0: 34, w1: 29 },  // ring
+    { b: [-14, -106], c: [-14, -176], e: [-14, -240], w0: 35, w1: 30 }, // middle
+    { b: [-42, -98], c: [-48, -164], e: [-52, -222], w0: 34, w1: 29 },  // index
+    { b: [-50, -30], c: [-96, -50], e: [-112, -104], w0: 40, w1: 32, thumb: true },
+  ];
+  drawHand(P, x, y, s, rot, 'M-56 40 C-66 0 -64 -60 -56 -100 L56 -100 C66 -60 66 0 54 40 Z', fingers, { nails: false, tone: { from: [-30, -150, 0], to: [60, 30, 0.45], bbox: [-130, -250, 80, 50] } });
   const lw = begin(P, x, y, s, rot);
-  const h = svg('M-50 60 C-58 20 -60 -10 -56 -40 L-56 -120 C-56 -134 -36 -134 -36 -120 L-34 -60 L-30 -150 C-30 -166 -8 -166 -8 -150 L-6 -64 L-2 -160 C-2 -176 20 -176 20 -160 L20 -62 L26 -140 C26 -154 46 -154 46 -140 L44 -40 C60 -60 76 -64 86 -50 C70 -20 60 10 50 60 Z');
-  P.fill(h, 'skin'); P.tone(h, 'skinDot', { from: [-20, -100, 0], to: [60, 60, 0.45], bbox: [-60, -180, 90, 70] }, 4); P.line(h, lw * 1.2);
-  P.line(svg('M-30 -10 C-10 0 10 0 30 -14'), lw * 0.5);
-  P.both(rect(-56, 56, 112, 44, 10), 'tealLt', lw);
+  P.line(svg('M-40 -64 C-14 -50 14 -50 42 -70 M-30 -30 C-6 -40 20 -40 40 -30'), lw * 0.45);   // creases of the palm
+  P.both(svg('M-58 34 L58 34 L60 62 L-60 62 Z'), 'tealLt', lw); for (let k = -48; k <= 48; k += 10) P.line(svg(`M${k} 36 L${k} 60`), lw * 0.35);
   end(P);
 }

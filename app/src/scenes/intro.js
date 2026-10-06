@@ -11,6 +11,8 @@ export default function intro(P, f) {
   if (f.t < c1) valley(P, f, c1);
   else if (f.t < c2) angel(P, f, c1, c2);
   else blossoms(P, f, c2);
+  const fi = 1 - clamp(f.t / 0.8);   // fade in from black
+  if (fi > 0) { P.save(); P.alpha(fi); P.fill(rect(0, 0, W, H), 'black'); P.restore(); }
 }
 
 // ---- A. the lane --------------------------------------------------------------------------------
