@@ -14,7 +14,8 @@ const REG = { black: [0, 0], blue: [2.5, -1.5], pink: [-2, 2], yellow: [1.5, 2.5
 
 const mk = (w = W, h = H) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
 
-export function makePrint(paper = '#f3eee4') {
+export function makePrint(paper = '#f3eee4', opt = {}) {
+  const regK = opt.reg ?? 1, grainAmt = opt.grain ?? 16, speckle = opt.speckle ?? 0;
   const layers = {};
   const layer = (ink) => (layers[ink] ??= mk().getContext('2d'));
   const every = (fn) => Object.values(layers).forEach(fn);
@@ -77,12 +78,20 @@ export function makePrint(paper = '#f3eee4') {
     compose(ctx, seed = 1) {
       ctx.fillStyle = paper; ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'multiply';
-      for (const [ink, g] of Object.entries(layers)) { const [dx, dy] = REG[ink] ?? [0, 0]; ctx.drawImage(g.canvas, dx, dy); }
+      for (const [ink, g] of Object.entries(layers)) {
+        const [dx, dy] = REG[ink] ?? [0, 0];
+        if (speckle) {   // riso: ink drops out in tiny specks and thins toward one edge of the drum
+          const id = g.getImageData(0, 0, W, H), a = id.data; let r = ink.length * 7919;
+          for (let i = 3; i < a.length; i += 4) { if (!a[i]) continue; r = (r * 1664525 + 1013904223) >>> 0; if ((r >>> 24) < speckle) a[i] = 0; else a[i] *= 0.86 + 0.14 * ((i / 4) % W) / W; }
+          g.putImageData(id, 0, 0);
+        }
+        ctx.drawImage(g.canvas, dx * regK, dy * regK);
+      }
       ctx.globalCompositeOperation = 'source-over';
       // paper grain and uneven ink
       const img = ctx.getImageData(0, 0, W, H), d = img.data; let s = seed * 9973;
       for (let i = 0; i < d.length; i += 4) {
-        s = (s * 1664525 + 1013904223) >>> 0; const n = ((s >>> 24) / 255 - 0.5) * 16;
+        s = (s * 1664525 + 1013904223) >>> 0; const n = ((s >>> 24) / 255 - 0.5) * grainAmt;
         d[i] += n; d[i + 1] += n; d[i + 2] += n * 0.9;
       }
       ctx.putImageData(img, 0, 0);
