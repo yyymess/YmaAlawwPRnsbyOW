@@ -11,9 +11,9 @@ its tokens and its context, they comfort me.
 ## Verse 1 — the dream
 
 Seventeen with a compiler and a dial-up phone line,
-read I-S-O one-four-four-nine-six like it was my valentine.
-I believed in open standards, I could quote you every spec —
-RFC ninety-five fifty-nine, Matroska, EBML, check.
+read the MPEG spec on Friday nights — and honestly, I was fine.
+I believed in open standards, I could recite the RFCs,
+I'd rewrite your app in Haskell if you'd only let me, please.
 Came out west with a laptop, a duffel bag, a dream:
 build the thing a billion people use and never see.
 Every bug was a riddle, every outage was a war,
