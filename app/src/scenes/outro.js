@@ -8,7 +8,7 @@ import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame, beatCut } from '../kit/props.js';
 import { redPen, scroll, begin, end, star } from '../kit/things.js';
-import { fist } from './verse1.js';
+import { fist, sleeveArm } from './verse1.js';
 
 const blinkAt = (t, k = 0) => { const v = (t * 0.41 + k * 0.13) % 1; return v > 0.965 ? 1 - Math.abs(v - 0.982) / 0.017 : 0; };
 const sing = (f) => (f.vocal > 0.18 ? 'sing' : 'neutral');
@@ -153,10 +153,9 @@ function reviewer(P, f, t, lt, L) {
   for (let i = 0; i < 5; i++) P.line(svg(`M420 ${598 + i * 32} l${[600, 520, 700, 460, 640][i]} 0`), 8, ['teal', 'sage', 'gold', 'rose', 'teal'][i]);
   P.ctx.save(); P.ctx.translate(mx, my); P.both(ell(0, 0, 80), 'glass', 6); P.ctx.save(); P.alpha(0.4); P.fill(ell(-20, -20, 30, 18), 'cream'); P.ctx.restore(); P.line(svg('M56 56 L130 130'), 22); P.line(svg('M56 56 L130 130'), 14, 'ochre'); P.ctx.restore();
   // his hands: the right holds the magnifier by its handle, the left his red pen (his arms reach from his shoulders)
-  const grip = (fx, fy, sx, sy) => { const dx = sx - fx, dy = sy - fy; return { rot: Math.atan2(-dx, dy), len: Math.hypot(dx, dy) / 0.62 - 40 }; };
-  fist(P, mx + 118, my + 118, 0.62, 'navy', false, { ...grip(mx + 118, my + 118, 690, 520), cuff: 'gold' });
+  sleeveArm(P, [mx + 118, my + 118], [690, 520], 0.62, 'navy', -1);
   redPen(P, 1230, 380, 0.62, 0.1, 0);
-  fist(P, 1232, 470, 0.62, 'navy', true, { ...grip(1232, 470, 930, 520), cuff: 'gold' });
+  sleeveArm(P, [1232, 470], [930, 520], 0.62, 'navy', 1, { flip: true });
   // not a nit: LGTM stamped on the code
   const st = clamp((t - fd - 0.2) / 0.18);
   if (st > 0) { const sq = 1 + 1.6 * (1 - st); P.ctx.save(); P.ctx.translate(1060, 668); P.ctx.rotate(-0.2); P.ctx.scale(sq, sq); P.alpha(0.92 * st); P.line(ell(0, 0, 96, 58), 7, 'red'); P.line(ell(0, 0, 84, 48), 2.5, 'red'); P.text('LGTM', 0, 15, { font: FONT.caps, weight: 700, size: 44, color: 'red' }); P.ctx.restore(); }

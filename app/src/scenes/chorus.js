@@ -10,7 +10,7 @@ import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
 import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll, flame } from '../kit/things.js';
-import { cloud, heart, palm, duck, fist } from './verse1.js';
+import { cloud, heart, palm, duck, fist, sleeveArm } from './verse1.js';
 
 const CEN = { x: 480, y: 30, w: 640, h: 640, rise: 250 };
 const WING = [{ x: 70, y: 110, w: 390, h: 540, rise: 160 }, { x: 1140, y: 110, w: 390, h: 540, rise: 160 }];
@@ -252,7 +252,7 @@ const VARIANTS = {
         P.both(svg('M470 520 L560 520 L560 572 L470 572 L446 546 Z'), 'gold', 3); P.text('SIGN', 510, 542, { font: FONT.caps, weight: 700, size: 16 }); P.text('HERE', 510, 563, { font: FONT.caps, weight: 700, size: 16 });
         const u = clamp((t - sg + 0.4) / 0.9), nx = 200 + 216 * u, ny = 545 - 14 * u + (u > 0 && u < 1 ? Math.sin(u * 30) * 4 : 0);
         if (t > sg - 0.4) { const sgp = new Path2D(); sgp.moveTo(200, 545); for (let i = 0; i <= 24 * u; i++) sgp.lineTo(200 + i * 9, 545 + Math.sin(i * 1.3) * 10 - i * 0.6); P.line(sgp, 4, 'navy'); }
-        quill(P, nx, ny, 0.55, -0.9); fist(P, nx - 4, ny - 26, 0.42, 'teal', false, { rot: -0.75, len: 520, cuff: 'tealLt' });
+        quill(P, nx, ny, 0.55, -0.9); sleeveArm(P, [nx - 4, ny - 26], [430, 640], 0.42, 'teal', 1, { cuff: 'tealLt' });
       } else if (c === 1) {   // tokens burned by April
         fillBg(P, box, 'night', 'redDk', 0.4);
         const months = ['JAN', 'FEB', 'MAR', 'APR'], tk = word(lines, 2, 'tokens'), tApr = tk + 3 * 0.45;

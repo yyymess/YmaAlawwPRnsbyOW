@@ -403,3 +403,18 @@ export function fist(P, x, y, s, sleeve = 'teal', flip = false, o = {}) {
   P.both(rect(-36, 38, 70, 18, 5), o.cuff ?? 'gold', lw * 0.8);
   end(P);
 }
+
+/**
+ * An arm in a sleeve from a hand at F up to a shoulder at S: two segments with an elbow bent a little to one side
+ * (bend +1 / -1), stroked with an outline and a fold at the elbow; then a fist at F, its cuff along the forearm.
+ */
+export function sleeveArm(P, F, S, s, color, bend = 1, o = {}) {
+  const dx = S[0] - F[0], dy = S[1] - F[1], D = Math.hypot(dx, dy) || 1, L = D * 0.56, w = 70 * s;
+  const h = Math.sqrt(Math.max(0, L * L - (D / 2) * (D / 2))), nx = -dy / D, ny = dx / D;
+  const E = [(F[0] + S[0]) / 2 + nx * h * bend, (F[1] + S[1]) / 2 + ny * h * bend];
+  const p = new Path2D(); p.moveTo(F[0], F[1]); p.lineTo(E[0], E[1]); p.lineTo(S[0], S[1]);
+  P.ctx.lineJoin = 'round'; P.ctx.lineCap = 'round'; P.line(p, w + 8 * Math.max(0.6, s), 'line'); P.line(p, w, color);
+  const ux = (E[0] - F[0]) / L, uy = (E[1] - F[1]) / L;
+  P.line(svg(`M${E[0] - ux * w * 0.4 + nx * w * 0.2} ${E[1] - uy * w * 0.4 + ny * w * 0.2} Q${E[0]} ${E[1]} ${E[0] + nx * w * 0.35} ${E[1] + ny * w * 0.35}`), Math.max(1.2, 3 * s));   // a fold at the elbow
+  fist(P, F[0], F[1], s, color, o.flip ?? false, { rot: Math.atan2(-ux, uy), len: 20, cuff: o.cuff ?? 'gold' });
+}
