@@ -102,9 +102,11 @@ and now I'm the glue code too.
 
 Glue between the agents' lines
 in the engineer's paradise,
-review the slop, approve, resign
+read its code — it's cleaner than mine
 in the engineer's paradise.
-Rest in peace, the craft of mine
+Even wrote the tests this time
+in the engineer's paradise,
+not a single nit to find
 in the engineer's paradise…
 
 (spoken, last bar, flat) Accept all.
