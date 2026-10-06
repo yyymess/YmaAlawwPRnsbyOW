@@ -1,15 +1,9 @@
-# Engineer's Paradise — lyrics draft v1
-
-~80 BPM, C minor, 4/4. Structure: Intro (4 bars) · V1 (12) · C1 (8) · V2 (14) · C2 (8) · V3 (14) · C3 (8) · Bridge (8) · Outro (8) = 84 bars ≈ 4:12 (one bar = 3 s).
-
-## Intro (spoken, low, over strings)
-
+[Intro: solemn spoken sermon, strings]
 Yea, though I commit through the valley of the shadow of deprecation,
 I will fear no outage, for my agent is with me;
 its tokens and its context, they comfort me.
 
-## Verse 1 — the dream
-
+[Verse 1: nerdy rap]
 Seventeen with a compiler and a dial-up phone line,
 read the MPEG spec on Friday nights — and honestly, I was fine.
 I believed in open standards, I could recite the RFCs,
@@ -23,8 +17,7 @@ the scariest man in the building was a code reviewer with no humor.
 Didn't do it for the money — swear we'd do it all for free;
 we were gonna change the world. The mission said so. So did we.
 
-## Chorus 1 (sung)
-
+[Chorus: pious gospel choir]
 Burned the midnight oil for life
 in the engineer's paradise,
 best idea wins the fight
@@ -34,8 +27,7 @@ in the engineer's paradise,
 change the world, we didn't mind
 in the engineer's paradise.
 
-## Verse 2 — the business model eats it
-
+[Verse 2: nerdy rap]
 Then one Monday at the fridge there's a sign in Comic Sans:
 "Soda now fifty cents" — and a fella with a plan.
 He had more shares than the founders and conjoined triangles to show,
@@ -51,8 +43,7 @@ till you couldn't tell the difference — best quarter we ever had.
 Got an email Friday morning, so I drove in like before:
 badge reader blinked red — guess I don't work here anymore.
 
-## Chorus 2 (sung)
-
+[Chorus: pious gospel choir]
 Revenue up and to the right
 in the engineer's paradise,
 soda's fifty cents tonight
@@ -62,8 +53,7 @@ in the engineer's paradise,
 badge turned red — goodnight
 in the engineer's paradise.
 
-## Verse 3 — the horseless carriage
-
+[Verse 3: nerdy rap]
 Then the model learned to code, and the keynote spread the news:
 "the hottest language now is English" — guess which language we lose.
 Twenty years of Emacs chords, got a pinky bent just like a hook,
@@ -79,8 +69,7 @@ got a stall at the farmers' market, by the jam and the clotted cream.
 Small-batch, organic, artisanal code — not a token in the can;
 every bug is hand-crafted, signed and dated by the man.
 
-## Chorus 3 (sung)
-
+[Chorus: pious gospel choir]
 Agent writes it, I just sign
 in the engineer's paradise,
 tokens burned by April, fine
@@ -90,16 +79,14 @@ in the engineer's paradise,
 "You're absolutely right!"
 in the engineer's paradise.
 
-## Bridge (half-sung, slow)
-
+[Bridge: half-sung, sparse, drums drop out]
 Nineteen-fifteen: twenty-six million horses on the road.
 Nineteen-sixty: three million left to pull the load.
 Nobody retrained the horses, son — nobody had a clue.
 They boiled 'em down to glue…
 and now I'm the glue code too.
 
-## Outro (choir, cursors blinking like candles)
-
+[Outro: choir, fading]
 Glue between the agents' lines
 in the engineer's paradise,
 read its code — it's cleaner than mine
@@ -108,34 +95,9 @@ Even wrote the tests this time
 in the engineer's paradise,
 not a single nit to find
 in the engineer's paradise…
-
-(spoken, last bar, flat) Accept all.
-
 ---
 
-## Spare lines (liked, not placed yet)
+[Spoken: flat]
+Accept all.
 
-- Then they moved the free dinner to right after the last bus goes —
-  you can stay and eat, or you can leave. Everybody knows.
-- Then the CEO got on stage: "the bot writes thirty percent!"
-  Two weeks later — guess which thirty percent of us got sent.
-- Design doc used to be a page; now it's forty, plus a deck,
-  seven VPs to sign it, and a privacy-legal-brand check.
-
----
-
-## Suno style prompt
-
-Target: the comedic parody take (lighter, brighter, sillier), not the grave original. Same groove, measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop **Cm – Ab – Fm – G** (i–VI–iv–V), one chord every two beats. The parody's mix is about 20% brighter (spectral centroid ~2.7 kHz vs ~2.2 kHz).
-
-**Style (full):**
-
-Comedy parody of a mid-90s West Coast rap ballad, 80 BPM, C minor. Faithful, polished re-creation of the groove: looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, on a lush synthesized string section with a 1970s soul feel and a church-organ pad; boom-bap drums with a round kick, crisp snare on 2 and 4, straight 8th hi-hats. Lead vocal: a nerdy, slightly nasal male tenor rapper, wide-eyed and earnest, theatrical over-enunciation, proud deadpan delivery that plays every absurd line completely straight, little comic vocal inflections and ad-libs. Hook: a sincere, overly pious church choir singing it big and holy, with a soulful lead on top. Spoken-word intro read like a solemn sermon. Bright, clean, glossy late-90s mix; mock-epic, cheerful underneath the gravity.
-
-**Style (short, ≤ 200 chars):**
-
-comedy parody, 90s West Coast rap ballad, 80 BPM, C minor string loop, boom-bap, nerdy nasal tenor rap, earnest deadpan, pious gospel choir hook, bright
-
-**Exclude styles:** trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, menacing, gritty, lo-fi
-
-**Structure tags to put in the lyrics field:** `[Intro: solemn spoken sermon, strings]`, `[Verse 1: nerdy rap]`, `[Chorus: pious gospel choir]`, `[Verse 2]`, `[Chorus]`, `[Verse 3]`, `[Chorus]`, `[Bridge: half-sung, sparse, drums drop out]`, `[Outro: choir, fading]`, `[Spoken: "Accept all."]`, `[End]`.
+[End]
