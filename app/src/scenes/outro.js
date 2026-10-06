@@ -18,13 +18,16 @@ export default function outro(P, f) {
   const cuts = [f.start, L[1].start - 0.3, L[2].start - 0.3, L[3].start - 0.3, L[4].start - 0.3, L[5].start - 0.25, L[5].end + 3.3];
   let k = 0; for (let i = 1; i < cuts.length; i++) if (t >= cuts[i]) k = i;
   const lt = t - cuts[k];
+  const zo = k < 4 ? 1 + 0.04 * ease.out(clamp(lt / 6)) : 1;
+  ctx.save(); ctx.translate(800, 450); ctx.scale(zo, zo); ctx.translate(-800, -450);
   if (k === 0) choirWide(P, f, t, lt, L);
   else if (k === 1) readsCode(P, f, t, lt, L);
   else if (k === 2) testsScroll(P, f, t, lt, L);
   else if (k === 3) reviewer(P, f, t, lt, L);
   else if (k === 4) nave(P, f, t, lt, L);
   else if (k === 5) cardStunt(P, f, t, lt, L);
-  else { valleyEnd(P, f, t, lt); return; }
+  else { ctx.restore(); valleyEnd(P, f, t, lt); return; }
+  ctx.restore();
   // the ribbon banner, as in the choruses
   const line = f.L.at(t) && f.L.at(t).start >= L[0].start - 0.5 ? f.L.at(t) : L[0];
   if (k < 6 && !(k === 5 && lt > 2.4)) { const refrain = /paradise/i.test(line.text); lyricBanner(P, f, line, 800, 806, { size: 46, tail: refrain ? 'goldLt' : 'roseLt' }); }
@@ -139,8 +142,11 @@ function nave(P, f, t, lt, L) {
 function cardStunt(P, f, t, lt, L) {
   chapel(P, f, t, 1.4);
   const ac = L[5].words[0].start, turned = t > ac - 0.05, press = t > L[5].words[1].start;
+  const zz = 1 + 0.65 * ease.outCubic(clamp((t - ac + 0.15) / 0.5));
+  P.ctx.save(); P.ctx.translate(800, 640); P.ctx.scale(zz, zz); P.ctx.translate(-800, -640);
   choir(P, f, t, { screen: turned });
   heroFront(P, 800, 470, 0.42, { hold: 'phone', uplit: 0.8, look: [0, 0.6], mouth: 'neutral', blink: blinkAt(t), screen: turned, press });
+  P.ctx.restore();
   if (press) { const k = clamp((t - L[5].words[1].start) / 0.5); P.ctx.save(); P.alpha((1 - k) * 0.8); P.fill(rect(0, 0, W, H), 'cream'); P.ctx.restore(); }
   // then the arch closes in on the light
   const cl = clamp((lt - 2.4) / 1.0);

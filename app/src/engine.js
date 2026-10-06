@@ -15,20 +15,32 @@ export class Engine {
   }
   async init() { for (const e of this.timeline) { const m = await e.load(); e.scene = m.default; } }
   entryAt(t) { return this.timeline.find((e) => t >= e.start && t < e.end) ?? null; }
+  draw(e, t) {
+    const { ctx, P, audio: A } = this;
+    const f = {
+      t, lt: t - e.start, p: (t - e.start) / (e.end - e.start), start: e.start, end: e.end, params: e.params ?? {},
+      beat: A.beatAt(t), bar: A.barAt(t), A, L: this.lyrics,
+      kick: A.hit('kick', t), snare: A.hit('snare', t), vocal: A.level('vocal', t), rms: A.level('rms', t),
+    };
+    f.beatPhase = f.beat - Math.floor(f.beat); f.barPhase = f.bar - Math.floor(f.bar);
+    try { ctx.save(); e.scene(P, f); ctx.restore(); }
+    catch (err) { ctx.restore(); const msg = `${e.id}: ${err.stack ?? err}`; if (!this.errors.includes(msg)) { this.errors.push(msg); console.error(msg); } }
+  }
   render(t) {
-    const { ctx, P, audio: A } = this, e = this.entryAt(t);
+    const { ctx, P } = this, e = this.entryAt(t);
     ctx.setTransform(this.scale, 0, 0, this.scale, 0, 0);
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
     if (e) {
-      const f = {
-        t, lt: t - e.start, p: (t - e.start) / (e.end - e.start), start: e.start, end: e.end, params: e.params ?? {},
-        beat: A.beatAt(t), bar: A.barAt(t), A, L: this.lyrics,
-        kick: A.hit('kick', t), snare: A.hit('snare', t), vocal: A.level('vocal', t), rms: A.level('rms', t),
-      };
-      f.beatPhase = f.beat - Math.floor(f.beat); f.barPhase = f.bar - Math.floor(f.bar);
-      try { ctx.save(); e.scene(P, f); ctx.restore(); }
-      catch (err) { ctx.restore(); const msg = `${e.id}: ${err.stack ?? err}`; if (!this.errors.includes(msg)) { this.errors.push(msg); console.error(msg); } }
+      // between sections the new one opens through a growing arch, gold-rimmed, over the old one
+      const i = this.timeline.indexOf(e), prev = i > 0 ? this.timeline[i - 1] : null, D = 0.6, k = (t - e.start) / D;
+      if (prev && k < 1) {
+        this.draw(prev, t);
+        const u = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2, w = 60 + 2500 * u, h = w * 0.95, x = 800 - w / 2, y = 980 - h;
+        const iris = new Path2D(); iris.moveTo(x, 980); iris.lineTo(x, y + w / 2); iris.arc(800, y + w / 2, w / 2, Math.PI, 0); iris.lineTo(x + w, 980); iris.closePath();
+        ctx.save(); ctx.clip(iris); this.draw(e, t); ctx.restore();
+        P.line(iris, 16); P.line(iris, 10, 'gold');
+      } else this.draw(e, t);
     }
     P.grain(t);
   }

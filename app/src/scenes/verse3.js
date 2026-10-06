@@ -31,7 +31,8 @@ export default function verse3(P, f) {
   if (t < f.start + 0.6) shut = Math.max(shut, 1 - ease.inOutCubic(clamp((t - f.start) / 0.6)));
   P.fill(rect(0, 0, W, H), 'night');
   // the scene on stage
-  ctx.save(); P.clip(rect(OX, OY, OW, OH)); ctx.translate(OX, OY);
+  const zs = 1 + 0.05 * ease.out(clamp((t - (T[k] - 0.12)) / 6.5));
+  ctx.save(); P.clip(rect(OX, OY, OW, OH)); ctx.translate(OX + OW / 2, OY + OH * 0.55); ctx.scale(zs, zs); ctx.translate(-OW / 2, -OH * 0.55);
   sc[k].draw(P, f, sc[k].L, t, OW, OH);
   ctx.restore();
   stage(P, f, shut);

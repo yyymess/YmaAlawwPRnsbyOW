@@ -237,6 +237,7 @@ export function phoneInHands(P, x, y, s, o) {
     for (const [k, l] of [[18, 0.55], [52, 0.45]]) P.line(Q(`M${pt(add(add(a, g.f, k), g.p, 40))} C${pt(add(add(a, g.f, k + 14), g.p, 14))} ${pt(add(add(a, g.f, k + 4), g.p, -14))} ${pt(add(add(a, g.f, k + 18), g.p, -38))}`), lw * l);   // folds gathering into the cuff
   }
   P.restore();
+  const drawPhone = () => {
   // the phone
   const ph = Q(`M${-hw + 18} ${-hh} L${hw - 18} ${-hh} Q${hw} ${-hh} ${hw} ${-hh + 18} L${hw} ${hh - 18} Q${hw} ${hh} ${hw - 18} ${hh} L${-hw + 18} ${hh} Q${-hw} ${hh} ${-hw} ${hh - 18} L${-hw} ${-hh + 18} Q${-hw} ${-hh} ${-hw + 18} ${-hh} Z`);
   if (o.uplit) P.line(ph, 12 * s + 2, 'goldLt');
@@ -244,15 +245,17 @@ export function phoneInHands(P, x, y, s, o) {
     P.both(ph, 'black', lw * 1.1);
     const scr = Q(rect(-hw + 8, -hh + 10, 2 * hw - 16, 2 * hh - 20, 12)); P.fill(scr, 'cream');
     P.tone(scr, 'goldLt', { from: [x, y + py * s, 0.7], to: [x + hw * s, y + (py - hh) * s, 0], radial: true, bbox: [x - hw * s, y + (py - hh) * s, x + hw * s, y + (py + hh) * s] }, Math.max(2.5, 4 * s));
-    const pr = o.press ? 3 : 0;
-    P.both(Q(rect(-hw + 14, -30 + pr, 2 * hw - 28, 60, 30)), o.press ? 'tealDk' : 'teal', lw * 0.8);
-    P.text('Accept all', x, y + (py + 8 + pr) * s, { size: 19 * s * 1.0, color: 'cream' });
+    const pr = o.press ? 4 : 0;
+    P.both(Q(rect(-hw + 12, -50 + pr, 2 * hw - 24, 100, 26)), o.press ? 'tealDk' : 'teal', lw * 0.8);
+    P.text('Accept', x, y + (py - 6 + pr) * s, { size: 30 * s, color: 'cream' }); P.text('all', x, y + (py + 28 + pr) * s, { size: 30 * s, color: 'cream' });
   } else {
   P.both(ph, 'tealDk', lw * 1.1);
   P.tone(ph, '#0f1c1b', { from: [x - hw * s, y + (py - hh) * s, 0], to: [x + hw * s, y + (py + hh) * s, 0.5], bbox: [x - (hw + 4) * s, y + (py - hh - 4) * s, x + (hw + 4) * s, y + (py + hh + 4) * s] }, Math.max(3, 5 * s));
   P.both(Q(`M${-hw + 18} ${-hh + 12} L${-hw + 58} ${-hh + 12} Q${-hw + 66} ${-hh + 12} ${-hw + 66} ${-hh + 20} L${-hw + 66} ${-hh + 66} Q${-hw + 66} ${-hh + 74} ${-hw + 58} ${-hh + 74} L${-hw + 18} ${-hh + 74} Q${-hw + 10} ${-hh + 74} ${-hw + 10} ${-hh + 66} L${-hw + 10} ${-hh + 20} Q${-hw + 10} ${-hh + 12} ${-hw + 18} ${-hh + 12} Z`), 'teal', lw * 0.8);
   for (const [cx, cy] of [[-hw + 25, -hh + 28], [-hw + 51, -hh + 28], [-hw + 25, -hh + 56]]) P.both(ell(x + cx * s, y + (py + cy) * s, 10 * s), 'black', lw * 0.5);
   }
+  };
+  if (!o.screen) drawPhone();   // its back to us: the hands wrap over it; turned round, the fingers are behind it
   // the hands, the underneath one first. Each hand is one silhouette: outlines under the fill, so only
   // the outer edge shows; thin lines part the fingers; shade like the face; the top hand casts a shadow
   const shapes = (g) => [g.back, ...g.fingers.map((F) => Q(F.p))];
@@ -282,6 +285,7 @@ export function phoneInHands(P, x, y, s, o) {
     P.both(Q(`M${pt(add(c0, g.p, 47))} C${pt(add(add(c0, g.p, 47), g.f, -5))} ${pt(add(add(c0, g.p, -47), g.f, -5))} ${pt(add(c0, g.p, -47))} L${pt(add(c1, g.p, -54))} C${pt(add(add(c1, g.p, -54), g.f, 4))} ${pt(add(add(c1, g.p, 54), g.f, 4))} ${pt(add(c1, g.p, 54))} Z`), 'tealLt', lw);
     for (let k = -36; k <= 36; k += 9) P.line(Q(`M${pt(add(add(c0, g.p, k * 0.95), g.f, 3))} L${pt(add(add(c1, g.p, k * 1.08), g.f, -3))}`), lw * 0.35);
   });
+  if (o.screen) drawPhone();
 }
 
 /**

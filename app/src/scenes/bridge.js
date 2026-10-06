@@ -14,7 +14,8 @@ export default function bridge(P, f) {
   const Ls = [f.L.get('Nineteen-fifteen'), f.L.get('Nineteen-sixty'), f.L.get('Nobody retrained'), f.L.get('boiled'), f.L.get('glue code too')];
   const cutB = Ls[2].start - 0.3, cutC = Ls[3].start - 0.3, cutD = Ls[4].start - 0.3;
   page(P, f);
-  ctx.save(); P.clip(rect(110, 150, 1380, 560));
+  const sub = t < cutB ? f.start : t < cutC ? cutB : t < cutD ? cutC : cutD, zb = 1 + 0.04 * ease.out(clamp((t - sub) / 6));
+  ctx.save(); P.clip(rect(110, 150, 1380, 560)); ctx.translate(800, 430); ctx.scale(zb, zb); ctx.translate(-800, -430);
   if (t < cutB) isotype(P, f, Ls, t);
   else if (t < cutC) schoolroom(P, f, Ls, t, t - cutB);
   else if (t < cutD) glueWorks(P, f, Ls, t, t - cutC);

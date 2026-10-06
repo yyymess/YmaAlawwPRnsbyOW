@@ -23,6 +23,9 @@ export default function verse2(P, f) {
   const ps = POSTERS.map((p) => ({ ...p, L: p.lines.map((q) => f.L.get(q)) }));
   const T = ps.map((p) => p.L[0].words[0].start - 0.42);   // when each poster is slapped on
   let cur = 0; for (let k = 1; k < ps.length; k++) if (t >= T[k]) cur = k;
+  const since = t - T[cur], bump = since > 0.38 && since < 0.6 ? Math.sin((since - 0.38) / 0.22 * Math.PI) * 0.006 : 0;
+  const zv = 1 + 0.035 * ease.out(clamp(since / 6)) + bump;
+  ctx.save(); ctx.translate(800, 450); ctx.scale(zv, zv); ctx.translate(-800, -450);
   wallBg(P, f);
   // older posters as torn layers peeking out, then the previous one, then the current one landing
   for (let k = Math.max(0, cur - 4); k < cur - 1; k++) torn(P, k, ps[k]);
@@ -32,6 +35,7 @@ export default function verse2(P, f) {
   // the paste brush sweeps across as it lands
   const br = clamp((t - T[cur] - 0.3) / 0.5);
   if (br > 0 && br < 1) { ctx.save(); P.alpha(0.3 * (1 - br)); P.fill(svg(`M${100 + br * 1400} 60 L${180 + br * 1400} 60 L${120 + br * 1400} 860 L${40 + br * 1400} 860 Z`), 'cream'); ctx.restore(); }
+  ctx.restore();
 }
 
 function wallBg(P, f) {

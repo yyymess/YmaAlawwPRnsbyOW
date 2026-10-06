@@ -31,7 +31,9 @@ export default function chorus(P, f) {
   const cs = [0, 1, 2, 3].map((c) => lines[2 * c].start - 0.3);
   let c = 0; for (let k = 1; k < 4; k++) if (t >= cs[k] - 0.2) c = k;
   const V = VARIANTS[n];
-  // the room: a sunburst behind the altarpiece (a stage spotlight for the launch)
+  // the room: a sunburst behind the altarpiece (a stage spotlight for the launch); a slow push across the chorus
+  const zc = 1 + 0.045 * ease.inOutSine(clamp(f.p));
+  ctx.save(); ctx.translate(800, 400); ctx.scale(zc, zc); ctx.translate(-800, -400);
   backdrop(P, f, n);
   headers(P, f, n);
   // wings: open at the start of chorus 1; closed at the end of chorus 2
@@ -56,6 +58,7 @@ export default function chorus(P, f) {
   const line = f.L.at(t) && f.L.at(t).start >= lines[0].start - 0.5 ? f.L.at(t) : lines[0];
   const refrain = /paradise/i.test(line.text);
   if (refrain) { const g = clamp(1 - (t - line.start) / 1.2); if (g > 0) { ctx.save(); P.alpha(g * 0.7); P.tone(ell(800, 780, 620, 120), 'goldLt', { from: [800, 780, 1], to: [1420, 780, 0], radial: true, bbox: [180, 660, 1420, 900] }, 7); ctx.restore(); } }
+  ctx.restore();
   lyricBanner(P, f, line, 800, 782, { size: 46, tail: refrain ? 'goldLt' : 'roseLt' });
 }
 
