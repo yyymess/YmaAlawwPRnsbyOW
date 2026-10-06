@@ -1,0 +1,13 @@
+TITLE
+Engineer's Paradise
+
+STYLE OF MUSIC (paste one; use SHORT if the field is limited to ~200 characters)
+Comedy parody of a mid-90s West Coast rap ballad, 80 BPM, C minor. Faithful, polished re-creation of the groove: looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, on a lush synthesized string section with a 1970s soul feel and a church-organ pad; boom-bap drums with a round kick, crisp snare on 2 and 4, straight 8th hi-hats. Lead vocal: a nerdy, slightly nasal male tenor rapper, wide-eyed and earnest, theatrical over-enunciation, proud deadpan delivery that plays every absurd line completely straight, little comic vocal inflections and ad-libs. Hook: a sincere, overly pious church choir singing it big and holy, with a soulful lead on top. Spoken-word intro read like a solemn sermon. Bright, clean, glossy late-90s mix; mock-epic, cheerful underneath the gravity.
+
+SHORT:
+comedy parody, 90s West Coast rap ballad, 80 BPM, C minor string loop, boom-bap, nerdy nasal tenor rap, earnest deadpan, pious gospel choir hook, bright
+
+EXCLUDE STYLES
+trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, menacing, gritty, lo-fi
+
+VOCAL GENDER (if offered): Male
