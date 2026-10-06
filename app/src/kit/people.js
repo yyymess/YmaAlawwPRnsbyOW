@@ -71,6 +71,12 @@ export function person(P, x, y, s, o = {}) {
   features(P, x, y, s, T, lw, { glasses: 'none', temples: true, ...o });
   P.ctx.restore();
   hats(P, T, x, y, s, o, acc, lw, cell, bb);
+  if (acc.has('shoot')) {   // the camera held up to his eye in both hands, the lens towards us
+    for (const sx of [-1, 1]) { P.both(T(`M${sx * 330} 700 C${sx * 330} 420 ${sx * 262} 200 ${sx * 186} 120 L${sx * 124} 160 C${sx * 200} 250 ${sx * 232} 440 ${sx * 228} 700 Z`), o.color ?? 'teal', lw); }
+    P.both(T(rect(-150, -86, 300, 172, 22)), 'black', lw); P.both(T(rect(-130, -116, 80, 34, 8)), 'char', lw);
+    P.both(ell(x + 10 * s, y - 2 * s, 66 * s), 'char', lw); P.both(ell(x + 10 * s, y - 2 * s, 46 * s), 'glass', lw * 0.8); P.line(ell(x + 10 * s, y - 2 * s, 24 * s), lw * 0.6); P.fill(ell(x - 4 * s, y - 18 * s, 10 * s), 'cream');
+    for (const sx of [-1, 1]) { const hnd = T(`M${sx * 150} -60 C${sx * 196} -64 ${sx * 210} 0 ${sx * 200} 60 C${sx * 192} 110 ${sx * 160} 124 ${sx * 132} 112 L${sx * 132} -40 Z`); P.fill(hnd, o.skin ?? 'skin'); P.line(hnd, lw); P.line(T(`M${sx * 150} -20 L${sx * 196} -16 M${sx * 150} 16 L${sx * 198} 20 M${sx * 150} 52 L${sx * 192} 56`), lw * 0.5); }
+  }
   // accessories on the chest, then the arms
   if (acc.has('lanyard')) {
     P.line(T('M-62 272 C-56 380 -30 470 -10 520 M62 272 C56 380 30 470 10 520'), lw * 3.4); P.line(T('M-62 272 C-56 380 -30 470 -10 520 M62 272 C56 380 30 470 10 520'), lw * 2, o.lanyardColor ?? 'red');
@@ -113,7 +119,7 @@ function drawTop(P, T, x, y, s, o, k) {
   if (top === 'tee' || top === 'hawaiian') {
     if (top === 'tee') { P.line(T('M-66 266 C-40 318 40 318 66 266'), lw); P.line(T('M-80 262 C-48 332 48 332 80 262'), lw * 0.6); }
     for (const sx of [-1, 1]) { const arm = T(`M${sx * 330} 640 C${sx * 370} 652 ${sx * 410} 648 ${sx * 428} 636 L${sx * 432} 1250 L${sx * 334} 1250 C${sx * 336} 1000 ${sx * 336} 800 ${sx * 330} 640 Z`); P.fill(arm, skin); P.tone(arm, dot, { from: [x + sx * 330 * s, y, 0.1], to: [x + sx * 430 * s, y, 0.4], bbox: bb }, fc); P.line(arm, lw * 1.2); }
-    if (o.print) { const [a, b] = o.print.split('|'); P.text(a, x, y + 420 * s, { font: FONT.caps, weight: 700, size: 40 * s, color: 'cream' }); if (b) P.text(b, x, y + 466 * s, { font: FONT.caps, weight: 700, size: 34 * s, color: 'cream' }); }
+    if (o.print) { const [a, b] = o.print.split('|'); P.text(a, x, y + 400 * s, { font: FONT.caps, weight: 700, size: 70 * s, color: 'cream' }); if (b) P.text(b, x, y + 466 * s, { font: FONT.caps, weight: 700, size: 52 * s, color: 'cream' }); }
   }
   if (top === 'hawaiian') { P.both(T('M-60 262 L-130 330 L-40 360 L0 320 Z'), col, lw); P.both(T('M60 262 L130 330 L40 360 L0 320 Z'), col, lw); P.line(T('M0 320 L0 1250'), lw * 0.7); }
   if (top === 'shirt') {

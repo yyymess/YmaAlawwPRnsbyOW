@@ -38,6 +38,8 @@ export default function chorus(P, f) {
   headers(P, f, n);
   // wings: open at the start of chorus 1; closed at the end of chorus 2
   const open = n === 1 ? ease.inOutCubic(clamp((t - f.start) / 0.75)) : n === 2 ? 1 - ease.inOutCubic(clamp((t - lines[7].start) / 0.9)) : 1;
+  // chorus 2's lights go out panel by panel on 'badge', 'goodnight' (centre) and 'turned'
+  const dark = n === 2 ? (() => { const l = lines[6], wq = (q) => l.words.find((x) => x.w.toLowerCase().startsWith(q)).start; return [wq('badge'), wq('goodnight'), wq('turned')]; })() : null;
   // each panel flips like a card to its next couplet, staggered left, centre, right
   const panel = (j, box, draw) => {
     const sw = j * 0.09, k = c > 0 ? clamp((t - (cs[c] - 0.45 + sw)) / 0.5) : 1;
@@ -46,6 +48,7 @@ export default function chorus(P, f) {
     ctx.save(); ctx.translate(box.x + box.w / 2, 0); ctx.scale(Math.max(0.02, sx), 1); ctx.translate(-(box.x + box.w / 2), 0);
     ctx.save(); P.clip(arch); ctx.translate(box.x, box.y);
     draw(P, f, cc, t - (cc > 0 ? cs[cc] : f.start), lines, box);
+    if (dark) { const k2 = ease.inOutCubic(clamp((t - dark[j]) / 0.5)); if (k2 > 0) { ctx.save(); P.alpha(0.88 * k2); P.fill(rect(-20, -20, box.w + 40, box.h + 40), 'night'); ctx.restore(); } }
     ctx.restore();
     frame(P, box, j === 1 ? f.kick : 0);
     ctx.restore();
@@ -116,11 +119,6 @@ function wing(P, f, box, j, open, drawOpen) {
 
 function darkness(P, f, lines) {
   const t = f.t, l = lines[6], w = (q) => l.words.find((x) => x.w.toLowerCase().startsWith(q)).start;
-  const offs = [[WING[0], w('badge')], [WING[1], w('turned')], [CEN, w('goodnight')]];
-  for (const [box, t0] of offs) {
-    const k = ease.inOutCubic(clamp((t - t0) / 0.5)); if (k <= 0) continue;
-    P.ctx.save(); P.alpha(0.88 * k); P.fill(archE(box.x, box.y, box.w, box.h, box.rise), 'night'); P.ctx.restore();
-  }
   // the badge reader's light in the dark centre, red, then out
   const gn = w('goodnight'), red = clamp((t - w('red')) / 0.2) * (1 - clamp((t - gn - 0.8) / 0.4));
   if (red > 0) { const cx = 1030, cy = 380; P.tone(ell(cx, cy, 160), 'red', { from: [cx, cy, 0.9 * red], to: [cx + 160, cy, 0], radial: true, bbox: [cx - 160, cy - 160, cx + 160, cy + 160] }, 6); P.both(rect(cx - 50, cy - 80, 100, 160, 14), 'char', 4); P.both(ell(cx, cy - 30, 16), red > 0.5 && Math.floor(t * 4) % 2 ? 'red' : 'redDk', 3); P.line(rect(cx - 30, cy + 10, 60, 40, 6), 2); }
@@ -207,7 +205,7 @@ const VARIANTS = {
         fillBg(P, box, 'rose', 'redDk', 0.4);
         throne(P, 320, 690, 0.78);
         person(P, 320, 230, 0.5, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 960, blink: blinkAt(t) });
-        clicker(P, 480, 330, 0.8, t);
+        clicker(P, 570, 300, 0.8, t); fist(P, 579, 347, 0.5, 'shirt', false, { rot: 0.04, len: 560, cuff: 'shirt' });
       } else {   // badge turned red: the lights go out (see darkness())
         fillBg(P, box, 'cream', 'sepia', 0.4);
         heroFront(P, 280, 330, 0.5, { mouth: 'frown', look: [0.8, 0.2], blink: blinkAt(t) });

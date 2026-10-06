@@ -5,7 +5,7 @@ import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, 
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { sodaCan, tablet, scroll, begin, end, priceTag } from '../kit/things.js';
-import { heart } from './verse1.js';
+import { heart, fist, sleeveArm } from './verse1.js';
 
 const POSTERS = [
   { title: 'MONDAY', lines: ['one Monday at the fridge', '"Soda now fifty cents"'], draw: fridge, paper: 'ivory', rot: -0.012 },
@@ -118,34 +118,42 @@ function fridge(P, f, L, t, w, h) {
   }
 }
 
-// ---- 2. THE FLYWHEEL: long-limbed workers turn it like a barn raising; the Manager rides it with his shares ---------
+// ---- 2. THE FLYWHEEL: long-limbed workers turn it like a barn raising; the Manager rides it in a gilded box with his shares ---------
 function flywheel(P, f, L, t, w, h) {
-  const ctx = P.ctx;
+  const ctx = P.ctx, cx = 610, cy = 300, R = 170, spin = t * 0.5;
   fill(P, w, h, 'goldLt', 'gold', 0.3);
-  for (let i = 0; i < 16; i++) { const a = (i / 16) * Math.PI * 2; ctx.save(); P.alpha(0.25); P.fill(svg(`M610 300 L${610 + Math.cos(a - 0.08) * 900} ${300 + Math.sin(a - 0.08) * 900} L${610 + Math.cos(a + 0.08) * 900} ${300 + Math.sin(a + 0.08) * 900} Z`), 'cream'); ctx.restore(); }
-  P.fill(rect(-10, 470, w + 20, 80), 'sage'); P.line(svg(`M0 470 L${w} 470`), 3);
-  // the wheel, turning
-  const spin = t * 0.5, cx = 610, cy = 270, R = 200;
+  for (let i = 0; i < 16; i++) { const a = (i / 16) * Math.PI * 2; ctx.save(); P.alpha(0.25); P.fill(svg(`M${cx} ${cy} L${cx + Math.cos(a - 0.08) * 900} ${cy + Math.sin(a - 0.08) * 900} L${cx + Math.cos(a + 0.08) * 900} ${cy + Math.sin(a + 0.08) * 900} Z`), 'cream'); ctx.restore(); }
+  P.fill(rect(-10, 490, w + 20, 80), 'sage'); P.line(svg(`M0 490 L${w} 490`), 3);
+  // the stand and the wheel, turning; its four virtues on plaques that turn with it but stay upright
+  P.both(svg(`M${cx - 44} 490 L${cx - 12} ${cy} L${cx + 12} ${cy} L${cx + 44} 490 Z`), 'sepiaDk', 4);
   P.both(ell(cx, cy, R + 26), 'ochre', 5); P.both(ell(cx, cy, R), 'cream', 4);
-  const words = ['SHIP', 'GROW', 'REORG', 'ALIGN'];
   for (let i = 0; i < 8; i++) { const a = spin + (i / 8) * Math.PI * 2; P.line(svg(`M${cx} ${cy} L${cx + Math.cos(a) * R} ${cy + Math.sin(a) * R}`), 5); }
-  for (let i = 0; i < 4; i++) { const a = spin + ((i + 0.5) / 4) * Math.PI * 2; ctx.save(); ctx.translate(cx + Math.cos(a) * R * 0.66, cy + Math.sin(a) * R * 0.66); ctx.rotate(a + Math.PI / 2); P.text(words[i], 0, 10, { font: FONT.caps, weight: 700, size: 30 }); ctx.restore(); }
   for (let i = 0; i < 16; i++) { const a = spin + (i / 16) * Math.PI * 2; P.both(ell(cx + Math.cos(a) * (R + 13), cy + Math.sin(a) * (R + 13), 6), 'gold', 2); }
-  P.both(ell(cx, cy, 34), 'gold', 4); P.both(svg(`M${cx - 26} 470 L${cx} ${cy + 20} L${cx + 26} 470 Z`), 'sepiaDk', 4);
-  // the workers, long-limbed and small-headed, in colours no person comes in
-  const crew = [[300, 'teal', 'rose', 1], [430, 'plum', 'gold', 1], [800, 'rose', 'teal', -1], [930, 'gold', 'plum', -1]];
-  crew.forEach(([x, skin, cloth, dir], i) => memphis(P, x, 470, 0.8, t + i * 0.3, skin, cloth, dir));
-  // the Manager rides the top with his shares
-  const sh = wd(L, 0, 'shares');
-  person(P, cx, 30, 0.22, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 700, blink: blinkAt(t) });
-  if (t > sh - 0.2) { const u = ease.outBack(clamp((t - sh + 0.2) / 0.4)); for (let i = 0; i < 4; i++) { ctx.save(); ctx.translate(cx + 90, 120); ctx.rotate(-0.5 + i * 0.28 * u); P.both(rect(0, -30, 120, 64, 4), 'cream', 3); P.text('SHARES', 60, 10, { font: FONT.caps, weight: 700, size: 18, color: 'sageDk' }); ctx.restore(); } }
-  // the mission, now with a footnote
+  ['SHIP', 'GROW', 'REORG', 'ALIGN'].forEach((v, i) => { const a = spin + ((i + 0.5) / 4) * Math.PI * 2, px = cx + Math.cos(a) * R * 0.6, py = cy + Math.sin(a) * R * 0.6, pw = P.measure(v, { font: FONT.caps, size: 24, weight: 700 }) + 26; P.both(rect(px - pw / 2, py - 20, pw, 40, 8), 'ivory', 3); P.text(v, px, py + 9, { font: FONT.caps, weight: 700, size: 24 }); });
+  P.both(ell(cx, cy, 30), 'gold', 4);
+  // the workers push on the rim, each pair in a chain, in colours no person comes in
+  const crew = [[186, 'plum', 'gold', 1], [306, 'teal', 'rose', 1], [914, 'rose', 'teal', -1], [1034, 'gold', 'plum', -1]];
+  crew.forEach(([x, skin, cloth, dir], i) => memphis(P, x, 490, 0.72, t + i * 0.3, skin, cloth, dir));
+  // the Manager rides on top in a gilded box, his shares fanned like a winning hand
+  const sh = wd(L, 0, 'shares'), fan = ease.outBack(clamp((t - sh + 0.2) / 0.4));
+  person(P, cx, 50, 0.155, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 700, blink: blinkAt(t), look: [0.5, 0] });
+  if (fan > 0) for (let i = 0; i < 4; i++) { ctx.save(); ctx.translate(cx + 92, 86); ctx.rotate(0.55 + i * 0.3 * fan); P.both(rect(-22, -78, 44, 64, 4), 'ivory', 2.5); P.line(rect(-17, -73, 34, 54, 3), 1.2, 'sageDk'); P.text('%', 0, -36, { font: FONT.caps, weight: 700, size: 24, color: 'sageDk' }); ctx.restore(); }
+  if (fan > 0) fist(P, cx + 92, 86, 0.3, 'char', false, { rot: -0.4, len: 30, cuff: 'shirt' });
+  P.both(svg(`M${cx - 96} 92 L${cx + 96} 92 L${cx + 84} 128 C${cx + 60} 140 ${cx - 60} 140 ${cx - 84} 128 Z`), 'gold', 4);
+  P.tone(svg(`M${cx - 96} 92 L${cx + 96} 92 L${cx + 84} 128 C${cx + 60} 140 ${cx - 60} 140 ${cx - 84} 128 Z`), 'ochre', { from: [cx, 92, 0], to: [cx + 90, 140, 0.6], bbox: [cx - 100, 90, cx + 100, 142] }, 5);
+  P.line(svg(`M${cx - 90} 104 L${cx + 90} 104`), 2); P.both(ell(cx, 118, 9), 'red', 2);
+  // the mission on its tablet, then its footnote on a ribbon
   const ms = wd(L, 1, 'mission'), mu = ease.outCubic(clamp((t - ms + 0.3) / 0.5));
   if (mu > 0) {
-    ctx.save(); ctx.translate(0, (1 - mu) * 300);
-    tablet(P, 1080, 70, 220, 200, { lines: ['CHANGE', 'THE WORLD'], size: 24, top: 110, lineH: 34 });
-    const fn = wd(L, 1, 'footnote');
-    if (t > fn) { P.text('*', 1180, 160, { size: 48, weight: 700, color: 'red' }); P.text('*subject to quarterly results', 1080, 300, { size: 16, style: 'italic', color: 'charDk' }); }
+    ctx.save(); ctx.translate(0, (1 - mu) * -260);
+    tablet(P, 1100, 14, 190, 170, { lines: ['CHANGE', 'THE WORLD'], size: 22, top: 92, lineH: 32 });
+    const fn = wd(L, 1, 'got') - 0.1;
+    if (t > fn) {
+      const k = ease.outBack(clamp((t - fn) / 0.35));
+      P.text('*', 1186, 112, { size: 48, weight: 700, color: 'red' });
+      const ft = '*subject to quarterly results', tw = P.measure(ft, { size: 24, style: 'italic' }) + 36;
+      ctx.save(); ctx.translate(1040, 222); ctx.scale(k, k); P.banner(-tw / 2, -24, tw, 48, { tail: 'roseLt' }); P.text(ft, 0, 8, { size: 24, style: 'italic', color: 'redDk' }); ctx.restore();
+    }
     ctx.restore();
   }
 }
@@ -218,7 +226,7 @@ function graveyard(P, f, L, t, w, h) {
   const uw = wd(L, 1, 'users') - 0.3;
   if (t > uw) {
     ctx.save(); P.alpha(0.6); P.fill(svg('M440 120 C470 60 560 50 610 90 C660 40 760 60 770 120 C820 130 820 180 770 190 L460 190 C410 180 410 130 440 120 Z'), 'cream'); ctx.restore();
-    for (let i = 0; i < 12; i++) { const u = clamp((t - uw - i * 0.12) / 2.2); if (u <= 0) continue; const x = 200 + ((i * 97) % 820), y = 420 - u * 300; ctx.save(); P.alpha(1 - u * 0.7); P.both(ell(x, y - 18, 9), 'cream', 2); P.both(svg(`M${x - 12} ${y + 12} C${x - 12} ${y - 6} ${x + 12} ${y - 6} ${x + 12} ${y + 12} Z`), 'cream', 2); ctx.restore(); }
+    for (let i = 0; i < 10; i++) { const u = clamp((t - uw - i * 0.14) / 2.4); if (u <= 0) continue; const x = 200 + ((i * 113) % 820) + Math.sin(u * 5 + i) * 14, y = 430 - ease.out(u) * 280; ctx.save(); P.alpha(1 - Math.max(0, u - 0.75) * 3); P.both(ell(x, y - 30, 15), 'ivory', 3); P.both(svg(`M${x - 22} ${y + 22} C${x - 22} ${y - 10} ${x + 22} ${y - 10} ${x + 22} ${y + 22} Z`), 'ivory', 3); P.line(svg(`M${x - 22} ${y + 4} L${x - 34} ${y - 12} M${x + 22} ${y + 4} L${x + 34} ${y - 12}`), 3); ctx.restore(); }
   }
 }
 function tomb(P, x, y, s, icon, badge) {
@@ -263,16 +271,18 @@ function orgChart(P, f, L, t, w, h) {
     prev = cur;
   });
   // the button, in its frame; it goes from blue to gray on "gray"
-  const gr = wd(L, 0, 'gray'), g = clamp((t - gr) / 0.4);
+  const gr = wd(L, 1, 'review') + 0.05, g = clamp((t - gr) / 0.3);   // grey only once the launch review signs off
   P.both(rect(470, 380, 260, 120, 12), 'cream', 4);
   const bc = g < 1 ? (g > 0.5 ? 'grey' : 'navy') : 'grey';
   P.both(rect(510, 410, 180, 60, 30), bc, 4); P.text('Submit', 600, 450, { size: 30, color: 'cream' });
   // three syncs: calendar invites; nine sign-offs: nine stamps, one per beat; May
   const sy = wd(L, 1, 'three');
-  for (let i = 0; i < 3; i++) { const u = ease.outBack(clamp((t - sy - i * 0.12) / 0.3)); if (u > 0) { ctx.save(); ctx.translate(120 + i * 40, 420 + i * 18); ctx.scale(u, u); P.both(rect(-70, -40, 140, 80, 6), 'ivory', 3); P.fill(rect(-70, -40, 140, 20, 6), 'navy'); P.text('SYNC', 0, 22, { font: FONT.caps, weight: 700, size: 22 }); ctx.restore(); } }
+  for (let i = 0; i < 3; i++) { const u = ease.outBack(clamp((t - sy - i * 0.12) / 0.3)); if (u > 0) { ctx.save(); ctx.translate(90 + i * 30, 412 + i * 16); ctx.scale(u, u); P.both(rect(-70, -40, 140, 80, 6), 'ivory', 3); P.fill(rect(-70, -40, 140, 20, 6), 'navy'); P.text('SYNC', 0, 22, { font: FONT.caps, weight: 700, size: 22 }); ctx.restore(); } }
   const nn = wd(L, 1, 'nine'), beatT = f.A.P / 2;
-  for (let i = 0; i < 9; i++) { const ts = nn + i * beatT * 0.55, u = clamp((t - ts) / 0.12); if (u <= 0) continue; const a = (i / 9) * Math.PI * 2, sx = 600 + Math.cos(a) * 250, sy2 = 440 + Math.sin(a) * 90; ctx.save(); ctx.translate(sx, sy2); ctx.rotate(-0.2 + (i % 3) * 0.15); ctx.scale(1 + (1 - u) * 0.6, 1 + (1 - u) * 0.6); P.ctx.save(); P.alpha(0.85); P.line(rect(-62, -20, 124, 40, 6), 4, 'red'); P.text('APPROVED', 0, 9, { font: FONT.caps, weight: 700, size: 20, color: 'red' }); P.ctx.restore(); ctx.restore(); }
-  const my = wd(L, 1, 'may'), mu = ease.outBack(clamp((t - my + 0.15) / 0.35));
+  const spots = [[350, 392], [850, 392], [600, 360], [350, 452], [850, 452], [300, 512], [500, 516], [700, 516], [900, 512]];
+  // a volley of nine stamps, bang-bang-bang, ringed round the button
+  for (let i = 0; i < 9; i++) { const ts = nn + i * 0.09, u = clamp((t - ts) / 0.1); if (u <= 0) continue; const [sx, sy2] = spots[i]; ctx.save(); ctx.translate(sx, sy2); ctx.rotate(-0.16 + (i % 3) * 0.12); ctx.scale(1 + (1 - u) * 0.6, 1 + (1 - u) * 0.6); P.ctx.save(); P.alpha(0.88); P.line(rect(-93, -30, 186, 60, 8), 5, 'red'); P.line(rect(-86, -23, 172, 46, 5), 1.5, 'red'); P.text('APPROVED', 0, 11, { font: FONT.caps, weight: 700, size: 30, color: 'red' }); P.ctx.restore(); ctx.restore(); }
+  const my = wd(L, 1, 'launch'), mu = ease.outBack(clamp((t - my) / 0.35));
   if (mu > 0) { ctx.save(); ctx.translate(1080, 430); ctx.scale(mu, mu); P.both(rect(-90, -80, 180, 170, 8), 'ivory', 4); P.fill(rect(-90, -80, 180, 44, 8), 'red'); P.line(rect(-90, -80, 180, 170, 8), 4); P.text('MAY', 0, -46, { font: FONT.caps, weight: 700, size: 30, color: 'cream' }); P.text('31', 0, 50, { font: FONT.caps, weight: 700, size: 70 }); ctx.restore(); }
 }
 
@@ -324,10 +334,11 @@ function friday(P, f, L, t, w, h) {
     P.both(svg(`M-10 380 L${w + 10} 380 L${w + 10} ${h + 10} L-10 ${h + 10} Z`), 'sage', 3);
     P.both(rect(780, 60, 380, 330, 6), 'glass', 4); P.line(svg('M970 60 L970 390'), 4); P.tone(rect(780, 60, 380, 330), 'mintDk', { from: [780, 60, 0], to: [1160, 390, 0.5], bbox: [780, 60, 1160, 390] }, 6);
     const em = wd(L, 0, 'email'), eu = ease.outBack(clamp((t - em + 0.2) / 0.4));
-    if (eu > 0 && t < em + 2.2) { ctx.save(); ctx.translate(300, 140); ctx.scale(eu, eu); P.both(rect(-150, -80, 300, 170, 8), 'ivory', 4); P.line(svg('M-150 -80 L0 20 L150 -80'), 4); P.both(rect(-130, 40, 260, 34, 6), 'cream', 2); P.text('Subject: Org update', 0, 64, { size: 20 }); ctx.restore(); }
+    if (eu > 0 && t < em + 2.2) { ctx.save(); ctx.translate(205, 150); ctx.scale(eu * 0.9, eu * 0.9); P.both(rect(-150, -80, 300, 170, 8), 'ivory', 4); P.line(svg('M-150 -80 L0 20 L150 -80'), 4); P.both(rect(-130, 40, 260, 34, 6), 'cream', 2); P.text('Subject: Org update', 0, 64, { size: 20 }); ctx.restore(); }
     const walk = t - (L[0].words[0].start - 0.3);
-    ctx.save(); heroWalk(P, lerp(120, 640, clamp(walk / 2.6)), 400, 0.36, walk * 6, {}); ctx.restore();
-    P.both(ell(lerp(130, 650, clamp(walk / 2.6)) + 20, 400 - 380 + Math.sin(t * 3) * 3, 40, 10), 'gold', 3);
+    const hx = lerp(430, 700, clamp(walk / 2.6));
+    ctx.save(); heroWalk(P, hx, 400, 0.36, walk * 6, {}); ctx.restore();
+    P.both(ell(hx + 30, 400 - 380 + Math.sin(t * 3) * 3, 40, 10), 'gold', 3);
   } else {
     // the close-up: badge to the reader, red, the halo going grey
     fill(P, w, h, 'cream', 'sepia', 0.3);
@@ -338,8 +349,9 @@ function friday(P, f, L, t, w, h) {
     const gn = wd(L, 1, 'guess'), grey = clamp((t - gn) / 0.6);
     heroFront(P, 430, 230, 0.55, { mouth: t > gn ? 'frown' : 'neutral', look: [0.8, 0], blink: blinkAt(t), brow: t > gn ? 1 : 0 });
     // the badge on its lanyard, held to the reader
-    P.line(svg('M400 420 C560 400 700 330 820 290'), 6, 'teal');
+    P.line(svg('M448 392 C520 540 700 540 796 352'), 7); P.line(svg('M448 392 C520 540 700 540 796 352'), 4, 'teal');
     P.both(rect(790, 240, 90, 120, 8), 'cream', 4); P.both(rect(806, 256, 58, 50, 4), 'glass', 2); P.line(svg('M806 324 L864 324 M806 340 L846 340'), 3);
+    sleeveArm(P, [836, 386], [606, 470], 0.55, 'teal', -1, { cuff: 'tealLt' });
     // the halo, from gold to grey, sinking a little
     const hc = grey > 0.5 ? 'grey' : 'gold';
     P.both(ell(430, 30 + grey * 20, 150, 34), hc, 5); P.line(ell(430, 30 + grey * 20, 120, 24), 2, grey > 0.5 ? 'silver' : 'goldLt');

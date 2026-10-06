@@ -91,9 +91,9 @@ function keynote(P, f, L, t, w, h) {
   });
   agentAngel(P, 940, 150 + Math.sin(t * 1.6) * 6, 0.45, t);
   ctx.restore();
-  // the braces fall off the screen: guess which language we lose
-  const lose = wd(L, 1, 'guess');
-  [['{', 420], ['}', 560], [';', 700], ['<', 820], ['>', 900]].forEach(([g, x], i) => { const u = clamp((t - lose - i * 0.1) / 0.9); if (u <= 0) return; const y = 300 + ease.in(u) * 330; ctx.save(); ctx.translate(x, y); ctx.rotate(u * (i % 2 ? 2 : -2)); P.both(rect(-26, -26, 52, 52, 8), 'cream', 3); P.text(g, 0, 12, { font: FONT.mono, size: 34, weight: 700 }); ctx.restore(); });
+  // as each line turns into English its punctuation drops off the screen and piles up below it: guess which language we lose
+  const rr = rng(21); let gi = 0;
+  code.forEach((c, i) => { for (let k = 0; k < c.length; k++) { if (!'{}();?=+'.includes(c[k])) continue; const x0 = 360 + P.measure(c.slice(0, k), { font: FONT.mono, size: 28, weight: 600 }) + 8, y0 = 120 + i * 46 - 10, t0 = ho + i * 0.18 + 0.22 + (gi % 3) * 0.04, dx = (rr() - 0.5) * 140, rest = 492 + (gi % 3) * 8, spinr = (rr() - 0.5) * 5; gi++; const u = clamp((t - t0) / 0.75); if (u <= 0) continue; const x = x0 + dx * u, y = y0 + (rest - y0) * ease.in(u); ctx.save(); ctx.translate(x, y); ctx.rotate(spinr * u); P.both(rect(-19, -19, 38, 38, 7), 'cream', 3); P.text(c[k], 0, 9, { font: FONT.mono, size: 26, weight: 700 }); ctx.restore(); } });
   // the presenter, in a black tee with a headset, at stage left
   person(P, 230, 300, 0.36, { hair: 'buzz', top: 'tee', color: 'black', mouth: f.t < en ? 'smile' : 'grin', crop: 1250, look: [0.6, 0], blink: blinkAt(t), glasses: 'rect' });
   P.line(svg('M180 290 C170 330 190 360 220 352'), 3);
@@ -120,15 +120,16 @@ function emacs(P, f, L, t, w, h) {
         const kw = k === 'Space' ? 440 : k.length > 2 ? 130 : 84, down = lit.includes(k) && (t < l2 || taps.some((tp) => t > tp && t < tp + 0.22));
         const glow = lit.includes(k) && t >= l2;
         P.both(rect(x, -180 + ri * 74 + (down ? 4 : 0), kw, 64, 10), glow ? 'goldLt' : (down ? 'gold' : 'ivory'), 3);
-        P.text(k, x + kw / 2, -138 + ri * 74 + (down ? 4 : 0), { font: FONT.mono, size: k.length > 2 ? 22 : 26, weight: 700 });
+        const wide = k.length > 2 && k !== 'Space';
+        P.text(k, wide ? x + 14 : x + kw / 2, -138 + ri * 74 + (down ? 4 : 0), { font: FONT.mono, size: k.length > 2 ? 22 : 26, weight: 700, align: wide ? 'left' : 'center' });
         x += kw + 12;
       });
     });
     // the hand: the pinky bent like a hook on Control
-    hand(P, -262, 22, 1.0, t, t < l2 ? 'hook' : 'tab', taps);
+    hand(P, t, t < l2 ? 'hook' : 'tab', taps);
     ctx.restore();
     if (t < l2) ['C-x C-s', 'C-x C-f', 'M-x'].forEach((c, i) => { if (i === chord) { P.both(rect(980, 40, 300, 70, 12), 'night', 3); P.text(c, 1130, 88, { font: FONT.mono, size: 36, weight: 700, color: 'mint' }); } });
-    else taps.forEach((tp, i) => { if (t > tp) { const u = ease.outBack(clamp((t - tp) / 0.25)); ctx.save(); ctx.translate(1000 + i * 120, 90); ctx.scale(u, u); P.both(rect(-50, -32, 100, 64, 12), 'gold', 3); P.text('TAB', 0, 12, { font: FONT.mono, size: 30, weight: 700 }); ctx.restore(); } });
+    else taps.forEach((tp, i) => { if (t > tp) { const u = ease.outBack(clamp((t - tp) / 0.25)); ctx.save(); ctx.translate(560 + i * 120, 84); ctx.scale(u, u); P.both(rect(-50, -32, 100, 64, 12), 'gold', 3); P.text('TAB', 0, 12, { font: FONT.mono, size: 30, weight: 700 }); ctx.restore(); } });
   } else {
     // Accept all, in a reliquary with rays; he presses it with his eyes shut
     const u = ease.outCubic(clamp((t - acc + 0.15) / 0.5));
@@ -144,16 +145,27 @@ function emacs(P, f, L, t, w, h) {
     for (const hx of [260, 1100]) { P.both(ell(hx, 82, 110, 24), 'gold', 4); P.line(ell(hx, 82, 88, 15), 1.5); }
   }
 }
-/** his left hand on the keys, from above: one silhouette, the little finger hooked onto Control (or reaching Tab) */
-function hand(P, x, y, s, t, mode, taps) {
-  const tapDown = taps.some((tp) => t > tp && t < tp + 0.22) ? 8 : 0;
-  const lw = begin(P, x, y, s);
-  P.both(svg('M-90 330 L70 330 L74 150 L-78 150 Z'), 'teal', lw); P.tone(svg('M-90 330 L70 330 L74 150 L-78 150 Z'), 'hoodDot', { from: [-80, 150, 0.1], to: [70, 330, 0.5], bbox: [-90, 150, 74, 330] }, 6); P.line(svg('M-90 330 L70 330 L74 150 L-78 150 Z'), lw);
-  P.both(svg('M-84 150 L80 150 L76 178 L-80 178 Z'), 'tealLt', lw); for (let k = -66; k <= 66; k += 11) P.line(svg(`M${k} 152 L${k} 176`), lw * 0.35);
+/**
+ * his left hand on the keys, from above, in the keyboard's own units: index on F, middle on D, ring on S, and the
+ * little finger hooked onto the top edge of Ctrl (or stretched up to Tab), the thumb on the space bar; the forearm
+ * runs off the bottom of the keyboard in its sleeve
+ */
+function hand(P, t, mode, taps) {
+  const tap = taps.some((tp) => t > tp && t < tp + 0.22) ? 6 : 0;
+  const lw = begin(P, 0, 0, 1);
+  const sl = svg('M-300 640 L40 640 L22 436 L-262 436 Z');
+  P.fill(sl, 'teal'); P.tone(sl, 'hoodDot', { from: [-260, 440, 0.1], to: [20, 640, 0.5], bbox: [-300, 436, 40, 640] }, 6); P.line(sl, lw);
+  P.both(svg('M-268 404 L28 404 L24 448 L-264 448 Z'), 'tealLt', lw); for (let k = -250; k <= 10; k += 14) P.line(svg(`M${k} 410 L${k} 442`), lw * 0.35);
   end(P);
-  const little = mode === 'hook' ? { b: [-58, -14], c: [-128, -84], e: [-136, -14], w0: 40, w1: 33 } : { b: [-58, -14], c: [-118, -58], e: [-146, -80 + tapDown], w0: 40, w1: 33 };
-  const fingers = [little, { b: [-16, -34], c: [-22, -96], e: [-28, -156], w0: 44, w1: 37 }, { b: [30, -40], c: [32, -106], e: [36, -172], w0: 46, w1: 38 }, { b: [76, -34], c: [84, -92], e: [92, -150], w0: 44, w1: 37 }, { b: [86, 70], c: [140, 62], e: [178, 30], w0: 48, w1: 40, thumb: true }];
-  drawHand(P, x, y, s * 1.2, 0, 'M-74 154 C-100 90 -98 20 -84 -24 L104 -48 C124 0 122 90 74 154 Z', fingers, { tone: { from: [10, -40, 0], to: [-60, 150, 0.45], bbox: [-170, -230, 230, 160] }, knuckles: [[-56, -20], [-16, -40], [30, -46], [76, -40]] });
+  // a hand the size of the keys: each finger about a key wide, the fingers touching at the knuckles
+  const little = mode === 'hook' ? { b: [-288, 128], c: [-404, 96], e: [-372, -16], w0: 64, w1: 54 } : { b: [-288, 128], c: [-376, 30], e: [-390, -58 + tap], w0: 64, w1: 54 };
+  const fingers = [little,
+    { b: [-206, 140], c: [-206, 70], e: [-204, 2], w0: 72, w1: 60 },
+    { b: [-124, 146], c: [-116, 72], e: [-108, 0], w0: 76, w1: 62 },
+    { b: [-42, 140], c: [-24, 70], e: [-12, 6], w0: 72, w1: 60 },
+    { b: [8, 300], c: [44, 252], e: [42, 168], w0: 80, w1: 66, thumb: true }];
+  drawHand(P, 0, 0, 1, 0, 'M-326 128 C-346 228 -318 330 -252 412 L12 412 C52 352 64 250 26 132 C-60 150 -200 152 -326 128 Z', fingers,
+    { tone: { from: [-150, 40, 0], to: [-150, 412, 0.5], bbox: [-440, -80, 100, 420] }, knuckles: [[-284, 126], [-204, 138], [-122, 144], [-40, 138]] });
 }
 
 // ---- 3. the ghost town and the empty queue; the rubber duck talks back -----------------------------------------
@@ -162,7 +174,7 @@ function ghostTown(P, f, L, t, w, h) {
   if (t < l2) {
     backdrop(P, w, h, 'goldLt', 'ochre');
     // false-front buildings on a dusty street
-    const fronts = [[60, 'sepiaDk', 'HOTEL'], [330, 'ochre', 'STACK'], [600, 'sepiaDk', 'OVERFLOW'], [870, 'ochre', 'SALOON'], [1140, 'sepiaDk', 'Q & A']];
+    const fronts = [[100, 'sepiaDk', 'HOTEL'], [370, 'ochre', 'STACK'], [640, 'sepiaDk', 'OVERFLOW'], [910, 'ochre', 'SALOON']];
     fronts.forEach(([x, c, s2], i) => { P.both(svg(`M${x} 460 L${x} 120 L${x + 40} 120 L${x + 40} 90 L${x + 220} 90 L${x + 220} 120 L${x + 250} 120 L${x + 250} 460 Z`), c, 4); P.both(rect(x + 20, 140, 210, 50, 4), 'ivory', 3); P.text(s2, x + 125, 178, { font: FONT.caps, weight: 700, size: 30 }); P.both(rect(x + 50, 240, 60, 90, 3), 'night', 3); P.both(rect(x + 140, 240, 60, 90, 3), 'night', 3); P.line(svg(`M${x + 50} 240 L${x + 110} 330 M${x + 140} 330 L${x + 200} 240`), 2, 'sepia'); P.both(rect(x + 90, 360, 70, 100, 3), 'charDk', 3); });
     P.fill(rect(-10, 460, w + 20, 200), 'sepia'); P.tone(rect(-10, 460, w + 20, 200), 'sepiaDk', { from: [0, 460, 0], to: [0, 640, 0.5], bbox: [0, 460, w, 640] }, 6);
     // the queue: stanchions and a rope, nobody in it; a sign: 0 answers
@@ -175,7 +187,7 @@ function ghostTown(P, f, L, t, w, h) {
     // the duck under a spotlight, its words in a chat bubble with typing dots first
     backdrop(P, w, h, 'night', 'tealDk');
     ctx.save(); P.alpha(0.3); P.fill(svg('M640 -10 L480 560 L800 560 Z'), 'goldLt'); ctx.restore();
-    P.both(rect(380, 520, 520, 40, 6), 'ochre', 4);
+    P.both(rect(530, 604, 220, 18, 4), 'sepiaDk', 4); P.both(rect(566, 548, 148, 58, 4), 'ochre', 4); for (const fx of [594, 622, 650, 678]) P.line(svg(`M${fx} 554 L${fx} 600`), 2, 'sepiaDk'); P.both(rect(500, 520, 280, 32, 6), 'ochre', 4);
     const dk = wd(L, 1, 'talks'), lb = wd(L, 1, 'load-bearing');
     P.both(ell(640, 300, 90, 20), 'gold', 4); P.line(ell(640, 300, 70, 12), 1.5);
     duck(P, 620, 520, 1.6, { talk: t > dk && t < lb + 0.8 ? (Math.sin(t * 22) > 0 ? 1 : 0) : 0 });
@@ -227,9 +239,9 @@ function ladder(P, f, L, t, w, h) {
     for (const y of [140, 190, 240]) P.line(svg(`M${600 + (640 - y) * 0.0755 + 6} ${y} L${760 - (640 - y) * 0.0755 - 6} ${y}`), 10, 'ochre');
     for (const y of [300, 380, 460, 540]) { P.ctx.save(); P.ctx.setLineDash([6, 10]); P.line(svg(`M${600 + (640 - y) * 0.0755 + 6} ${y} L${760 - (640 - y) * 0.0755 - 6} ${y}`), 3, 'sepiaDk'); P.ctx.restore(); }
     const grads = [[300, 'skin', 'long'], [470, 'skin3', 'short'], [900, 'skin2', 'bun'], [1070, 'skin', 'messy']];
-    grads.forEach(([x, sk, hr], i) => person(P, x, 420 + (i % 2) * 20, 0.34, { hair: hr, top: 'gown', color: 'black', acc: ['mortar'], skin: sk, mouth: 'frown', look: [x < 680 ? 0.5 : -0.5, -0.8], crop: 900, blink: blinkAt(t + i) }));
-    const toss = wd(L, 0, 'hired'), u = clamp((t - toss) / 1.2);
-    if (u > 0 && u < 1) { ctx.save(); ctx.translate(1000 + u * 60, 300 - Math.sin(u * Math.PI) * 220); ctx.rotate(u * 8); P.both(svg('M0 -30 L60 -10 L0 10 L-60 -10 Z'), 'black', 3); ctx.restore(); }
+    const toss = wd(L, 0, 'hired'), u = clamp((t - toss) / 1.3);
+    grads.forEach(([x, sk, hr], i) => person(P, x, 420 + (i % 2) * 20, 0.34, { hair: hr, top: 'gown', color: 'black', acc: i === 3 && t > toss ? [] : ['mortar'], skin: sk, mouth: 'frown', look: i === 3 && t > toss ? [0.6, -1] : [x < 680 ? 0.5 : -0.5, -0.8], crop: 900, blink: blinkAt(t + i) }));
+    if (u > 0 && u < 1) { ctx.save(); ctx.translate(1070 + u * 260, 332 - Math.sin(u * Math.PI) * 250 + u * 70); ctx.rotate(u * 2.4); ctx.scale(0.34, 0.34); mortarboard(P, t); ctx.restore(); }
   } else {
     // a stained-glass window of nine panes, an agent in each; he herds them with a crook
     backdrop(P, w, h, 'night', 'plum');
@@ -247,8 +259,8 @@ function ladder(P, f, L, t, w, h) {
     }
     P.line(svg('M-330 -150 C-330 -330 330 -330 330 -150'), 8);
     ctx.restore();
-    heroPose(P, 230, 640, 0.5, { lean: 0.05, legs: { near: { a: 0.08, b: 0.08 }, far: { a: -0.06, b: -0.06 } }, arms: { near: { a: 0.9 + 0.1 * Math.sin(t * 2), e: 1.9 }, far: { a: 0.2, e: 0.6 } }, hands: { near: 'fist' }, look: [0, -0.4], lookUp: 0.3, mouth: sing(f), open: f.vocal,
-      hold: (P2, which, wr) => { if (which === 'near') { P2.line(svg(`M${wr[0]} ${wr[1] + 200} L${wr[0] + 20} ${wr[1] - 300} C${wr[0] + 30} ${wr[1] - 380} ${wr[0] + 120} ${wr[1] - 380} ${wr[0] + 110} ${wr[1] - 320}`), 16); P2.line(svg(`M${wr[0]} ${wr[1] + 200} L${wr[0] + 20} ${wr[1] - 300} C${wr[0] + 30} ${wr[1] - 380} ${wr[0] + 120} ${wr[1] - 380} ${wr[0] + 110} ${wr[1] - 320}`), 9, 'ochre'); } } });
+    heroPose(P, 230, 640, 0.5, { lean: 0.05, legs: { near: { a: 0.3, b: -0.1, foot: 0.08 }, far: { a: -0.08, b: -0.08 } }, arms: { near: { a: 0.9 + 0.06 * Math.sin(t * 2), e: 1.9 }, far: { a: -0.64, e: 1.27 } }, hands: { near: 'fist', far: 'pocket' }, look: [0, -0.4], lookUp: 0.3, mouth: sing(f), open: f.vocal,
+      hold: (P2, which, wr) => { if (which === 'near') { const d = `M${wr[0] - 30} -4 L${wr[0] + 20} ${wr[1] - 300} C${wr[0] + 30} ${wr[1] - 380} ${wr[0] + 120} ${wr[1] - 380} ${wr[0] + 110} ${wr[1] - 320}`; P2.line(svg(d), 16); P2.line(svg(d), 9, 'ochre'); } } });
   }
 }
 
@@ -259,13 +271,17 @@ function spring(P, f, L, t, w, h) {
     backdrop(P, w, h, 'sky', 'roseLt');
     P.fill(rect(-10, 500, w + 20, 160), 'sage');
     P.both(svg('M1040 520 C1050 420 1030 330 1000 270 L1020 260 C1050 310 1060 300 1070 250 L1090 254 C1090 300 1080 420 1100 520 Z'), 'sepiaDk', 4);
-    for (let i = 0; i < 7; i++) P.flower(980 + Math.cos(i) * 140, 200 + Math.sin(i * 1.7) * 70, 0.7, 'roseLt', i);
+    for (let k = 0; k < 9; k++) { const bx = 1050 + Math.cos(k * 0.72 + 0.4) * (90 + (k % 3) * 34), by = 210 + Math.sin(k * 0.72 + 0.4) * 60 - (k % 2) * 20; P.both(ell(bx, by, 72, 56), k % 2 ? 'roseLt' : 'cream', 3); }
+    P.tone(ell(1050, 230, 220, 120), 'rose', { from: [1050, 160, 0], to: [1050, 300, 0.4], bbox: [830, 110, 1270, 350] }, 6);
+    for (let i = 0; i < 9; i++) P.flower(1050 + Math.cos(i * 0.7) * (60 + (i % 3) * 50), 200 + Math.sin(i * 1.7) * 60, 0.6, i % 2 ? 'rose' : 'roseLt', i);
     for (let i = 0; i < 14; i++) { const u = ((t * 0.25 + i * 0.071) % 1); P.flower(200 + ((i * 197) % 1100) + Math.sin(u * 8 + i) * 30, -20 + u * 560, 0.32, 'roseLt', u * 6); }
     // the box of his things: a plant, a mug, the duck
     ctx.save(); ctx.translate(560, 520);
     P.both(svg('M-160 0 L-150 -170 L150 -170 L160 0 Z'), 'ochre', 4); P.line(svg('M-150 -170 L-190 -220 M150 -170 L190 -220'), 4);
-    P.both(rect(-120, -260, 70, 100, 8), 'cream', 3); for (let k = 0; k < 4; k++) P.leaf(-90 + k * 6, -270, -1.6 + k * 0.4, 0.8);
-    P.both(rect(30, -230, 60, 70, 8), 'cream', 3); duck(P, -10, -168, 0.5);
+    for (let k = 0; k < 4; k++) P.leaf(-90 + k * 6, -246, -1.6 + k * 0.4, 0.8);
+    P.both(svg('M-128 -166 L-122 -232 L-56 -232 L-50 -166 Z'), 'ochre', 3); P.both(rect(-132, -246, 86, 18, 4), 'ochre', 3); P.tone(svg('M-128 -166 L-122 -232 L-56 -232 L-50 -166 Z'), 'redDk', { from: [-120, -232, 0], to: [-50, -166, 0.5], bbox: [-130, -234, -48, -164] }, 4);
+    P.line(svg('M90 -222 C120 -222 120 -184 90 -184'), 6); P.line(svg('M90 -222 C120 -222 120 -184 90 -184'), 3, 'ivory');
+    P.both(rect(28, -236, 64, 74, 8), 'ivory', 3); P.text('#1', 60, -204, { font: FONT.caps, weight: 700, size: 18, color: 'red' }); P.text('DEV', 60, -182, { font: FONT.caps, weight: 700, size: 15 }); duck(P, -10, -168, 0.5);
     P.text('LAYOFF', 0, -70, { font: FONT.caps, weight: 700, size: 30, color: 'sepiaDk' });
     ctx.restore();
     heroFront(P, 300, 290, 0.42, { mouth: sing(f), open: f.vocal, look: [0.5, 0.2], blink: blinkAt(t), apron: t > wd(L, 0, 'craftsman') });
@@ -280,15 +296,15 @@ function marketStall(P, f, t, w, h, L, close) {
   // the awning, striped
   for (let i = 0; i < 12; i++) P.both(svg(`M${160 + i * 90} 90 L${250 + i * 90} 90 L${250 + i * 90} 170 C${235 + i * 90} 190 ${175 + i * 90} 190 ${160 + i * 90} 170 Z`), i % 2 ? 'cream' : 'red', 3);
   P.line(svg('M180 170 L180 540 M1200 170 L1200 540'), 12); P.line(svg('M180 170 L180 540 M1200 170 L1200 540'), 6, 'ochre');
-  P.both(rect(380, 30, 620, 70, 10), 'ivory', 4); P.text('HAND-TYPED CODE', 690, 80, { font: FONT.caps, weight: 700, size: 42, tracking: 4 });
+  P.both(rect(380, 58, 620, 64, 10), 'ivory', 4); P.text('HAND-TYPED CODE', 690, 104, { font: FONT.caps, weight: 700, size: 40, tracking: 4 });
+  heroFront(P, 700, 216, 0.36, { mouth: sing(f), open: f.vocal, blink: blinkAt(t), apron: true });
   // the counter with jam, clotted cream, and jars with a bug in each
   P.both(rect(160, 420, 1060, 120, 6), 'ochre', 4); P.both(rect(160, 400, 1060, 30, 6), 'sepiaDk', 4);
-  for (let i = 0; i < 4; i++) jar(P, 240 + i * 70, 400, 0.7, 'rose', 'JAM');
-  for (let i = 0; i < 3; i++) jar(P, 900 + i * 76, 400, 0.72, 'cream', 'CREAM');
-  for (let i = 0; i < 4; i++) bugJar(P, 560 + i * 82, 400, 0.78, i, t);
-  P.both(rect(980, 200, 200, 160, 8), 'charDk', 4);
-  ['small batch', 'organic', 'artisanal'].forEach((s2, i) => P.text(s2, 1080, 246 + i * 42, { size: 30, color: 'cream' }));
-  heroFront(P, 700, 260, 0.36, { mouth: sing(f), open: f.vocal, blink: blinkAt(t), apron: true });
+  for (let i = 0; i < 3; i++) jar(P, 240 + i * 70, 400, 0.7, 'rose', 'JAM');
+  for (let i = 0; i < 3; i++) jar(P, 1010 + i * 76, 400, 0.72, 'cream', 'CREAM');
+  for (let i = 0; i < 4; i++) bugJar(P, 576 + i * 82, 400, 0.7, i, t);
+  P.line(svg('M1100 170 L1060 196 M1100 170 L1140 196'), 3); P.both(rect(1010, 196, 180, 110, 8), 'charDk', 4);
+  ['small batch', 'organic', 'artisanal'].forEach((s2, i) => P.text(s2, 1100, 228 + i * 30, { size: 25, color: 'cream' }));
 }
 function jar(P, x, y, s, fillc, label) { const lw = begin(P, x, y, s); P.both(svg('M-36 0 L-40 -90 C-40 -110 40 -110 40 -90 L36 0 Z'), fillc, lw); P.both(rect(-40, -126, 80, 22, 6), 'red', lw); P.both(rect(-30, -70, 60, 34, 4), 'ivory', lw * 0.6); P.text(label, 0, -46, { font: FONT.caps, size: 15, weight: 700 }); end(P); }
 function bugJar(P, x, y, s, i, t) {
@@ -307,14 +323,14 @@ function market(P, f, L, t, w, h) {
     marketStall(P, f, t, w, h, L, true);
     // the tourists arrive at the stall
     const og = wd(L, 0, 'organic'), tu = ease.outCubic(clamp((t - og + 0.3) / 0.8));
-    if (tu > 0) { person(P, lerp(-200, 290, tu), 470, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], skin: 'skin3', mouth: 'o', crop: 700, look: [0.7, -0.2], blink: blinkAt(t) }); person(P, lerp(w + 200, w - 290, tu), 480, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 700, look: [-0.7, -0.2], blink: blinkAt(t + 1) }); }
+    if (tu > 0) { person(P, lerp(-200, 290, tu), 470, 0.34, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: tu >= 1 ? ['shoot', 'sunhat'] : ['sunhat'], skin: 'skin3', mouth: 'o', crop: 700, look: [0.7, -0.2], blink: blinkAt(t) }); person(P, lerp(w + 200, w - 290, tu), 480, 0.34, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 700, look: [-0.7, -0.2], blink: blinkAt(t + 1) }); }
     const nt = wd(L, 0, 'not') - 0.1, u = ease.outBack(clamp((t - nt) / 0.4));
-    if (u > 0) { ctx.save(); ctx.translate(1080, 470); ctx.scale(u, u); P.both(svg('M-60 0 L-60 -140 C-60 -150 60 -150 60 -140 L60 0 Z'), 'silver', 4); P.both(rect(-60, -110, 120, 70, 4), 'ivory', 3); P.text('NO', 0, -82, { font: FONT.caps, weight: 700, size: 22 }); P.text('TOKENS', 0, -54, { font: FONT.caps, weight: 700, size: 20 }); ctx.restore(); }
+    if (u > 0) { ctx.save(); ctx.translate(462, 400); ctx.scale(0.7 * u, 0.7 * u); P.both(svg('M-60 0 L-60 -140 C-60 -150 60 -150 60 -140 L60 0 Z'), 'silver', 4); P.both(rect(-60, -110, 120, 70, 4), 'ivory', 3); P.text('NO', 0, -82, { font: FONT.caps, weight: 700, size: 22 }); P.text('TOKENS', 0, -54, { font: FONT.caps, weight: 700, size: 20 }); ctx.restore(); }
   } else {
     // the jar close up; he signs and dates its label; the tourists' flashes
     backdrop(P, w, h, 'goldLt', 'ochre');
     const sg = wd(L, 1, 'signed');
-    ctx.save(); ctx.translate(700, 560); ctx.scale(2.4, 2.4);
+    ctx.save(); ctx.translate(680, 600); ctx.scale(2.0, 2.0);
     P.both(svg('M-60 0 L-64 -170 C-64 -196 64 -196 64 -170 L60 0 Z'), 'glass', 2.4); P.both(rect(-64, -214, 128, 34, 8), 'gold', 2.4);
     const bx = Math.sin(t * 2) * 8;
     P.both(ell(bx, -110, 26, 17), 'charDk', 1.6); P.both(ell(bx + 26, -112, 10, 9), 'charDk', 1.4); P.fill(ell(bx + 30, -114, 2.5), 'red');
@@ -324,8 +340,15 @@ function market(P, f, L, t, w, h) {
     if (t > sg) { const u = clamp((t - sg) / 0.8), pp = new Path2D(); pp.moveTo(-34, -12); for (let i = 0; i <= 20 * u; i++) pp.lineTo(-34 + i * 2.6, -12 + Math.sin(i * 1.5) * 2.5); P.line(pp, 1.2, 'navy'); if (u > 0.9) P.text('2026', 30, -8, { size: 9, color: 'navy' }); }
     ctx.restore();
     // tourists with cameras at the sides, flashing
-    person(P, 170, 250, 0.36, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['camera', 'sunhat'], skin: 'skin3', mouth: 'o', crop: 900, look: [0.6, 0] });
+    person(P, 170, 250, 0.36, { hair: 'side', top: 'tee', color: 'navy', print: 'I ♥|ENGINEERS', acc: ['shoot', 'sunhat'], skin: 'skin3', mouth: 'o', crop: 900, look: [0.6, 0] });
     person(P, 1200, 260, 0.36, { hair: 'bun', top: 'hawaiian', color: 'rose', skin: 'skin2', acc: ['camera'], mouth: 'grin', seed: 3, crop: 900, look: [-0.6, 0] });
-    for (const [fx, ph] of [[180, 0], [1210, 0.45]]) { const k = ((t * 1.1 + ph) % 1); if (k < 0.12) { ctx.save(); P.alpha(1 - k / 0.12); P.tone(ell(fx + 20, 450, 200), 'cream', { from: [fx + 20, 450, 1], to: [fx + 220, 450, 0], radial: true, bbox: [fx - 180, 250, fx + 220, 650] }, 5); for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2; P.line(svg(`M${fx + 20 + Math.cos(a) * 40} ${450 + Math.sin(a) * 40} L${fx + 20 + Math.cos(a) * 110} ${450 + Math.sin(a) * 110}`), 5, 'cream'); } ctx.restore(); } }
+    for (const [fx, fy, ph] of [[174, 249, 0], [1227, 476, 0.45]]) { const k = ((t * 1.1 + ph) % 1); if (k < 0.12) { ctx.save(); P.alpha(1 - k / 0.12); P.tone(ell(fx, fy, 200), 'cream', { from: [fx, fy, 1], to: [fx + 200, fy, 0], radial: true, bbox: [fx - 200, fy - 200, fx + 200, fy + 200] }, 5); for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2; P.line(svg(`M${fx + Math.cos(a) * 40} ${fy + Math.sin(a) * 40} L${fx + Math.cos(a) * 110} ${fy + Math.sin(a) * 110}`), 5, 'cream'); } ctx.restore(); } }
   }
+}
+
+/** a mortarboard in its own units (board ~500 wide), the tassel swinging */
+function mortarboard(P, t) {
+  P.both(svg('M-150 0 C-150 78 150 78 150 0 Z'), 'black', 10); P.both(svg('M0 -70 L250 0 L0 70 L-250 0 Z'), 'black', 10);
+  P.line(svg('M0 -70 L250 0 L0 70 L-250 0 Z'), 4, 'charDk'); P.both(ell(0, 0, 14), 'gold', 6);
+  const sw = Math.sin(t * 9) * 30; P.line(svg(`M0 0 L180 6 L${190 + sw} 110`), 10, 'gold'); P.both(rect(176 + sw, 106, 30, 60, 8), 'gold', 6);
 }

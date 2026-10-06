@@ -13,7 +13,7 @@ export class Engine {
     this.timeline = makeTimeline(this.lyrics, this.audio).filter((e) => !opts.only || opts.only.includes(e.id));
     this.errors = [];
   }
-  async init() { for (const e of this.timeline) { const m = await e.load(); e.scene = m.default; } }
+  async init() { for (const e of this.timeline) { const m = await e.load(); e.scene = m.default; if (m.loadError && !this.errors.includes(m.loadError)) this.errors.push(m.loadError); } }
   entryAt(t) { return this.timeline.find((e) => t >= e.start && t < e.end) ?? null; }
   draw(e, t) {
     const { ctx, P, audio: A } = this;
@@ -25,10 +25,18 @@ export class Engine {
     f.beatPhase = f.beat - Math.floor(f.beat); f.barPhase = f.bar - Math.floor(f.bar);
     P.t = t;   // song time, for idle motion inside characters
     try { ctx.save(); e.scene(P, f); ctx.restore(); }
-    catch (err) { ctx.restore(); const msg = `${e.id}: ${err.stack ?? err}`; if (!this.errors.includes(msg)) { this.errors.push(msg); console.error(msg); } }
+    catch (err) {
+      // a scene that throws may leave saves (and clips) on the stack: pop them all (restore on an empty stack is a
+      // no-op), keeping what is drawn, so nothing leaks into the rest of the frame
+      for (let i = 0; i < 256; i++) ctx.restore();
+      ctx.setTransform(this.scale, 0, 0, this.scale, 0, 0);
+      const msg = `${e.id}: ${err.stack ?? err}`; if (!this.errors.includes(msg)) { this.errors.push(msg); console.error(msg); }
+    }
   }
   render(t) {
     const { ctx, P } = this, e = this.entryAt(t);
+    // every frame starts from a clean state: no transform, clip or style left over from the last
+    if (ctx.reset) ctx.reset(); else for (let i = 0; i < 256; i++) ctx.restore();
     ctx.setTransform(this.scale, 0, 0, this.scale, 0, 0);
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);

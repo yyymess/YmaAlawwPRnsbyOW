@@ -5,7 +5,8 @@ const modules = {
   verse2: () => import('./scenes/verse2.js'), verse3: () => import('./scenes/verse3.js'), bridge: () => import('./scenes/bridge.js'),
   outro: () => import('./scenes/outro.js'), placeholder: () => import('./scenes/placeholder.js'),
 };
-const load = (name) => async () => { try { return await modules[name](); } catch (e) { console.warn(`scene ${name}: ${e.message}; using placeholder`); return modules.placeholder(); } };
+// a scene that fails to load falls back to the placeholder, and says so loudly: the error is reported by the engine
+const load = (name) => async () => { try { return await modules[name](); } catch (e) { console.error(`scene ${name} failed to load: ${e.message}`); return { ...(await modules.placeholder()), loadError: `scene ${name} failed to load: ${e.message}` }; } };
 
 export function makeTimeline(L, A) {
   const s = (n) => A.sectionByName(n);

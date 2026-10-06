@@ -418,6 +418,7 @@ export function heroPose(P, x, y, s, o = {}) {
   // the torso and shoulder, tipped about the hip
   const sh = pt(hip, Math.PI - lean, 290).map((v, i) => v + (i === 0 ? 8 * Math.cos(lean) : 0));
   const hand = (w, ang, kind, which) => {
+    if (kind === 'pocket') return;   // in the hoodie's pocket, out of sight
     ctx.save(); ctx.translate(w[0], w[1]); ctx.rotate(-ang);
     P.both(rect(-26, -18, 52, 26, 8), which === 'near' ? 'tealLt' : 'tealDk', lw); for (let k = -16; k <= 16; k += 8) P.line(svg(`M${k} -14 L${k} 4`), lw * 0.4);
     ctx.restore();
