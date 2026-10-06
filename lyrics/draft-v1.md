@@ -40,8 +40,8 @@ Then the ad money came in like a river, then a flood,
 and the MBAs came after, smellin' margin in the blood.
 The mission on the wall picked up a footnote at the end,
 all-hands went monthly, then a pre-recorded friend.
-Perf is every season, gotta show 'em your *impact*:
-launch a thing, get promoted, and never come back.
+Promo used to be a thesis, a committee of your peers —
+now they rate us once a year: it's cheaper, and nobody hears.
 There's a graveyard full of products, near three hundred stones in rows,
 every one bought someone a level — where the users went, God knows.
 Cut the staplers, cut the laptops, cut the snacks down to the bone,
