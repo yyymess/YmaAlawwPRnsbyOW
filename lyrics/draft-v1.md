@@ -128,10 +128,10 @@ in the engineer's paradise…
 
 The parody works like the 1996 one: the music is a straight, faithful re-creation and only the words are funny. So the style describes a serious 90s rap ballad, with no "comedy" words (round 1 used them and drifted: 86 BPM, a different chord loop, heavier drums). Measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop Cm – Ab – Fm – G (i–VI–iv–V), one chord every two beats.
 
-**Style (C, tag list, 419 chars) — best so far; long prose descriptions helped less:**
+**Style (C4, tag list, 383 chars). Short tags work better than prose; keep the intro; C's rhythm was too strong:**
 
-nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
+nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, conversational rhymed verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
 
-**Exclude styles:** deep voice, baritone, gravelly, gangsta, street slang, laid-back, swing, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
+**Exclude styles:** deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
 
 **Sliders:** Weirdness ~30%, Style Influence ~75%, others default.

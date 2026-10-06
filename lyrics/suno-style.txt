@@ -1,23 +1,17 @@
 TITLE
 Engineer's Paradise
 
-STYLE OF MUSIC (C, tag list — best so far, 419 chars)
-nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
+LYRICS
+lyrics/suno.txt (keep the intro: without it the vocal starts off unsettled)
+
+STYLE OF MUSIC (C4 — C with a softer rhythm, 383 chars)
+nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, conversational rhymed verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
 
 EXCLUDE STYLES
-deep voice, baritone, gravelly, gangsta, street slang, laid-back, swing, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
+deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal
 
 MORE OPTIONS
 Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
 
----- shorter variants of C to try ----
-
-C2 (174 chars)
-nerdy nasal tenor, geeky, square on-beat cadence, crisp diction, deadpan, 90s hip-hop ballad, 80 bpm, c minor, string loop, church organ, sparse boom bap, gospel choir chorus
-
-C3 (132 chars)
-geeky nasal tenor, spelling-bee diction, stiff on-beat flow, slow 90s string-loop hip-hop ballad, 80 bpm, c minor, gospel choir hook
-
----- A/B tests (change one thing at a time, style C) ----
-1. Lyrics without the three intro lines (does the psalm line pull the voice toward the original?)
-2. Intro kept, title changed to "Code Review" (does the title pull it?)
+---- previous best (C, rhythm too strong) ----
+nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, gospel choir chorus, minor-key hymn, drums drop out in bridge, choir outro fade, polished late-90s mix
