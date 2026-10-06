@@ -124,14 +124,14 @@ in the engineer's paradise…
 
 ---
 
-## Suno style prompt
+## Suno style prompt (v6 Pro)
 
-The parody works like the 1996 one: the music is a straight, faithful re-creation and only the words are funny. So the style describes a serious 90s rap ballad, with no "comedy" words (round 1 used them and drifted: 86 BPM, a different chord loop, heavier drums). Measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop Cm – Ab – Fm – G (i–VI–iv–V), one chord every two beats.
+Rules from the v6 guides (see research/suno-v6-notes.md): Variety 0, no negatives in the style box (they read as instructions to include), Exclude as a short list of categories, style ordered Genre → Vocals → instruments → sections → production → ending, and section tags that repeat the style's words.
 
-**Style (C4, tag list, 383 chars). Short tags work better than prose; keep the intro; C's rhythm was too strong:**
+**Style (793 chars):**
 
-geeky male vocal, nasal, thin, high-pitched tenor, clean-cut, verses talked in rhythm not sung, no melody on verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
+1990s hip-hop ballad, 80 BPM, 4/4, C minor. Vocals: a geeky male tenor with a thin, nasal, clean-cut voice raps every verse line in an even, deadpan, conversational cadence, crisp consonants, sitting right on the beat; he speaks the intro calmly over the strings. Drums: soft drum machine, round kick, snare on 2 and 4, light hi-hat, lots of space. Bass: low synth bass on the chord roots. Strings: sustained legato synth strings play one two-bar loop, Cm – Ab – Fm – G, a chord every two beats, all song long, over a soft church-organ pad. Chorus: an all-male gospel choir sings a slow minor-key hymn melody. Bridge: drums drop out, strings and organ under a half-spoken lead. Production: polished late-90s studio mix. Ending: the men's choir holds the last chord, one spoken line, then stop.
 
-**Exclude styles:** deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, sung verses, crooning, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
+**Exclude styles:** female vocals, gangsta delivery, gravelly voice, crooning, trap, 808, autotune, EDM, rock guitar
 
-**Sliders:** Weirdness ~30%, Style Influence ~75%, others default.
+**Sliders:** Variety 0 (Off), Weirdness 20%, Style Influence 75%.

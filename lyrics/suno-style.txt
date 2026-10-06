@@ -1,17 +1,21 @@
 TITLE
 Engineer's Paradise
 
+MODEL
+v6 Pro
+
 LYRICS
-lyrics/suno.txt (keep the intro: without it the vocal starts off unsettled)
+lyrics/suno.txt
 
-STYLE OF MUSIC (C6 — C4 + geeky, verses talked not sung)
-geeky male vocal, nasal, thin, high-pitched tenor, clean-cut, verses talked in rhythm not sung, no melody on verses, relaxed and clear, crisp diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, soft understated drums, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
+STYLE OF MUSIC (V6-1, ordered Genre → Vocals → Drums → Bass → Strings → sections → Production → Ending; positive wording only, 793 chars)
+1990s hip-hop ballad, 80 BPM, 4/4, C minor. Vocals: a geeky male tenor with a thin, nasal, clean-cut voice raps every verse line in an even, deadpan, conversational cadence, crisp consonants, sitting right on the beat; he speaks the intro calmly over the strings. Drums: soft drum machine, round kick, snare on 2 and 4, light hi-hat, lots of space. Bass: low synth bass on the chord roots. Strings: sustained legato synth strings play one two-bar loop, Cm – Ab – Fm – G, a chord every two beats, all song long, over a soft church-organ pad. Chorus: an all-male gospel choir sings a slow minor-key hymn melody. Bridge: drums drop out, strings and organ under a half-spoken lead. Production: polished late-90s studio mix. Ending: the men's choir holds the last chord, one spoken line, then stop.
 
-EXCLUDE STYLES
-deep voice, baritone, gravelly, gangsta, street slang, aggressive, punchy, hard-hitting drums, melodic verses, sung verses, crooning, musical theater, comedy, upbeat, fast, major key, trap, 808, autotune, EDM, female vocal, female choir, female backing vocals
+EXCLUDE STYLES (categories only, fewer than ten)
+female vocals, gangsta delivery, gravelly voice, crooning, trap, 808, autotune, EDM, rock guitar
 
 MORE OPTIONS
-Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
+Variety: OFF (0)  ← most important: any other setting lets Suno rewrite the style prompt
+Weirdness: 20% · Style Influence: 75% · Vocal Gender: Male · Duration: Auto · Personalize: Off
 
----- previous best (C, rhythm too strong) ----
-nerdy male vocal, nasal, thin, high-pitched tenor, geeky, clean-cut, rhythmic spoken verses, square on-beat cadence, no swing, crisp over-enunciated diction, earnest, deadpan, 90s hip-hop ballad instrumental, 80 bpm, c minor, cm ab fm g loop, sustained synth strings, church organ, sparse boom bap, snare on 2 and 4, all-male gospel choir chorus, men's choir only, minor-key hymn, drums drop out in bridge, men's choir outro fade, polished late-90s mix
+---- short alternative (V6-2, 161 chars) ----
+1990s hip-hop ballad, 80 BPM, C minor, geeky nasal male tenor raps the verses deadpan, string loop, church organ, soft drum machine, all-male gospel choir chorus
