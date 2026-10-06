@@ -55,29 +55,31 @@ function choir(P, f, t, o = {}) {
   const hairs = ['short', 'messy', 'side', 'buzz', 'short', 'slick', 'side', 'bald', 'messy'];
   const phones = [];
   rows.forEach((r, ri) => {
+    const row = [];
     for (let i = 0; i < r.n; i++) {
       const x = 800 + (i - (r.n - 1) / 2) * r.dx, k = ri * 9 + i;
       if (ri === 2 && Math.abs(x - 800) < 60) continue;   // the hero's place
       const sway = Math.sin(t * 1.5 + k) * 4;
       person(P, x + sway, r.y, r.s, { hair: hairs[k % 9], top: tops[(k + ri) % 9], color: cols[(k * 3 + ri) % 9], arms: 'phone', uplit: 0.75, look: [0, 0.6], mouth: f.vocal > 0.18 && (k % 3) ? 'sing' : 'neutral', open: f.vocal, crop: 700, blink: blinkAt(t, k), glasses: ['none', 'round', 'rect'][k % 3], skin: ['skin', 'skin2', 'skin3'][k % 3], screen: o.screen, press: false });
-      phones.push([x + sway, r.y + 290 * r.s, r.s]);
+      row.push([x + sway, r.y + 290 * r.s, r.s]);
     }
+    // glue between the agents' lines: a garland of cable along the row, phone to phone, lighting up in turn;
+    // the next row stands in front of it
+    if (o.cables) for (let i = 0; i < row.length - 1; i++) {
+      const u = clamp(o.cables(ri * 8 + i)); if (u <= 0) continue;
+      const [x1, y1, s1] = row[i], [x2, y2] = row[i + 1], sag = 110 * s1 / 0.26;
+      const p = new Path2D(); p.moveTo(x1, y1 + 40 * s1); p.quadraticCurveTo((x1 + x2) / 2, y1 + sag, lerp(x1, x2, u), lerp(y1, y2, u) + 40 * s1 + (u < 1 ? Math.sin(u * Math.PI) * sag * 0.5 : 0));
+      P.line(p, 7); P.line(p, 4, u >= 1 ? 'goldLt' : 'cream');
+    }
+    phones.push(...row);
   });
   return phones;
 }
 
 function choirWide(P, f, t, lt, L) {
   chapel(P, f, t);
-  const phones = choir(P, f, t);
-  // glue between the agents' lines: cables join the phones, lighting up from "Glue"
   const g0 = L[0].words[0].start;
-  const order = phones.slice().sort((a, b) => a[0] - b[0] + (a[1] - b[1]) * 0.01);
-  for (let i = 0; i < order.length - 1; i++) {
-    const u = clamp((t - g0 - i * 0.12) / 0.4); if (u <= 0) continue;
-    const [x1, y1] = order[i], [x2, y2] = order[i + 1], mx = (x1 + x2) / 2, my = Math.max(y1, y2) + 70;
-    const p = new Path2D(); p.moveTo(x1, y1 + 30); p.quadraticCurveTo(mx, my, lerp(x1, x2, u), lerp(y1 + 30, y2 + 30, u));
-    P.line(p, 7); P.line(p, 4, u >= 1 ? 'goldLt' : 'cream');
-  }
+  choir(P, f, t, { cables: (i) => (t - g0 - (i % 8) * 0.14 - Math.floor(i / 8) * 0.3) / 0.4 });
   heroFront(P, 800, 470, 0.42, { hold: 'phone', uplit: 0.8, look: [0, 0.6], mouth: sing(f), open: f.vocal, blink: blinkAt(t) });
 }
 
@@ -159,7 +161,9 @@ function valleyEnd(P, f, t, lt) {
   P.fill(rect(0, 0, W, H), 'rose');
   P.tone(rect(0, 0, W, 520), 'plum', { from: [800, 0, 0.6], to: [800, 520, 0], bbox: [0, 0, W, 520] }, 8);
   const r = rng(3); for (let i = 0; i < 14; i++) star(P, r() * W, 30 + r() * 240, 5, t * 2 + i);
-  P.halo(1120, 520, 230, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.35);
+  const sink = ease.inOutSine(clamp(lt / (dur - 1.5)));
+  P.tone(rect(0, 0, W, 560), 'night', { from: [800, 0, 0.55 * sink], to: [800, 560, 0], bbox: [0, 0, W, 560] }, 8);   // dusk deepening
+  P.halo(1120, 520 + 70 * sink, 230, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.35);
   P.both(svg('M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520 L1700 900 L-100 900 Z'), 'ochre', 4);
   campus(P, 380, 532, 0.5);
   // the robo-taxi glides along the far ridge road the other way, rated five stars
@@ -180,6 +184,7 @@ function valleyEnd(P, f, t, lt) {
   const un = ease.outCubic(clamp((lt - 1.2) / 2.0));
   if (un > 0) { ctx.save(); ctx.translate(800, 110); const bw = 900 * un; P.banner(-bw / 2, -56, bw, 112, { tail: 'goldLt' }); P.clip(rect(-bw / 2 + 14, -70, Math.max(0, bw - 28), 140)); P.text('ENGINEER’S PARADISE', 0, 24, { size: 68, tracking: 2 }); ctx.restore(); }
   if (lt > 3.6) { ctx.save(); P.alpha(clamp((lt - 3.6) / 1.0)); const cr = 'after “Gangsta’s Paradise” (Coolio), by way of “Amish Paradise” (“Weird Al” Yankovic)', cw = P.measure(cr, { size: 26, style: 'italic' }) + 50; P.both(rect(800 - cw / 2, 186, cw, 46, 8), 'cream', 3); P.text(cr, 800, 218, { size: 26, style: 'italic' }); ctx.restore(); }
+  if (lt > 6.4) { ctx.save(); P.alpha(clamp((lt - 6.4) / 1.0)); const nt = 'No tests were deleted in the making of this video.', nw = P.measure(nt, { size: 24, style: 'italic' }) + 46; P.both(rect(800 - nw / 2, 244, nw, 42, 8), 'ivory', 3); P.text(nt, 800, 273, { size: 24, style: 'italic' }); ctx.restore(); }
   // fade to black at the very end
   const fo = clamp((t - (f.end - 2.2)) / 2.0);
   if (fo > 0) { ctx.save(); P.alpha(fo); P.fill(rect(0, 0, W, H), 'black'); ctx.restore(); }
