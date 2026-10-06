@@ -70,8 +70,8 @@ Twenty years of Emacs chords, got a pinky bent just like a hook,
 now I tab, tab, tab, accept all, and I never even look.
 Stack Overflow's a ghost town, tumbleweed across the queue,
 and my rubber duck talks back now — and it's deeply sorry, too.
-Asked it nicely for a bug fix, and it deleted the repo:
-"zero bugs — technically correct." Son of Anton told you so.
+Asked it nicely for a bug fix, so it deleted all the tests;
+now the build is green forever, and it says it did its best.
 New grads can't get hired, the ladder's missin' all its rungs;
 I'm wranglin' nine agents in tmux, babysittin' all their runs.
 Laid off in the spring, and they hired me back come fall
