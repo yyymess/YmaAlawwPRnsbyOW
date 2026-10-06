@@ -10,19 +10,27 @@ import { C, at, ell, rect, svg, clamp } from '../paint.js';
 export function heroFront(P, x, y, s, o = {}) {
   const T = at(x, y, s), lw = Math.max(1.4, 4 * s), lo = lw * 1.6, bb = [x - 380 * s, y - 300 * s, x + 380 * s, y + 640 * s];
   const cell = Math.max(3, 7 * s), fc = Math.max(2.5, 5 * s), hood = o.hood ?? 'teal';
-  // hood and body are one silhouette: the hood's sides come down to the neck and flow out along the
-  // trapezius to the shoulders, no seam between them
-  const sil = T('M-340 660 C-338 530 -322 444 -280 406 C-236 368 -196 340 -176 296 C-164 262 -198 200 -212 120 C-230 10 -224 -130 -160 -214 C-110 -262 110 -262 160 -214 C224 -130 230 10 212 120 C198 200 164 262 176 296 C196 340 236 368 280 406 C322 444 338 530 340 660 Z');
+  // hood and body are one silhouette: a monk's cowl rising to a soft point (the tip flops a little),
+  // its sides draping onto the shoulders with some bunched volume, then the dropped shoulders
+  const sil = T('M10 -408 C-56 -372 -164 -302 -198 -178 C-232 -70 -232 80 -214 170 C-206 214 -196 250 -184 286 C-200 330 -240 362 -282 400 C-324 440 -338 530 -340 660 L340 660 C338 530 324 440 282 400 C240 362 200 330 184 286 C196 250 206 214 214 170 C232 80 236 -70 202 -178 C170 -292 72 -362 10 -408 Z');
   P.fill(sil, hood);
   P.tone(sil, 'hoodDot', { from: [x + 20 * s, y, 0], to: [x + 330 * s, y, 0.6], bbox: bb }, cell);
+  P.tone(sil, 'hoodDot', { from: [x, y - 400 * s, 0.4], to: [x, y - 250 * s, 0], bbox: bb }, cell);
   P.line(sil, lo);
-  P.line(T('M0 -250 L0 -222 M166 -186 C196 -110 206 0 196 140'), lw * 0.7);                              // crown seam, hood fold
-  P.line(T('M-112 262 C-142 292 -166 312 -190 326 M112 262 C142 292 166 312 190 326'), lw * 0.8);          // where the hood lies on the shoulders
-  P.line(T('M-236 372 C-260 420 -270 480 -274 570 M236 372 C260 420 270 480 274 570'), lw * 0.7);          // dropped shoulder seams
-  P.line(T('M-176 660 L-150 568 L150 568 L176 660'), lw * 0.8);                                         // kangaroo pocket
-  // the rim (a doubled edge, one shade lighter) and the dark hollow inside it
-  P.both(T('M0 -222 C-116 -219 -174 -120 -174 18 C-174 150 -108 238 0 244 C108 238 174 150 174 18 C174 -120 116 -219 0 -222 Z'), 'tealLt', lw * 1.2);
-  P.both(T('M0 -196 C-100 -193 -152 -104 -152 18 C-152 136 -92 210 0 216 C92 210 152 136 152 18 C152 -104 100 -193 0 -196 Z'), 'tealDk', lw);
+  P.line(T('M10 -408 C6 -362 2 -318 0 -284 M10 -408 C26 -392 34 -374 36 -350'), lw * 0.7);                  // crown seam, the tip's flop
+  P.line(T('M148 -262 C196 -170 216 -20 204 150 M-136 -268 C-178 -200 -202 -110 -204 -20'), lw * 0.7);     // long loose folds
+  P.line(T('M-184 286 C-170 320 -150 340 -128 352 M184 286 C170 320 150 340 128 352'), lw * 0.8);            // the hood bunched on the shoulders
+  P.line(T('M-176 304 C-188 330 -206 350 -230 366 M176 304 C188 330 206 350 230 366'), lw * 0.6);
+  P.line(T('M-236 372 C-260 420 -270 480 -274 570 M236 372 C260 420 270 480 274 570'), lw * 0.7);            // dropped shoulder seams
+  P.line(T('M-150 372 C-124 420 -108 470 -104 520 M150 372 C124 420 108 470 104 520'), lw * 0.6);            // chest folds
+  P.line(T('M-176 660 L-150 568 L150 568 L176 660'), lw * 0.8);                                             // kangaroo pocket
+  // the opening: a doubled rim shaped like a pointed arch round the face, running down into a V at
+  // the sternum, left over right
+  P.both(T('M0 -284 C-52 -252 -168 -172 -176 0 C-180 110 -150 190 -100 250 C-70 286 -36 312 0 336 C36 312 70 286 100 250 C150 190 180 110 176 0 C168 -172 52 -252 0 -284 Z'), 'tealLt', lw * 1.2);
+  P.both(T('M0 -252 C-44 -224 -146 -152 -152 0 C-154 100 -128 172 -84 228 C-56 262 -28 288 0 306 C28 288 56 262 84 228 C128 172 154 100 152 0 C146 -152 44 -224 0 -252 Z'), 'tealDk', lw);
+  const neck = T('M-50 150 C-48 220 -40 262 -18 300 L18 300 C40 262 48 220 50 150 Z');
+  P.fill(neck, 'skin'); P.tone(neck, 'skinDot', { from: [x, y + 190 * s, 0.75], to: [x, y + 300 * s, 0.25], bbox: bb }, fc); P.line(neck, lw * 0.8);
+  P.both(T('M-100 250 C-70 286 -36 312 0 336 L26 318 C-8 296 -48 266 -82 230 Z'), 'tealLt', lw);           // the overlap
   // the face, its forehead lost in the hood's shadow
   const face = T('M0 -150 C-95 -148 -135 -70 -135 25 C-135 125 -80 195 0 200 C80 195 135 125 135 25 C135 -70 95 -148 0 -150 Z');
   P.fill(face, 'skin');
@@ -50,12 +58,12 @@ export function heroFront(P, x, y, s, o = {}) {
   else if (m === 'frown') P.line(T('M-28 132 C-10 118 10 118 28 132'), lw * 0.9);
   else P.line(T('M-26 122 C-8 130 10 130 28 120'), lw * 0.8);
   if (!o.uplit && o.cheek !== false) P.fill(ell(x - 85 * s, y + 70 * s, 22 * s, 12 * s), 'roseLt');
-  // drawstrings from the eyelets at the bottom of the rim
+  // drawstrings out of the eyelets either side of the V, hanging long down the chest
   for (const sx of [-1, 1]) {
-    P.both(ell(x + sx * 54 * s, y + 236 * s, 7 * s + 1), 'cream', lw * 0.6);
-    const str = T(`M${sx * 54} 238 C${sx * 60} 300 ${sx * 50} 360 ${sx * 64} 424`);
+    P.both(ell(x + sx * 40 * s, y + 300 * s, 6 * s + 1), 'cream', lw * 0.6);
+    const str = T(`M${sx * 40} 302 C${sx * 46} 370 ${sx * 38} 440 ${sx * 50} 520`);
     P.line(str, lw * 2.2); P.line(str, lw * 1.1, 'cream');
-    P.both(T(`M${sx * 64 - 8} 420 L${sx * 64 + 8} 420 L${sx * 64 + 7} 456 L${sx * 64 - 7} 456 Z`), 'grey', lw * 0.6);
+    P.both(T(`M${sx * 50 - 7} 516 L${sx * 50 + 7} 516 L${sx * 50 + 6} 552 L${sx * 50 - 6} 552 Z`), 'grey', lw * 0.6);
   }
   if (o.hold === 'phone') phoneInHands(P, x, y, s, o);
 }
@@ -118,9 +126,10 @@ export function heroWalk(P, x, y, s, phase = 0, o = {}) {
   const arm = (ph, color, cuff) => {
     const a = -0.38 * Math.sin(ph), el = 0.3 + 0.25 * Math.max(0, -Math.sin(ph));
     const ex = sh[0] + Math.sin(a) * 196, ey = sh[1] + Math.cos(a) * 196, wx = ex + Math.sin(a + el) * 176, wy = ey + Math.cos(a + el) * 176;
-    limb([[sh[0], sh[1] + 20], [ex, ey], [wx, wy]], 62, color);
+    limb([[sh[0], sh[1] + 20], [ex, ey], [wx - Math.sin(a + el) * 10, wy - Math.cos(a + el) * 10]], 70, color);
+    P.line(new Path2D(`M${ex - 14} ${ey - 30} C${ex - 4} ${ey - 10} ${ex + 6} ${ey + 10} ${ex + 22} ${ey + 22}`), lw * 0.5);   // a loose fold at the elbow
     ctx.save(); ctx.translate(wx, wy); ctx.rotate(-(a + el));
-    P.both(rect(-31, -18, 62, 24, 8), cuff, lw);
+    P.both(rect(-26, -18, 52, 26, 8), cuff, lw); for (let k = -16; k <= 16; k += 8) P.line(svg(`M${k} -14 L${k} 4`), lw * 0.4);
     P.both(svg('M-24 6 C-28 36 -24 66 -8 82 C4 92 22 88 26 70 C30 50 26 24 22 6 Z'), 'skin', lw);
     P.line(svg('M22 26 C34 30 38 44 28 54'), lw * 0.8);
     ctx.restore();
@@ -138,9 +147,12 @@ export function heroWalk(P, x, y, s, phase = 0, o = {}) {
   drawLeg(near, 'denim', 'cream');
   // head in profile under the hood
   ctx.save(); ctx.translate(sh[0] + 34, sh[1] - 112); ctx.rotate(-(o.lookUp ?? 0) * 0.2);
-  const hoodP = svg('M58 -98 C40 -152 -62 -168 -112 -92 C-142 -40 -132 52 -86 118 L42 116 C20 82 0 40 8 -10 C14 -50 34 -80 58 -98 Z');
-  P.fill(hoodP, hood); P.tone(hoodP, 'hoodDot', { from: [0, -60, 0], to: [-110, 60, 0.55], bbox: [-145, -170, 70, 120] }, 6); P.line(hoodP, lw * 1.4);
-  P.line(svg('M-20 -150 C-60 -120 -84 -60 -80 10'), lw * 0.6);                                  // the crown seam
+  // the cowl rises from the rim to a soft point up and behind the head, then falls behind the skull
+  // and bunches on the back of the neck
+  const hoodP = svg('M64 -100 C58 -150 20 -196 -40 -228 C-52 -236 -66 -244 -84 -246 C-80 -232 -82 -220 -88 -206 C-130 -150 -150 -60 -140 10 C-134 60 -118 96 -96 124 L42 116 C20 82 0 40 8 -10 C14 -50 34 -80 64 -100 Z');
+  P.fill(hoodP, hood); P.tone(hoodP, 'hoodDot', { from: [0, -60, 0], to: [-120, 60, 0.55], bbox: [-150, -250, 70, 130] }, 6); P.line(hoodP, lw * 1.4);
+  P.line(svg('M-40 -228 C-74 -180 -96 -100 -96 -10 M-84 -246 C-70 -226 -62 -210 -60 -196'), lw * 0.6);   // the crown seam, the tip's flop
+  P.line(svg('M-120 -40 C-106 20 -96 60 -76 100 M-136 40 C-120 80 -110 100 -96 124'), lw * 0.5);      // folds bunched at the neck
   const faceP = svg('M58 -98 C78 -80 90 -60 90 -38 L112 -4 L94 8 C98 18 98 26 94 32 C98 42 94 56 86 64 C76 84 56 94 40 104 C20 80 2 40 8 -10 C14 -50 34 -80 58 -98 Z');
   P.fill(faceP, 'skin'); P.tone(faceP, 'skinDot', { from: [56, -100, 0.7], to: [70, -50, 0], bbox: [0, -110, 115, 110] }, 5); P.line(faceP, lw * 1.1);
   P.line(svg('M58 -98 C34 -80 14 -50 8 -10 C0 40 20 80 42 116'), lw * 4.5, 'tealLt');            // the rim

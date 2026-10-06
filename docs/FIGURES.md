@@ -10,12 +10,13 @@ How people are built in the flat Art Nouveau + screentone look. The rules come f
 
 ## The hoodie (hood up)
 A hood is soft cloth, not a shell:
-- **Volume** above and behind the skull: a rounded bag, slightly peaked at the top, a fold where it sits on the shoulders.
+- **Volume** above and behind the skull, rising to a **soft point like a monk's cowl** (the tip flops slightly, so it stays cloth, never a stiff cone); big loose folds, and bunched volume where it sits on the neck and shoulders.
+- **The opening is a pointed arch** (an ogive, like a chapel niche): the dark hollow above the forehead makes the face sit in a shrine.
 - **The rim**: a thick, doubled edge that frames the face; draw it as its own band (one shade lighter) with the dark hollow of the hood just inside it.
 - **No hair** when the hood is up. The forehead disappears into the hood's shadow.
 - **Drawstrings** come out of eyelets at the bottom of the rim, by the chin, and hang on the chest; the ends are aglets.
-- Body: dropped shoulder seams, a **kangaroo pocket** across the belly, **ribbed cuffs and hem**. Sleeves are wider than the arm inside.
-- In profile the hood bulges behind the head and overhangs the forehead; the rim shows as a curved band in front of the ear, and the face profile (brow, nose, lips, chin) sits inside it.
+- Body: dropped shoulder seams, a **kangaroo pocket** across the belly, **ribbed cuffs and hem**. Sleeves are wider than the arm inside and gather into narrower ribbed cuffs.
+- In profile the cowl rises from the rim to its point up and behind the head, then falls behind the skull and bunches on the neck; the rim shows as a curved band in front of the ear, and the face profile (brow, nose, lips, chin) sits inside it.
 
 ## Joints and gesture
 - Limbs are two segments with visible joints: thigh/shin with a **knee**, upper arm/forearm with an **elbow**. Never a straight capsule.

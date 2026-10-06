@@ -4,11 +4,11 @@ import { robotaxi, agent } from './props.js';
 import { rect } from '../paint.js';
 
 export function hero(P) {
-  heroFront(P, 230, 300, 0.5, {});
-  heroFront(P, 600, 300, 0.5, { mouth: 'sing', open: 0.8, look: [0.6, 0] });
-  heroFront(P, 970, 300, 0.5, { hold: 'phone', uplit: 0.6, look: [0, 0.6] });
-  heroFront(P, 1340, 300, 0.5, { mouth: 'smile', blink: 1 });
-  for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 870, 0.4, (i / 8) * Math.PI * 2);
+  heroFront(P, 230, 230, 0.4, {});
+  heroFront(P, 600, 230, 0.4, { mouth: 'sing', open: 0.8, look: [0.6, 0] });
+  heroFront(P, 970, 230, 0.4, { hold: 'phone', uplit: 0.6, look: [0, 0.6] });
+  heroFront(P, 1340, 230, 0.4, { mouth: 'smile', blink: 1 });
+  for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 880, 0.33, (i / 8) * Math.PI * 2);
 }
 
 import { tree, cypress, campus, agentAngel } from './props.js';
