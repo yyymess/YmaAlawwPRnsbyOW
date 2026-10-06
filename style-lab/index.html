@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Style lab</title>
+<style>
+  body { margin: 0; background: #111; color: #ddd; font: 14px "DejaVu Sans", sans-serif; }
+  canvas { display: block; width: 100%; max-width: 1600px; }
+  figure { margin: 0 0 24px; } figcaption { padding: 6px 0; }
+</style>
+<div id="out"></div>
+<script type="module">
+  import { W, H, SCENES } from './scenes.js';
+  import { STYLES, STYLE_NAMES } from './styles.js';
+  const q = new URLSearchParams(location.search);
+  const styles = q.get('style') ? [q.get('style')] : Object.keys(STYLES);
+  const scenes = q.get('scene') ? [q.get('scene')] : Object.keys(SCENES);
+  for (const st of styles) for (const sc of scenes) {
+    const f = document.createElement('figure'), c = document.createElement('canvas');
+    c.width = W; c.height = H; c.id = `${st}-${sc}`;
+    const cap = document.createElement('figcaption'); cap.textContent = `${STYLE_NAMES[st]} — ${sc}`;
+    f.append(c, cap); document.getElementById('out').append(f);
+    STYLES[st](c.getContext('2d', { willReadFrequently: true }), SCENES[sc]);
+  }
+  window.__done = true;
+</script>
