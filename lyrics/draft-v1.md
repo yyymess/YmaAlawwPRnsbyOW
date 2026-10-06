@@ -42,6 +42,8 @@ He had more stock than the founders and conjoined triangles to show,
 and the mission on the wall got a footnote down below.
 Promo used to be a thesis, a committee of your peers —
 now they rate us once a year: it's cheaper, and nobody hears.
+There's a graveyard full of products, near three hundred stones in rows;
+every one bought someone a level — where the users went, God knows.
 Then the org chart got real, every box became a fiefdom,
 every box pointin' a gun at the box right beside 'em.
 Code yellow on the revenue, so we shrank the little "Ad"
