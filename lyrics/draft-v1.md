@@ -126,16 +126,16 @@ in the engineer's paradise…
 
 ## Suno style prompt
 
-Target: the comedic parody take (lighter, brighter, sillier), not the grave original. Same groove, measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop **Cm – Ab – Fm – G** (i–VI–iv–V), one chord every two beats. The parody's mix is about 20% brighter (spectral centroid ~2.7 kHz vs ~2.2 kHz).
+The parody works like the 1996 one: the music is a straight, faithful re-creation and only the words are funny. So the style describes a serious 90s rap ballad, with no "comedy" words (round 1 used them and drifted: 86 BPM, a different chord loop, heavier drums). Measured from the reference: ~80 BPM, 4/4, C minor, two-bar loop Cm – Ab – Fm – G (i–VI–iv–V), one chord every two beats.
 
-**Style (full):**
+**Style (full, 810 chars):**
 
-Comedy parody of a mid-90s West Coast rap ballad, 80 BPM, C minor. Faithful, polished re-creation of the groove: looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, on a lush synthesized string section with a 1970s soul feel and a church-organ pad; boom-bap drums with a round kick, crisp snare on 2 and 4, straight 8th hi-hats. Lead vocal: a nerdy, slightly nasal male tenor rapper, wide-eyed and earnest, theatrical over-enunciation, proud deadpan delivery that plays every absurd line completely straight, little comic vocal inflections and ad-libs. Hook: a sincere, overly pious church choir singing it big and holy, with a soulful lead on top. Spoken-word intro read like a solemn sermon. Bright, clean, glossy late-90s mix; mock-epic, cheerful underneath the gravity.
+80 BPM, C minor, 4/4. Mid-1990s West Coast hip-hop ballad, slow and stately. The whole song sits on one repeating two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through verses and choruses. A sustained legato synth string section plays the loop, over a soft church-organ pad and a low synth bass on the chord roots. Sparse, laid-back drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat, lots of space. Verses: one clean male tenor rapper, slightly nasal, crisp enunciation, steady even flow locked to the beat, earnest and sincere, never shouting. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody, with a soulful male lead on top. Spoken intro over the strings. Polished, bright, full late-90s studio mix. Straight-faced and cinematic.
 
-**Style (short, ≤ 200 chars):**
+**Style (short, 144 chars):**
 
-comedy parody, 90s West Coast rap ballad, 80 BPM, C minor string loop, boom-bap, nerdy nasal tenor rap, earnest deadpan, pious gospel choir hook, bright
+80 BPM, C minor, 90s West Coast rap ballad, Cm-Ab-Fm-G string loop, sparse boom-bap, clear nasal tenor rap, gospel choir hymn chorus, bright mix
 
-**Exclude styles:** trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, menacing, gritty, lo-fi
+**Exclude styles:** comedy, novelty, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
 
-**Structure tags to put in the lyrics field:** `[Intro: solemn spoken sermon, strings]`, `[Verse 1: nerdy rap]`, `[Chorus: pious gospel choir]`, `[Verse 2]`, `[Chorus]`, `[Verse 3]`, `[Chorus]`, `[Bridge: half-sung, sparse, drums drop out]`, `[Outro: choir, fading]`, `[Spoken: "Accept all."]`, `[End]`.
+**Sliders:** Weirdness ~30%, Style Influence ~75%, others default.

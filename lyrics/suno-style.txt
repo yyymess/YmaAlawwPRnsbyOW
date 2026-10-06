@@ -1,13 +1,14 @@
 TITLE
 Engineer's Paradise
 
-STYLE OF MUSIC (paste one; use SHORT if the field is limited to ~200 characters)
-Comedy parody of a mid-90s West Coast rap ballad, 80 BPM, C minor. Faithful, polished re-creation of the groove: looping two-bar minor progression i–VI–iv–V (Cm–Ab–Fm–G), chord change every two beats, on a lush synthesized string section with a 1970s soul feel and a church-organ pad; boom-bap drums with a round kick, crisp snare on 2 and 4, straight 8th hi-hats. Lead vocal: a nerdy, slightly nasal male tenor rapper, wide-eyed and earnest, theatrical over-enunciation, proud deadpan delivery that plays every absurd line completely straight, little comic vocal inflections and ad-libs. Hook: a sincere, overly pious church choir singing it big and holy, with a soulful lead on top. Spoken-word intro read like a solemn sermon. Bright, clean, glossy late-90s mix; mock-epic, cheerful underneath the gravity.
+STYLE OF MUSIC (full; use SHORT if the field is limited to ~200 characters)
+80 BPM, C minor, 4/4. Mid-1990s West Coast hip-hop ballad, slow and stately. The whole song sits on one repeating two-bar chord loop, Cm – Ab – Fm – G, a new chord every two beats, unchanged through verses and choruses. A sustained legato synth string section plays the loop, over a soft church-organ pad and a low synth bass on the chord roots. Sparse, laid-back drum machine: deep kick, snare on 2 and 4, light 8th-note hi-hat, lots of space. Verses: one clean male tenor rapper, slightly nasal, crisp enunciation, steady even flow locked to the beat, earnest and sincere, never shouting. Chorus: a large gospel choir sings a slow, sustained, minor-key hymn-like melody, with a soulful male lead on top. Spoken intro over the strings. Polished, bright, full late-90s studio mix. Straight-faced and cinematic.
 
 SHORT:
-comedy parody, 90s West Coast rap ballad, 80 BPM, C minor string loop, boom-bap, nerdy nasal tenor rap, earnest deadpan, pious gospel choir hook, bright
+80 BPM, C minor, 90s West Coast rap ballad, Cm-Ab-Fm-G string loop, sparse boom-bap, clear nasal tenor rap, gospel choir hymn chorus, bright mix
 
 EXCLUDE STYLES
-trap hi-hats, 808 rolls, autotune, EDM, pop-punk, female lead vocal, menacing, gritty, lo-fi
+comedy, novelty, cartoonish, upbeat, fast tempo, major key, trap, 808 rolls, autotune, EDM, rock guitar, female lead vocal
 
-VOCAL GENDER (if offered): Male
+MORE OPTIONS
+Vocal Gender: Male · Weirdness: ~30% · Style Influence: ~75% · Duration: Auto · Variety: Normal · Personalize: Off
