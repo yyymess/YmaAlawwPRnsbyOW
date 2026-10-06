@@ -8,6 +8,7 @@ node app/render.mjs stills --t 3.5,25,61        # PNGs in out/stills
 node app/render.mjs sheet --from 0 --to 21.6 --n 12 --out out/intro.jpg
 node app/render.mjs video                       # out/engineers-paradise.mp4, 1920x1080, 30 fps, with the song
 node app/render.mjs video --from 21.6 --to 57.7 --only verse1 --preset veryfast --out out/verse1.mp4
+node app/render.mjs video --from 150 --to 158 --size 720 --crf 23 --preset veryfast --out out/clip.mp4   # a quick 720p clip of one shot
 ```
 
 Needs Node, Chromium (Playwright's, or set `CHROMIUM`) and ffmpeg. `--workers N` renders with N headless pages (default 3); about 15 frames/s on 4 cores for simple scenes.

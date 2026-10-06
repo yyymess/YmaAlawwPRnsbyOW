@@ -2,7 +2,7 @@
 // Offline renderer: drives app/index.html?export=1 in headless Chromium.
 //   node app/render.mjs stills --t 3.5,25,61 [--only intro] [--out out/stills]
 //   node app/render.mjs sheet  --from 0 --to 21.6 --n 12 [--cols 4] [--only intro] [--out out/sheet.jpg]
-//   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--out out/engineers-paradise.mp4]
+//   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--size 720] [--out out/engineers-paradise.mp4]
 //   node app/render.mjs check  [--step 0.2] [--from] [--to]   (draws every step; reports scene errors, exit 2 if any)
 //   node app/render.mjs serve  [--port 5173]          (preview: http://localhost:5173/app/?t=0)
 import { createRequire } from 'node:module';
@@ -81,6 +81,7 @@ else {
       const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
         ...(argv.includes('--noaudio') ? [] : ['-ss', String(from), '-t', String(to - from), '-i', path.join(ROOT, 'audio/engineers-paradise.m4a')]),
         '-map', '0:v', ...(argv.includes('--noaudio') ? [] : ['-map', '1:a', '-c:a', 'aac', '-b:a', '256k']),
+        ...(opt('size') ? ['-vf', `scale=${Math.round(+opt('size') * 16 / 9 / 2) * 2}:${opt('size')}:flags=lanczos`] : []),
         '-c:v', 'libx264', '-preset', opt('preset', 'slow'), '-crf', crf, '-pix_fmt', 'yuv420p',
         '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
       const closed = new Promise((r) => ff.on('close', r));
