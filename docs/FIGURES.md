@@ -1,6 +1,6 @@
 # Figures in this style
 
-How people are built in the flat Art Nouveau + screentone look. The rules come from the intro review (hoodie read as a helmet, hands too small, straight-legged walk, hair under a hood).
+How people are built in the flat Art Nouveau + screentone look. The rules come from the intro and character reviews (hoodie read as a helmet, hood far too big, bloated side view, hands too small, an unnatural phone grip, straight-legged walk).
 
 ## Proportions
 - Adults are about **6.5–7 heads** tall (stylised, not heroic). Head = crown to chin. The walking hero is ~1000 units to the hood's point with a 150-unit head.

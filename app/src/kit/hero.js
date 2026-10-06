@@ -1,5 +1,5 @@
-// The hero (see docs/FIGURES.md): teal hoodie with the hood up, round glasses, clean-shaven, no hair
-// showing. Front bust (optionally holding a phone up) and a walking profile with real joints.
+// The hero (see docs/FIGURES.md): teal hoodie with the hood up, round glasses, clean-shaven, a fringe
+// showing under the hood. Front, side and back busts (the front can hold a phone up) and a walking profile.
 import { C, at, ell, rect, svg, clamp } from '../paint.js';
 
 // Front bust unit space: face ~270 wide, eyes at y=-10, chin at y=200, top of the skull ~-225; the bust
