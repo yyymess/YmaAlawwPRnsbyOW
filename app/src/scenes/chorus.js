@@ -216,7 +216,8 @@ const VARIANTS = {
     left(P, f, c, lt, lines, box) {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'sage', 'sageDk', 0.4); coins(P, 195, 520, Math.min(8, Math.floor(lt / 0.5) + 1)); }
-      else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); heroFront(P, 180, 210, 0.38, { mouth: 'frown', look: [0.3, 0.9], brow: 1, blink: blinkAt(t) }); palm(P, 250, 560, 0.95, -0.2, { sleeve: 300 }); for (const [cx, cy, v] of [[236, 446, '10¢'], [276, 470, '5¢']]) { P.both(ell(cx, cy, 26), 'gold', 3); P.line(ell(cx, cy, 20), 1.2, 'ochre'); P.text(v, cx, cy + 7, { font: FONT.caps, weight: 700, size: 17 }); } }
+      else if (c === 1) { fillBg(P, box, 'char', 'charDk', 0.4); heroFront(P, 180, 230, 0.44, { mouth: 'frown', look: [0.4, 0.9], brow: 1, blink: blinkAt(t) }); palm(P, 262, 474, 0.5, -0.2, { sleeve: 400 });
+        P.ctx.save(); P.ctx.translate(262, 474); P.ctx.rotate(-0.2); P.ctx.scale(0.5, 0.5); for (const [cx, cy, v] of [[-14, -58, '10¢'], [26, -20, '5¢']]) { P.both(ell(cx, cy, 34), 'gold', 5); P.line(ell(cx, cy, 27), 2, 'ochre'); P.text(v, cx, cy + 9, { font: FONT.caps, weight: 700, size: 26 }); } P.ctx.restore(); }   // his change in his palm, the hand in proportion
       else if (c === 2) { fillBg(P, box, 'rose', 'redDk', 0.4); person(P, 195, 290, 0.38, { hair: 'slick', hairColor: 'hairBr', top: 'vest', color: 'navy', mouth: 'smirk', acc: ['lanyard'], crop: 900, blink: blinkAt(t + 1), look: [0.5, 0] }); }
       else {   // his desk, cleared: an empty chair, a box with the plant and the duck
         fillBg(P, box, 'cream', 'sepia', 0.4);

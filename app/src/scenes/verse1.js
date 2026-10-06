@@ -350,7 +350,7 @@ function covenant(P, f, L, t) {
     if (fu > 0) { const w = 520 * fu; P.banner(440 - w / 2, 470, w, 90, { tail: 'roseLt' }); if (fu > 0.9) P.text('FREE', 440, 534, { font: FONT.caps, weight: 700, size: 54, tracking: 8 }); }
     heroFront(P, 120, 420, 0.42, { mouth: t > mo ? 'smile' : 'neutral', look: [0.7, 0], blink: blinkAt(t) });
     const pu = ease.outBack(clamp((t - (mo - 0.25)) / 0.35));
-    if (pu > 0) palm(P, 330, 520 - 90 * pu, 0.68, 0.22, { sleeve: 400 });
+    if (pu > 0) palm(P, 322, 530 - 100 * pu, 0.48, 0.22, { sleeve: 600 });   // the hand about three quarters of his head's height
   } else {
     // the tablet of the mission; the believers below, each under a small halo, nod on "So did we"
     const u = ease.outCubic(clamp((t - mi) / 0.6));
