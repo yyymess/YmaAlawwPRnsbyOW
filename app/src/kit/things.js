@@ -266,3 +266,168 @@ export function star(P, x, y, r, tw = 0) {
   const k = 1 + 0.25 * Math.sin(tw);
   P.both(svg(`M${x} ${y - r * k} L${x + r * 0.28} ${y - r * 0.28} L${x + r * k} ${y} L${x + r * 0.28} ${y + r * 0.28} L${x} ${y + r * k} L${x - r * 0.28} ${y + r * 0.28} L${x - r * k} ${y} L${x - r * 0.28} ${y - r * 0.28} Z`), 'goldLt', 2);
 }
+
+/** a brass oil lamp with a living flame; (x, y) the base centre */
+export function oilLamp(P, x, y, s, t, o = {}) {
+  const lw = begin(P, x, y, s), fl = o.flame ?? 1;
+  if (fl > 0) {
+    P.tone(ell(60, -150, 170), 'goldLt', { from: [60, -150, 0.85 * fl], to: [230, -150, 0], radial: true, bbox: [-110, -320, 230, 20] }, 5);
+    const w = Math.sin(t * 11) * 6 + Math.sin(t * 7.3) * 4;
+    P.both(svg(`M60 -110 C30 -130 34 -170 ${60 + w} ${-230 - 20 * fl} C86 -170 90 -130 60 -110 Z`), 'gold', lw);
+    P.both(svg(`M60 -116 C48 -128 50 -150 ${60 + w * 0.6} -176 C70 -150 72 -128 60 -116 Z`), 'cream', lw * 0.6);
+  }
+  P.both(svg('M-60 0 L60 0 L44 -20 L-44 -20 Z'), 'ochre', lw);
+  const body = svg('M-110 -60 C-110 -100 -40 -110 0 -110 C30 -110 60 -104 90 -96 L120 -110 L130 -100 C110 -86 90 -70 70 -60 C40 -30 -60 -24 -110 -60 Z');
+  P.fill(body, 'gold'); P.tone(body, 'ochre', { from: [-60, -100, 0], to: [60, -30, 0.6], bbox: [-120, -120, 140, -20] }, 5); P.line(body, lw * 1.2);
+  P.line(svg('M-110 -70 C-150 -80 -160 -40 -126 -40'), lw * 2.4); P.line(svg('M-110 -70 C-150 -80 -160 -40 -126 -40'), lw * 1.2, 'gold');
+  P.both(ell(-10, -114, 26, 8), 'ochre', lw); P.both(ell(-10, -124, 8), 'gold', lw * 0.8);
+  P.both(svg('M-20 -24 L20 -24 L10 -60 L-10 -60 Z'), 'ochre', lw);
+  end(P);
+}
+
+/** a wall clock; h: hours as a float (12-hour), the hands move with it */
+export function clock(P, x, y, r, h) {
+  const lw = begin(P, x, y, 1);
+  P.both(ell(0, 0, r), 'ivory', lw * 1.4); P.line(ell(0, 0, r * 0.86), lw * 0.5);
+  for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; P.line(svg(`M${Math.sin(a) * r * 0.74} ${-Math.cos(a) * r * 0.74} L${Math.sin(a) * r * 0.84} ${-Math.cos(a) * r * 0.84}`), lw * (i % 3 ? 0.6 : 1.2)); }
+  const ha = (h / 12) * Math.PI * 2, ma = (h % 1) * Math.PI * 2;
+  P.line(svg(`M0 0 L${Math.sin(ha) * r * 0.5} ${-Math.cos(ha) * r * 0.5}`), lw * 1.8); P.line(svg(`M0 0 L${Math.sin(ma) * r * 0.74} ${-Math.cos(ma) * r * 0.74}`), lw * 1.1);
+  P.both(ell(0, 0, r * 0.07), 'gold', lw * 0.5);
+  end(P);
+}
+
+/** a paper coffee cup */
+export function cup(P, x, y, s, rot = 0) {
+  const lw = begin(P, x, y, s, rot);
+  P.both(svg('M-30 0 L-38 -90 L38 -90 L30 0 Z'), 'cream', lw); P.both(svg('M-36 -66 L36 -66 L34 -40 L-34 -40 Z'), 'sepiaDk', lw * 0.8);
+  P.both(rect(-42, -102, 84, 14, 5), 'ivory', lw);
+  end(P);
+}
+
+/** a light bulb: glass, filament, screw base; glow 0..1; o.crown */
+export function bulb(P, x, y, s, glow = 0.5, o = {}) {
+  const lw = begin(P, x, y, s);
+  if (glow > 0.05) {
+    P.tone(ell(0, -130, 230), 'goldLt', { from: [0, -130, 0.9 * glow], to: [230, -130, 0], radial: true, bbox: [-230, -360, 230, 100] }, 6);
+    for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2 + (o.spin ?? 0); P.line(svg(`M${Math.cos(a) * 120} ${-130 + Math.sin(a) * 120} L${Math.cos(a) * (120 + 80 * glow)} ${-130 + Math.sin(a) * (120 + 80 * glow)}`), lw * 1.6, 'gold'); }
+  }
+  const g = svg('M-40 0 C-40 -40 -96 -70 -96 -140 C-96 -200 -50 -236 0 -236 C50 -236 96 -200 96 -140 C96 -70 40 -40 40 0 Z');
+  P.fill(g, glow > 0.3 ? 'cream' : 'glass'); P.tone(g, glow > 0.3 ? 'goldLt' : 'mintDk', { from: [0, -130, glow > 0.3 ? 0.6 : 0.1], to: [90, -60, glow > 0.3 ? 0 : 0.5], bbox: [-100, -240, 100, 0] }, 5); P.line(g, lw * 1.3);
+  P.line(svg('M-20 -10 L-24 -110 L-12 -126 L0 -110 L12 -126 L24 -110 L20 -10'), lw * 0.9, glow > 0.3 ? 'ochre' : 'line');
+  P.line(svg('M-60 -170 C-50 -200 -30 -214 -10 -218'), lw * 0.8, 'cream');
+  for (let i = 0; i < 4; i++) P.both(rect(-42 + i * 2, i * 16, 84 - i * 4, 16, 5), 'silver', lw * 0.8);
+  P.both(svg('M-20 64 L20 64 L10 78 L-10 78 Z'), 'charDk', lw * 0.8);
+  if (o.crown) { P.ctx.save(); P.ctx.translate(0, -262); P.ctx.scale(o.crown, o.crown); P.both(svg('M-50 0 L-60 -60 L-30 -30 L0 -74 L30 -30 L60 -60 L50 0 Z'), 'gold', lw); for (const cx of [-60, 0, 60]) P.both(ell(cx, cx ? -60 : -74, 7), 'red', lw * 0.6); P.ctx.restore(); }
+  end(P);
+}
+
+/** a sailing ship in profile, (x, y) the waterline at mid-ship; o.sail text */
+export function ship(P, x, y, s, t, o = {}) {
+  const lw = begin(P, x, y, s, Math.sin(t * 1.4) * 0.03);
+  const hull = svg('M-260 -60 L250 -60 C240 -10 200 30 150 40 L-200 40 C-240 20 -256 -20 -260 -60 Z');
+  P.fill(hull, 'redDk'); P.tone(hull, '#000', { from: [0, -60, 0], to: [0, 40, 0.5], bbox: [-260, -60, 250, 40] }, 6); P.line(hull, lw * 1.3);
+  P.line(svg('M-256 -40 L246 -40'), lw * 2, 'gold'); for (let i = 0; i < 7; i++) P.both(ell(-170 + i * 56, -16, 9), 'goldLt', lw * 0.6);
+  P.both(svg('M180 -60 L250 -60 L300 -96 L230 -96 Z'), 'redDk', lw);
+  for (const [mx, mh] of [[-120, 360], [60, 420]]) {
+    P.line(svg(`M${mx} -60 L${mx} ${-60 - mh}`), lw * 3); P.line(svg(`M${mx} -60 L${mx} ${-60 - mh}`), lw * 1.4, 'sepiaDk');
+    const sl = svg(`M${mx - 110} ${-60 - mh + 40} C${mx - 60} ${-60 - mh + 60} ${mx + 60} ${-60 - mh + 60} ${mx + 110} ${-60 - mh + 40} C${mx + 130} ${-60 - mh * 0.5} ${mx + 120} ${-110} ${mx + 100} -90 L${mx - 100} -90 C${mx - 120} -110 ${mx - 130} ${-60 - mh * 0.5} ${mx - 110} ${-60 - mh + 40} Z`);
+    P.fill(sl, 'ivory'); P.tone(sl, 'sepiaDk', { from: [mx - 110, 0, 0.3], to: [mx + 110, 0, 0], bbox: [mx - 130, -60 - mh, mx + 130, -80] }, 6); P.line(sl, lw * 1.1);
+    P.both(svg(`M${mx} ${-60 - mh} L${mx + 50} ${-60 - mh + 14} L${mx} ${-60 - mh + 28} Z`), 'gold', lw * 0.8);
+  }
+  if (o.sail) P.text(o.sail, 60, -290, { font: FONT.caps, weight: 700, size: 64, color: 'red' });
+  end(P);
+}
+
+/** a firework burst: k 0..1 its age */
+export function firework(P, x, y, r, k, color = 'goldLt', n = 14) {
+  if (k <= 0 || k >= 1) return;
+  const lw = begin(P, x, y, 1), rr = r * ease.outCubic(k);
+  P.ctx.save(); P.alpha(1 - k * k);
+  for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; P.line(svg(`M${Math.cos(a) * rr * 0.55} ${Math.sin(a) * rr * 0.55 + k * 20} L${Math.cos(a) * rr} ${Math.sin(a) * rr + k * 30}`), 5, color); P.both(ell(Math.cos(a) * rr, Math.sin(a) * rr + k * 30, 5), color, 1.5); }
+  P.restore(); end(P);
+}
+
+/** a soda can, (x, y) its base centre */
+export function sodaCan(P, x, y, s, rot = 0, o = {}) {
+  const lw = begin(P, x, y, s, rot);
+  const can = svg('M-50 0 C-56 -6 -56 -14 -52 -20 L-52 -180 C-56 -186 -56 -194 -48 -200 L48 -200 C56 -194 56 -186 52 -180 L52 -20 C56 -14 56 -6 50 0 Z');
+  P.fill(can, o.color ?? 'red'); P.tone(can, 'redDk', { from: [-20, 0, 0], to: [52, 0, 0.7], bbox: [-56, -200, 56, 0] }, 5); P.line(can, lw * 1.2);
+  P.line(svg('M-36 -180 L-36 -24'), lw * 2.4, 'cream');
+  P.both(ell(0, -200, 48, 8), 'silver', lw); P.both(ell(10, -201, 14, 4), 'grey', lw * 0.5);
+  P.ctx.save(); P.ctx.translate(4, -100); P.ctx.rotate(-Math.PI / 2); P.text(o.label ?? 'SODA', 0, 12, { font: FONT.caps, weight: 700, size: 34, color: 'cream' }); P.ctx.restore();
+  end(P);
+}
+
+/** a price tag on a string */
+export function priceTag(P, x, y, s, text, rot = 0) {
+  const lw = begin(P, x, y, s, rot);
+  P.line(svg('M0 0 C-10 30 -20 50 -10 70'), lw * 0.8);
+  const tag = svg('M-60 70 L40 70 L70 100 L40 130 L-60 130 Z');
+  P.both(tag, 'ivory', lw); P.both(ell(48, 100, 6), 'paper', lw * 0.5);
+  P.text(text, -10, 114, { font: FONT.display, size: 40, color: 'red' });
+  end(P);
+}
+
+/** a throne: gold, high-backed, with a cushion; (x, y) the floor centre */
+export function throne(P, x, y, s) {
+  const lw = begin(P, x, y, s);
+  P.both(svg('M-200 0 L-180 -260 L-210 -620 C-210 -700 -120 -760 0 -770 C120 -760 210 -700 210 -620 L180 -260 L200 0 Z'), 'gold', lw * 1.4);
+  P.tone(svg('M-200 0 L-180 -260 L-210 -620 C-210 -700 -120 -760 0 -770 C120 -760 210 -700 210 -620 L180 -260 L200 0 Z'), 'ochre', { from: [0, -700, 0], to: [200, 0, 0.6], bbox: [-210, -770, 210, 0] }, 7);
+  P.line(svg('M-150 -300 L-160 -600 C-160 -660 -90 -704 0 -712 C90 -704 160 -660 150 -600 L150 -300 Z'), lw);
+  P.both(svg('M-150 -300 L-160 -600 C-160 -660 -90 -704 0 -712 C90 -704 160 -660 150 -600 L150 -300 Z'), 'red', lw);
+  P.both(rect(-230, -300, 460, 60, 14), 'gold', lw * 1.2); P.both(rect(-200, -250, 400, 40, 10), 'red', lw);
+  for (const sx of [-1, 1]) P.both(ell(sx * 214, -640, 26), 'gold', lw);
+  end(P);
+}
+
+/** a horse in profile, facing right, walking; (x, y) the ground under its belly; phase the gait */
+export function horse(P, x, y, s, phase = 0, o = {}) {
+  const lw = begin(P, x, y, s), col = o.color ?? 'sepiaDk', dk = o.dark ?? 'charDk';
+  const leg = (hx, hy, ph, front, near) => {
+    const a = 0.32 * Math.sin(ph), k = front ? Math.max(0, Math.sin(ph + 1.2)) * 0.9 : Math.max(0, -Math.sin(ph + 0.4)) * 0.8;
+    const kx = hx + Math.sin(a) * 120, ky = hy + Math.cos(a) * 120, b = front ? a - k : a + k, fx = kx + Math.sin(b) * 112, fy = ky + Math.cos(b) * 112;
+    const p = new Path2D(); p.moveTo(hx, hy); p.lineTo(kx, ky); p.lineTo(fx, fy - 10);
+    P.ctx.lineJoin = 'round'; P.ctx.lineCap = 'round'; P.line(p, 38 + 2 * lw, 'line'); P.line(p, 38, near ? col : dk);
+    P.both(svg(`M${fx - 22} ${fy - 14} L${fx + 22} ${fy - 14} L${fx + 26} ${fy + 6} L${fx - 24} ${fy + 6} Z`), 'charDk', lw * 0.8);
+  };
+  const hy = -240;
+  leg(150, hy + 20, phase + Math.PI, true, false); leg(-150, hy + 20, phase, false, false);
+  // tail
+  P.both(svg(`M-210 ${hy - 70} C${-290 + Math.sin(phase) * 8} ${hy - 40} -300 ${hy + 60} ${-270 + Math.sin(phase * 0.5) * 10} ${hy + 140} C-250 ${hy + 60} -240 ${hy} -200 ${hy - 40} Z`), dk, lw);
+  // body, neck and head
+  const body = svg(`M-220 ${hy - 60} C-230 ${hy - 120} -150 ${hy - 140} -40 ${hy - 130} C60 ${hy - 124} 140 ${hy - 150} 190 ${hy - 190} C210 ${hy - 260} 250 ${hy - 330} 300 ${hy - 350} C330 ${hy - 362} 360 ${hy - 350} 380 ${hy - 320} L440 ${hy - 250} C456 ${hy - 228} 440 ${hy - 206} 414 ${hy - 210} L340 ${hy - 250} C300 ${hy - 230} 270 ${hy - 180} 240 ${hy - 110} C220 ${hy - 40} 190 ${hy + 30} 130 ${hy + 40} C40 ${hy + 54} -100 ${hy + 50} -170 ${hy + 30} C-210 ${hy + 16} -226 ${hy - 20} -220 ${hy - 60} Z`);
+  P.fill(body, col); P.tone(body, '#000', { from: [40, hy - 140, 0], to: [0, hy + 50, 0.45], bbox: [-230, hy - 360, 460, hy + 60] }, 6); P.line(body, lw * 1.3);
+  P.both(svg(`M300 ${hy - 350} L304 ${hy - 392} L326 ${hy - 356} Z`), col, lw);                 // ear
+  P.fill(ell(374, hy - 304, 7, 8), 'line');                                                     // eye
+  P.both(svg(`M200 ${hy - 200} C220 ${hy - 280} 250 ${hy - 340} 300 ${hy - 352} C280 ${hy - 300} 260 ${hy - 240} 236 ${hy - 160} C230 ${hy - 190} 214 ${hy - 196} 200 ${hy - 200} Z`), dk, lw);   // mane
+  P.line(svg(`M420 ${hy - 226} C426 ${hy - 222} 430 ${hy - 218} 434 ${hy - 214}`), lw * 0.8);
+  if (o.harness) { P.line(svg(`M330 ${hy - 330} L420 ${hy - 250} M250 ${hy - 140} C200 ${hy - 120} 120 ${hy - 110} -60 ${hy - 110}`), lw * 2.2, 'red'); P.both(svg(`M180 ${hy - 190} C200 ${hy - 130} 210 ${hy - 70} 200 ${hy - 20}`), 'black', lw * 3); }
+  leg(130, hy + 30, phase, true, true); leg(-170, hy + 20, phase + Math.PI, false, true);
+  end(P);
+}
+
+/** an Amish buggy: a grey box on two tall spoked wheels; (x, y) the ground under its axle */
+export function buggy(P, x, y, s, t = 0) {
+  const lw = begin(P, x, y, s);
+  P.both(svg('M-200 -360 C-200 -420 200 -420 200 -360 L200 -120 L-200 -120 Z'), 'char', lw * 1.3);
+  P.tone(svg('M-200 -360 C-200 -420 200 -420 200 -360 L200 -120 L-200 -120 Z'), '#000', { from: [0, -400, 0], to: [200, -120, 0.4], bbox: [-200, -420, 200, -120] }, 6);
+  P.both(rect(-160, -330, 120, 120, 8), 'black', lw); P.both(svg('M-200 -150 L-240 -110 L240 -110 L200 -150 Z'), 'charDk', lw);
+  P.both(svg('M120 -90 L120 -60'), 'line', lw);
+  P.both(rect(130, -330, 50, 40, 6), 'red', lw * 0.6); P.both(svg('M150 -300 L160 -318 L170 -300 Z'), 'gold', lw * 0.5);
+  for (const wx of [-110, 110]) { P.both(ell(wx, -50, 70), 'ivory', lw); P.line(ell(wx, -50, 60), lw * 0.5); for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI + t * 2; P.line(svg(`M${wx + Math.cos(a) * 60} ${-50 + Math.sin(a) * 60} L${wx - Math.cos(a) * 60} ${-50 - Math.sin(a) * 60}`), lw * 0.6); } P.both(ell(wx, -50, 10), 'char', lw * 0.6); }
+  P.line(svg('M200 -150 L420 -170'), lw * 2);
+  end(P);
+}
+
+/** a scroll of code pouring out, its lines as bars of colour (no real code) */
+export function codeScroll(P, x, y, w, h, t, o = {}) {
+  const lw = begin(P, x, y, 1), r = rng(o.seed ?? 3);
+  const sheet = svg(`M${-w / 2} 0 L${w / 2} 0 L${w / 2} ${h} L${-w / 2} ${h} Z`);
+  P.fill(sheet, 'ivory'); P.line(sheet, lw);
+  P.ctx.save(); P.clip(sheet);
+  const off = (t * (o.speed ?? 60)) % 30;
+  for (let i = -1; i < h / 30 + 1; i++) { const ind = Math.floor(r() * 4) * 20, len = 40 + r() * (w - 120 - ind); P.line(svg(`M${-w / 2 + 24 + ind} ${i * 30 + off + 18} l${len} 0`), 6, ['teal', 'rose', 'gold', 'sageDk'][i & 3]); }
+  P.restore();
+  P.both(rect(-w / 2 - 14, -12, w + 28, 24, 12), 'sepia', lw);
+  end(P);
+}
