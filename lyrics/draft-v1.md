@@ -38,7 +38,7 @@ in the engineer's paradise.
 
 Then one Monday at the fridge there's a sign in Comic Sans:
 "Soda now fifty cents" — and a fella with a plan.
-He had more shares than the founders and conjoined triangles to show,
+He had more shares than the founders and a flywheel slide to show,
 and the mission on the wall got a footnote down below.
 Now the code don't really matter, it's the story in the doc:
 write "drove cross-functional alignment," and they'll hand you all the stock.
