@@ -1,14 +1,15 @@
 // Review sheets for characters and props (app/kit.html?sheet=...).
-import { heroFront, heroWalk, phone } from './hero.js';
+import { heroFront, heroSide, heroBack, heroWalk, phone } from './hero.js';
 import { robotaxi, agent } from './props.js';
 import { rect } from '../paint.js';
 
 export function hero(P) {
-  heroFront(P, 230, 230, 0.4, {});
-  heroFront(P, 600, 230, 0.4, { mouth: 'sing', open: 0.8, look: [0.6, 0] });
-  heroFront(P, 970, 230, 0.4, { hold: 'phone', uplit: 0.6, look: [0, 0.6] });
-  heroFront(P, 1340, 230, 0.4, { mouth: 'smile', blink: 1 });
-  for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 880, 0.33, (i / 8) * Math.PI * 2);
+  // turnaround: front, side, back, front with the phone; then the walk cycle
+  heroFront(P, 230, 200, 0.36, {});
+  heroSide(P, 610, 200, 0.36, {});
+  heroBack(P, 990, 200, 0.36, {});
+  heroFront(P, 1370, 200, 0.36, { hold: 'phone', uplit: 0.6, look: [0, 0.6], mouth: 'smile' });
+  for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 880, 0.4, (i / 8) * Math.PI * 2);
 }
 
 import { tree, cypress, campus, agentAngel } from './props.js';

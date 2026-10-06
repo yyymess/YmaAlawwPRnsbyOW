@@ -3,20 +3,22 @@
 How people are built in the flat Art Nouveau + screentone look. The rules come from the intro review (hoodie read as a helmet, hands too small, straight-legged walk, hair under a hood).
 
 ## Proportions
-- Adults are about **7 heads** tall (stylised, not heroic). Head = crown to chin.
+- Adults are about **6.5–7 heads** tall (stylised, not heroic). Head = crown to chin. The walking hero is ~1000 units to the hood's point with a 150-unit head.
 - **Hands are big**: a hand from wrist to fingertip is about **0.75 of the face height**; two hands holding a phone cover most of its lower half.
 - A phone is about **0.6 of the face height** (it covers the chin and neck when held up to read).
 - Shoulders are about **2 heads** wide on a man; a hoodie widens them with dropped seams.
 
 ## The hoodie (hood up)
-A hood is soft cloth, not a shell:
-- **Volume** above and behind the skull, rising to a **soft point like a monk's cowl** (the tip flops slightly, so it stays cloth, never a stiff cone); big loose folds, and bunched volume where it sits on the neck and shoulders.
-- **The opening is a pointed arch** (an ogive, like a chapel niche): the dark hollow above the forehead makes the face sit in a shrine.
-- **The rim**: a thick, doubled edge that frames the face; draw it as its own band (one shade lighter) with the dark hollow of the hood just inside it.
-- **No hair** when the hood is up. The forehead disappears into the hood's shadow.
-- **Drawstrings** come out of eyelets at the bottom of the rim, by the chin, and hang on the chest; the ends are aglets.
-- Body: dropped shoulder seams, a **kangaroo pocket** across the belly, **ribbed cuffs and hem**. Sleeves are wider than the arm inside and gather into narrower ribbed cuffs.
-- In profile the cowl rises from the rim to its point up and behind the head, then falls behind the skull and bunches on the neck; the rim shows as a curved band in front of the ear, and the face profile (brow, nose, lips, chin) sits inside it.
+Measured against hoodie reference sheets (front, side, back, turning). A hood is soft cloth that **hugs the skull**, not a shell or a big bag:
+- **Size**: the hood is only a little bigger than the head: about 25 units of slack over the crown (head ~425 crown to chin in bust units), a little more at the back. **Shoulders are about 2.3 hoods wide**; if the hood looks as wide as the shoulders, it is far too big.
+- **The point**: a soft point at the crown seam (our "religious" touch, like a monk's cowl), modest, about 60 units above the skull; the tip flops a little.
+- **The opening**: the rim sits **on the forehead** (brows still visible) and **over the edges of the cheeks**, so the face nearly fills it. The dark inside shows only as a thin sliver at the sides and below the jaw, round the neck. A gentle pointed arch at the top.
+- The hood's sides fall nearly straight past the jaw, then its base spreads onto the shoulders; the pullover's crossover V sits at the collarbone, with the neck showing in it.
+- **No hair** when the hood is up.
+- **Drawstrings** come out of eyelets either side of the V and hang to mid-chest; aglets at the ends.
+- **Side view**: the face (brow, nose, lips, chin, and the cheek up to the temple) stands **in front of** the rim, which runs from over the forehead back past the cheekbone and down under the jaw to the chest. The hood's back curves round the skull, **dips in at the nape**, and lies along the upper back to the shoulder blades, so it merges with the back line rather than sticking out as a hump.
+- **Back view**: a centre seam from the point down; the hood's lower edge makes a soft U across the upper back, with a little shadow under it and folds bunched where it lies.
+- Body: dropped shoulder seams, a **kangaroo pocket**, **ribbed cuffs and hem**; sleeves are wider than the arm inside and gather into narrower cuffs. Big, loose folds: a few long lines, not many short ones.
 
 ## Joints and gesture
 - Limbs are two segments with visible joints: thigh/shin with a **knee**, upper arm/forearm with an **elbow**. Never a straight capsule.
