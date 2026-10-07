@@ -12,6 +12,7 @@ export const C = {
   skin2: '#f4dcc9', skin3: '#e9c8ad', sepia: '#e6d3ad', sepiaDk: '#8a6a43', silver: '#cfcac0',
   skin4: '#e2bf9f', skin5: '#d6ac8b', hairBr: '#5b4030', hairAu: '#8a4a2c', hairBl: '#c9a466', hairGr: '#aaa49b', hairSp: '#5f554d', beardSp: '#8a8076',
   blossom: '#f3d2d4', blossomDk: '#dc9eaa', blossomDeep: '#c27886', bark: '#3b2b27', barkLt: '#7b655b',
+  kraft: '#c9a06a', kraftDk: '#9f7a4c', kraftLt: '#dcc497', kraftIn: '#6b4f31', terracotta: '#c2704b', leaf: '#5e7a52', leafDk: '#425a3a',
 };
 export const FONT = { display: 'Federant, serif', caps: 'Cinzel, serif', mono: '"Plex Mono", monospace', comic: '"Comic Neue", "Comic Sans MS", cursive' };
 

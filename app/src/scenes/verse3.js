@@ -5,8 +5,8 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { agentAngel, token, cherryTree } from '../kit/props.js';
-import { begin, end, quill, scroll, star, globe, drawHand } from '../kit/things.js';
+import { agentAngel, token, cherryTree, petal } from '../kit/props.js';
+import { begin, end, quill, scroll, star, globe, drawHand, cardboardBox, mug, snakePlant } from '../kit/things.js';
 import { duck, heart, cloud } from './verse1.js';
 
 const SCENES = [
@@ -274,17 +274,29 @@ function spring(P, f, L, t, w, h) {
   const ctx = P.ctx, l2 = L[1].words[0].start - 0.1;
   if (t < l2) {
     backdrop(P, w, h, 'sky', 'roseLt');
-    P.fill(rect(-10, 500, w + 20, 160), 'sage');
+    // a spring sky: two flat clouds; far hills, pale with distance
+    for (const [cx, cy, cs] of [[260, 120, 1], [700, 70, 0.7]]) { const cl = svg(`M${cx - 120 * cs} ${cy + 20 * cs} C${cx - 130 * cs} ${cy - 10 * cs} ${cx - 90 * cs} ${cy - 30 * cs} ${cx - 60 * cs} ${cy - 18 * cs} C${cx - 50 * cs} ${cy - 50 * cs} ${cx + 10 * cs} ${cy - 56 * cs} ${cx + 30 * cs} ${cy - 26 * cs} C${cx + 60 * cs} ${cy - 44 * cs} ${cx + 110 * cs} ${cy - 24 * cs} ${cx + 110 * cs} ${cy + 4 * cs} C${cx + 140 * cs} ${cy + 6 * cs} ${cx + 140 * cs} ${cy + 22 * cs} ${cx + 120 * cs} ${cy + 26 * cs} Z`); P.fill(cl, 'cream'); P.tone(cl, 'roseLt', { from: [cx, cy - 40 * cs, 0], to: [cx, cy + 26 * cs, 0.55], bbox: [cx - 140 * cs, cy - 60 * cs, cx + 140 * cs, cy + 30 * cs] }, 5); P.line(cl, 2.5); }
+    const far = svg(`M-10 470 C120 430 260 440 380 462 C520 486 640 446 800 450 C960 454 1100 470 1240 452 C1320 444 1380 450 ${w + 10} 446 L${w + 10} 520 L-10 520 Z`);
+    P.fill(far, '#c5c9a4'); P.tone(far, 'sage', { from: [w / 2, 440, 0], to: [w / 2, 520, 0.5], bbox: [0, 430, w, 520] }, 6); P.line(far, 2.5);
+    // a rolling lawn
+    const lawn = svg(`M-10 506 C260 488 620 500 940 490 C1140 484 1260 494 ${w + 10} 488 L${w + 10} ${h + 10} L-10 ${h + 10} Z`);
+    P.fill(lawn, 'sage'); P.tone(lawn, 'sageDk', { from: [w / 2, 490, 0], to: [w / 2, h, 0.42], bbox: [0, 480, w, h] }, 7); P.line(lawn, 3);
+    for (const [gx, gy] of [[90, 566], [380, 548], [700, 604], [960, 560], [1290, 592], [880, 520]]) P.line(svg(`M${gx} ${gy} l6 -16 M${gx + 8} ${gy} l2 -20 M${gx + 16} ${gy} l-4 -14`), 2.5, 'sageDk');
     cherryTree(P, 1165, 532, 0.9, t);   // a cherry in full blossom, shedding its petals
-    // the box of his things: a plant, a mug, the duck
-    ctx.save(); ctx.translate(560, 520);
-    P.both(svg('M-160 0 L-150 -170 L150 -170 L160 0 Z'), 'ochre', 4); P.line(svg('M-150 -170 L-190 -220 M150 -170 L190 -220'), 4);
-    for (let k = 0; k < 4; k++) P.leaf(-90 + k * 6, -246, -1.6 + k * 0.4, 0.8);
-    P.both(svg('M-128 -166 L-122 -232 L-56 -232 L-50 -166 Z'), 'ochre', 3); P.both(rect(-132, -246, 86, 18, 4), 'ochre', 3); P.tone(svg('M-128 -166 L-122 -232 L-56 -232 L-50 -166 Z'), 'redDk', { from: [-120, -232, 0], to: [-50, -166, 0.5], bbox: [-130, -234, -48, -164] }, 4);
-    P.line(svg('M90 -222 C120 -222 120 -184 90 -184'), 6); P.line(svg('M90 -222 C120 -222 120 -184 90 -184'), 3, 'ivory');
-    P.both(rect(28, -236, 64, 74, 8), 'ivory', 3); P.text('#1', 60, -204, { font: FONT.caps, weight: 700, size: 18, color: 'red' }); P.text('DEV', 60, -182, { font: FONT.caps, weight: 700, size: 15 }); duck(P, -10, -168, 0.5);
-    P.text('LAYOFF', 0, -70, { font: FONT.caps, weight: 700, size: 30, color: 'sepiaDk' });
-    ctx.restore();
+    // the box of his things on the grass: a snake plant, the duck, the #1 DEV mug with his pens; his badge hung over the edge
+    P.tone(ell(705, 530, 250, 20), 'sageDk', { from: [705, 530, 0.6], to: [955, 530, 0], radial: true, bbox: [455, 510, 955, 550] }, 5);
+    cardboardBox(P, 675, 530, 0.92, {
+      label: 'LAYOFF',
+      inside: (P) => { snakePlant(P, -86, -136, 0.58, t); duck(P, 6, -172, 0.6); mug(P, 108, -160, 0.8, { text: ['#1', 'DEV'], pens: ['navy', 'cream', 'red'] }); },
+      over: (P) => {
+        P.line(svg('M-98 -186 C-104 -150 -92 -112 -72 -94 M-42 -186 C-46 -150 -56 -116 -64 -98'), 9); P.line(svg('M-98 -186 C-104 -150 -92 -112 -72 -94 M-42 -186 C-46 -150 -56 -116 -64 -98'), 5, 'teal');
+        P.ctx.save(); P.ctx.translate(-68, -92); P.ctx.rotate(0.06);
+        P.both(rect(-6, -6, 12, 12, 2), 'silver', 2); P.both(rect(-30, 4, 60, 76, 7), 'cream', 3); P.both(rect(-20, 14, 40, 32, 3), 'glass', 2);
+        P.both(ell(0, 26, 7, 8), 'skin', 1.5); P.both(svg('M-12 46 C-12 36 12 36 12 46 Z'), 'teal', 1.5); P.line(svg('M-20 56 L20 56 M-20 66 L8 66'), 2.5);
+        P.ctx.restore();
+        [[-150, -150, 0.4], [126, -136, -1.1], [214, -206, 0.8], [-180, -206, 2.2]].forEach(([px, py, a]) => petal(P, px, py, 13, a));
+      },
+    });
     heroFront(P, 300, 290, 0.42, { mouth: sing(f), open: f.vocal, look: [0.5, 0.2], blink: blinkAt(t), apron: t > wd(L, 0, 'craftsman') });
     cherryTree(P, 1165, 532, 0.9, t, { part: 'petals' });   // the petals blow across him
   } else {

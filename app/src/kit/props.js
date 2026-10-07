@@ -147,6 +147,8 @@ function sakura(P, x, y, sz, rot, o = {}) {   // a flower of five notched petals
   for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2 + 0.6; P.line(svg(`M${Math.cos(a) * sz * 0.2} ${Math.sin(a) * sz * 0.2} L${Math.cos(a) * sz * 0.42} ${Math.sin(a) * sz * 0.42}`), Math.max(0.8, sz * 0.05), 'redDk'); }
   ctx.restore();
 }
+/** a single cherry petal lying or falling, (x, y) its base, sz its length */
+export function petal(P, x, y, sz, rot = 0, color = 'blossom') { const c = P.ctx; c.save(); c.translate(x, y); c.rotate(rot); c.scale(sz, sz); P.fill(svg(SAKURA), color); c.lineWidth = 1.4 / sz; c.strokeStyle = C.line; c.stroke(svg(SAKURA)); c.restore(); }
 export function cherryTree(P, x, y, s, t, o = {}) {
   const ctx = P.ctx, seed = o.seed ?? 7; if (!CHERRY.has(seed)) CHERRY.set(seed, cherrySkeleton(seed));
   const { limbs, puffs, flowers } = CHERRY.get(seed), lw = Math.max(1.3, 3.5 * s) / s;

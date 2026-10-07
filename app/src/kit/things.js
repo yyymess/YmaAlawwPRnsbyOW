@@ -541,3 +541,91 @@ export function platter(P, x, y, r) {
   P.both(ell(x, y, r * 0.3), 'silver', Math.max(1.5, r / 110)); P.line(ell(x, y, r * 0.2), Math.max(1, r / 200)); P.fill(ell(x, y, r * 0.07), 'line');
   P.line(d, r * 0.05 + 4); P.line(d, r * 0.05, 'gold'); P.line(ell(x, y, r * 0.975), Math.max(1, r / 260), 'goldLt');
 }
+
+
+/**
+ * A cardboard moving box, open, seen a little from above and to the right: front and side faces, the dark opening, four
+ * flaps folded out (the front one tipped forward, the back one standing behind), the cut edges showing the board's
+ * thickness, a hand hole, torn packing tape, a marker scrawl. (x, y) the middle of its foot. o.inside(P) draws what is in
+ * it (in the box's units: the opening's front edge at y = -170, its back edge at y = -200, shifted 50 right), between the
+ * inside and the front; o.over(P) what hangs over its front; o.label the scrawl.
+ */
+export function cardboardBox(P, x, y, s, o = {}) {
+  const lw = begin(P, x, y, s), W = 160, H = 170, DX = 50, DY = -30;
+  const FL = [-W, -H], FR = [W, -H], BL = [-W + DX, -H + DY], BR = [W + DX, -H + DY];
+  const quad = (a, b, c, d) => svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]} L${c[0]} ${c[1]} L${d[0]} ${d[1]} Z`);
+  const cut = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1, nx = -dy / l * 4, ny = dx / l * 4; P.line(svg(`M${a[0] + nx} ${a[1] + ny} L${b[0] + nx} ${b[1] + ny}`), lw * 0.45); };   // the board's thickness along a cut edge
+  const flap = (a, b, c, d, color, toneTo) => { const f = quad(a, b, c, d); P.fill(f, color); P.tone(f, 'kraftDk', { from: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, 0], to: toneTo, bbox: [Math.min(a[0], b[0], c[0], d[0]), Math.min(a[1], b[1], c[1], d[1]), Math.max(a[0], b[0], c[0], d[0]), Math.max(a[1], b[1], c[1], d[1])] }, 5); P.line(f, lw); cut(c, d); };
+  // the back flap standing behind, the left flap folded out
+  const bk = [[BR[0] - 16, BR[1] - 70], [BL[0] - 16, BL[1] - 70]];
+  flap(BL, BR, bk[0], bk[1], 'kraftLt', [BR[0], BR[1] - 70, 0.3]);
+  const lf = [[BL[0] - 78, BL[1] - 36], [FL[0] - 78, FL[1] - 30]];
+  flap(FL, BL, lf[0], lf[1], 'kraftLt', [FL[0] - 78, FL[1], 0.35]);
+  // the opening: the inside of the back and left walls in shadow
+  const op = quad(FL, FR, BR, BL);
+  P.fill(op, 'kraftIn'); P.tone(op, '#000', { from: [0, BL[1], 0.15], to: [0, FL[1], 0.55], bbox: [FL[0], BL[1], BR[0], FL[1]] }, 5);
+  P.line(svg(`M${BL[0]} ${BL[1]} L${BL[0]} ${BL[1] + 34}`), lw * 0.5);   // the inside corner
+  if (o.inside) { P.ctx.save(); o.inside(P); P.ctx.restore(); }
+  // the front face and the side face
+  const fr = quad([-W, 0], [W, 0], FR, FL), sd = quad([W, 0], [W + DX, DY], BR, FR);
+  P.fill(fr, 'kraft'); P.tone(fr, 'kraftDk', { from: [0, -H, 0], to: [W, 0, 0.45], bbox: [-W, -H, W, 0] }, 6); P.line(fr, lw * 1.2);
+  P.fill(sd, 'kraftDk'); P.tone(sd, '#000', { from: [W, -H, 0.15], to: [W + DX, 0, 0.45], bbox: [W, -H + DY, W + DX, 0] }, 6); P.line(sd, lw * 1.2);
+  { const c = P.ctx; c.save(); c.transform(1, DY / DX, 0, 1, W + DX / 2, -H * 0.66 + DY / 2); P.both(rect(-15, -9, 30, 18, 9), 'kraftIn', lw * 0.8);   // the hand hole
+    for (const ax of [-9, 9]) P.line(svg(`M${ax} 66 L${ax} 40 M${ax - 6} 48 L${ax} 40 L${ax + 6} 48`), lw * 0.7, 'charDk');   // THIS SIDE UP
+    P.line(svg('M-14 74 L14 74'), lw * 0.7, 'charDk'); c.restore(); }
+  // the front flap tipped forward, the right flap folded out
+  const ff = [[W + 12, -H + 46], [-W - 12, -H + 46]];
+  flap(FL, FR, ff[0], ff[1], 'kraftLt', [0, -H + 46, 0.4]);
+  const rf = [[BR[0] + 70, BR[1] - 30], [FR[0] + 70, FR[1] - 24]];
+  flap(FR, BR, rf[0], rf[1], 'kraftLt', [FR[0] + 70, FR[1], 0.3]);
+  // the packing tape, torn when it was opened, hanging from the front flap
+  const tp = svg('M6 -128 L44 -128 L44 -96 L40 -90 L35 -97 L29 -88 L24 -96 L18 -89 L12 -97 L6 -91 Z');
+  P.ctx.save(); P.alpha(0.85); P.fill(tp, 'goldLt'); P.restore(); P.line(tp, lw * 0.6); P.line(svg('M10 -122 L40 -122'), lw * 0.4, 'cream');
+  if (o.label) { P.ctx.save(); P.ctx.translate(70, -46); P.ctx.rotate(-0.07); P.text(o.label, 0, 0, { font: FONT.comic, weight: 700, size: 40, color: 'charDk' }); P.line(svg('M-74 10 C-30 14 30 12 76 6'), lw * 0.7, 'charDk'); P.ctx.restore(); }
+  if (o.over) { P.ctx.save(); o.over(P); P.ctx.restore(); }
+  end(P);
+}
+
+/** a ceramic mug, (x, y) the middle of its foot: a glazed body with a highlight, a thick handle, the rim's ellipse; o.text
+ *  [big, small] printed on it, o.pens colours of pens standing in it */
+export function mug(P, x, y, s, o = {}) {
+  const lw = begin(P, x, y, s), R = 34, H = 86, ry = 9, body = o.color ?? 'ivory';
+  // the handle, behind the body where it joins
+  const hd = svg(`M${R - 6} ${-H + 18} C${R + 34} ${-H + 12} ${R + 36} ${-24} ${R - 4} -22`);
+  P.line(hd, 22); P.line(hd, 22 - 2 * lw, body); P.line(svg(`M${R + 10} ${-H + 30} C${R + 18} ${-H + 40} ${R + 16} -42 ${R + 8} -34`), lw * 0.5);
+  // the body, a little narrower at the foot, its bottom rounded
+  const b = svg(`M${-R} ${-H} L${-R + 3} -12 Q${-R + 4} 0 ${-R + 16} 0 L${R - 16} 0 Q${R - 4} 0 ${R - 3} -12 L${R} ${-H} Z`);
+  P.fill(b, body); P.tone(b, 'sepiaDk', { from: [R * 0.15, 0, 0], to: [R, 0, 0.5], bbox: [-R, -H - ry, R, 0] }, 4);
+  P.line(svg(`M${-R * 0.58} ${-H + 10} L${-R * 0.5} -12`), lw * 1.6, 'cream');   // the glaze catching the light
+  P.line(b, lw);
+  // the rim: the dark inside, pens standing in it, the front lip over them
+  P.fill(ell(0, -H, R - 3, ry - 2), 'charDk');
+  (o.pens ?? []).forEach((c, i) => { const a = -0.28 + i * 0.3, px = -10 + i * 12; P.ctx.save(); P.ctx.translate(px, -H + 2); P.ctx.rotate(a); P.both(rect(-4.5, -62, 9, 62, 3), c, lw * 0.7); P.both(rect(-5, -70, 10, 14, 4), c === 'cream' ? 'red' : 'charDk', lw * 0.6); P.line(svg('M3 -66 L3 -42'), lw * 0.6, 'silver'); P.ctx.restore(); });
+  const lip = new Path2D(); lip.ellipse(0, -H, R, ry, 0, 0, Math.PI); lip.ellipse(0, -H, R - 4, ry - 3, 0, Math.PI, 0, true); lip.closePath();
+  P.fill(lip, body); P.line(ell(0, -H, R, ry), lw); P.line(svg(`M${-R + 4} ${-H} A${R - 4} ${ry - 3} 0 0 0 ${R - 4} ${-H}`), lw * 0.5);
+  if (o.text) { P.text(o.text[0], -2, -H * 0.52, { font: FONT.caps, weight: 700, size: 26, color: 'red' }); if (o.text[1]) P.text(o.text[1], -2, -H * 0.52 + 22, { font: FONT.caps, weight: 700, size: 17, color: 'charDk' }); }
+  end(P);
+}
+
+/** a snake plant in a terracotta pot, (x, y) the middle of the pot's foot: sword leaves banded darker, with light margins */
+export function snakePlant(P, x, y, s, t = 0) {
+  const lw = begin(P, x, y, s), r = rng(13);
+  const leaves = [[-34, 190, -0.34], [-14, 278, -0.12], [6, 236, 0.02], [22, 300, 0.12], [40, 210, 0.3], [-28, 150, -0.6]];
+  for (const [bx, len, a0] of leaves) {
+    const a = a0 + Math.sin(t * 1.3 + bx) * 0.012, by = -96, tx = bx + Math.sin(a) * len, ty = by - Math.cos(a) * len, w = 15 + len * 0.03, nx = Math.cos(a), ny = Math.sin(a), bend = 0.1 * len * Math.sign(a0 || 0.1);
+    const lf = svg(`M${bx - nx * w} ${by - ny * w} C${bx - nx * w + Math.sin(a) * len * 0.5 + bend} ${by - ny * w - Math.cos(a) * len * 0.5} ${tx - nx * 6} ${ty + 30} ${tx} ${ty} C${tx + nx * 6} ${ty + 30} ${bx + nx * w + Math.sin(a) * len * 0.5 + bend} ${by + ny * w - Math.cos(a) * len * 0.5} ${bx + nx * w} ${by + ny * w} Z`);
+    P.fill(lf, 'leaf');
+    P.ctx.save(); P.clip(lf);
+    for (let k = 0; k < 7; k++) { const u = 0.12 + k * 0.12 + r() * 0.04, cx = bx + Math.sin(a) * len * u, cy = by - Math.cos(a) * len * u, hw = w * (1 - u * 0.8); P.line(svg(`M${cx - nx * hw} ${cy - ny * hw + 4} C${cx - nx * hw * 0.3} ${cy - ny * hw * 0.3 - 5} ${cx + nx * hw * 0.3} ${cy + ny * hw * 0.3 + 5} ${cx + nx * hw} ${cy + ny * hw - 4}`), lw * 1.1, 'leafDk'); }
+    P.tone(lf, 'leafDk', { from: [bx, by, 0], to: [bx + nx * w * 2, by, 0.5], bbox: [bx - w * 2, ty - 10, bx + w * 2 + Math.abs(Math.sin(a)) * len, by] }, 4);
+    P.line(lf, lw * 3.4, 'goldLt');   // the yellow margin, inside the edge
+    P.ctx.restore();
+    P.line(lf, lw);
+  }
+  // the pot: rim band, tapered body, soil
+  const pot = svg('M-50 -86 L50 -86 L40 0 L-40 0 Z');
+  P.fill(pot, 'terracotta'); P.tone(pot, 'redDk', { from: [6, -86, 0], to: [50, 0, 0.5], bbox: [-50, -86, 50, 0] }, 5); P.line(pot, lw);
+  const rim = rect(-58, -108, 116, 26, 6); P.fill(rim, 'terracotta'); P.tone(rim, 'redDk', { from: [10, -108, 0], to: [58, -82, 0.45], bbox: [-58, -108, 58, -82] }, 5); P.line(rim, lw);
+  P.line(svg('M-46 -96 L-30 -96'), lw * 1.2, '#dd9a78');
+  end(P);
+}
