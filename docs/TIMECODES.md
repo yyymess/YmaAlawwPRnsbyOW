@@ -20,7 +20,7 @@ Where each shot is in the video, to point at things during review. Times are m:s
 | 1:39 | verse 2 | THE GRAVEYARD: rows of stones with level medals; the users float away |
 | 1:46 | verse 2 | THE ORG CHART: three syncs, nine stamps, MAY 31, the button turns grey |
 | 1:52 | verse 2 | CODE YELLOW: the Ad label shrinks to nothing; best quarter ever |
-| 1:57 | verse 2 | FRIDAY: the email, the walk to the door; the badge reader blinks red, the halo goes grey |
+| 1:57 | verse 2 | FRIDAY: the email, the walk to the door; the badge reader blinks red and he greys out, like a disabled button |
 | 2:03 | chorus 2 | revenue arrow · 50¢ vending machine · the Manager enthroned · lights out, CLOSED FOR REORG |
 | 2:27 | verse 3 | the keynote: code turns into English, the punctuation falls off |
 | 2:33 | verse 3 | the Emacs hand on Ctrl; TAB TAB TAB; Accept all in a reliquary |

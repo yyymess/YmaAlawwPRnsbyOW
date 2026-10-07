@@ -148,7 +148,6 @@ function emacs(P, f, L, t, w, h) {
     ctx.restore();
     heroFront(P, 260, 300, 0.45, { blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile' });
     person(P, 1100, 300, 0.45, { hair: 'ponytail', hairColor: 'hairBr', fem: true, top: 'hoodie', color: 'plum', glasses: 'rect', blink: t > lk - 0.3 ? 1 : 0, mouth: 'smile', crop: 1250 });
-    for (const hx of [260, 1100]) { P.both(ell(hx, 82, 110, 24), 'gold', 4); P.line(ell(hx, 82, 88, 15), 1.5); }
   }
 }
 /**

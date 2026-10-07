@@ -34,6 +34,19 @@ export function rng(seed) { let s = seed >>> 0 || 1; return () => ((s = (s * 166
 
 // ---- path helpers --------------------------------------------------------------------------------
 export const svg = (d) => new Path2D(d);
+/** draw with the palette drained of colour, k 0..1: to grey and a little washed out, like a disabled control */
+export function greyed(k, draw) {
+  if (k <= 0) return draw();
+  const saved = { ...C };
+  try {
+    for (const name in saved) {
+      const h = saved[name]; if (typeof h !== 'string' || h.length !== 7 || h[0] !== '#') continue;
+      const v = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)), l = 0.3 * v[0] + 0.59 * v[1] + 0.11 * v[2], wash = l + (214 - l) * 0.3;
+      C[name] = '#' + v.map((c) => Math.round(c + (wash - c) * k).toString(16).padStart(2, '0')).join('');
+    }
+    draw();
+  } finally { Object.assign(C, saved); }
+}
 export const ell = (x, y, rx, ry = rx) => { const p = new Path2D(); p.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); return p; };
 export const rect = (x, y, w, h, r = 0) => { const p = new Path2D(); r ? p.roundRect(x, y, w, h, r) : p.rect(x, y, w, h); return p; };
 /** a transform for SVG-path snippets drawn in a local unit space */

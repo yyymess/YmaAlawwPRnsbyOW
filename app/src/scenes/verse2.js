@@ -1,7 +1,7 @@
 // Verse 2 — The Poster Campaign (docs/TREATMENT.md). The devotional posters give way to advertising:
 // on a wall, a new poster is pasted over the last one for each couplet, slapped on with a brush of paste.
 // Each is an ad idiom redrawn as a Mucha poster; its slogan band carries the lyric.
-import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
+import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric, greyed } from '../paint.js';
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { sodaCan, tablet, scroll, begin, end, priceTag } from '../kit/things.js';
@@ -325,7 +325,7 @@ function codeYellow(P, f, L, t, w, h) {
   }
 }
 
-// ---- 7. FRIDAY: an email; he drives in like before; the badge reader blinks red; the halo goes grey -----------------
+// ---- 7. FRIDAY: an email; he drives in like before; the badge reader blinks red; he greys out, like a disabled button -
 function friday(P, f, L, t, w, h) {
   const ctx = P.ctx, br = L[1].words[0].start - 0.25;
   if (t < br) {
@@ -338,22 +338,23 @@ function friday(P, f, L, t, w, h) {
     const walk = t - (L[0].words[0].start - 0.3);
     const hx = lerp(430, 700, clamp(walk / 2.6));
     ctx.save(); heroWalk(P, hx, 400, 0.36, walk * 6, {}); ctx.restore();
-    P.both(ell(hx + 30, 400 - 380 + Math.sin(t * 3) * 3, 40, 10), 'gold', 3);
   } else {
-    // the close-up: badge to the reader, red, the halo going grey
+    // the close-up: badge to the reader; it blinks red, and he is greyed out like a disabled control, the grey spreading
+    // from the badge in his hand up his arm and over him; only the reader's red light keeps its colour
     fill(P, w, h, 'cream', 'sepia', 0.3);
     P.both(rect(780, -10, 200, h + 20), 'sepia', 4); P.line(svg(`M800 -10 L800 ${h + 10}`), 2);
     const rd = wd(L, 1, 'red'), red = t > rd - 0.1;
     P.both(rect(840, 160, 110, 180, 16), 'char', 4); P.both(ell(895, 210, 18), red && Math.floor(t * 5) % 2 === 0 ? 'red' : (red ? 'redDk' : 'sage'), 3); P.line(rect(860, 250, 70, 60, 8), 2, 'grey');
     if (red) P.tone(ell(895, 210, 120), 'red', { from: [895, 210, 0.7], to: [1015, 210, 0], radial: true, bbox: [775, 90, 1015, 330] }, 5);
-    const gn = wd(L, 1, 'guess'), grey = clamp((t - gn) / 0.6);
-    heroFront(P, 430, 230, 0.55, { mouth: t > gn ? 'frown' : 'neutral', look: [0.8, 0], blink: blinkAt(t), brow: t > gn ? 1 : 0 });
-    // the badge on its lanyard, held to the reader
-    P.line(svg('M448 392 C520 540 700 540 796 352'), 7); P.line(svg('M448 392 C520 540 700 540 796 352'), 4, 'teal');
-    P.both(rect(790, 240, 90, 120, 8), 'cream', 4); P.both(rect(806, 256, 58, 50, 4), 'glass', 2); P.line(svg('M806 324 L864 324 M806 340 L846 340'), 3);
-    sleeveArm(P, [836, 386], [606, 470], 0.55, 'teal', -1, { cuff: 'tealLt' });
-    // the halo, from gold to grey, sinking a little
-    const hc = grey > 0.5 ? 'grey' : 'gold';
-    P.both(ell(430, 30 + grey * 20, 150, 34), hc, 5); P.line(ell(430, 30 + grey * 20, 120, 24), 2, grey > 0.5 ? 'silver' : 'goldLt');
+    const gn = wd(L, 1, 'guess'), wipe = ease.inOutSine(clamp((t - gn + 0.15) / 1.2));
+    const him = () => {
+      heroFront(P, 430, 230, 0.55, { mouth: t > gn ? 'frown' : 'neutral', look: [0.8, 0], blink: blinkAt(t), brow: t > gn ? 1 : 0 });
+      // the badge on its lanyard, held to the reader
+      P.line(svg('M448 392 C520 540 700 540 796 352'), 7); P.line(svg('M448 392 C520 540 700 540 796 352'), 4, 'teal');
+      P.both(rect(790, 240, 90, 120, 8), 'cream', 4); P.both(rect(806, 256, 58, 50, 4), 'glass', 2); P.line(svg('M806 324 L864 324 M806 340 L846 340'), 3);
+      sleeveArm(P, [836, 386], [606, 470], 0.55, 'teal', -1, { cuff: 'tealLt' });
+    };
+    him();
+    if (wipe > 0) { ctx.save(); P.clip(ell(835, 300, 40 + 900 * wipe)); greyed(1, him); ctx.restore(); }
   }
 }

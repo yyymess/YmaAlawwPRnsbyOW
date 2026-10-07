@@ -5,7 +5,7 @@
 //  3 Introducing Accept All: a launch poster; the agent writes and he signs; the calendar burns; the
 //    robo-taxi passes the horse and buggy at the end of the line; "You're absolutely right!".
 // Every line is lettered on the same ribbon banner; the refrain flashes gold.
-import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
+import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric, greyed } from '../paint.js';
 import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
@@ -208,8 +208,7 @@ const VARIANTS = {
         clicker(P, 570, 300, 0.8, t); fist(P, 579, 347, 0.5, 'shirt', false, { rot: 0.04, len: 560, cuff: 'shirt' });
       } else {   // badge turned red: the lights go out (see darkness())
         fillBg(P, box, 'cream', 'sepia', 0.4);
-        heroFront(P, 280, 330, 0.5, { mouth: 'frown', look: [0.8, 0.2], blink: blinkAt(t) });
-        P.both(ell(280, 120, 120, 26), 'grey', 4);
+        greyed(1, () => heroFront(P, 280, 330, 0.5, { mouth: 'frown', look: [0.8, 0.2], blink: blinkAt(t) }));   // still greyed out, as on Friday
         P.both(rect(500, -10, 150, 700), 'sepia', 4); P.line(svg('M520 -10 L520 690'), 2);
       }
     },
