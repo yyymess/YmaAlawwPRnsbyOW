@@ -336,20 +336,79 @@ export function bulb(P, x, y, s, glow = 0.5, o = {}) {
   end(P);
 }
 
-/** a sailing ship in profile, (x, y) the waterline at mid-ship; o.sail text */
+/**
+ * A three-masted sailing ship in profile, bow to the right, (x, y) the middle of its waterline. o.sail: the word on the
+ * main course; o.lit: its lights at night (portholes, stern lantern), 0..1. It rocks a little, its flags stream ahead.
+ * A gold rubber duck for a figurehead.
+ */
 export function ship(P, x, y, s, t, o = {}) {
-  const lw = begin(P, x, y, s, Math.sin(t * 1.4) * 0.03);
-  const hull = svg('M-260 -60 L250 -60 C240 -10 200 30 150 40 L-200 40 C-240 20 -256 -20 -260 -60 Z');
-  P.fill(hull, 'redDk'); P.tone(hull, '#000', { from: [0, -60, 0], to: [0, 40, 0.5], bbox: [-260, -60, 250, 40] }, 6); P.line(hull, lw * 1.3);
-  P.line(svg('M-256 -40 L246 -40'), lw * 2, 'gold'); for (let i = 0; i < 7; i++) P.both(ell(-170 + i * 56, -16, 9), 'goldLt', lw * 0.6);
-  P.both(svg('M180 -60 L250 -60 L300 -96 L230 -96 Z'), 'redDk', lw);
-  for (const [mx, mh] of [[-120, 360], [60, 420]]) {
-    P.line(svg(`M${mx} -60 L${mx} ${-60 - mh}`), lw * 3); P.line(svg(`M${mx} -60 L${mx} ${-60 - mh}`), lw * 1.4, 'sepiaDk');
-    const sl = svg(`M${mx - 110} ${-60 - mh + 40} C${mx - 60} ${-60 - mh + 60} ${mx + 60} ${-60 - mh + 60} ${mx + 110} ${-60 - mh + 40} C${mx + 130} ${-60 - mh * 0.5} ${mx + 120} ${-110} ${mx + 100} -90 L${mx - 100} -90 C${mx - 120} -110 ${mx - 130} ${-60 - mh * 0.5} ${mx - 110} ${-60 - mh + 40} Z`);
-    P.fill(sl, 'ivory'); P.tone(sl, 'sepiaDk', { from: [mx - 110, 0, 0.3], to: [mx + 110, 0, 0], bbox: [mx - 130, -60 - mh, mx + 130, -80] }, 6); P.line(sl, lw * 1.1);
-    P.both(svg(`M${mx} ${-60 - mh} L${mx + 50} ${-60 - mh + 14} L${mx} ${-60 - mh + 28} Z`), 'gold', lw * 0.8);
+  const ctx = P.ctx, lw = begin(P, x, y, s, Math.sin(t * 1.4) * 0.025), lit = o.lit ?? 1, thin = lw * 0.45;
+  const L = (d, w = thin, c = 'line') => P.line(svg(d), w, c);
+  const wave = Math.sin(t * 4);
+  // the rigging behind the sails: backstays from the mastheads to the stern
+  L('M10 -556 L-250 -132 M150 -496 L-170 -126 M-150 -438 L-262 -136');
+  // sails, one mast at a time from aft forward: square sails billowing ahead, seams, a reef band with its points
+  const sq = (mx, top, h, w, word) => {
+    const l = mx - w / 2, r = mx + w / 2, b = top + h, bl = 10 + w * 0.04;
+    const sl = svg(`M${l} ${top} L${r} ${top} C${r + bl} ${top + h * 0.35} ${r + bl * 0.9} ${top + h * 0.75} ${r - 6} ${b} C${mx + w * 0.2} ${b + bl * 0.8} ${mx - w * 0.2} ${b + bl * 0.8} ${l + 6} ${b} C${l + bl * 0.5} ${top + h * 0.7} ${l + bl * 0.4} ${top + h * 0.3} ${l} ${top} Z`);
+    P.fill(sl, 'ivory'); P.tone(sl, 'sepiaDk', { from: [mx - w * 0.1, top, 0], to: [r + bl, top + h, 0.42], bbox: [l, top, r + bl, b + bl] }, 5);
+    ctx.save(); P.clip(sl);
+    for (let k = 1; k < 6; k++) { const sx = l + (w * k) / 6; L(`M${sx} ${top} C${sx + bl * 0.5} ${top + h * 0.4} ${sx + bl * 0.5} ${top + h * 0.7} ${sx} ${b + bl}`, thin * 0.8, 'sepia'); }
+    L(`M${l} ${top + h * 0.2} L${r + 4} ${top + h * 0.2}`, thin, 'sepiaDk'); for (let k = 1; k < 9; k++) L(`M${l + (w * k) / 9} ${top + h * 0.2 - 4} L${l + (w * k) / 9} ${top + h * 0.2 + 5}`, thin, 'sepiaDk');
+    ctx.restore(); P.line(sl, lw);
+    if (word) P.text(word, mx + 8, top + h * 0.66, { font: FONT.caps, weight: 700, size: h * 0.36, color: 'red' });
+    L(`M${l - 10} ${top} L${r + 10} ${top}`, lw * 2.6); L(`M${l - 10} ${top} L${r + 10} ${top}`, lw * 1.4, 'sepiaDk');   // the yard
+    L(`M${l + 6} ${b} L${l - 6} ${b + 30} M${r - 6} ${b} L${r + 4} ${b + 28}`);   // sheets
+  };
+  const mast = (mx, top, foot = -60) => { L(`M${mx} ${foot} L${mx} ${top}`, lw * 3.6); L(`M${mx} ${foot} L${mx} ${top}`, lw * 2.2, 'sepiaDk'); P.both(rect(mx - 22, top + (foot - top) * 0.42 - 6, 44, 10, 2), 'sepiaDk', thin * 1.6); P.fill(ell(mx, top - 4, 6), 'gold'); };
+  const shrouds = (mx, topY) => { const pts = [-70, -46, -22].map((d) => [mx + d, -74]); for (const [px, py] of pts) L(`M${mx} ${topY} L${px} ${py}`); for (let yy = topY + 26; yy < -84; yy += 18) { const k = (yy - topY) / (-74 - topY); L(`M${mx - 70 * k} ${yy} L${mx - 22 * k} ${yy}`, thin * 0.7); } };
+  // the mizzen: a spanker (fore-and-aft, gaff and boom) and a topsail
+  mast(-150, -438); shrouds(-150, -300);
+  const sp = svg('M-146 -330 L-286 -366 L-292 -142 L-146 -130 Z');
+  P.fill(sp, 'ivory'); P.tone(sp, 'sepiaDk', { from: [-150, -330, 0], to: [-292, -142, 0.4], bbox: [-292, -366, -146, -130] }, 5); ctx.save(); P.clip(sp); for (let k = 1; k < 5; k++) L(`M${-146 - k * 29} ${-330 - k * 7} L${-146 - k * 29} ${-130}`, thin * 0.8, 'sepia'); ctx.restore(); P.line(sp, lw);
+  L('M-146 -330 L-300 -370', lw * 2.2, 'sepiaDk'); L('M-146 -130 L-306 -140', lw * 2.2, 'sepiaDk');
+  sq(-150, -420, 64, 130);
+  // the foremast and its headsails out to the bowsprit; then the main mast in front of it all, so its word reads whole
+  mast(150, -496); shrouds(150, -300);
+  sq(150, -466, 58, 150); sq(150, -392, 104, 210); sq(150, -270, 160, 262);
+  L('M270 -100 L436 -168', lw * 3.2); L('M270 -100 L436 -168', lw * 1.8, 'sepiaDk');                       // bowsprit and jib-boom
+  for (const [top, tip, clew] of [[[150, -470], [436, -166], [250, -132]], [[150, -380], [372, -142], [236, -120]]]) {
+    const jb = svg(`M${top[0]} ${top[1]} L${tip[0]} ${tip[1]} Q${(tip[0] + clew[0]) / 2} ${(tip[1] + clew[1]) / 2 + 10} ${clew[0]} ${clew[1]} Q${clew[0] - 30} ${(top[1] + clew[1]) / 2} ${top[0] + 2} ${top[1]} Z`);
+    P.fill(jb, 'ivory'); P.tone(jb, 'sepiaDk', { from: [top[0], top[1], 0], to: [clew[0], clew[1], 0.35], bbox: [top[0], top[1], tip[0], clew[1]] }, 5); P.line(jb, lw);
   }
-  if (o.sail) P.text(o.sail, 60, -290, { font: FONT.caps, weight: 700, size: 64, color: 'red' });
+  L('M150 -496 L436 -168 M10 -556 L150 -300 M-150 -438 L10 -330');   // the stays
+  mast(10, -556); shrouds(10, -330);
+  sq(10, -520, 66, 170); sq(10, -436, 116, 236); sq(10, -296, 178, 300, o.sail);
+  // flags streaming ahead: a long swallow-tailed pennant from the main truck, small flags fore and aft
+  const pen = (px, py, len, h, c) => { const p = new Path2D(); p.moveTo(px, py - h / 2); for (let k = 1; k <= 8; k++) { const u = k / 8; p.lineTo(px + len * u, py - h / 2 * (1 - u * 0.6) + Math.sin(t * 5 + u * 4) * 6 * u); } p.lineTo(px + len * 0.86, py + Math.sin(t * 5 + 3.4) * 5); for (let k = 8; k >= 0; k--) { const u = k / 8; p.lineTo(px + len * u, py + h / 2 * (1 - u * 0.6) + Math.sin(t * 5 + u * 4) * 6 * u); } p.closePath(); P.both(p, c, thin * 1.6); };
+  pen(10, -566, 150, 22, 'red'); pen(150, -504, 60, 22, 'gold'); pen(-150, -446, 54, 20, 'teal');
+  // the hull: a sheer from the high stern to the bow, the main wale, lit portholes, planking, the waterline band
+  const hull = svg('M-262 -120 L-170 -120 L-160 -80 C-60 -66 80 -64 196 -84 L198 -96 L262 -104 C292 -86 302 -48 290 -10 C280 14 262 26 240 32 C120 46 -120 46 -220 32 C-250 18 -268 -10 -270 -40 C-272 -70 -270 -100 -262 -120 Z');
+  P.fill(hull, 'redDk'); P.tone(hull, '#000', { from: [0, -100, 0.05], to: [0, 40, 0.5], bbox: [-276, -124, 302, 46] }, 5);
+  ctx.save(); P.clip(hull);
+  for (const dy of [14, 36, 58]) L(`M-280 ${-90 + dy} C-120 ${-62 + dy} 120 ${-60 + dy} 300 ${-86 + dy}`, thin, 'black');
+  P.fill(svg('M-300 6 C-120 20 120 20 320 4 L320 60 L-300 60 Z'), 'black');                                   // the dark band at the waterline
+  P.line(svg('M-300 6 C-120 20 120 20 320 4'), thin * 1.4, 'ochre');
+  ctx.restore();
+  P.line(svg('M-276 -84 C-120 -52 120 -50 296 -74'), lw * 3.4); P.line(svg('M-276 -84 C-120 -52 120 -50 296 -74'), lw * 2, 'gold');   // the main wale
+  for (let k = 0; k < 9; k++) { const px = -200 + k * 50, py = -42 + Math.abs(px) * 0.03; P.both(ell(px, py, 9), lit > 0 ? 'goldLt' : 'night', thin * 1.6); if (lit > 0) { ctx.save(); P.alpha(0.3 * lit); P.fill(ell(px, py, 18), 'goldLt'); ctx.restore(); } }
+  P.line(hull, lw * 1.3);
+  // the rails: balusters on the poop and the forecastle, a rail along the waist
+  L('M-262 -120 L-262 -138 L-172 -138 L-172 -120', lw); for (let bx = -252; bx < -176; bx += 12) L(`M${bx} -138 L${bx} -120`, thin);
+  L('M200 -98 L200 -116 L262 -122 L262 -104', lw); for (let bx = 210; bx < 258; bx += 12) L(`M${bx} -117 L${bx} -100`, thin);
+  L('M-160 -94 C-60 -80 80 -78 196 -98', lw * 0.9);
+  // the stern: its gallery windows lit, the lantern on its post, the ensign
+  for (let k = 0; k < 3; k++) P.both(rect(-266 + k * 9, -112 + k * 4, 7, 14, 2), lit > 0 ? 'goldLt' : 'night', thin);
+  L('M-266 -138 L-266 -176', lw * 1.4); P.both(svg('M-276 -176 L-256 -176 L-252 -196 L-280 -196 Z'), 'gold', thin * 1.6); P.both(svg('M-282 -196 L-250 -196 L-266 -210 Z'), 'gold', thin * 1.6);
+  if (lit > 0) { ctx.save(); P.alpha(0.35 * lit); P.fill(ell(-266, -186, 34), 'goldLt'); ctx.restore(); }
+  L('M-262 -120 L-292 -180', lw * 1.2); pen(-292, -186, 48, 30, 'navy');
+  // the bow: the cutwater, and the figurehead, a gold rubber duck leaning into the sea
+  ctx.save(); ctx.translate(296, -78); ctx.rotate(0.35); ctx.scale(0.42, 0.42);
+  P.both(svg('M-60 0 C-70 -40 -40 -70 0 -64 C30 -60 50 -50 64 -30 C70 -10 60 0 40 0 Z'), 'gold', thin * 4); P.both(ell(16, -86, 36, 34), 'gold', thin * 4); P.both(svg('M44 -90 C70 -96 84 -86 80 -76 C70 -72 56 -74 44 -76 Z'), 'ochre', thin * 4); P.fill(ell(26, -96, 6, 7), 'line');
+  ctx.restore();
+  // the sea at its waterline: a bow wave and the wake, foam running aft
+  const bw = svg(`M226 22 C256 ${4 + wave * 3} 286 ${-6 + wave * 4} 312 6 C296 10 280 14 266 28 Z`); P.both(bw, 'cream', thin * 1.6);
+  for (let k = 0; k < 7; k++) { const fx = 220 - k * 70, fy = 30 + Math.sin(t * 3 + k) * 3; P.line(svg(`M${fx} ${fy} q-18 -8 -36 0 q-18 8 -36 0`), lw * 0.9, 'cream'); }
   end(P);
 }
 

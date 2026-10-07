@@ -147,14 +147,29 @@ const VARIANTS = {
         bulb(P, 170, 500, 0.95, lerp(0.6, 0.15, win), {});
         bulb(P, 470, 500, 0.95 + 0.15 * win, lerp(0.6, 1, win), { crown: win, spin: t * 0.3 });
         P.text('A', 170, 610, { font: FONT.caps, weight: 700, size: 44 }); P.text('B', 470, 610, { font: FONT.caps, weight: 700, size: 44 });
-      } else if (c === 2) {   // ship it to the world tonight
+      } else if (c === 2) {   // ship it to the world tonight: launched at night from the harbour, fireworks overhead
         fillBg(P, box, 'night', 'navy', 0.5);
         moon(P, 520, 120, 40);
-        const sh = word(lines, 4, 'ship'), u = ease.inOutCubic(clamp((t - sh) / 1.6));
-        for (let i = 0; i < 6; i++) firework(P, 120 + ((i * 197) % 420), 120 + ((i * 89) % 160), 90, ((t - sh - i * 0.37) % 2.2) / 1.2, i % 2 ? 'goldLt' : 'roseLt');
-        P.fill(rect(-10, 470, box.w + 20, 200), 'navyDk');
+        const sh = word(lines, 4, 'ship'), u = ease.inOutCubic(clamp((t - sh) / 1.6)), fw = [];
+        for (let i = 0; i < 6; i++) { const fx = 120 + ((i * 197) % 420), fy = 120 + ((i * 89) % 160), k = ((t - sh - i * 0.37) % 2.2) / 1.2; firework(P, fx, fy, 90, k, i % 2 ? 'goldLt' : 'roseLt'); if (k > 0 && k < 1) fw.push([fx, 1 - k, i % 2 ? 'goldLt' : 'roseLt']); }
+        // the far shore: a headland with a lighthouse, its beam turning; the harbour town's lights along the water
+        P.both(svg('M420 474 C460 446 520 430 580 432 C620 434 650 444 660 452 L660 476 L420 476 Z'), 'navyDk', 3);
+        P.both(svg('M-10 476 L-10 456 C30 450 60 452 90 446 L90 438 L104 438 L104 446 C140 444 170 450 210 452 L210 476 Z'), 'navyDk', 3);
+        for (let i = 0; i < 9; i++) P.fill(ell(10 + i * 22 + (i % 3) * 4, 462 + (i % 2) * 6, 2.6), 'goldLt');
+        P.both(svg('M556 432 L562 372 L578 372 L584 432 Z'), 'cream', 3); P.fill(svg('M558.5 410 L581.5 410 L582.7 422 L557.3 422 Z'), 'red'); P.fill(svg('M560.4 390 L579.6 390 L580.5 400 L559.5 400 Z'), 'red');
+        P.both(rect(558, 356, 24, 16, 3), 'goldLt', 3); P.both(svg('M554 356 L586 356 L570 342 Z'), 'red', 3);
+        { const a = t * 1.3, bl = 260, p = new Path2D(); p.moveTo(570, 364); p.lineTo(570 + Math.cos(a - 0.12) * bl, 364 + Math.sin(a - 0.12) * bl * 0.25); p.lineTo(570 + Math.cos(a + 0.12) * bl, 364 + Math.sin(a + 0.12) * bl * 0.25); p.closePath(); P.ctx.save(); P.alpha(0.3 * Math.max(0, Math.cos(a))); P.fill(p, 'goldLt'); P.ctx.restore(); }
+        // the water: darker towards us; the moon and the fireworks laid on it in broken streaks
+        P.fill(rect(-10, 470, box.w + 20, 200), 'navyDk'); P.tone(rect(-10, 470, box.w + 20, 200), 'night', { from: [320, 470, 0], to: [320, 640, 0.6], bbox: [0, 470, box.w, 640] }, 6);
+        P.line(svg(`M-10 471 L${box.w + 10} 471`), 3);
+        for (let k = 0; k < 7; k++) { const ry = 480 + k * 12, wob = Math.sin(t * 3 + k) * 6, ww = 26 - k * 2; P.line(svg(`M${520 - ww + wob} ${ry} L${520 + ww + wob} ${ry}`), 3, 'goldLt'); }
+        for (const [fx, a, c2] of fw) { P.ctx.save(); P.alpha(a * 0.8); for (let k = 0; k < 4; k++) { const ry = 482 + k * 14, wob = Math.sin(t * 4 + k + fx) * 5; P.line(svg(`M${fx - 14 + wob} ${ry} L${fx + 14 + wob} ${ry}`), 3, c2); } P.ctx.restore(); }
+        for (let r2 = 0; r2 < 3; r2++) for (let i = 0; i < 9; i++) { const wy = 492 + r2 * 18, wx = -30 + i * 80 + (r2 % 2) * 40 + Math.sin(t * 1.5 + i + r2) * 8, ws = 0.5 + r2 * 0.18; P.line(svg(`M${wx} ${wy} q${12 * ws} ${-8 * ws} ${24 * ws} 0 q${12 * ws} ${8 * ws} ${24 * ws} 0`), 2, 'navy'); }
         ship(P, lerp(150, 330, u), 520 + lerp(-40, 0, u), 0.62, t, { sail: 'BETA' });   // the public beta, as everything once launched
-        for (let i = 0; i < 6; i++) P.line(svg(`M${-40 + i * 130 + Math.sin(t * 2 + i) * 20} ${540 + (i % 2) * 40} q30 -14 60 0 q30 14 60 0`), 4, 'mint');
+        // the sea in front of the hull: crests with foam curling off them
+        const front = new Path2D(); front.moveTo(-10, 548); for (let i = 0; i <= 16; i++) { const wx = -10 + i * 42, wy = 540 + Math.sin(t * 2 + i * 0.9) * 5; front.quadraticCurveTo(wx + 10, wy - 14, wx + 21, wy); front.quadraticCurveTo(wx + 32, wy + 8, wx + 42, wy); } front.lineTo(box.w + 10, 660); front.lineTo(-10, 660); front.closePath();
+        P.fill(front, 'navy'); P.tone(front, 'night', { from: [320, 540, 0.1], to: [320, 640, 0.6], bbox: [0, 520, box.w, 640] }, 6); P.line(front, 3);
+        for (let i = 0; i < 8; i++) { const wx = 10 + i * 84 + Math.sin(t * 2 + i) * 14, wy = 576 + (i % 2) * 34; P.line(svg(`M${wx} ${wy} q22 -16 44 0 q-10 -4 -14 6`), 3, 'mint'); }
       } else {   // change the world: the globe lifted up under a halo
         fillBg(P, box, 'goldLt', 'gold', 0.4);
         P.halo(320, 300, 250, undefined, f.beat * 0.03, 0.4 + 0.2 * f.kick);
@@ -171,7 +186,7 @@ const VARIANTS = {
       const t = f.t;
       if (c === 0) { fillBg(P, box, 'tealDk', 'hoodDot', 0.5); P.both(rect(40, 500, 310, 24, 4), 'ochre', 4); for (const bx of [70, 320]) P.both(svg(`M${bx - 10} 524 L${bx + 10} 524 L${bx} 560 Z`), 'ochre', 3); const n = Math.min(6, Math.floor(lt / 0.75) + 1); for (let i = 0; i < n; i++) cup(P, 195 + (i % 2 ? 18 : -14), 500 - i * 74, 0.9, (i % 2 ? 0.08 : -0.06)); }
       else if (c === 1) { fillBg(P, box, 'teal', 'tealDk', 0.4); pennant(P, 195, 230, 'A', 'teal', 150 * ease.inOutCubic(clamp((t - lines[3].start) / 1.4))); bars(P, 95, 500, [0.5, 0.42, 0.38], 'cream'); }
-      else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 120 + i * 90, 180 + i * 90, 80, ((t - i * 0.6) % 1.8) / 1.2, i % 2 ? 'roseLt' : 'goldLt'); champagne(P, 200, 520, 0.9, lt); }
+      else if (c === 2) { fillBg(P, box, 'night', 'navy', 0.5); for (let i = 0; i < 3; i++) firework(P, 120 + i * 90, 180 + i * 90, 80, ((t - i * 0.6) % 1.8) / 1.2, i % 2 ? 'roseLt' : 'goldLt'); champagne(P, 165, 520, 0.9, lt); }
       else { fillBg(P, box, 'sage', 'sageDk', 0.4); person(P, 195, 300, 0.42, { hair: 'bob', skin: 'skin4', fem: true, top: 'tee', color: 'navy', acc: ['halo'], mouth: 'smile', look: [0.6, -0.3], crop: 900, blink: blinkAt(t) }); }
     },
     right(P, f, c, lt, lines, box) {
@@ -325,11 +340,39 @@ function pennant(P, x, y, letter, color, drop = 0) {
   P.text(letter, x - 60, y - 44 + drop + 6 * droop, { font: FONT.caps, weight: 700, size: 56 });
 }
 function bars(P, x, y, hs, color) { hs.forEach((h, i) => P.both(rect(x + i * 70, y - 300 * h, 50, 300 * h, 4), color, 3)); P.line(svg(`M${x - 20} ${y} L${x + 220} ${y}`), 4); }
+/** the christening bottle: champagne hung on a ribbon from above, swung at the hull (off to the right); on the swing the
+ *  cork pops and it foams over. (x, y) the bottle's foot at rest. */
 function champagne(P, x, y, s, lt) {
-  const lw = begin(P, x, y, s, -0.6 + Math.min(1, lt / 0.8) * 0.9);
-  P.both(svg('M-30 0 L-30 -160 C-30 -200 -14 -210 -14 -240 L14 -240 C14 -210 30 -200 30 -160 L30 0 Z'), 'sageDk', lw); P.both(rect(-16, -270, 32, 34, 4), 'gold', lw); P.both(rect(-30, -120, 60, 60, 4), 'cream', lw);
-  end(P);
-  if (lt > 0.8 && lt < 2.5) for (let i = 0; i < 8; i++) { const a = -Math.PI / 2 + (i - 4) * 0.25, u = (lt - 0.8) / 1.7; P.both(ell(x + 120 + Math.cos(a) * 160 * u, y - 260 + Math.sin(a) * 160 * u + 200 * u * u, 8), 'goldLt', 2); }
+  const ctx = P.ctx, sw = lt < 0.8 ? -0.5 + 0.84 * ease.inCubic(lt / 0.8) : 0.34 - 0.22 * Math.sin(Math.min(1, (lt - 0.8) / 1.6) * Math.PI) * Math.exp(-(lt - 0.8) * 0.8);
+  const piv = [x, y - 560 * s];
+  ctx.save(); ctx.translate(...piv); ctx.rotate(-sw);
+  const lw = Math.max(1.3, 4 * s) / s; ctx.scale(s, s);
+  // the ribbon from above, tied in a bow round the neck
+  P.line(svg('M0 0 L0 270'), lw * 5.4); P.line(svg('M0 0 L0 270'), lw * 3.6, 'red'); P.line(svg('M0 0 L0 270'), lw * 1.2, 'cream');
+  ctx.translate(0, 560);
+  P.both(svg('M0 -284 C-26 -300 -40 -280 -28 -270 C-18 -262 -6 -276 0 -284 Z M0 -284 C26 -300 40 -280 28 -270 C18 -262 6 -276 0 -284 Z'), 'red', lw * 0.8);
+  P.both(svg('M-4 -282 L-16 -244 L-8 -246 L-4 -236 Z M4 -282 L16 -244 L8 -246 L4 -236 Z'), 'red', lw * 0.7);
+  // the bottle: dark green glass, the light running down its side, a foil-capped neck with the cage, collar and label
+  const b = svg('M-34 -8 Q-34 0 -26 0 L26 0 Q34 0 34 -8 L34 -150 C34 -190 14 -206 12 -236 L12 -300 L-12 -300 L-12 -236 C-14 -206 -34 -190 -34 -150 Z');
+  P.fill(b, '#2f4a35'); P.tone(b, '#000', { from: [0, -150, 0], to: [34, -150, 0.5], bbox: [-34, -300, 34, 0] }, 4); P.line(b, lw);
+  P.line(svg('M-24 -20 L-24 -146 C-24 -170 -14 -184 -8 -200'), lw * 1.6, '#8fb38f');
+  const foil = svg('M-13 -300 L13 -300 L13 -232 L9 -226 L4 -232 L0 -226 L-4 -232 L-9 -226 L-13 -232 Z'); P.both(foil, 'gold', lw * 0.8); P.line(svg('M-13 -286 L13 -286 M-8 -300 L-8 -232 M8 -300 L8 -232'), lw * 0.4, 'ochre');
+  if (lt < 0.8) { P.both(rect(-11, -318, 22, 20, 6), 'sepia', lw * 0.8); P.line(svg('M-12 -306 L12 -306 M-6 -318 L-10 -300 M6 -318 L10 -300'), lw * 0.5, 'silver'); }   // the cork in its wire cage
+  P.both(svg('M-26 -196 C-10 -204 10 -204 26 -196 L28 -182 C10 -190 -10 -190 -28 -182 Z'), 'gold', lw * 0.7);   // the collar
+  P.both(svg('M-30 -136 L30 -136 L30 -64 Q0 -54 -30 -64 Z'), 'cream', lw * 0.8); P.line(svg('M-24 -130 L24 -130 L24 -70 Q0 -62 -24 -70 Z'), lw * 0.5, 'gold');
+  P.text('CUVÉE', 0, -112, { font: FONT.caps, size: 11, weight: 700, color: 'sepiaDk' }); P.text('BETA', 0, -88, { font: FONT.caps, size: 18, weight: 700, color: 'red' });
+  // on the swing: the cork pops off, the foam fountains out and falls
+  if (lt > 0.8) {
+    const k = lt - 0.8;
+    if (k < 1.2) { ctx.save(); ctx.translate(30 + k * 260, -330 - k * 300 + k * k * 220); ctx.rotate(k * 9); P.both(rect(-11, -10, 22, 20, 6), 'sepia', lw * 0.8); ctx.restore(); }
+    if (k < 0.25) { ctx.save(); P.alpha(1 - k / 0.25); for (let i = 0; i < 7; i++) { const a = -Math.PI / 2 + (i - 3) * 0.35; P.line(svg(`M${Math.cos(a) * 30} ${-300 + Math.sin(a) * 30} L${Math.cos(a) * 64} ${-300 + Math.sin(a) * 64}`), lw * 1.4, 'cream'); } ctx.restore(); }
+    if (k < 2.2) {
+      const r = rng(9);
+      P.both(svg(`M-12 -300 C-26 ${-330 - 30 * Math.min(1, k * 3)} 26 ${-336 - 34 * Math.min(1, k * 3)} 12 -300 Z`), 'cream', lw * 0.7);
+      for (let i = 0; i < 26; i++) { const t0 = r() * 1.1, q = k - t0; if (q < 0 || q > 1.1) continue; const vx = (r() - 0.3) * 260, vy = -280 - r() * 220, bx = vx * q, by = -310 + vy * q + 520 * q * q, br = 4 + r() * 9; ctx.save(); P.alpha(1 - q / 1.1); P.both(ell(bx, by, br), i % 3 ? 'cream' : 'goldLt', lw * 0.5); ctx.restore(); }
+    }
+  }
+  ctx.restore();
 }
 function coins(P, x, y, n) { for (let i = 0; i < n; i++) { P.both(ell(x + (i % 2 ? 6 : -6), y - i * 22, 70, 18), 'gold', 3); P.line(svg(`M${x - 50 + (i % 2 ? 6 : -6)} ${y - i * 22} L${x + 50 + (i % 2 ? 6 : -6)} ${y - i * 22}`), 1.5, 'ochre'); } }
 function clicker(P, x, y, s, t) {
