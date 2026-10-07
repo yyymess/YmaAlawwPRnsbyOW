@@ -256,23 +256,26 @@ function valleyEnd(P, f, t, lt) {
   lit(L, () => {
     P.both(svg(`${RIDGE} L1700 900 L-100 900 Z`), 'hill', 4);   // the intro's hills, lane and trees, in the evening light
     campus(P, 380, 532, 0.5);
+    // his path, drawn in two stretches so the layers fall right: the far one climbs the far hill to the crest and goes
+    // under the road (the road runs on across it, the robo-taxi drives over it); the near one comes up from the lane
+    // over the brow of the near hill. Each band narrows as it climbs away.
+    const pts = WALK.pts, into = pts.findIndex((q) => q[1] < 740);
+    const band = (outlineClip, fillClip) => {
+      ctx.save(); P.clip(outlineClip); for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2] + 5); } ctx.restore();
+      ctx.save(); P.clip(fillClip); for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2], 'cream'); } ctx.restore();
+    };
+    band(rect(-50, -50, W + 100, 750), rect(-50, -50, W + 100, 750));   // (the near hill hides its lower part)
     // the road along the ridge, and the robo-taxi gliding along it the other way, five stars on its door
     P.fill(rect(-20, 566, W + 40, 16), 'sepia'); P.line(svg('M-20 566 L1620 566 M-20 582 L1620 582'), 2.5);
     const rx = lerp(1750, -250, clamp((lt - 0.3) / 3.6));
     if (rx > -240 && rx < 1740) { robotaxi(P, rx, 578, 0.3, t, -1); P.both(rect(rx - 44, 578 - 0.3 * 150, 88, 22, 6), 'cream', 2); P.text('★★★★★', rx, 578 - 0.3 * 150 + 16, { size: 15, color: 'gold' }); }
-    const near = svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z');
+    const NEAR = 'M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620', near = svg(`${NEAR} L1700 900 L-100 900 Z`);
     P.both(near, 'sage', 4); P.tone(near, 'hoodDot', { from: [800, 620, 0], to: [800, 900, 0.35], bbox: [0, 580, W, H] }, 7);
     tree(P, 150, 650, 0.9, 2); cypress(P, 250, 655, 0.8); cypress(P, 1290, 640, 0.7); tree(P, 1420, 645, 0.8, 5);
     for (let x = -40; x < W + 80; x += 70) P.line(svg(`M${x} 690 l6 -16 M${x + 8} 690 l2 -20 M${x + 16} 690 l-4 -14`), 2, 'sageDk');
     P.both(rect(-20, 700, W + 40, 70), 'cream', 4); P.tone(rect(-20, 700, W + 40, 70), 'skinDot', { from: [0, 700, 0.0], to: [0, 770, 0.35], bbox: [0, 700, W, 770] }, 6);
-    // the path leaves the lane and climbs to the crest, narrowing as it goes; cut square at the lane's edge, its fill
-    // just covering the edge line so the two run together
-    const pts = WALK.pts, into = pts.findIndex((q) => q[1] < 740);
-    ctx.save(); P.clip(rect(-50, -50, W + 100, 752));
-    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2] + 5); }
-    ctx.restore(); ctx.save(); P.clip(rect(-50, -50, W + 100, 755));
-    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2], 'cream'); }
-    ctx.restore();
+    // the near stretch, on the near hill only, cut square at the lane's edge with its fill just covering the edge line
+    band(svg(`${NEAR} L1700 702 L-100 702 Z`), svg(`${NEAR} L1700 705 L-100 705 Z`));
   });
   // he walks at a steady pace, backlit into a silhouette as he nears the sun; past the crest only what is above it shows
   lit(L.map((v) => v * lerp(1, 0.35, clamp((lt - 2.5) / 4.5))), () => {
