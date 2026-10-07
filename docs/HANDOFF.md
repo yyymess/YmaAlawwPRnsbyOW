@@ -15,6 +15,7 @@ A parody music video, **"Engineer's Paradise"**: "Gangsta's Paradise" by way of 
 
 - 80.024 BPM, beat period 0.74978 s, first beat at 0.689 s. `data/audio.json` (beat grid, sections, envelopes, onsets) and `data/lyrics.json` (81 lines, 680 words with start and end times) were made once by `analysis/` (Python with uv: demucs, librosa, whisper alignment). Only rerun it if the audio changes.
 - Sections: intro 0–21.7, verse 1 –57.7, chorus 1 –81.7, verse 2 –123.7, chorus 2 –147.6, verse 3 –189.6, chorus 3 –213.6, bridge –237.6, outro –278.6.
+- Harmony, read off the demucs bass and other stems: Suno did not use the Cm–Ab–Fm–G loop the style prompt asked for. Verses and choruses are Pachelbel's Canon in E♭ major, one chord every two beats, four bars round. The verses run Eb – Bb/D – Cm – Bb – Ab – Eb/G – Fm – Bb, with the bass stepping down Eb D C Bb Ab G F Bb. The choruses run Eb – Bb/D – Cm – Gm – Ab – Eb/G – Fm – Bb, which is the Canon with Fm standing in for its second Ab. Gangsta's Paradise is a two-bar Ab–F–G–C loop in C minor, so the song reads as the Canon more than as the original. Listeners notice.
 - A section whose vocal starts with a pickup cuts on the beat before its first word, never before the previous line has ended (`beatCut`/`cut` in `app/src/kit/props.js`, `app/src/timeline.js`). Scenes find lyric lines by text (`f.L.get('soda now')`) and never hard-code times, so the picture stays locked to the song.
 
 ## How it is built
