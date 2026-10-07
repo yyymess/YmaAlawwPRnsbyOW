@@ -1,13 +1,13 @@
 // Outro — The Choir (docs/TREATMENT.md). A chapel of arches; a men's choir of engineers, each holding his
 // phone up to his face, lit from below. Cables join the phones; he reads its code, cleaner than his; it even
 // wrote the tests; the old reviewer finds no nit and caps his red pen; the arches multiply into a nave. On
-// "Accept all." every phone turns round to show the same button and he presses his. Then the Valley at dusk:
-// he walks off down the lane and the title comes back.
+// "Accept all." every phone turns round to show the same button and he presses his. Then the Valley at sunset:
+// he walks up the path and over the ridge as the sun goes down behind it, and the title comes back.
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame, beatCut } from '../kit/props.js';
-import { redPen, scroll, begin, end, star, platter } from '../kit/things.js';
+import { redPen, scroll, begin, end, star, moon, platter } from '../kit/things.js';
 import { fist, sleeveArm } from './verse1.js';
 
 const blinkAt = (t, k = 0) => { const v = (t * 0.41 + k * 0.13) % 1; return v > 0.965 ? 1 - Math.abs(v - 0.982) / 0.017 : 0; };
@@ -191,35 +191,96 @@ function cardStunt(P, f, t, lt, L, dur) {
   if (cl > 0) { P.ctx.save(); P.alpha(ease.inOutCubic(cl)); P.fill(rect(0, 0, W, H), 'night'); P.ctx.restore(); }
 }
 
-// ---- the Valley at dusk: he walks away down the lane; the title returns --------------------------------------------------
+// ---- the Valley at dusk: he walks up the path and over the ridge, into the setting sun --------------------------------
+// The hour is one parameter of time: the sun sinks behind the far ridge, the sky goes from gold to plum to night, and
+// the land is printed in the light of the moment: every palette colour multiplied by it (lit), so it warms, then darkens,
+// as one flat poster would. Sky and sun keep their own colours. He walks at one steady pace, his feet keeping step with
+// the ground, smaller as he climbs, and goes over the crest just as the sun does.
+const rgb = (c) => { const h = (C[c] ?? c).slice(1); return [0, 2, 4].map((i) => parseInt(h.length === 3 ? h[i / 2] + h[i / 2] : h.slice(i, i + 2), 16) / 255); };
+const hex = (v) => '#' + v.map((x) => Math.round(clamp(x) * 255).toString(16).padStart(2, '0')).join('');
+const hour = (ks, t) => {   // keyframes [[t, value]] of colours, [r, g, b] or numbers, eased between
+  let i = 1; while (i < ks.length - 1 && t > ks[i][0]) i++;
+  const [t0, a] = ks[i - 1], [t1, b] = ks[i], k = ease.inOutSine(clamp((t - t0) / (t1 - t0)));
+  if (typeof a === 'string') { const p = rgb(a), q = rgb(b); return hex(p.map((v, j) => lerp(v, q[j], k))); }
+  return Array.isArray(a) ? a.map((v, j) => lerp(v, b[j], k)) : lerp(a, b, k);
+};
+function lit(L, draw) {   // draw with the whole palette lit by L = [r, g, b]
+  const saved = { ...C };
+  try { for (const k in saved) C[k] = hex(rgb(saved[k]).map((v, i) => v * L[i])); draw(); } finally { Object.assign(C, saved); }
+}
+const LAND = [[0, [1.0, 0.92, 0.8]], [4, [0.98, 0.8, 0.64]], [7, [0.86, 0.58, 0.48]], [9.2, [0.54, 0.4, 0.45]], [11.5, [0.3, 0.26, 0.37]]];
+const SUN = [[0, [1, 1, 1]], [4, [1, 0.88, 0.72]], [7, [1, 0.68, 0.5]], [9.7, [0.95, 0.5, 0.38]]];
+const SKY = [[0, '#f0d9a8'], [4, '#efc39a'], [7, '#d98f7f'], [9.2, '#7f5266'], [11.5, '#2b293d']];
+const GLOW = [[0, '#e6c77f'], [4, '#f0a860'], [7, '#e8743f'], [9.2, '#c24a36'], [11.5, '#5e2a36']];
+const RIDGE = 'M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520';   // the far hill's crest; the sun sets behind it
+const ABOVE_RIDGE = 'M-100 -20 L1700 -20 L1700 520 C1100 470 900 545 640 520 C420 500 200 470 -100 560 Z';
+const SUN_X = 1120, SUN_R = 200, sunY = (lt) => 280 + 44 * lt;   // clear of the ridge at first, half set at ~5 s, gone by ~9.7 s
+// his path: along the lane, up the hill and over the crest under the sun (x always increasing, so he never turns round);
+// each sample keeps its scale (smaller as he climbs away) and the distance walked to reach it in the figure's own units
+const WALK = (() => {
+  const cub = (a, b, c, d, u) => { const v = 1 - u; return v * v * v * a + 3 * v * v * u * b + 3 * v * u * u * c + u * u * u * d; };
+  const pts = [];
+  for (let i = 0; i <= 240; i++) { const u = i / 240, y = cub(748, 752, 590, 507.5, u); pts.push([cub(430, 780, 900, 1100, u), y, 0.36 * (y - 464.6) / 283.4]); }
+  const crest = pts.length - 1, sc = pts[crest][2];
+  for (let i = 1; i <= 60; i++) { const v = i / 60; pts.push([1100 + 44 * v, 507.5 + 70 * v * (0.6 + 0.4 * v), sc * (1 - 0.3 * v)]); }   // down the far side, out of sight
+  pts[0].push(0);
+  for (let i = 1; i < pts.length; i++) { const [x0, y0, s0] = pts[i - 1], [x1, y1, s1] = pts[i]; pts[i].push(pts[i - 1][3] + Math.hypot(x1 - x0, y1 - y0) / ((s0 + s1) / 2)); }
+  return { pts, crest };
+})();
+const STRIDE = 820, CREST_AT = 7.0;   // heroWalk's planted foot covers 820 units per cycle; he reaches the crest at 7 s
+const CADENCE = WALK.pts[WALK.crest][3] / (STRIDE * CREST_AT);   // walk cycles per second, steady from the first frame
+function walkAt(lt) {   // [x, y, scale, past the crest] after lt seconds of walking
+  const d = STRIDE * CADENCE * lt, Q = WALK.pts; let lo = 0, hi = Q.length - 1;
+  if (d >= Q[hi][3]) return [Q[hi][0], Q[hi][1], Q[hi][2], true];
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (Q[m][3] <= d) lo = m; else hi = m; }
+  const k = (d - Q[lo][3]) / (Q[hi][3] - Q[lo][3]);
+  return [lerp(Q[lo][0], Q[hi][0], k), lerp(Q[lo][1], Q[hi][1], k), lerp(Q[lo][2], Q[hi][2], k), lo >= WALK.crest];
+}
+
 function valleyEnd(P, f, t, lt) {
-  const ctx = P.ctx, dur = f.end - (t - lt);
-  P.fill(rect(0, 0, W, H), 'rose');
-  P.tone(rect(0, 0, W, 520), 'plum', { from: [800, 0, 0.6], to: [800, 520, 0], bbox: [0, 0, W, 520] }, 8);
-  const r = rng(3); for (let i = 0; i < 14; i++) star(P, r() * W, 30 + r() * 240, 5, t * 2 + i);
-  const sink = ease.inOutSine(clamp(lt / (dur - 1.5)));
-  P.tone(rect(0, 0, W, 560), 'night', { from: [800, 0, 0.55 * sink], to: [800, 560, 0], bbox: [0, 0, W, 560] }, 8);   // dusk deepening
-  P.halo(1120, 520 + 70 * sink, 230, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.35);
-  P.both(svg('M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520 L1700 900 L-100 900 Z'), 'ochre', 4);
-  campus(P, 380, 532, 0.5);
-  // the road along the ridge, and the robo-taxi gliding along it the other way, five stars on its door
-  P.fill(rect(-20, 566, W + 40, 16), 'sepia'); P.line(svg('M-20 566 L1620 566 M-20 582 L1620 582'), 2.5);
-  const rx = lerp(1750, -250, clamp((lt - 0.3) / 3.6));
-  if (rx > -240 && rx < 1740) { robotaxi(P, rx, 578, 0.3, t, -1); P.both(rect(rx - 44, 578 - 0.3 * 150, 88, 22, 6), 'cream', 2); P.text('★★★★★', rx, 578 - 0.3 * 150 + 16, { size: 15, color: 'gold' }); }
-  P.both(svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z'), 'sageDk', 4);
-  P.tone(svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z'), 'hoodDot', { from: [800, 620, 0.1], to: [800, 900, 0.5], bbox: [0, 580, W, H] }, 7);
-  tree(P, 150, 650, 0.9, 2); cypress(P, 250, 655, 0.8); cypress(P, 1290, 640, 0.7); tree(P, 1420, 645, 0.8, 5);
-  P.both(rect(-20, 700, W + 40, 70), 'sepia', 4);
-  // a path winds from the lane up the hill to the ridge below the sun; he walks away along it, smaller as he goes
-  const B = (u) => { const a = [600, 742], b = [1180, 730], c = [520, 640], d = [1060, 584], v = 1 - u; return [v * v * v * a[0] + 3 * v * v * u * b[0] + 3 * v * u * u * c[0] + u * u * u * d[0], v * v * v * a[1] + 3 * v * v * u * b[1] + 3 * v * u * u * c[1] + u * u * u * d[1]]; };
-  const segs = []; for (let i = 0; i < 40; i++) segs.push([B(i / 40), B((i + 1) / 40), lerp(78, 8, i / 40)]);
-  for (const [a, b, wd] of segs) P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), wd + 5);
-  for (const [a, b, wd] of segs) P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), wd, 'sepia');
-  const w = ease.inOutSine(clamp(lt / (dur - 2.2))), [px, py] = B(w), [qx] = B(Math.min(1, w + 0.01)), hs = lerp(0.42, 0.09, Math.pow(w, 0.8));
-  ctx.save(); ctx.translate(px, py); if (qx < px) ctx.scale(-1, 1); heroWalk(P, 0, 0, hs, lt * 6, { hood: 'teal' }); ctx.restore();
-  // the fence
-  for (let x = -40; x < W + 160; x += 160) P.both(rect(x - 11, 770, 22, 130, 6), 'cream', 3);
-  P.both(rect(-20, 800, W + 40, 14, 4), 'cream', 3); P.both(rect(-20, 846, W + 40, 14, 4), 'cream', 3);
+  const ctx = P.ctx, L = hour(LAND, lt), sy = sunY(lt);
+  // the sky: its colour of the hour, a glow on the horizon round the sun, night coming down from the top
+  P.fill(rect(0, 0, W, H), hour(SKY, lt));
+  const gw = hour([[0, 0.5], [6, 0.8], [9.2, 0.55], [11.5, 0.25]], lt);
+  P.tone(rect(0, 0, W, 600), hour(GLOW, lt), { from: [SUN_X, 520, gw], to: [SUN_X + 1000, 520, 0], radial: true, bbox: [0, 0, W, 600] }, 8);
+  const dusk = hour([[0, 0], [5, 0.12], [9.2, 0.55], [11.5, 0.85]], lt);
+  if (dusk > 0.04) P.tone(rect(0, 0, W, 600), '#1b1a2c', { from: [800, 0, dusk], to: [800, 560, 0], bbox: [0, 0, W, 600] }, 8);
+  const night = clamp((lt - 7.6) / 2.2);   // the stars and a new moon come out once the sun is down
+  if (night > 0) { ctx.save(); P.alpha(night); const r = rng(3); for (let i = 0; i < 16; i++) star(P, r() * W, 30 + r() * 300, 5, t * 2 + i); moon(P, 250, 150, 34); ctx.restore(); }
+  // the sun, the great halo of the intro's dawn, reddening as it sinks behind the far ridge
+  const sunFade = clamp((9.9 - lt) / 1.2);
+  if (sunFade > 0) lit(hour(SUN, lt), () => { P.halo(SUN_X, sy, SUN_R, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.4 * sunFade); ctx.save(); P.alpha(sunFade); P.beads(SUN_X, sy, SUN_R + 30, 36, 6, 'goldLt', f.kick); ctx.restore(); });
+  // the land in the light of the hour
+  const [px, py, hs, over] = walkAt(lt);
+  lit(L, () => {
+    P.both(svg(`${RIDGE} L1700 900 L-100 900 Z`), 'ochre', 4);
+    campus(P, 380, 532, 0.5);
+    // the road along the ridge, and the robo-taxi gliding along it the other way, five stars on its door
+    P.fill(rect(-20, 566, W + 40, 16), 'sepia'); P.line(svg('M-20 566 L1620 566 M-20 582 L1620 582'), 2.5);
+    const rx = lerp(1750, -250, clamp((lt - 0.3) / 3.6));
+    if (rx > -240 && rx < 1740) { robotaxi(P, rx, 578, 0.3, t, -1); P.both(rect(rx - 44, 578 - 0.3 * 150, 88, 22, 6), 'cream', 2); P.text('★★★★★', rx, 578 - 0.3 * 150 + 16, { size: 15, color: 'gold' }); }
+    const near = svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z');
+    P.both(near, 'sageDk', 4); P.tone(near, 'hoodDot', { from: [800, 620, 0.1], to: [800, 900, 0.5], bbox: [0, 580, W, H] }, 7);
+    tree(P, 150, 650, 0.9, 2); cypress(P, 250, 655, 0.8); cypress(P, 1290, 640, 0.7); tree(P, 1420, 645, 0.8, 5);
+    P.both(rect(-20, 700, W + 40, 70), 'sepia', 4);
+    // the path leaves the lane and climbs to the crest, narrowing as it goes; its fill runs on into the lane over the edge
+    const pts = WALK.pts, off = pts.findIndex((q) => q[1] < 700), into = pts.findIndex((q) => q[1] < 728);
+    for (let i = off; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2] + 5); }
+    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2], 'sepia'); }
+  });
+  // he walks at a steady pace, backlit into a silhouette as he nears the sun; past the crest only what is above it shows
+  lit(L.map((v) => v * lerp(1, 0.35, clamp((lt - 2.5) / 4.5))), () => {
+    ctx.save(); if (over) ctx.clip(svg(ABOVE_RIDGE));
+    heroWalk(P, px, py, hs, Math.PI * 2 * CADENCE * lt, { hood: 'teal' });
+    ctx.restore();
+  });
+  // the campus works on into the night: its windows light up one by one
+  if (lt > 8.2) { const r = rng(11); ctx.save(); ctx.translate(380, 532); ctx.scale(0.5, 0.5); for (let fl = 0; fl < 2; fl++) for (let k = 0; k < 12; k++) { const on = clamp((lt - 8.2 - r() * 2.2) / 0.25), dark = r() < 0.25; if (on <= 0 || dark || (fl === 1 && (k === 5 || k === 6))) continue; ctx.save(); P.alpha(on); P.fill(rect(-200 + k * 34 + (k ? 4 : 3), -166 + fl * 84, k ? 26 : 25, 76), 'goldLt'); ctx.restore(); } ctx.restore(); }
+  // the fence, nearest and darkest
+  lit(L.map((v) => v * 0.82), () => {
+    for (let x = -40; x < W + 160; x += 160) P.both(rect(x - 11, 770, 22, 130, 6), 'cream', 3);
+    P.both(rect(-20, 800, W + 40, 14, 4), 'cream', 3); P.both(rect(-20, 846, W + 40, 14, 4), 'cream', 3);
+  });
   posterFrame(P);
   // the title, unfurling; the credit
   const un = ease.outCubic(clamp((lt - 1.2) / 2.0));

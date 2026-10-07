@@ -33,4 +33,4 @@ Where each shot is in the video, to point at things during review. Times are m:s
 | 3:33 | bridge | the almanac: 26 horses in 1915, 3 in 1960; the retraining class; the glue works; GLUE CODE |
 | 3:56 | outro | the choir with phones, cables joining them; ITS vs MINE; the tests; the reviewer, LGTM |
 | 4:18 | outro | the nave; on "Accept all." every phone shows the same button and he presses his |
-| 4:25 | outro | the Valley at dusk: he walks away up the path, the title and credits, fade to black |
+| 4:25 | outro | the Valley at sunset: he walks up the path and over the ridge as the sun sets behind it; dusk, the campus lights up; the title and credits, fade to black |
