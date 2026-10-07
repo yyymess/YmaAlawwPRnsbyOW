@@ -124,42 +124,60 @@ export function campus(P, x, y, s) {
   ctx.restore();
 }
 
+// its canopies, left to right: [width, rise of the peak over its eave, lift of the eave]. They swell towards a
+// double-height pair two thirds along (the atrium, its glass taller under a raised eave), then settle before the prow.
+const CANOPIES = [[200, 46, 0], [206, 50, 0], [212, 54, 0], [216, 58, 0], [226, 66, 0], [252, 84, 22], [232, 72, 22], [186, 54, 0]];
 /**
  * The campus as it is now: a megastructure lying low along the ridge, after the new headquarters of the last few years.
  * A row of tent-like canopies clad in silver solar scales, each with a glazed clerestory under its peak, over one long
  * ribbon of dark glass on a concrete plinth; a sharp prow at the end, a column under it, a nameless slab of a sign.
  * Austere where the old campus was whimsical: no slide, no bikes, no roof garden. (x, y) is the left end of its base;
- * o.n canopies; o.glow 0..1 the light in its glass at night (in raw colours, so a scene's palette dimming leaves it be).
+ * o.n how many of its canopies; o.glow 0..1 the light in its glass at night (in raw colours, so a scene's palette dimming leaves it be).
  */
 export function megacampus(P, x, y, s, o = {}) {
-  const ctx = P.ctx, n = o.n ?? 8, CW = 212, EAVE = -92, PEAK = -152, FB = -82, GB = -16, b = n * CW, tip = b + 96;
-  const lw = Math.max(1.3, 3.5 * s) / s;
+  const ctx = P.ctx, EAVE = -92, GB = -16, lw = Math.max(1.3, 3.5 * s) / s, g = o.glow ?? 0;
+  let a = 0; const cs = CANOPIES.slice(0, o.n ?? CANOPIES.length).map(([w, rise, lift]) => { const c = { a, w, m: a + w / 2, e: EAVE - lift, pk: EAVE - lift - rise, fb: EAVE - lift + 10 }; a += w; return c; });
+  const b = a, last = cs[cs.length - 1], tip = b + 80, top = Math.min(...cs.map((c) => c.pk)), fbTop = Math.min(...cs.map((c) => c.fb));
+  const fbAt = (gx) => (cs.find((c) => gx < c.a + c.w) ?? last).fb;   // the roof's underside, the top of the glass, at gx
   ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
-  const roof = new Path2D(); roof.moveTo(-40, FB); roof.lineTo(-40, EAVE);
-  for (let i = 0; i < n; i++) { const a = i * CW; roof.quadraticCurveTo(a + CW * 0.3, EAVE - 24, a + CW / 2, PEAK); roof.quadraticCurveTo(a + CW * 0.7, EAVE - 24, a + CW, EAVE); }   // broad tents, gently hollowed
-  roof.lineTo(tip, EAVE + 4); roof.lineTo(tip - 22, FB); roof.closePath();
-  const clere = new Path2D(); for (let i = 0; i < n; i++) { const m = i * CW + CW / 2; clere.moveTo(m + 3, PEAK + 12); clere.lineTo(m + 3, EAVE + 1); clere.lineTo(m + CW * 0.27, EAVE + 1); clere.closePath(); }
-  const glass = rect(0, FB, b + 40, GB - FB), panes = new Path2D(), g = o.glow ?? 0;
-  for (let gx = 0; gx < b + 40; gx += 26) panes.rect(gx + 2.5, FB + 3, 21, GB - FB - 6);
+  // the roof: broad tents, gently hollowed, stepping up over the double-height pair; its underside steps with it
+  const roof = new Path2D(); roof.moveTo(-40, cs[0].fb); roof.lineTo(-40, cs[0].e); roof.lineTo(0, cs[0].e);
+  cs.forEach((c, i) => {
+    const k = (c.e - c.pk) / 60;
+    roof.quadraticCurveTo(c.a + c.w * 0.3, c.e - 24 * k, c.m, c.pk); roof.quadraticCurveTo(c.a + c.w * 0.7, c.e - 24 * k, c.a + c.w, c.e);
+    if (cs[i + 1] && cs[i + 1].e !== c.e) roof.lineTo(c.a + c.w, cs[i + 1].e);
+  });
+  roof.lineTo(tip, last.e + 4); roof.lineTo(tip - 22, last.fb);
+  for (let i = cs.length - 1; i >= 0; i--) { roof.lineTo(cs[i].a + cs[i].w, cs[i].fb); roof.lineTo(cs[i].a, cs[i].fb); }
+  roof.lineTo(-40, cs[0].fb); roof.closePath();
+  const clere = new Path2D(), cy = (c, gx) => c.pk + 12 + ((gx - c.m - 3) / (c.w * 0.27 - 3)) * (c.e - c.pk - 11);
+  cs.forEach((c) => { clere.moveTo(c.m + 3, c.pk + 12); clere.lineTo(c.m + 3, c.e + 1); clere.lineTo(c.m + c.w * 0.27, c.e + 1); clere.closePath(); });
+  const glass = new Path2D(); glass.moveTo(0, GB); glass.lineTo(0, cs[0].fb);
+  cs.forEach((c, i) => { glass.lineTo(c.a + c.w, c.fb); if (cs[i + 1]) glass.lineTo(c.a + c.w, cs[i + 1].fb); });
+  glass.lineTo(b + 40, last.fb); glass.lineTo(b + 40, GB); glass.closePath();
+  const panes = new Path2D(); for (let gx = 0; gx < b + 40; gx += 26) { const f = fbAt(gx + 13); panes.rect(gx + 2.5, f + 3, 21, GB - f - 6); }
+  const gbb = [0, fbTop, b + 40, GB];
   // the plinth and the glass ribbon, shadowed under the deep eave
   P.both(rect(-40, GB, tip + 60, -GB), '#bdb8ae', lw);
-  P.fill(glass, 'navyDk'); P.tone(glass, 'denim', { from: [0, GB, 0.5], to: [600, FB, 0], bbox: [0, FB, b + 40, GB] }, 5);
-  for (let gx = 0; gx <= b + 40; gx += 26) P.line(svg(`M${gx} ${FB} L${gx} ${GB}`), lw * 0.5, 'char');
-  P.tone(glass, '#000', { from: [0, FB, 0.55], to: [0, FB + 26, 0], bbox: [0, FB, b + 40, GB] }, 5); P.line(glass, lw);
+  P.fill(glass, 'navyDk'); P.tone(glass, 'denim', { from: [0, GB, 0.5], to: [600, fbTop, 0], bbox: gbb }, 5);
+  for (let gx = 0; gx <= b + 40; gx += 26) P.line(svg(`M${gx} ${fbAt(Math.min(gx, b + 39))} L${gx} ${GB}`), lw * 0.5, 'char');
+  ctx.save(); P.clip(glass); for (const c of cs) P.tone(rect(c.a, c.fb, c.w + (c === last ? 40 : 0), 26), '#000', { from: [0, c.fb, 0.55], to: [0, c.fb + 26, 0], bbox: [c.a, c.fb, c.a + c.w + 40, c.fb + 26] }, 5); ctx.restore();
+  P.line(glass, lw);
   if (g > 0) { ctx.save(); P.alpha(g); P.fill(panes, '#e3f0ec'); ctx.restore(); }   // the light inside, cold and even: never switched off
   // the canopies: silver scales, the clerestories, the fascia's edge
   P.fill(roof, 'silver');
   ctx.save(); P.clip(roof);
-  const sc = new Path2D(); for (let ry = PEAK + 6, row = 0; ry < FB; ry += 8, row++) for (let rx = -40 + (row % 2) * 7; rx < tip; rx += 14) { sc.moveTo(rx - 7, ry); sc.arc(rx, ry, 7, Math.PI, 0, true); }
+  const sc = new Path2D(); for (let ry = top + 6, row = 0; ry < -72; ry += 8, row++) for (let rx = -40 + (row % 2) * 7; rx < tip; rx += 14) { sc.moveTo(rx - 7, ry); sc.arc(rx, ry, 7, Math.PI, 0, true); }
   P.line(sc, lw * 0.32, '#a9a49a');
-  P.tone(roof, 'grey', { from: [0, PEAK, 0], to: [0, FB, 0.35], bbox: [-40, PEAK, tip, FB] }, 5);
-  P.fill(clere, 'navyDk'); P.tone(clere, 'denim', { from: [0, PEAK, 0.4], to: [0, EAVE, 0], bbox: [-40, PEAK, tip, EAVE] }, 4);
+  P.tone(roof, 'grey', { from: [0, top, 0], to: [0, -82, 0.35], bbox: [-40, top, tip, -72] }, 5);
+  P.fill(clere, 'navyDk'); P.tone(clere, 'denim', { from: [0, top, 0.4], to: [0, EAVE, 0], bbox: [-40, top, tip, EAVE] }, 4);
   if (g > 0) { ctx.save(); P.alpha(g * 0.85); P.fill(clere, '#cfe4e0'); ctx.restore(); }
-  for (let i = 0; i < n; i++) { const m = i * CW + CW / 2; P.line(svg(`M${m + 3} ${PEAK + 12} L${m + 3} ${EAVE} M${m + 20} ${EAVE - 14} L${m + 20} ${EAVE} M${m + 37} ${EAVE - 4} L${m + 37} ${EAVE}`), lw * 0.4, 'char'); }
+  for (const c of cs) for (const f of [0.34, 0.67]) { const gx = c.m + 3 + f * (c.w * 0.27 - 3); P.line(svg(`M${gx} ${cy(c, gx)} L${gx} ${c.e}`), lw * 0.4, 'char'); }
   ctx.restore();
-  P.line(roof, lw * 1.2); P.line(svg(`M-40 ${EAVE + 2} L${b} ${EAVE + 2} L${tip} ${EAVE + 5}`), lw * 0.5);
+  P.line(roof, lw * 1.2);
+  const fl = new Path2D(); fl.moveTo(-40, cs[0].e + 2); for (const c of cs) { fl.lineTo(c.a, c.e + 2); fl.lineTo(c.a + c.w, c.e + 2); } fl.lineTo(tip, last.e + 5); P.line(fl, lw * 0.5);
   // the prow's column, light poles along the plinth, the slab of a sign
-  P.line(svg(`M${tip - 28} ${FB} L${tip - 28} ${GB}`), lw * 1.6, 'char');
+  P.line(svg(`M${tip - 28} ${last.fb} L${tip - 28} ${GB}`), lw * 1.6, 'char');
   for (let px = 120; px < b; px += 320) { P.line(svg(`M${px} ${GB} L${px} ${GB - 46}`), lw * 0.7); P.line(svg(`M${px - 8} ${GB - 46} L${px + 8} ${GB - 46}`), lw * 1.2); }
   P.both(rect(b - 120, -64, 24, 64), 'charDk', lw); P.line(svg(`M${b - 116} -40 L${b - 100} -40`), lw * 0.6, 'silver');
   ctx.restore();
