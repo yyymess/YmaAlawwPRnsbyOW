@@ -85,15 +85,38 @@ const fill = (P, w, h, c, tone, a = 0.4) => { P.fill(rect(-10, -10, w + 20, h + 
 // ---- 1. MONDAY: the fridge with its Comic Sans sign; a fella with a plan ------------------------------------------
 function fridge(P, f, L, t, w, h) {
   const ctx = P.ctx;
-  fill(P, w, h, 'mint', 'mintDk', 0.4);
-  for (let i = 0; i < 9; i++) P.line(svg(`M${i * 150 - 40} 0 L${i * 150 + 60} ${h}`), 2, 'mintDk');
-  // the fridge: a glass door, shelves of red cans
-  P.both(rect(120, 30, 420, 560, 22), 'cream', 5);
-  P.both(rect(150, 60, 360, 470, 12), 'glass', 4);
-  ctx.save(); P.clip(rect(150, 60, 360, 470, 12));
-  for (let r = 0; r < 3; r++) { P.line(svg(`M150 ${200 + r * 150} L510 ${200 + r * 150}`), 4); for (let k = 0; k < 5; k++) sodaCan(P, 190 + k * 68, 196 + r * 150, 0.5); }
-  P.line(svg('M180 80 L260 520'), 6, 'cream'); ctx.restore();
-  P.both(rect(520, 200, 18, 160, 8), 'silver', 3);
+  // the office micro-kitchen: a tiled backsplash, open shelving with jars of snacks, a counter with an espresso machine,
+  // a stack of cups and a bowl of fruit; the drinks fridge on the left
+  fill(P, w, h, 'mint', 'mintDk', 0.25);
+  const bs = rect(-10, 250, w + 20, 200); P.fill(bs, 'cream');
+  for (let y = 250; y < 450; y += 34) { P.line(svg(`M-10 ${y} L${w + 10} ${y}`), 1.5, 'silver'); for (let x = ((y / 34) % 2) * 34 - 10; x < w + 10; x += 68) P.line(svg(`M${x} ${y} L${x} ${y + 34}`), 1.5, 'silver'); }
+  P.line(svg(`M-10 250 L${w + 10} 250`), 3);
+  P.both(rect(560, 150, 680, 14, 3), 'ochre', 3); for (const bx of [600, 1200]) P.both(svg(`M${bx} 164 L${bx} 190 L${bx + 18} 164 Z`), 'sepiaDk', 2);
+  [['gold', 640], ['rose', 720], ['sage', 800], ['ochre', 1100], ['plum', 1170]].forEach(([c, x]) => { P.both(rect(x - 26, 80, 52, 70, 8), 'glass', 2.5); P.fill(rect(x - 22, 104, 44, 42, 4), c); P.both(rect(x - 28, 72, 56, 12, 3), 'charDk', 2); });
+  const ct = rect(-10, 450, w + 20, 140); P.fill(ct, 'sepia'); P.tone(ct, 'sepiaDk', { from: [0, 460, 0], to: [0, 590, 0.5], bbox: [540, 450, w, 590] }, 6); P.line(ct, 3); P.both(rect(-10, 440, w + 20, 16, 3), 'silver', 3);
+  for (let dx = 610; dx < w; dx += 170) { P.line(svg(`M${dx} 470 L${dx} 590`), 2); P.both(rect(dx + 60, 484, 40, 8, 3), 'silver', 2); }
+  ctx.save(); ctx.translate(1100, 440);   // the espresso machine
+  P.both(rect(-80, -150, 160, 150, 10), 'silver', 3); P.both(rect(-70, -140, 140, 40, 6), 'charDk', 2); P.fill(ell(-40, -120, 5), 'red'); P.fill(ell(-20, -120, 5), 'mint');
+  P.both(rect(-40, -96, 80, 14, 4), 'charDk', 2); P.line(svg('M-20 -82 L-20 -60 M20 -82 L20 -60'), 4); P.both(svg('M-12 -2 L-16 -34 L16 -34 L12 -2 Z'), 'cream', 2); P.line(svg('M70 -120 L96 -126'), 5);
+  ctx.restore();
+  ctx.save(); ctx.translate(1230, 440); for (let k = 0; k < 5; k++) P.both(svg(`M-22 ${-k * 12} L-26 ${-k * 12 - 14} L26 ${-k * 12 - 14} L22 ${-k * 12} Z`), 'cream', 2); ctx.restore();
+  ctx.save(); ctx.translate(940, 440); P.both(svg('M-60 0 C-60 -30 60 -30 60 0 Z'), 'ochre', 3); for (const [fx, fy, fc] of [[-30, -28, 'red'], [0, -36, 'gold'], [28, -28, 'sage'], [-12, -46, 'red']]) { P.both(ell(fx, fy, 18), fc, 2); } P.line(svg('M0 -54 l4 -10'), 2.5); ctx.restore();
+  // the drinks fridge: a steel cabinet with a lit header and its badge, a glass door with a gasket, wire shelves with
+  // price-tag rails, cans in rows, a cold glow, the handle, the kick grille
+  P.both(rect(120, 20, 420, 580, 18), 'silver', 5); P.tone(rect(120, 20, 420, 580), 'grey', { from: [420, 20, 0], to: [540, 600, 0.5], bbox: [120, 20, 540, 600] }, 6);
+  P.both(rect(140, 32, 380, 34, 6), 'navy', 3); P.text('COLD DRINKS', 330, 57, { font: FONT.caps, weight: 700, size: 22, color: 'cream', tracking: 4 });
+  P.both(rect(146, 74, 368, 466, 12), 'charDk', 4); P.both(rect(154, 82, 352, 450, 8), 'glass', 2);
+  ctx.save(); P.clip(rect(154, 82, 352, 450, 8));
+  P.tone(rect(154, 82, 352, 450), 'cream', { from: [330, 82, 0.5], to: [330, 300, 0], bbox: [154, 82, 506, 532] }, 5);
+  for (let r = 0; r < 3; r++) {
+    const sy = 200 + r * 150;
+    for (let k = 0; k < 5; k++) sodaCan(P, 190 + k * 68, sy - 4, 0.5);
+    P.line(svg(`M154 ${sy} L506 ${sy}`), 4); P.line(svg(`M154 ${sy + 6} L506 ${sy + 6}`), 2, 'silver');
+    for (let k = 0; k < 5; k++) { P.both(rect(172 + k * 68, sy + 8, 36, 14, 2), 'cream', 1.5); P.line(svg(`M${178 + k * 68} ${sy + 15} l22 0`), 1.2, 'red'); }
+  }
+  P.line(svg('M180 90 L260 520'), 6, 'cream'); P.line(svg('M210 90 L280 400'), 2.5, 'cream'); ctx.restore();
+  P.both(rect(520, 190, 16, 190, 8), 'silver', 3); P.line(svg('M524 200 L524 370'), 1.5, 'cream');
+  P.both(rect(150, 548, 360, 40, 6), 'charDk', 3); for (let k = 0; k < 14; k++) P.line(svg(`M${166 + k * 25} 556 L${166 + k * 25} 580`), 2.5, 'grey');
   // the sign, hand-lettered in Comic Sans, taped to the glass
   const sg = wd(L, 0, 'sign'), su = ease.outBack(clamp((t - sg + 0.2) / 0.4));
   if (su > 0) {

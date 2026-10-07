@@ -211,11 +211,27 @@ const VARIANTS = {
         P.text('$', 140, 160, { size: 90, weight: 700, color: 'gold', stroke: 'line', strokeW: 6 });
       } else if (c === 1) {   // soda's fifty cents: the fridge became a vending machine
         fillBg(P, box, 'char', 'charDk', 0.5);
-        P.both(rect(120, 110, 400, 470, 18), 'red', 5); P.both(rect(150, 140, 230, 400, 10), 'night', 4);
-        for (let i = 0; i < 3; i++) for (let k = 0; k < 3; k++) sodaCan(P, 190 + k * 75, 240 + i * 130, 0.42);
-        P.both(rect(400, 160, 96, 120, 8), 'cream', 3); P.text('50¢', 448, 238, { font: FONT.display, size: 46, color: 'red' });
-        P.both(rect(430, 320, 40, 80, 6), 'silver', 3); P.line(svg('M450 335 L450 385'), 6);
-        const ct = word(lines, 2, 'cents'); if (t > ct) { const u = clamp((t - ct) / 0.6); P.both(ell(450, lerp(250, 340, u), 18, 6 + 12 * (1 - u)), 'gold', 3); }
+        // the vending machine: a lit header, a glass front on rows of spiral coils with price tags, the keypad and its
+        // display, coin slot and bill acceptor, the dark flap where the can drops; its glow on the floor
+        P.tone(ell(320, 590, 260, 22), '#000', { from: [320, 590, 0.6], to: [580, 590, 0], radial: true, bbox: [60, 568, 580, 612] }, 5);
+        P.both(rect(120, 96, 400, 490, 18), 'red', 5); P.tone(rect(120, 96, 400, 490), 'redDk', { from: [400, 96, 0], to: [520, 586, 0.5], bbox: [120, 96, 520, 586] }, 6);
+        P.both(rect(140, 108, 360, 42, 8), 'cream', 3); P.text('FIZZ', 320, 140, { font: FONT.caps, weight: 700, size: 30, color: 'red', tracking: 8 });
+        P.both(rect(150, 160, 236, 360, 8), 'night', 4);
+        P.ctx.save(); P.clip(rect(150, 160, 236, 360, 8));
+        for (let i = 0; i < 3; i++) {
+          const sy = 284 + i * 120;
+          for (let k = 0; k < 3; k++) { const cx = 190 + k * 75; for (let q = 0; q < 5; q++) P.line(svg(`M${cx - 26} ${sy - 6 - q * 3} C${cx - 10} ${sy - 14 - q * 3} ${cx + 10} ${sy + 2 - q * 3} ${cx + 26} ${sy - 6 - q * 3}`), 1.6, 'silver'); sodaCan(P, cx, sy - 8, 0.42); P.both(rect(cx - 18, sy + 2, 36, 14, 2), 'cream', 1.2); P.text('50¢', cx, sy + 13, { font: FONT.caps, weight: 700, size: 11, color: 'red' }); }
+          P.line(svg(`M150 ${sy + 18} L386 ${sy + 18}`), 3, 'grey');
+        }
+        P.tone(rect(150, 160, 236, 360), 'mint', { from: [268, 160, 0.4], to: [268, 300, 0], bbox: [150, 160, 386, 520] }, 5);
+        P.line(svg('M170 170 L240 510'), 5, 'cream'); P.ctx.restore();
+        P.both(rect(400, 160, 104, 120, 8), 'cream', 3); P.text('50¢', 452, 236, { font: FONT.display, size: 46, color: 'red' });
+        P.both(rect(410, 292, 84, 34, 4), 'night', 2.5); P.text('A2', 452, 316, { font: FONT.mono, size: 20, weight: 700, color: 'mint' });
+        for (let r2 = 0; r2 < 3; r2++) for (let k = 0; k < 3; k++) P.both(rect(414 + k * 28, 336 + r2 * 26, 22, 20, 4), 'silver', 2);
+        P.both(rect(430, 420, 40, 64, 6), 'silver', 3); P.line(svg('M450 432 L450 470'), 6);
+        P.both(rect(410, 496, 84, 16, 3), 'charDk', 2.5);
+        P.both(rect(170, 532, 196, 40, 6), 'charDk', 3); P.line(svg('M176 540 L360 540'), 2, 'grey');
+        const ct = word(lines, 2, 'cents'); if (t > ct && t < ct + 0.75) { const u = clamp((t - ct) / 0.6); P.both(ell(450, lerp(386, 446, ease.inCubic(u)), 4 + 14 * (1 - u), 18), 'gold', 3); }   // the coin turns edge-on into the slot
       } else if (c === 2) {   // adult supervision: the Manager enthroned
         fillBg(P, box, 'rose', 'redDk', 0.4);
         throne(P, 320, 690, 0.78);
