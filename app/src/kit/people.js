@@ -222,3 +222,62 @@ function holdObject(P, x, y, s, o, k) {
     P.both(T(`M${sx * 236} ${hy + 110} L${sx * 160} ${hy + 168} L${sx * 182} ${hy + 196} L${sx * 256} ${hy + 140} Z`), 'tealLt', lw);
   }
 }
+
+
+/**
+ * personBack(P, x, y, s, o): the same bust seen from behind, as an audience is: shoulders and collar, the neck, ears, the
+ * back of the head with its hair (a whorl at the crown) in o.hair style and o.hairColor; o.phone 'left'|'right' holds a
+ * phone up at that side, its screen (towards us) showing o.screen(P, w, h) if given. (x, y) the middle of the head.
+ */
+export function personBack(P, x, y, s, o = {}) {
+  const ctx = P.ctx, X = x, Y = y + 50 * s, T = at(X, Y, s), lw = Math.max(1.3, 4 * s), fc = Math.max(2.5, 5 * s), cell = Math.max(3, 7 * s);
+  const skin = o.skin ?? 'skin', dot = DOT[skin] ?? 'skinDot', hc = o.hairColor ?? 'hair', style = o.hair ?? 'short', col = o.color ?? 'navy', top = o.top ?? 'tee', strand = STRAND[hc] ?? '#6b5240';
+  const bb = [X - 460 * s, Y - 320 * s, X + 460 * s, Y + 900 * s];
+  // shoulders and back, the collar
+  const body = T(TORSO); P.fill(body, col); P.tone(body, '#000', { from: [X - 100 * s, Y, 0], to: [X + 430 * s, Y + 600 * s, 0.45], bbox: bb }, cell); P.line(body, lw * 1.5);
+  P.line(T('M0 330 L0 900'), lw * 0.5);   // the back seam
+  P.line(T('M-330 520 C-338 700 -338 900 -334 1250 M330 520 C338 700 338 900 334 1250'), lw * 0.7);
+  if (top === 'hoodie') { const hd = T('M-150 250 C-160 330 -110 420 0 440 C110 420 160 330 150 250 C100 270 -100 270 -150 250 Z'); P.fill(hd, col); P.tone(hd, '#000', { from: [X, Y + 250 * s, 0.1], to: [X + 150 * s, Y + 440 * s, 0.5], bbox: bb }, cell); P.line(hd, lw); P.line(T('M0 268 L0 436'), lw * 0.6); }
+  else if (top === 'shirt' || top === 'vest') P.both(T('M-70 250 C-40 236 40 236 70 250 L66 286 C30 276 -30 276 -66 286 Z'), top === 'vest' ? (o.shirt ?? 'shirt') : col, lw);
+  else P.line(T('M-62 262 C-30 250 30 250 62 262'), lw);
+  // the neck, ears
+  const neck = T('M-54 120 C-54 180 -50 230 -46 280 L46 280 C50 230 54 180 54 120 Z'); P.fill(neck, skin); P.tone(neck, dot, { from: [X, Y + 150 * s, 0.6], to: [X, Y + 270 * s, 0.1], bbox: bb }, fc); P.line(neck, lw * 0.8);
+  if (style !== 'long' && style !== 'wavy' && style !== 'bob') for (const sx of [-1, 1]) { const ear = T(`M${sx * 128} -16 C${sx * 162} -34 ${sx * 178} 0 ${sx * 168} 30 C${sx * 160} 58 ${sx * 146} 74 ${sx * 126} 70 Z`); P.both(ear, skin, lw); P.tone(ear, dot, { from: [X + sx * 128 * s, Y, 0], to: [X + sx * 170 * s, Y + 40 * s, 0.4], bbox: bb }, fc); }
+  // the back of the head
+  const head = T('M0 -246 C96 -244 150 -150 150 -40 C150 50 110 130 56 156 L-56 156 C-110 130 -150 50 -150 -40 C-150 -150 -96 -244 0 -246 Z');
+  P.fill(head, skin); P.tone(head, dot, { from: [X - 40 * s, Y - 100 * s, 0], to: [X + 150 * s, Y + 100 * s, 0.45], bbox: bb }, fc); P.line(head, lw * 1.2);
+  const H = {
+    short: 'M0 -256 C104 -254 162 -150 160 -40 C158 30 140 80 110 112 C80 100 40 96 0 104 C-40 96 -80 100 -110 112 C-140 80 -158 30 -160 -40 C-162 -150 -104 -254 0 -256 Z',
+    buzz: 'M0 -250 C98 -248 154 -150 154 -40 C154 30 136 76 108 104 C70 96 30 92 0 98 C-30 92 -70 96 -108 104 C-136 76 -154 30 -154 -40 C-154 -150 -98 -248 0 -250 Z',
+    bald: 'M-150 -40 C-152 20 -136 70 -110 104 C-70 96 -30 92 0 98 C30 92 70 96 110 104 C136 70 152 20 150 -40 C120 -30 100 -70 96 -110 C40 -96 -40 -96 -96 -110 C-100 -70 -120 -30 -150 -40 Z',
+    long: 'M0 -260 C110 -258 168 -150 166 -30 C166 100 180 260 172 400 L-172 400 C-180 260 -166 100 -166 -30 C-168 -150 -110 -258 0 -260 Z',
+    wavy: 'M0 -262 C112 -260 172 -150 170 -30 C168 80 196 160 180 240 C166 310 196 360 176 420 L-176 420 C-196 360 -166 310 -180 240 C-196 160 -168 80 -170 -30 C-172 -150 -112 -260 0 -262 Z',
+    bob: 'M0 -262 C112 -260 176 -150 176 -20 C176 70 172 130 162 168 L-162 168 C-172 130 -176 70 -176 -20 C-176 -150 -112 -260 0 -262 Z',
+  };
+  const shape = H[style] ?? (style === 'bun' || style === 'ponytail' || style === 'slick' || style === 'side' || style === 'messy' ? H.short : H.short);
+  const hp = T(shape);
+  if (style === 'buzz') { ctx.save(); P.alpha(0.75); P.fill(hp, hc); ctx.restore(); P.tone(hp, '#000', { from: [X, Y - 250 * s, 0.1], to: [X + 150 * s, Y + 100 * s, 0.4], bbox: bb }, fc); }
+  else { P.fill(hp, hc); P.tone(hp, '#000', { from: [X - 60 * s, Y - 240 * s, 0], to: [X + 160 * s, Y + 120 * s, 0.4], bbox: bb }, fc); P.line(hp, lw * 1.1); }
+  // the crown's whorl and the hair falling from it
+  if (style !== 'bald') {
+    const wy = style === 'long' || style === 'wavy' || style === 'bob' ? -200 : -170;
+    P.line(T(`M0 ${wy} C14 ${wy - 10} 16 ${wy + 12} 0 ${wy + 12} C-14 ${wy + 12} -18 ${wy - 8} -4 ${wy - 18}`), lw * 0.6, strand);
+    for (let k = 0; k < 6; k++) { const a = -0.5 + k * 0.6, ex = Math.cos(a + 1.2) * 140, ey = wy + 40 + Math.abs(Math.sin(a + 1.2)) * 230; P.line(T(`M${Math.cos(a) * 14} ${wy + Math.sin(a) * 14} Q${ex * 0.5 + 20} ${wy + 20} ${ex} ${Math.min(ey, style === 'long' || style === 'wavy' ? 380 : 90)}`), lw * 0.5, strand); }
+  } else P.line(T('M-60 -200 C-20 -224 30 -222 60 -196'), lw * 0.5, 'cream');
+  if (style === 'bun') { const bn = T('M-56 -232 C-62 -310 62 -310 56 -232 Z'); P.both(bn, hc, lw); P.line(T('M-40 -262 C-10 -280 20 -280 42 -260'), lw * 0.5, strand); P.both(T('M-58 -236 L58 -236 L56 -222 L-56 -222 Z'), 'rose', lw * 0.7); }
+  if (style === 'ponytail') { P.both(T('M-24 -150 L24 -150 L20 -128 L-20 -128 Z'), 'red', lw * 0.7); const tl = T('M-26 -130 C-50 -40 -40 80 -20 200 C-6 236 6 236 20 200 C40 80 50 -40 26 -130 Z'); P.both(tl, hc, lw); P.line(T('M-8 -110 C-18 0 -12 100 0 200 M10 -110 C18 0 14 100 6 190'), lw * 0.5, strand); }
+  // a phone held up to film the stage, its screen towards us
+  if (o.phone) {
+    const sx = o.phone === 'left' ? -1 : 1, px = sx * 120, py = -360;
+    const arm = T(`M${sx * 330} 700 C${sx * 300} 400 ${sx * 220} ${py + 260} ${px + sx * 20} ${py + 120} L${px - sx * 50} ${py + 140} C${sx * 150} ${py + 300} ${sx * 210} 420 ${sx * 220} 700 Z`);
+    P.fill(arm, col); P.tone(arm, '#000', { from: [X + sx * 150 * s, Y + py * s, 0.1], to: [X + sx * 330 * s, Y + 700 * s, 0.45], bbox: bb }, cell); P.line(arm, lw * 1.2);
+    const ph = T(rect(px - 62, py - 120, 124, 220, 20)); P.both(ph, 'black', lw);
+    const sc = [X + (px - 52) * s, Y + (py - 108) * s, 104 * s, 196 * s];
+    ctx.save(); P.clip(T(rect(px - 52, py - 108, 104, 196, 12))); P.fill(T(rect(px - 52, py - 108, 104, 196)), 'night');
+    if (o.screen) { ctx.save(); ctx.translate(sc[0], sc[1]); o.screen(P, sc[2], sc[3]); ctx.restore(); }
+    ctx.restore();
+    const hand = T(`M${px - 64} ${py + 40} C${px - 74} ${py + 70} ${px - 60} ${py + 110} ${px - 20} ${py + 116} L${px + 30} ${py + 116} C${px + 60} ${py + 110} ${px + 70} ${py + 80} ${px + 64} ${py + 50} Z`);
+    P.fill(hand, skin); P.tone(hand, dot, { from: [X + px * s, Y + (py + 40) * s, 0], to: [X + (px + 60) * s, Y + (py + 116) * s, 0.45], bbox: bb }, fc); P.line(hand, lw);
+    P.line(T(`M${px - 40} ${py + 60} L${px - 40} ${py + 100} M${px - 12} ${py + 64} L${px - 12} ${py + 108} M${px + 16} ${py + 64} L${px + 16} ${py + 106}`), lw * 0.5);
+  }
+}

@@ -3,8 +3,8 @@
 // the stage's apron. The keynote; the Emacs hook and TAB TAB TAB; the ghost town and the talking duck; the
 // tests falling like leaves; the ladder and the nine agents; laid off to a stall at the farmers' market.
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
-import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
-import { person } from '../kit/people.js';
+import { heroFront, heroPose, heroWalk, heroBack } from '../kit/hero.js';
+import { person, personBack } from '../kit/people.js';
 import { agentAngel, token, cherryTree, petal } from '../kit/props.js';
 import { begin, end, quill, scroll, star, globe, drawHand, cardboardBox, mug, snakePlant } from '../kit/things.js';
 import { duck, heart, cloud } from './verse1.js';
@@ -97,14 +97,18 @@ function keynote(P, f, L, t, w, h) {
   // the presenter, in a black tee with a headset, at stage left
   person(P, 230, 300, 0.36, { hair: 'buzz', top: 'tee', color: 'black', mouth: f.t < en ? 'smile' : 'grin', crop: 1250, look: [0.6, 0], blink: blinkAt(t), glasses: 'rect' });
   P.line(svg('M180 290 C170 330 190 360 220 352'), 3);
-  // the audience, backs of heads, phones up
-  const crowd = [['hair'], ['hairBr', 'long'], ['hairBl'], ['charDk'], ['teal'], ['hairAu', 'long'], ['hairGr'], ['hair'], ['hair', 'tail']];
-  for (let i = 0; i < 9; i++) {
-    const x = 70 + i * 150, y = 560 + (i % 2) * 20, [hc, cut] = crowd[i];
-    P.both(ell(x, y, 54, 60), hc, 4); P.both(rect(x - 90, y + 40, 180, 80, 30), ['navy', 'plum', 'char', 'teal'][i % 4], 4);
-    if (cut === 'long') P.both(svg(`M${x - 54} ${y} C${x - 54} ${y - 80} ${x + 54} ${y - 80} ${x + 54} ${y} L${x + 48} ${y + 92} C${x + 20} ${y + 102} ${x - 20} ${y + 102} ${x - 48} ${y + 92} Z`), hc, 4);   // long hair down her back
-    if (cut === 'tail') P.both(svg(`M${x - 12} ${y + 30} C${x - 18} ${y + 60} ${x - 10} ${y + 90} ${x} ${y + 104} C${x + 10} ${y + 90} ${x + 18} ${y + 60} ${x + 12} ${y + 30} Z`), hc, 3);
-    if (i % 3 === 1) { P.both(rect(x + 30, y - 70, 40, 74, 6), 'black', 3); P.fill(rect(x + 34, y - 66, 32, 66, 4), 'mint'); } }
+  // the audience from behind: backs of heads and shoulders, a few filming on their phones (the slide on their screens)
+  const crowd = [
+    { hair: 'short', top: 'hoodie', color: 'navy' }, { hair: 'long', hairColor: 'hairBr', top: 'tee', color: 'plum', phone: 'right' }, { hair: 'short', hairColor: 'hairBl', top: 'shirt', color: 'shirt' },
+    { hair: 'buzz', hairColor: 'charDk', top: 'tee', color: 'char', skin: 'skin5' }, null, { hair: 'wavy', hairColor: 'hairAu', top: 'tee', color: 'rose', phone: 'left' },
+    { hair: 'bald', top: 'shirt', color: 'denim', skin: 'skin3' }, { hair: 'bun', top: 'hoodie', color: 'plum', skin: 'skin4' }, { hair: 'ponytail', top: 'tee', color: 'navy', phone: 'right' },
+  ];
+  const slide = (P, w2, h2) => { P.fill(rect(0, 0, w2, h2), '#173130'); for (let k = 0; k < 6; k++) P.line(svg(`M${w2 * 0.12} ${h2 * (0.18 + k * 0.12)} l${w2 * (0.3 + ((k * 37) % 5) * 0.1)} 0`), Math.max(1, h2 * 0.03), k % 2 ? 'mint' : '#a6e8bf'); P.both(ell(w2 * 0.78, h2 * 0.2, w2 * 0.1), 'gold', 0.8); };
+  crowd.forEach((c, i) => {
+    const x = 70 + i * 150, y = 572 + (i % 2) * 18;
+    if (!c) { heroBack(P, x, y + 20, 0.36, {}); return; }   // he is in the audience too, hood up
+    personBack(P, x, y, 0.36, { ...c, screen: slide });
+  });
 }
 
 // ---- 2. Emacs: the pinky hooked on Control; then TAB, TAB, TAB, and Accept all, revealed like a relic --------------
