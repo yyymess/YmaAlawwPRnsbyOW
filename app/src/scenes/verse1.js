@@ -320,11 +320,13 @@ function elders(P, f, L, t) {
   // the reviewer: an icon, rising; the red pen his sceptre, the LGTM seal held back
   if (rise > 0) {
     ctx.save(); ctx.translate(0, (1 - rise) * 700);
+    const B = { x: 440, y: 250, s: 0.62 }, penArm = armPlan(B, 1, [702, 470]), sealArm = armPlan(B, -1, [236, 520]);   // elbows at his sides
     platter(P, 440, 210, 300);   // his halo a disk platter, as St IGNUcius wears it
+    upperArm(P, penArm, 'navy'); upperArm(P, sealArm, 'red');
     person(P, 440, 250, 0.62, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: true, mouth: 'flat', glasses: 'rect', fw: 1.06, crop: 900, blink: blinkAt(t + 3) });
     redPen(P, 700, 380, 0.75, 0.05);
-    fist(P, 702, 470, 0.9, 'red');   // his right hand round the pen
-    fist(P, 236, 520, 0.9, 'red', true); seal(P, 230, 462, 0.85, 'LGTM', {});   // the seal held up in his left hand   // and his left, holding the seal back
+    foreArm(P, penArm, 'navy', { cuff: 'gold' });                                      // the red pen his sceptre
+    foreArm(P, sealArm, 'red', { cuff: 'gold', flip: true }); seal(P, 230, 462, 0.85, 'LGTM', {});   // the LGTM seal held back
     ctx.restore();
     // the small hero below, holding up his change for review; it gets its first red nit
     const nit = at0(L, 1, 'reviewer');
@@ -401,6 +403,42 @@ export function fist(P, x, y, s, sleeve = 'teal', flip = false, o = {}) {
   P.both(rect(-36, 38, 70, 18, 5), o.cuff ?? 'gold', lw * 0.8);
   end(P);
 }
+
+/**
+ * Arms for a front bust (heroFront or person: one unit space, shoulders at ±330, the bust's foot at y=690). armPlan(B,
+ * side, H) plans one: B = { x, y, s } the bust, side +1 for the arm on the viewer's right, H the fist's centre on screen.
+ * The elbow rests at the bust's side, where the hanging sleeve already is, and only moves out towards the hand when the
+ * hand is beyond a forearm's reach (o.rest moves the resting elbow, in bust units). Draw upperArm() before the body, so the
+ * body covers it and it shows only where it leaves the body's side; then foreArm() after the body: forearm, elbow, fist.
+ * (With o.fist false, foreArm() leaves the fist to armFist(), to draw something between them, like a desk in front.)
+ */
+export function armPlan(B, side, H, o = {}) {
+  const s = B.s, at = (p) => [B.x + p[0] * s, B.y + p[1] * s], J = at([side * 250, 430]),   // the shoulder joint, deep enough inside the bust that the arm's top never shows over the shoulder
+    E0 = at(o.rest ? [side * o.rest[0], o.rest[1]] : [side * 415, 600]);
+  const fs = (o.hand ?? 1.6) * s, A = 400 * s + 50 * fs, dx = E0[0] - H[0], dy = E0[1] - H[1], d = Math.hypot(dx, dy) || 1, k = Math.min(1, A / d);
+  const E = [H[0] + dx * k, H[1] + dy * k], el = Math.hypot(E[0] - H[0], E[1] - H[1]) || 1, u = [(E[0] - H[0]) / el, (E[1] - H[1]) / el];
+  return { s, side, J, E, H, fs, u, W: [H[0] + u[0] * 50 * fs, H[1] + u[1] * 50 * fs] };
+}
+function capsule(A, B, wa, wb) {   // a limb segment: tapering, round at both ends
+  const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L, a = Math.atan2(dy, dx), p = new Path2D();
+  p.moveTo(A[0] + nx * wa / 2, A[1] + ny * wa / 2); p.lineTo(B[0] + nx * wb / 2, B[1] + ny * wb / 2);
+  p.arc(B[0], B[1], wb / 2, a + Math.PI / 2, a - Math.PI / 2, true); p.lineTo(A[0] - nx * wa / 2, A[1] - ny * wa / 2);
+  p.arc(A[0], A[1], wa / 2, a - Math.PI / 2, a + Math.PI / 2, true); p.closePath(); return p;
+}
+function limb(P, A, B, wa, wb, color, tone, s) {
+  const cap = capsule(A, B, wa, wb), x0 = Math.min(A[0], B[0]) - wa, x1 = Math.max(A[0], B[0]) + wa, y0 = Math.min(A[1], B[1]) - wa, y1 = Math.max(A[1], B[1]) + wa;
+  P.fill(cap, color); P.tone(cap, tone, { from: [x0, 0, 0.05], to: [x1, 0, 0.45], bbox: [x0, y0, x1, y1] }, Math.max(3, 7 * s)); P.line(cap, Math.max(1.4, 4.4 * s));
+}
+export function upperArm(P, a, color, o = {}) { limb(P, a.J, a.E, 150 * a.s, 136 * a.s, color, o.tone ?? '#000', a.s); }
+export function foreArm(P, a, color, o = {}) {
+  const { s, E, W, H, fs, u, J } = a;
+  limb(P, E, W, 136 * s, 112 * s, color, o.tone ?? '#000', s);
+  // a fold inside the elbow, where the sleeve bunches
+  const j = [J[0] - E[0], J[1] - E[1]], jl = Math.hypot(...j) || 1, h = [-u[0], -u[1]], mx = j[0] / jl + h[0], my = j[1] / jl + h[1], ml = Math.hypot(mx, my);
+  if (ml > 0.2) { const ix = mx / ml, iy = my / ml, c = [E[0] + ix * 40 * s, E[1] + iy * 40 * s], px = -iy * 34 * s, py = ix * 34 * s; P.line(svg(`M${c[0] - px} ${c[1] - py} Q${c[0] + ix * 16 * s} ${c[1] + iy * 16 * s} ${c[0] + px} ${c[1] + py}`), Math.max(1, 3 * s)); }
+  if (o.fist !== false) armFist(P, a, color, o);
+}
+export function armFist(P, a, color, o = {}) { fist(P, a.H[0], a.H[1], a.fs, color, o.flip ?? false, { rot: Math.atan2(-a.u[0], a.u[1]), len: 20, cuff: o.cuff ?? 'gold' }); }
 
 /**
  * An arm in a sleeve from a hand at F up to a shoulder at S: two segments with an elbow bent a little to one side

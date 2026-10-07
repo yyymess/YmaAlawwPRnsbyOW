@@ -10,7 +10,7 @@ import { heroFront, heroPose } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, token } from '../kit/props.js';
 import { oilLamp, clock, cup, bulb, ship, firework, sodaCan, priceTag, throne, horse, buggy, codeScroll, globe, quill, star, moon, begin, end, scroll, flame } from '../kit/things.js';
-import { cloud, heart, palm, duck, fist, sleeveArm } from './verse1.js';
+import { cloud, heart, palm, duck, fist, sleeveArm, armPlan, upperArm, foreArm } from './verse1.js';
 
 const CEN = { x: 480, y: 30, w: 640, h: 640, rise: 250 };
 const WING = [{ x: 70, y: 110, w: 390, h: 540, rise: 160 }, { x: 1140, y: 110, w: 390, h: 540, rise: 160 }];
@@ -204,8 +204,10 @@ const VARIANTS = {
       } else if (c === 2) {   // adult supervision: the Manager enthroned
         fillBg(P, box, 'rose', 'redDk', 0.4);
         throne(P, 320, 690, 0.78);
+        const arm = armPlan({ x: 320, y: 230, s: 0.5 }, 1, [579, 347]);   // the clicker held up, his elbow at his side
+        upperArm(P, arm, 'shirt');
         person(P, 320, 230, 0.5, { hair: 'slick', top: 'vest', color: 'char', mouth: 'smirk', acc: ['lanyard'], crop: 960, blink: blinkAt(t) });
-        clicker(P, 570, 300, 0.8, t); fist(P, 579, 347, 0.5, 'shirt', false, { rot: 0.04, len: 560, cuff: 'shirt' });
+        clicker(P, 570, 300, 0.8, t); foreArm(P, arm, 'shirt', { cuff: 'shirt' });
       } else {   // badge turned red: the lights go out (see darkness())
         fillBg(P, box, 'cream', 'sepia', 0.4);
         greyed(1, () => heroFront(P, 280, 330, 0.5, { mouth: 'frown', look: [0.8, 0.2], blink: blinkAt(t) }));   // still greyed out, as on Friday
@@ -244,13 +246,14 @@ const VARIANTS = {
         fillBg(P, box, 'night', 'navy', 0.3);
         codeScroll(P, 320, 170, 300, 400, t, { speed: 90 });
         agentAngel(P, 320, 120 + Math.sin(t * 1.6) * 5, 0.55, t);
-        const sg = word(lines, 0, 'sign');
+        const sg = word(lines, 0, 'sign'), u = clamp((t - sg + 0.4) / 0.9), nx = 200 + 216 * u, ny = 545 - 14 * u + (u > 0 && u < 1 ? Math.sin(u * 30) * 4 : 0);
+        const arm = armPlan({ x: 540, y: 470, s: 0.36 }, -1, [nx - 4, ny - 26]);   // his right arm, reaching out to the scroll
+        upperArm(P, arm, 'teal', { tone: 'hoodDot' });
         heroFront(P, 540, 470, 0.36, { mouth: sing(f), open: f.vocal, look: [-0.6, 0.4], blink: blinkAt(t), uplit: 0.4 });
         // a yellow SIGN HERE tab at the foot of the scroll; his hand signs with a quill, its feather angled away
         P.both(svg('M470 520 L560 520 L560 572 L470 572 L446 546 Z'), 'gold', 3); P.text('SIGN', 510, 542, { font: FONT.caps, weight: 700, size: 16 }); P.text('HERE', 510, 563, { font: FONT.caps, weight: 700, size: 16 });
-        const u = clamp((t - sg + 0.4) / 0.9), nx = 200 + 216 * u, ny = 545 - 14 * u + (u > 0 && u < 1 ? Math.sin(u * 30) * 4 : 0);
         if (t > sg - 0.4) { const sgp = new Path2D(); sgp.moveTo(200, 545); for (let i = 0; i <= 24 * u; i++) sgp.lineTo(200 + i * 9, 545 + Math.sin(i * 1.3) * 10 - i * 0.6); P.line(sgp, 4, 'navy'); }
-        quill(P, nx, ny, 0.55, -0.9); sleeveArm(P, [nx - 4, ny - 26], [430, 640], 0.42, 'teal', 1, { cuff: 'tealLt' });
+        quill(P, nx, ny, 0.55, -0.9); foreArm(P, arm, 'teal', { tone: 'hoodDot', cuff: 'tealLt' });
       } else if (c === 1) {   // tokens burned by April
         fillBg(P, box, 'night', 'redDk', 0.4);
         const months = ['JAN', 'FEB', 'MAR', 'APR'], tk = word(lines, 2, 'tokens'), tApr = tk + 3 * 0.45;
@@ -260,9 +263,11 @@ const VARIANTS = {
           P.ctx.save(); P.alpha(fu);
           for (let k = 0; k < 9; k++) { const fx = -20 + k * 85, side = Math.abs(fx - 320) > 140 ? 1 : 0.35; flame(P, fx, 664, (280 + 60 * (k % 3)) * side, 120, t, k, k % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
           P.ctx.restore();
+          const arm = armPlan({ x: 320, y: 330, s: 0.42 }, 1, [404, 584], { rest: [430, 640] });   // his left hand round the cup, the elbow at his side
+          upperArm(P, arm, 'teal', { tone: 'hoodDot' });
           heroFront(P, 320, 330, 0.42, { mouth: 'smile', blink: t > word(lines, 2, 'fine') ? 1 : blinkAt(t), uplit: 0.6 });
-          cup(P, 404, 616, 0.8, 0.05); P.line(svg(`M400 526 C${390 + Math.sin(t * 3) * 8} 496 ${410 + Math.sin(t * 3 + 1) * 8} 476 400 446`), 3, 'cream');
-          fist(P, 436, 580, 0.42, 'teal', true, { rot: 0.5, len: 300, cuff: 'tealLt' });   // his hand round the cup
+          cup(P, 374, 616, 0.8, 0.05); P.line(svg(`M370 526 C${360 + Math.sin(t * 3) * 8} 496 ${380 + Math.sin(t * 3 + 1) * 8} 476 370 446`), 3, 'cream');
+          foreArm(P, arm, 'teal', { tone: 'hoodDot', cuff: 'tealLt', flip: true });
         }
         for (const i of [3, 2, 1, 0]) calPage(P, 320, 330, months[i], clamp((t - (tk + i * 0.45)) / 0.8), t, i);
         for (let i = 0; i < 10; i++) { const u = ((t * 0.5 + i * 0.1) % 1); P.ctx.save(); P.alpha(1 - u); token(P, 100 + (i * 53) % 440, 600 - u * 500, 0.8, Math.sin(i + t), ['tok', 'en', '##s', 'ctx', '▁the'][i % 5]); P.ctx.restore(); }

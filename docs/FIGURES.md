@@ -29,6 +29,7 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 ## Hands, in practice
 - Draw a hand as **one silhouette**: the back of the hand plus tapered, slightly curved fingers (`curvedFinger`, `drawHand` in `app/src/kit/things.js`), outlines under the fills so only the outer edge shows; thin lines part the fingers, a crease marks each middle joint, nails only on the back of the hand.
 - A hand is always **attached**: a sleeve or forearm runs from the wrist out of frame or to the body. A floating cuff reads as a prop.
+- **An arm on a front bust** (`armPlan`, `upperArm`, `foreArm` in `app/src/scenes/verse1.js`): the shoulder joint sits deep inside the bust and the upper arm is drawn *behind* the body, so it shows only where it leaves the body's side; the elbow rests at the side, where the hanging sleeve already is; the forearm and fist are drawn in front. Never start an arm on the chest. When something stands in front (a desk, a page), draw the forearm behind it and the fist after it, so the arm rises from behind. A tool leaves the fist sideways, never along the forearm.
 - Shade a hand like the face (screentone away from the light); a hand on top casts a soft tone shadow on the one below.
 - Holding things: fingers wrap over the object's edge; a fist round a pen shows three finger creases and the thumb across the front (`fist`).
 

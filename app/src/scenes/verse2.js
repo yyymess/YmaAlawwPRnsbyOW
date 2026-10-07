@@ -5,7 +5,7 @@ import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, 
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { sodaCan, tablet, scroll, begin, end, priceTag } from '../kit/things.js';
-import { heart, fist, sleeveArm } from './verse1.js';
+import { heart, fist, sleeveArm, armPlan, upperArm, foreArm } from './verse1.js';
 
 const POSTERS = [
   { title: 'MONDAY', lines: ['one Monday at the fridge', '"Soda now fifty cents"'], draw: fridge, paper: 'ivory', rot: -0.012 },
@@ -347,12 +347,14 @@ function friday(P, f, L, t, w, h) {
     P.both(rect(840, 160, 110, 180, 16), 'char', 4); P.both(ell(895, 210, 18), red && Math.floor(t * 5) % 2 === 0 ? 'red' : (red ? 'redDk' : 'sage'), 3); P.line(rect(860, 250, 70, 60, 8), 2, 'grey');
     if (red) P.tone(ell(895, 210, 120), 'red', { from: [895, 210, 0.7], to: [1015, 210, 0], radial: true, bbox: [775, 90, 1015, 330] }, 5);
     const gn = wd(L, 1, 'guess'), wipe = ease.inOutSine(clamp((t - gn + 0.15) / 1.2));
+    const arm = armPlan({ x: 430, y: 230, s: 0.55 }, 1, [834, 394]);   // his left arm: elbow at his side, forearm up to the reader
     const him = () => {
+      upperArm(P, arm, 'teal', { tone: 'hoodDot' });
       heroFront(P, 430, 230, 0.55, { mouth: t > gn ? 'frown' : 'neutral', look: [0.8, 0], blink: blinkAt(t), brow: t > gn ? 1 : 0 });
       // the badge on its lanyard, held to the reader
       P.line(svg('M448 392 C520 540 700 540 796 352'), 7); P.line(svg('M448 392 C520 540 700 540 796 352'), 4, 'teal');
       P.both(rect(790, 240, 90, 120, 8), 'cream', 4); P.both(rect(806, 256, 58, 50, 4), 'glass', 2); P.line(svg('M806 324 L864 324 M806 340 L846 340'), 3);
-      sleeveArm(P, [836, 386], [606, 470], 0.55, 'teal', -1, { cuff: 'tealLt' });
+      foreArm(P, arm, 'teal', { tone: 'hoodDot', cuff: 'tealLt' });
     };
     him();
     if (wipe > 0) { ctx.save(); P.clip(ell(835, 300, 40 + 900 * wipe)); greyed(1, him); ctx.restore(); }

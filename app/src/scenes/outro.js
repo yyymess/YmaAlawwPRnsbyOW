@@ -8,7 +8,7 @@ import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
 import { lyricBanner, agentAngel, robotaxi, tree, cypress, megacampus, posterFrame, beatCut } from '../kit/props.js';
 import { redPen, scroll, begin, end, star, moon, platter } from '../kit/things.js';
-import { fist, sleeveArm } from './verse1.js';
+import { fist, sleeveArm, armPlan, upperArm, foreArm, armFist } from './verse1.js';
 
 const blinkAt = (t, k = 0) => { const v = (t * 0.41 + k * 0.13) % 1; return v > 0.965 ? 1 - Math.abs(v - 0.982) / 0.017 : 0; };
 const sing = (f) => (f.vocal > 0.18 ? 'sing' : 'neutral');
@@ -151,20 +151,28 @@ function testsScroll(P, f, t, lt, L) {
 function reviewer(P, f, t, lt, L) {
   chapel(P, f, t, 1, false);
   const fd = L[3].words.find((w) => w.w.startsWith('find')).start;
+  // the magnifying glass sweeps over the code, finding nothing. He sits behind the page as behind a desk: his forearms
+  // rise from behind it, the elbows out of sight; the right hand holds the magnifier, its handle running down to the lens
+  // over the page, the left raises his red pen. (His right sleeve is under the red mantle.)
+  // (a long reading glass: the handle leaves the fist sideways, the forearm drops straight behind the page)
+  const mx = 590 + Math.sin(lt * 2.4) * 100, my = 652 + Math.cos(lt * 1.7) * 8, hd = [0.7071, -0.7071], H = [mx + 262 * hd[0], my + 262 * hd[1]];
+  const B = { x: 800, y: 300, s: 0.62 }, glassArm = armPlan(B, -1, H, { rest: [(800 - H[0] - 24) / 0.62, 620] }), penArm = armPlan(B, 1, [1232, 470], { rest: [400, 600] });
   platter(P, 800, 260, 300);
+  upperArm(P, glassArm, 'red'); upperArm(P, penArm, 'navy');
   person(P, 800, 300, 0.62, { hair: 'unix', hairColor: 'hairSp', beard: 'unix', top: 'robe', color: 'navy', mantle: 'red', stern: t < fd + 0.4, mouth: t > fd + 0.4 ? 'flat' : 'frown', glasses: 'rect', fw: 1.06, crop: 900, look: [Math.sin(lt * 2.4) * 0.8, 0.5], blink: blinkAt(t) });
-  // the magnifying glass sweeps over the code, finding nothing
-  const mx = 640 + Math.sin(lt * 2.4) * 220, my = 600 + Math.cos(lt * 1.7) * 20;
+  foreArm(P, glassArm, 'red', { fist: false }); foreArm(P, penArm, 'navy', { fist: false });
   P.both(rect(380, 560, 840, 200, 8), 'ivory', 4);
   for (let i = 0; i < 5; i++) P.line(svg(`M420 ${598 + i * 32} l${[600, 520, 700, 460, 640][i]} 0`), 8, ['teal', 'sage', 'gold', 'rose', 'teal'][i]);
-  P.ctx.save(); P.ctx.translate(mx, my); P.both(ell(0, 0, 80), 'glass', 6); P.ctx.save(); P.alpha(0.4); P.fill(ell(-20, -20, 30, 18), 'cream'); P.ctx.restore(); P.line(svg('M56 56 L130 130'), 22); P.line(svg('M56 56 L130 130'), 14, 'ochre'); P.ctx.restore();
-  // his hands: the right holds the magnifier by its handle, the left his red pen (his arms reach from his shoulders)
-  sleeveArm(P, [mx + 118, my + 118], [690, 520], 0.62, 'navy', -1);
+  P.ctx.save(); P.ctx.translate(mx, my); P.ctx.rotate(Math.atan2(hd[1], hd[0]) - Math.PI / 4);
+  P.line(svg('M56 56 L190 190'), 22); P.line(svg('M56 56 L190 190'), 14, 'ochre'); P.both(svg('M50 62 L62 50 L76 64 L64 76 Z'), 'gold', 4);   // the ferrule
+  P.both(ell(0, 0, 80), 'glass', 6); P.ctx.save(); P.alpha(0.4); P.fill(ell(-20, -20, 30, 18), 'cream'); P.ctx.restore();
+  P.ctx.restore();
+  armFist(P, glassArm, 'red');
   redPen(P, 1230, 380, 0.62, 0.1, 0);
-  sleeveArm(P, [1232, 470], [930, 520], 0.62, 'navy', 1, { flip: true });
+  armFist(P, penArm, 'navy', { flip: true });
   // not a nit: LGTM stamped on the code
   const st = clamp((t - fd - 0.2) / 0.18);
-  if (st > 0) { const sq = 1 + 1.6 * (1 - st); P.ctx.save(); P.ctx.translate(1060, 668); P.ctx.rotate(-0.2); P.ctx.scale(sq, sq); P.alpha(0.92 * st); P.line(ell(0, 0, 96, 58), 7, 'red'); P.line(ell(0, 0, 84, 48), 2.5, 'red'); P.text('LGTM', 0, 15, { font: FONT.caps, weight: 700, size: 44, color: 'red' }); P.ctx.restore(); }
+  if (st > 0) { const sq = 1 + 1.6 * (1 - st); P.ctx.save(); P.ctx.translate(960, 694); P.ctx.rotate(-0.2); P.ctx.scale(sq, sq); P.alpha(0.92 * st); P.line(ell(0, 0, 96, 58), 7, 'red'); P.line(ell(0, 0, 84, 48), 2.5, 'red'); P.text('LGTM', 0, 15, { font: FONT.caps, weight: 700, size: 44, color: 'red' }); P.ctx.restore(); }
 }
 
 // ---- the nave: the arches multiply ------------------------------------------------------------------------------------
