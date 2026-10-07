@@ -1,6 +1,6 @@
 // Preview (with the song) and the export API used by render.mjs.
 //   ?t=57      start at a time        ?only=intro,verse1   load only these timeline entries
-//   ?export=1  no UI; window.__ep drives rendering        ?scale=0.5  render smaller
+//   ?export=1  no UI; window.__ep drives rendering        ?scale=0.5  render smaller, ?scale=2  3840x2160 (4K)
 //   keys: space play/pause · ←/→ ±1 s (shift ±5 s) · ,/. ±1 frame · [/] previous/next entry · h hide UI
 import { loadData } from './data.js';
 import { Engine } from './engine.js';

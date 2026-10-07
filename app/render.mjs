@@ -2,16 +2,21 @@
 // Offline renderer: drives app/index.html?export=1 in headless Chromium.
 //   node app/render.mjs stills --t 3.5,25,61 [--only intro] [--out out/stills]
 //   node app/render.mjs sheet  --from 0 --to 21.6 --n 12 [--cols 4] [--only intro] [--out out/sheet.jpg]
-//   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--size 720] [--out out/engineers-paradise.mp4]
+//   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--size 720] [--scale 2] [--out out/engineers-paradise.mp4]
+//     --scale renders the frames themselves larger (2 = 3840x2160, true 4K: it is all vector); --size only downscales the encode
 //   node app/render.mjs check  [--step 0.2] [--from] [--to]   (draws every step; reports scene errors, exit 2 if any)
 //   node app/render.mjs serve  [--port 5173]          (preview: http://localhost:5173/app/?t=0)
 import { createRequire } from 'node:module';
 import { execSync, spawn } from 'node:child_process';
 import http from 'node:http';
 import { readFile, mkdir, writeFile, stat } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-const { chromium } = createRequire(execSync('npm root -g').toString().trim() + '/')('playwright');
+// Playwright: from this project's node_modules (npm install), else the global one (npm install -g playwright)
+const { chromium } = (() => { try { return createRequire(import.meta.url)('playwright'); } catch { return createRequire(execSync('npm root -g').toString().trim() + '/')('playwright'); } })();
+// Chromium: $CHROMIUM if set, else the cloud box's copy if present, else Playwright's own (npx playwright install chromium)
+const CHROMIUM = process.env.CHROMIUM ?? ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].find((p) => existsSync(p));
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const argv = process.argv.slice(2), mode = argv[0] ?? 'stills';
 const opt = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
@@ -30,11 +35,11 @@ function serve(port = 0) {
 }
 
 async function open(server) {
-  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
+  const browser = await chromium.launch({ executablePath: CHROMIUM, args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   const logs = []; page.on('console', (m) => m.type() === 'error' && logs.push(m.text())); page.on('pageerror', (e) => logs.push(e.message));
-  const only = opt('only');
-  await page.goto(`http://localhost:${server.address().port}/app/index.html?export=1${only ? '&only=' + only : ''}`);
+  const only = opt('only'), scale = opt('scale');
+  await page.goto(`http://localhost:${server.address().port}/app/index.html?export=1${only ? '&only=' + only : ''}${scale ? '&scale=' + scale : ''}`);
   await page.waitForFunction(() => window.__ep?.ready || window.__ep?.error, null, { timeout: 120000 });
   const err = await page.evaluate(() => window.__ep.error); if (err) throw new Error(err + '\n' + logs.join('\n'));
   return { browser, page, logs };
