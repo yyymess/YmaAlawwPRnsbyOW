@@ -178,16 +178,72 @@ function ghostTown(P, f, L, t, w, h) {
   const ctx = P.ctx, l2 = L[1].words[0].start - 0.1;
   if (t < l2) {
     backdrop(P, w, h, 'goldLt', 'ochre');
-    // false-front buildings on a dusty street
-    const fronts = [[100, 'sepiaDk', 'HOTEL'], [370, 'ochre', 'STACK'], [640, 'sepiaDk', 'OVERFLOW'], [910, 'ochre', 'SALOON']];
-    fronts.forEach(([x, c, s2], i) => { P.both(svg(`M${x} 460 L${x} 120 L${x + 40} 120 L${x + 40} 90 L${x + 220} 90 L${x + 220} 120 L${x + 250} 120 L${x + 250} 460 Z`), c, 4); P.both(rect(x + 20, 140, 210, 50, 4), 'ivory', 3); P.text(s2, x + 125, 178, { font: FONT.caps, weight: 700, size: 30 }); P.both(rect(x + 50, 240, 60, 90, 3), 'night', 3); P.both(rect(x + 140, 240, 60, 90, 3), 'night', 3); P.line(svg(`M${x + 50} 240 L${x + 110} 330 M${x + 140} 330 L${x + 200} 240`), 2, 'sepia'); P.both(rect(x + 90, 360, 70, 100, 3), 'charDk', 3); });
-    P.fill(rect(-10, 460, w + 20, 200), 'sepia'); P.tone(rect(-10, 460, w + 20, 200), 'sepiaDk', { from: [0, 460, 0], to: [0, 640, 0.5], bbox: [0, 460, w, 640] }, 6);
+    // mesas far off across the desert, showing between the buildings
+    const mesa = svg(`M-10 400 L-10 352 L90 352 L120 318 L300 318 L330 352 L520 352 L560 330 L700 330 L740 360 L960 360 L990 326 L1180 326 L1210 356 L${w + 10} 356 L${w + 10} 400 Z`);
+    P.fill(mesa, 'rose'); P.tone(mesa, 'redDk', { from: [0, 318, 0], to: [0, 400, 0.4], bbox: [0, 318, w, 400] }, 6); P.line(mesa, 3);
+    P.fill(rect(-10, 380, w + 20, 90), 'sepia');
+    // false-front buildings on a dusty street: weathered boards, painted signs, broken windows, a covered boardwalk
+    const fronts = [[100, 'sepiaDk', 'HOTEL', 'M0 460 L0 100 L60 100 L60 70 L190 70 L190 100 L250 100 L250 460 Z'], [370, 'ochre', 'STACK', 'M0 460 L0 130 L250 130 L250 460 Z'],
+      [640, 'sepiaDk', 'OVERFLOW', 'M0 460 L0 150 L40 150 C80 92 170 92 210 150 L250 150 L250 460 Z'], [910, 'ochre', 'SALOON', 'M0 460 L0 110 L70 110 L125 66 L180 110 L250 110 L250 460 Z']];
+    const r = rng(17);
+    fronts.forEach(([x, c, s2, d], i) => {
+      ctx.save(); ctx.translate(x, 0);
+      const fr = svg(d);
+      P.fill(fr, c); P.tone(fr, '#000', { from: [125, 80, 0], to: [250, 460, 0.42], bbox: [0, 60, 250, 460] }, 6);
+      ctx.save(); P.clip(fr);
+      for (let bx = 22; bx < 250; bx += 22) P.line(svg(`M${bx + (r() - 0.5) * 2} 60 L${bx + (r() - 0.5) * 3} 460`), 2, '#00000055');   // the boards
+      for (let k = 0; k < 3; k++) { const bx = 22 * Math.floor(1 + r() * 10); ctx.save(); P.alpha(0.16); P.fill(rect(bx, 60, 22, 400), 'cream'); ctx.restore(); }   // sun-bleached boards
+      { const bx = 22 * Math.floor(2 + r() * 8), by = 220 + r() * 60; P.fill(rect(bx + 2, by, 18, 46 + r() * 30), 'night'); }                                   // a missing board
+      ctx.restore(); P.line(fr, 4);
+      P.both(rect(-6, i === 1 ? 120 : 162, 262, 12, 2), c === 'ochre' ? 'sepiaDk' : 'ochre', 3);   // the cornice
+      if (i === 1) for (let k = 0; k < 6; k++) P.both(svg(`M${12 + k * 46} 132 L${24 + k * 46} 132 L${18 + k * 46} 146 Z`), 'sepiaDk', 2);
+      // the sign: painted board, faded, a crack across
+      P.both(rect(22, 122 + (i === 1 ? 26 : 8), 206, 48, 4), 'ivory', 3); P.tone(rect(22, 122 + (i === 1 ? 26 : 8), 206, 48), 'sepia', { from: [22, 130, 0], to: [228, 178, 0.5], bbox: [22, 128, 228, 178] }, 4);
+      P.text(s2, 125, 160 + (i === 1 ? 26 : 8), { font: FONT.caps, weight: 700, size: s2.length > 6 ? 27 : 30, color: 'charDk' });
+      P.line(svg(`M${40 + r() * 60} ${126 + (i === 1 ? 26 : 8)} l12 14 l-6 10 l14 22`), 1.6, 'sepiaDk');
+      // upper windows: sashes of six panes, some broken, one boarded, a shutter hanging by a hinge
+      for (const [wx, kind] of [[44, i % 2 ? 'boarded' : 'broken'], [146, i === 3 ? 'shutter' : 'broken']]) {
+        P.both(rect(wx, 206, 60, 82, 3), 'night', 3);
+        for (const gx of [wx + 20, wx + 40]) P.line(svg(`M${gx} 206 L${gx} 288`), 2.5, c); P.line(svg(`M${wx} 247 L${wx + 60} 247`), 2.5, c);
+        if (kind === 'broken') { const cx = wx + 30 + (r() - 0.5) * 20, cy = 228 + r() * 40; P.line(svg(`M${cx} ${cy} l-12 -10 M${cx} ${cy} l10 -12 M${cx} ${cy} l12 6 M${cx} ${cy} l-4 14`), 1.6, 'glass'); ctx.save(); P.alpha(0.5); P.fill(rect(wx + 2, 208, 17, 37), 'glass'); ctx.restore(); }
+        if (kind === 'boarded') { P.both(svg(`M${wx - 6} 214 L${wx + 66} 270 L${wx + 66} 284 L${wx - 6} 228 Z`), 'sepia', 2); P.both(svg(`M${wx + 66} 214 L${wx - 6} 270 L${wx - 6} 284 L${wx + 66} 228 Z`), 'sepia', 2); }
+        if (kind === 'shutter') { ctx.save(); ctx.translate(wx + 60, 210); ctx.rotate(0.5 + Math.sin(t * 1.3) * 0.04); P.both(rect(0, 0, 30, 80, 2), 'sepia', 2.5); for (let k = 1; k < 6; k++) P.line(svg(`M2 ${k * 13} L28 ${k * 13}`), 1.2, 'sepiaDk'); ctx.restore(); }
+        P.both(rect(wx - 6, 286, 72, 8, 2), c === 'ochre' ? 'sepiaDk' : 'ochre', 2);   // sill
+      }
+      // the porch roof on posts, the boardwalk under it
+      P.both(svg('M-10 318 L260 318 L262 336 L-12 336 Z'), c === 'ochre' ? 'sepiaDk' : 'ochre', 3);
+      for (const px of [6, 125, 238]) { P.both(rect(px - 6, 336, 12, 118, 2), 'sepiaDk', 2.5); P.both(svg(`M${px + (px < 125 ? 6 : -6)} 352 L${px + (px < 125 ? 26 : -26)} 336 L${px + (px < 125 ? 6 : -6)} 336 Z`), 'sepiaDk', 2); }
+      P.both(rect(-12, 452, 274, 14, 2), 'sepia', 3); for (let k = 0; k < 9; k++) P.line(svg(`M${-12 + k * 31} 452 L${-12 + k * 31} 466`), 1.5, 'sepiaDk');
+      // the ground floor: a door, a window each side
+      if (s2 === 'SALOON') {   // swinging batwing doors, still swinging
+        P.fill(rect(90, 352, 70, 100), 'night');
+        const sw = Math.sin(t * 2.2) * 0.5;
+        for (const [hx, dir] of [[90, 1], [160, -1]]) { ctx.save(); ctx.translate(hx, 0); ctx.scale(Math.cos(sw) * dir, 1); P.both(svg('M0 378 L34 378 C34 372 30 368 24 368 L0 368 Z M0 378 L34 378 L34 426 L0 426 Z'), 'ochre', 2.5); for (let k = 1; k < 4; k++) P.line(svg(`M0 ${378 + k * 12} L34 ${378 + k * 12}`), 1.2, 'sepiaDk'); ctx.restore(); }
+      } else { P.both(rect(96, 352, 58, 100, 2), 'charDk', 3); for (let k = 1; k < 4; k++) P.line(svg(`M${96 + k * 14.5} 352 L${96 + k * 14.5} 452`), 1.2, 'black'); P.both(ell(144, 404, 4), 'gold', 1.5); }
+      for (const wx of [20, 176]) { P.both(rect(wx, 366, 54, 56, 3), 'night', 2.5); P.line(svg(`M${wx + 27} 366 L${wx + 27} 422 M${wx} 394 L${wx + 54} 394`), 2.5, c); }
+      if (i === 0) { ctx.save(); ctx.translate(178, 70); P.both(svg('M-16 0 C-18 -14 -10 -26 2 -26 C8 -32 18 -30 18 -22 C14 -20 12 -16 10 -12 C14 -6 14 0 12 0 Z'), 'black', 2); P.line(svg('M-6 0 L-6 6 M4 0 L4 6'), 2); ctx.restore(); }   // a vulture on the hotel
+      P.line(svg('M222 340 C230 346 238 344 240 336 M222 340 L238 336'), 1, 'cream');   // a cobweb in the porch corner
+      ctx.restore();
+    });
+    // the street: dust, wheel ruts, stones; a hitching rail, a barrel and a trough
+    P.fill(rect(-10, 466, w + 20, 200), 'sepia'); P.tone(rect(-10, 466, w + 20, 200), 'sepiaDk', { from: [0, 466, 0], to: [0, 640, 0.5], bbox: [0, 466, w, 640] }, 6); P.line(svg(`M-10 466 L${w + 10} 466`), 3);
+    P.line(svg(`M-10 520 C300 506 900 512 ${w + 10} 500 M-10 560 C400 544 900 552 ${w + 10} 538`), 2.5, 'sepiaDk');
+    { const rr = rng(23); for (let i = 0; i < 26; i++) P.fill(ell(rr() * w, 480 + rr() * 150, 3 + rr() * 4, 2 + rr() * 2), 'sepiaDk'); }
+    P.both(rect(930, 480, 12, 50, 2), 'sepiaDk', 2.5); P.both(rect(1140, 480, 12, 50, 2), 'sepiaDk', 2.5); P.both(rect(922, 486, 238, 10, 3), 'sepiaDk', 2.5);
+    P.both(svg('M318 470 C312 440 312 420 318 392 L362 392 C368 420 368 440 362 470 Z'), 'ochre', 3); for (const by of [404, 456]) P.line(svg(`M314 ${by} L366 ${by}`), 4, 'charDk'); P.line(svg('M330 394 L328 468 M348 394 L350 468'), 1.2, 'sepiaDk');
     // the queue: stanchions and a rope, nobody in it; a sign: 0 answers
     for (let i = 0; i < 5; i++) { const x = 300 + i * 190; P.both(rect(x - 8, 450, 16, 120, 4), 'gold', 3); P.both(ell(x, 448, 14), 'gold', 3); P.both(ell(x, 572, 34, 10), 'gold', 3); if (i < 4) P.line(svg(`M${x} 460 C${x + 60} 510 ${x + 130} 510 ${x + 190} 460`), 10, 'redDk'); }
     P.both(rect(1060, 470, 180, 110, 6), 'ivory', 3); P.text('QUEUE', 1150, 510, { font: FONT.caps, weight: 700, size: 28 }); P.text('0 answers', 1150, 556, { size: 26, color: 'red' });
     // the tumbleweed rolls across the queue
     const tw = wd(L, 0, 'tumbleweed') - 0.4, u = clamp((t - tw) / 2.4);
-    if (u > 0) { const x = lerp(-150, w + 150, u), y = 500 - Math.abs(Math.sin(u * 12)) * 60; ctx.save(); ctx.translate(x, y); ctx.rotate(u * 16); P.ctx.save(); P.alpha(0.5); P.fill(ell(0, 0, 84), 'ochre'); P.ctx.restore(); for (let i = 0; i < 14; i++) { const a = i * 0.45; P.line(svg(`M${Math.cos(a) * 20} ${Math.sin(a) * 20} C${Math.cos(a) * 60} ${Math.sin(a) * 60} ${Math.cos(a + 1) * 90} ${Math.sin(a + 1) * 90} ${Math.cos(a + 2) * 74} ${Math.sin(a + 2) * 74}`), 6, 'sepiaDk'); } P.line(ell(0, 0, 84), 4, 'sepiaDk'); ctx.restore(); }
+    if (u > 0) {   // a tangled ball of dry twigs, rolling and bouncing, a little dust where it lands
+      const x = lerp(-150, w + 150, u), hop = Math.abs(Math.sin(u * 12)), y = 500 - hop * 60;
+      if (hop < 0.25) { ctx.save(); P.alpha(0.5 * (1 - hop * 4)); P.tone(ell(x, 566, 90, 14), 'sepiaDk', { from: [x, 566, 0.6], to: [x + 90, 566, 0], radial: true, bbox: [x - 90, 552, x + 90, 580] }, 4); ctx.restore(); }
+      ctx.save(); ctx.translate(x, y); ctx.rotate(u * 16);
+      ctx.save(); P.alpha(0.3); P.fill(ell(0, 0, 80), 'ochre'); ctx.restore();
+      const tr = rng(31); for (let i = 0; i < 46; i++) { const a = tr() * 6.28, b = a + 0.6 + tr() * 1.6, r1 = 20 + tr() * 62, r2 = 20 + tr() * 62, bend = (tr() - 0.5) * 70; P.line(svg(`M${Math.cos(a) * r1} ${Math.sin(a) * r1} Q${Math.cos((a + b) / 2) * (r1 + r2) / 2 + bend} ${Math.sin((a + b) / 2) * (r1 + r2) / 2 - bend} ${Math.cos(b) * r2} ${Math.sin(b) * r2}`), i % 3 ? 2 : 3, i % 2 ? 'sepiaDk' : 'ochre'); }
+      ctx.restore();
+    }
   } else {
     // the duck under a spotlight, its words in a chat bubble with typing dots first
     backdrop(P, w, h, 'night', 'tealDk');
