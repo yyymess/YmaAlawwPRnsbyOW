@@ -396,8 +396,14 @@ function marketStall(P, f, t, w, h, L, close) {
   P.line(svg('M180 170 L180 540 M1200 170 L1200 540'), 12); P.line(svg('M180 170 L180 540 M1200 170 L1200 540'), 6, 'ochre');
   P.both(rect(380, 58, 620, 64, 10), 'ivory', 4); P.text('HAND-TYPED CODE', 690, 104, { font: FONT.caps, weight: 700, size: 40, tracking: 4 });
   heroFront(P, 700, 216, 0.36, { mouth: sing(f), open: f.vocal, blink: blinkAt(t), apron: true });
-  // the counter with jam, clotted cream, and jars with a bug in each
-  P.both(rect(160, 420, 1060, 120, 6), 'ochre', 4); P.both(rect(160, 400, 1060, 30, 6), 'sepiaDk', 4);
+  // the counter: a plank top, a gingham cloth draped over the front, crates and a cash box under it; jam, clotted cream,
+  // and jars with a bug in each, each group with its hand-written price card
+  P.both(rect(160, 420, 1060, 120, 6), 'ochre', 4);
+  for (let k = 0; k < 4; k++) { const cx = 230 + k * 280; P.both(rect(cx, 470, 150, 70, 4), 'sepia', 3); for (const sx of [cx + 50, cx + 100]) P.line(svg(`M${sx} 470 L${sx} 540`), 1.5, 'sepiaDk'); P.line(svg(`M${cx} 492 L${cx + 150} 492`), 1.5, 'sepiaDk'); }
+  const cloth = new Path2D(); cloth.moveTo(156, 420); cloth.lineTo(1224, 420); cloth.lineTo(1224, 466); for (let k = 0; k <= 20; k++) { const x = 1224 - k * 53.4; cloth.quadraticCurveTo(x - 26.7, 480 + (k % 2) * 6, x - 53.4, 466); } cloth.closePath();
+  P.fill(cloth, 'cream'); P.ctx.save(); P.clip(cloth); for (let x = 156; x < 1230; x += 24) P.fill(rect(x, 420, 12, 70), '#e7b9b0'); for (let y = 426; y < 490; y += 24) { P.ctx.save(); P.alpha(0.55); P.fill(rect(150, y, 1080, 12), '#e7b9b0'); P.ctx.restore(); } P.ctx.restore(); P.line(cloth, 3);
+  P.both(rect(160, 400, 1060, 30, 6), 'sepiaDk', 4); for (let x = 260; x < 1220; x += 160) P.line(svg(`M${x} 402 L${x} 428`), 1.5, 'ochre');
+  for (const [px, label] of [[300, '$4'], [690, 'priceless'], [1090, '$6']]) { P.ctx.save(); P.ctx.translate(px, 446); P.ctx.rotate(-0.05); P.both(rect(-44, -16, 88, 32, 3), 'ivory', 2); P.text(label, 0, 8, { size: label.length > 3 ? 18 : 22, style: 'italic', color: 'charDk' }); P.ctx.restore(); }
   for (let i = 0; i < 3; i++) jar(P, 240 + i * 70, 400, 0.7, 'rose', 'JAM');
   for (let i = 0; i < 3; i++) jar(P, 1010 + i * 76, 400, 0.72, 'cream', 'CREAM');
   for (let i = 0; i < 4; i++) bugJar(P, 576 + i * 82, 400, 0.7, i, t);
