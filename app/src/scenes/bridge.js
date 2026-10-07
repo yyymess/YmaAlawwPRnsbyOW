@@ -92,8 +92,21 @@ function schoolroom(P, f, Ls, t, lt) {
   P.text('Lesson 1: Driving', 800, 350, { size: 40, color: 'cream' });
   const cl = Ls[2].words.find((w) => w.w.startsWith('clue')).start;
   if (t > Ls[2].words.find((w) => w.w.startsWith('nobody') && w.start > Ls[2].start + 1)?.start - 0.1) { const u = clamp((t - (cl - 0.6)) / 0.5); P.line(svg(`M480 330 L${480 + 640 * u} ${330 + 30 * u}`), 6, 'red'); P.text('CANCELLED', 800, 430, { font: FONT.caps, weight: 700, size: 34, color: 'red', tracking: 6 }); }
-  // empty desks
-  for (let i = 0; i < 4; i++) { const x = 360 + i * 260, y = 640; P.both(rect(x - 80, y - 90, 160, 20, 4), 'ochre', 3); P.line(svg(`M${x - 70} ${y - 70} L${x - 70} ${y} M${x + 70} ${y - 70} L${x + 70} ${y}`), 6, INK); }
+  // the room: a wall map, the stove and its pipe, the floorboards
+  P.both(rect(240, 220, 110, 150, 4), 'sepia', 3); ctx.save(); P.clip(rect(244, 224, 102, 142)); P.fill(svg('M250 260 C270 240 300 250 310 270 C330 300 300 340 270 330 C250 320 240 290 250 260 Z'), 'ochre'); P.line(svg('M244 300 L346 300 M295 224 L295 366'), 1, INK); ctx.restore(); P.line(svg('M240 220 L350 220'), 4, INK);
+  P.both(svg('M1300 620 L1300 520 C1300 500 1360 500 1360 520 L1360 620 Z'), INK, 3); P.line(svg('M1330 500 L1330 200 L1240 200'), 10, INK); P.both(rect(1312, 560, 36, 20, 3), 'gold', 2);
+  for (let y = 660; y < 720; y += 18) P.line(svg(`M150 ${y} L1450 ${y}`), 1, INK);
+  // empty school desks: slanted lids with an inkwell and a groove for the pen, benches, cast-iron legs
+  for (let i = 0; i < 4; i++) {
+    const x = 360 + i * 260, y = 650;
+    P.both(svg(`M${x - 84} ${y - 92} L${x + 84} ${y - 98} L${x + 84} ${y - 80} L${x - 84} ${y - 74} Z`), 'ochre', 3);
+    P.both(ell(x + 56, y - 92, 8, 4), INK, 1.5); P.line(svg(`M${x - 60} ${y - 88} L${x + 20} ${y - 91}`), 1.5, INK);
+    P.both(rect(x - 80, y - 74, 160, 26, 2), 'sepia', 2.5);   // the book box under the lid
+    for (const lx of [x - 70, x + 70]) { P.line(svg(`M${lx} ${y - 48} L${lx} ${y}`), 6, INK); P.line(svg(`M${lx - 12} ${y} L${lx + 12} ${y} M${lx} ${y - 30} C${lx - 10} ${y - 20} ${lx - 10} ${y - 10} ${lx} ${y - 4}`), 2.5, INK); }
+    P.both(rect(x - 76, y - 34, 152, 12, 2), 'ochre', 2.5); P.line(svg(`M${x - 70} ${y - 22} L${x - 70} ${y} M${x + 70} ${y - 22} L${x + 70} ${y}`), 4, INK);   // the bench
+  }
+  // the dunce's stool in the corner
+  P.both(ell(1250, 610, 30, 8), 'ochre', 2.5); P.line(svg('M1230 612 L1222 660 M1270 612 L1278 660 M1250 616 L1250 662'), 4, INK);
   // the horse, in a dunce cap, puzzled
   horse(P, 1140, 690, 0.48, Math.sin(lt * 1.2) * 0.2, { color: 'ochre', dark: INK });
   ctx.save(); ctx.translate(1140 + 300 * 0.48, 690 - 440 * 0.48); ctx.rotate(-0.25); P.both(svg('M-36 0 L0 -110 L36 0 Z'), 'ivory', 3); P.text('D', 0, -20, { font: FONT.caps, weight: 700, size: 26 }); ctx.restore();
@@ -103,12 +116,30 @@ function schoolroom(P, f, Ls, t, lt) {
 // ---- they boiled 'em down to glue: the glue works, and the horses filing in -----------------------------------------
 function glueWorks(P, f, Ls, t, lt) {
   const ctx = P.ctx;
-  // the works: brick, stacks, smoke
-  for (let i = 0; i < 3; i++) { const x = 820 + i * 150; P.both(rect(x, 250, 60, 210), INK, 3); for (let k = 0; k < 3; k++) { const u = ((lt * 0.4 + k * 0.33 + i * 0.1) % 1); ctx.save(); P.alpha(0.7 * (1 - u)); cloud(P, x + 30 + u * 50, 236 - u * 50, 24 + u * 20, 'ivory', k + i); ctx.restore(); } }
-  P.both(svg('M700 640 L700 380 L800 300 L900 380 L1000 300 L1100 380 L1200 300 L1300 380 L1300 640 Z'), 'ochre', 4);
-  P.tone(svg('M700 640 L700 380 L800 300 L900 380 L1000 300 L1100 380 L1200 300 L1300 380 L1300 640 Z'), INK, { from: [700, 380, 0.1], to: [1300, 640, 0.5], bbox: [700, 300, 1300, 640] }, 6);
-  P.both(rect(780, 420, 440, 80, 6), 'ivory', 3); P.text('GLUE WORKS', 1000, 476, { font: FONT.caps, weight: 700, size: 46, tracking: 6, color: INK });
-  P.both(svg('M840 640 L840 540 C840 510 920 510 920 540 L920 640 Z'), 'charDk', 3);
+  // the works, as an engraving: a sawtooth-roofed brick shed with three banded stacks smoking, arched windows, a loading
+  // door with a ramp the horses climb, a yard fence, barrels, and a cart of bones
+  for (let i = 0; i < 3; i++) {
+    const x = 820 + i * 150; P.both(svg(`M${x} 460 L${x + 6} 236 L${x + 54} 236 L${x + 60} 460 Z`), 'sepia', 3);
+    for (const by of [262, 300]) P.line(svg(`M${x + 4} ${by} L${x + 56} ${by}`), 5, INK); P.both(rect(x - 4, 226, 68, 12, 2), INK, 2);
+    ctx.save(); P.clip(svg(`M${x} 460 L${x + 6} 236 L${x + 54} 236 L${x + 60} 460 Z`)); for (let by = 240; by < 460; by += 12) P.line(svg(`M${x} ${by} L${x + 60} ${by}`), 1, INK); ctx.restore();
+    for (let k = 0; k < 3; k++) { const u = ((lt * 0.4 + k * 0.33 + i * 0.1) % 1); ctx.save(); P.alpha(0.7 * (1 - u)); cloud(P, x + 30 + u * 50, 216 - u * 50, 24 + u * 20, 'ivory', k + i); ctx.restore(); }
+  }
+  const shed = svg('M700 640 L700 380 L800 300 L900 380 L1000 300 L1100 380 L1200 300 L1300 380 L1300 640 Z');
+  P.fill(shed, 'ochre'); P.tone(shed, INK, { from: [700, 380, 0.1], to: [1300, 640, 0.5], bbox: [700, 300, 1300, 640] }, 6);
+  ctx.save(); P.clip(shed);
+  for (let by = 392, row = 0; by < 640; by += 16, row++) { P.line(svg(`M700 ${by} L1300 ${by}`), 1.2, INK); for (let bx = 700 + (row % 2) * 22; bx < 1300; bx += 44) P.line(svg(`M${bx} ${by} L${bx} ${by + 16}`), 1, INK); }   // the brickwork
+  for (const [rx, ry] of [[700, 380], [900, 380], [1100, 380]]) for (let k = 0; k < 6; k++) P.line(svg(`M${rx + 10 + k * 16} ${ry - k * 13 - 2} L${rx + 100 + k * 0} ${ry - 76}`), 0.9, INK);   // the roof's slates, hatched
+  ctx.restore();
+  P.line(shed, 4); P.line(svg('M700 384 L1300 384'), 3, INK);
+  for (let i = 0; i < 5; i++) { const wx = 960 + i * 64; if (wx > 1260) break; const win = svg(`M${wx} 610 L${wx} 560 C${wx} 538 ${wx + 40} 538 ${wx + 40} 560 L${wx + 40} 610 Z`); P.both(win, 'charDk', 2.5); P.line(svg(`M${wx + 20} 544 L${wx + 20} 610 M${wx} 580 L${wx + 40} 580`), 1.5, 'ochre'); ctx.save(); P.alpha(0.6); P.fill(svg(`M${wx + 4} 606 L${wx + 4} 584 L${wx + 18} 584 L${wx + 18} 606 Z`), 'goldLt'); ctx.restore(); }
+  P.both(rect(780, 420, 440, 80, 6), 'ivory', 3); P.line(rect(790, 430, 420, 60, 4), 1.5, INK); P.text('GLUE WORKS', 1000, 476, { font: FONT.caps, weight: 700, size: 46, tracking: 6, color: INK });
+  // the door, a ramp up to it; barrels; a bone cart; the yard fence along the front
+  P.both(svg('M836 640 L836 536 C836 504 924 504 924 536 L924 640 Z'), 'charDk', 3); P.line(svg('M880 512 L880 640'), 1.5, 'ochre');
+  P.both(svg('M760 652 L836 640 L924 640 L924 652 Z'), 'sepia', 2.5);
+  for (const [bx, by] of [[1220, 640], [1262, 640], [1241, 604]]) { P.both(svg(`M${bx - 18} ${by} C${bx - 22} ${by - 18} ${bx - 22} ${by - 30} ${bx - 18} ${by - 36} L${bx + 18} ${by - 36} C${bx + 22} ${by - 30} ${bx + 22} ${by - 18} ${bx + 18} ${by} Z`), 'sepia', 2.5); P.line(svg(`M${bx - 20} ${by - 10} L${bx + 20} ${by - 10} M${bx - 20} ${by - 26} L${bx + 20} ${by - 26}`), 2, INK); }
+  P.line(svg('M1320 652 L1400 652'), 4, INK); for (const wx of [1330, 1390]) { P.both(ell(wx, 640, 14), 'sepia', 2); P.line(svg(`M${wx - 14} 640 L${wx + 14} 640 M${wx} 626 L${wx} 654`), 1, INK); } P.both(svg('M1316 630 L1404 630 L1396 600 L1324 600 Z'), 'sepia', 2.5);
+  for (let k = 0; k < 4; k++) P.line(svg(`M${1334 + k * 18} 602 C${1338 + k * 18} 588 ${1346 + k * 18} 588 ${1350 + k * 18} 596`), 3, 'ivory');   // its load of bones
+  for (let fx = 1000; fx < 1440; fx += 34) P.line(svg(`M${fx} 660 L${fx} 618`), 2.5, INK); P.line(svg('M990 630 L1440 630 M990 648 L1440 648'), 2, INK);
   // the horses, a line of them walking in through the door
   ctx.save(); P.clip(rect(0, 0, 846, 900));   // they go in at the door
   for (let i = 0; i < 4; i++) { const x = -160 + ((lt * 80 + i * 250) % 1000); horse(P, x, 652, 0.26, lt * 6 + i * 1.3, { color: 'ochre', dark: INK }); }
