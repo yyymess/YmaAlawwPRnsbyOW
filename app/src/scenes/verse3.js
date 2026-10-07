@@ -269,13 +269,37 @@ function ghostTown(P, f, L, t, w, h) {
 }
 
 // ---- 4. the tests fall like leaves; the build glows green forever; it did its best -----------------------------
+/** the tree the tests grow on: a leaning trunk with a root flare, four limbs, and a twig out to each leaf (file) */
+function testTree(P, t, leaves) {
+  const ctx = P.ctx, sway = Math.sin(t * 1.2) * 0.004;
+  const seg = (pts, w0, w1, pass) => { for (let i = 0; i < pts.length - 1; i++) { const u = (i + 0.5) / (pts.length - 1), w = lerp(w0, w1, u); P.line(svg(`M${pts[i][0]} ${pts[i][1]} L${pts[i + 1][0]} ${pts[i + 1][1]}`), pass ? w : w + Math.min(7, 2.5 + w * 0.2), pass ? 'bark' : 'line'); } };   // the outline thins with the branch
+  const curve = (a, c, b, n = 12) => Array.from({ length: n + 1 }, (_, k) => { const u = k / n, v = 1 - u; return [v * v * a[0] + 2 * v * u * c[0] + u * u * b[0], v * v * a[1] + 2 * v * u * c[1] + u * u * b[1]]; });
+  ctx.save(); ctx.translate(660, 540); ctx.rotate(sway); ctx.translate(-660, -540);
+  const trunk = curve([660, 548], [690, 450], [652, 380], 14);
+  const limbs = [[[652, 380], [560, 320], [430, 214], 22, 6], [[652, 380], [600, 260], [560, 120], 20, 6], [[652, 380], [700, 250], [770, 112], 20, 6], [[652, 380], [760, 330], [905, 206], 22, 6]];
+  const twigs = leaves.map(([lx, ly]) => {   // from the nearest point on a limb out to the leaf
+    let best = null; for (const [a, c, b] of limbs) for (const p of curve(a, c, b, 10).slice(3)) { const d = Math.hypot(p[0] - lx, p[1] - ly); if (!best || d < best[1]) best = [p, d]; }
+    const [p] = best, mid = [(p[0] + lx) / 2 + (ly - p[1]) * 0.15, (p[1] + ly) / 2 - Math.abs(lx - p[0]) * 0.12]; return curve(p, mid, [lx, ly + 30], 6);
+  });
+  for (const pass of [0, 1]) {
+    if (pass) P.fill(svg('M624 552 C640 540 646 520 646 494 L676 494 C676 520 684 540 700 552 Z'), 'bark'); else P.line(svg('M624 552 C640 540 646 520 646 494 L676 494 C676 520 684 540 700 552 Z'), 7);
+    seg(trunk, 44, 34, pass); for (const [a, c, b, w0, w1] of limbs) seg(curve(a, c, b), w0, w1, pass); for (const tw of twigs) seg(tw, 5, 2, pass);
+  }
+  // a lit edge up the left of the trunk and limbs; the bark's short marks
+  P.line(svg('M650 540 C670 470 652 420 640 388'), 3, 'barkLt'); for (const [a, c, b] of limbs.slice(0, 2)) { const q = curve(a, c, b, 10); P.line(svg(`M${q[1][0] - 3} ${q[1][1] - 3} L${q[6][0] - 3} ${q[6][1] - 3}`), 2, 'barkLt'); }
+  for (let k = 0; k < 5; k++) { const y = 520 - k * 26; P.line(svg(`M${664 + (k % 2) * 6} ${y} l10 -1`), 2, 'barkLt'); }
+  ctx.restore();
+  // tufts of grass where it stands
+  for (const gx of [540, 600, 720, 790, 260, 1000, 1180]) P.line(svg(`M${gx} 536 l6 -16 M${gx + 8} 536 l2 -20 M${gx + 16} 536 l-4 -14`), 2.5, 'sageDk');
+}
 function tests(P, f, L, t, w, h) {
   const ctx = P.ctx;
   backdrop(P, w, h, 'sky', 'gold');
   P.fill(rect(-10, 520, w + 20, 140), 'sage');
-  // the tree of tests
-  P.both(svg('M640 540 C650 440 630 360 600 300 L620 290 C650 340 660 320 670 280 L690 284 C690 330 680 420 700 540 Z'), 'sepiaDk', 4);
+  // the tree of tests: a tree drawn by the rules (FIGURES.md, Trees), each test file a leaf on a twig of its own
   const dl = wd(L, 0, 'deleted'), r = rng(8), names = ['test_login', 'test_cart', 'test_auth', 'test_edge', 'test_null', 'test_utf8', 'test_leap', 'test_race', 'test_retry', 'test_zero', 'test_tz', 'test_y2k'];
+  const leaves = []; { const rr = rng(8); for (let i = 0; i < 12; i++) { const a = rr() * Math.PI * 2, d = 60 + rr() * 150; rr(); leaves.push([660 + Math.cos(a) * d * 1.6, 200 + Math.sin(a) * d * 0.8]); } }
+  testTree(P, t, leaves);
   for (let i = 0; i < 12; i++) {
     const a = r() * Math.PI * 2, d = 60 + r() * 150, x0 = 660 + Math.cos(a) * d * 1.6, y0 = 200 + Math.sin(a) * d * 0.8, fall = clamp((t - dl - i * 0.12) / 2.6);
     const x = x0 + Math.sin(fall * 9 + i) * 60 * fall, y = y0 + ease.in(fall) * (500 - y0);
