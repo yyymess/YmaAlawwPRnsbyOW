@@ -18,13 +18,17 @@ Needs Node, Chromium (Playwright's, or set `CHROMIUM`) and ffmpeg. `--workers N`
 Everything else is in the repo: the fonts (`app/fonts`, OFL), the song (`audio/`), and the beat grid and word timings (`data/`, made once by `analysis/`; not needed to render).
 
 ```sh
-brew install node ffmpeg              # or any Node 18+ and an ffmpeg with libx264 and AAC
+# Windows (PowerShell):  winget install Git.Git OpenJS.NodeJS.LTS Gyan.FFmpeg   (then open a new terminal)
+# macOS:                 brew install git node ffmpeg
+git clone https://github.com/yyymess/YmaAlawwPRnsbyOW.git && cd YmaAlawwPRnsbyOW
 npm install                           # Playwright
 npx playwright install chromium       # its Chromium (or point $CHROMIUM at a Chrome/Chromium binary)
 npm run preview                       # http://localhost:5173/app/?t=0
 npm run render                        # out/engineers-paradise.mp4, 1920x1080
 npm run render:4k                     # out/engineers-paradise-4k.mp4, 3840x2160
 ```
+
+Any Node 18+ and an ffmpeg with libx264 and AAC will do. Claude Code itself is not needed to render.
 
 `--scale 2` draws every frame at 3840x2160. It is all vector (lines, fills, screentone dots sized in frame units), so 4K is genuinely sharper, not upscaled; only the paper grain is a texture. It takes roughly three to four times as long as 1080p; set `--workers` to about the number of performance cores. `--scale 2 --size 1440` gives a supersampled 1440p.
 

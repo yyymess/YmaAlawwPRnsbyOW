@@ -12,12 +12,13 @@ import http from 'node:http';
 import { readFile, mkdir, writeFile, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // Playwright: from this project's node_modules (npm install), else the global one (npm install -g playwright)
 const { chromium } = (() => { try { return createRequire(import.meta.url)('playwright'); } catch { return createRequire(execSync('npm root -g').toString().trim() + '/')('playwright'); } })();
 // Chromium: $CHROMIUM if set, else the cloud box's copy if present, else Playwright's own (npx playwright install chromium)
 const CHROMIUM = process.env.CHROMIUM ?? ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].find((p) => existsSync(p));
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');   // (fileURLToPath, so it is right on Windows too)
 const argv = process.argv.slice(2), mode = argv[0] ?? 'stills';
 const opt = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.ttf': 'font/ttf', '.m4a': 'audio/mp4', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
