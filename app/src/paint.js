@@ -11,6 +11,7 @@ export const C = {
   navy: '#3a4660', navyDk: '#283247', shirt: '#dfe6e3', char: '#4d4844', charDk: '#37332f', plum: '#6d4b5c', ochre: '#b98b3c',
   skin2: '#f4dcc9', skin3: '#e9c8ad', sepia: '#e6d3ad', sepiaDk: '#8a6a43', silver: '#cfcac0',
   skin4: '#e2bf9f', skin5: '#d6ac8b', hairBr: '#5b4030', hairAu: '#8a4a2c', hairBl: '#c9a466', hairGr: '#aaa49b', hairSp: '#5f554d', beardSp: '#8a8076',
+  blossom: '#f3d2d4', blossomDk: '#dc9eaa', blossomDeep: '#c27886', bark: '#3b2b27', barkLt: '#7b655b',
 };
 export const FONT = { display: 'Federant, serif', caps: 'Cinzel, serif', mono: '"Plex Mono", monospace', comic: '"Comic Neue", "Comic Sans MS", cursive' };
 

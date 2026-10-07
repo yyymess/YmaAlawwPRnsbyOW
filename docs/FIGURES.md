@@ -39,6 +39,16 @@ Measured against hoodie reference sheets (front, side, back, turning). A hood is
 - Women (`fem: true`): a slightly narrower face, a lash flicked out at each eye's corner, a touch of rose on the lower lip, gold drop earrings when the ears show. Hair `bob`, `ponytail` (the tail over her right shoulder), `wavy` (the long Mucha fall, one shape over the shoulders behind the face) or `bun`.
 - The code reviewer is the Unix greybeard: `hair: 'unix'` (receding, parted, long to the shoulders) with `beard: 'unix'` (full, salt and pepper, a walrus moustache over the mouth, ragged bushy brows), and a hard-disk platter for a halo (`platter`).
 
+## Trees
+After Japanese prints by way of Art Nouveau (Hiroshige's *Plum Park in Kameido*, the tree Van Gogh copied; Mucha's *Seasons*, where branches curl with the figure's hair) and the flat, screen-printed travel poster:
+- **One gesture, silhouette first.** Trunk and limbs are one dark calligraphic shape that swells, bends and tapers: an S, never a column. A long limb may arch across the scene or out of the frame and frame it; let the frame crop the crown.
+- **Every fork tapers** (Leonardo's rule): the children's widths, squared, add up to the parent's. A branch never ends blunt; it thins out into twigs.
+- **Outline under fill**, as with the hands: the contour runs round the outside of the whole tree, never across its joints.
+- **Bark is a few long lines along the grain** and a lighter edge on the lit side; a cherry adds its short horizontal lenticels. No hatching.
+- **Foliage and blossom in a few big masses**, scalloped at the edge, of different sizes, gathered at the ends of the branches and overlapping; the limbs show between them. The masses behind are darker and sit behind the limbs; those in front are lighter and cover them. Each mass is flat, with screentone on its shadow side (lower right, away from the light).
+- **Detail lives at the edges.** Single flowers (or leaves) along the rims and on twigs poking out of the silhouette; the inside of a mass stays flat but for a faint texture. Never paste big flowers over the middle.
+- **Motion is small**: a slight sway from the foot; petals fall one by one (a cherry petal is notched at its tip), tumbling as they drift, and gather on the ground under the tree.
+
 ## Animals
 - The horse (`horse`): a barrel with chest and hindquarters, an arched neck with a mane along the crest, a wedge of a head with an ear and a forelock; front legs bend at the knee, hind legs at the backward hock; legs taper towards dark hooves.
 

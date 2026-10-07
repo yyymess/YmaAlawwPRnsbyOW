@@ -5,7 +5,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { agentAngel, token } from '../kit/props.js';
+import { agentAngel, token, cherryTree } from '../kit/props.js';
 import { begin, end, quill, scroll, star, globe, drawHand } from '../kit/things.js';
 import { duck, heart, cloud } from './verse1.js';
 
@@ -275,11 +275,7 @@ function spring(P, f, L, t, w, h) {
   if (t < l2) {
     backdrop(P, w, h, 'sky', 'roseLt');
     P.fill(rect(-10, 500, w + 20, 160), 'sage');
-    P.both(svg('M1040 520 C1050 420 1030 330 1000 270 L1020 260 C1050 310 1060 300 1070 250 L1090 254 C1090 300 1080 420 1100 520 Z'), 'sepiaDk', 4);
-    for (let k = 0; k < 9; k++) { const bx = 1050 + Math.cos(k * 0.72 + 0.4) * (90 + (k % 3) * 34), by = 210 + Math.sin(k * 0.72 + 0.4) * 60 - (k % 2) * 20; P.both(ell(bx, by, 72, 56), k % 2 ? 'roseLt' : 'cream', 3); }
-    P.tone(ell(1050, 230, 220, 120), 'rose', { from: [1050, 160, 0], to: [1050, 300, 0.4], bbox: [830, 110, 1270, 350] }, 6);
-    for (let i = 0; i < 9; i++) P.flower(1050 + Math.cos(i * 0.7) * (60 + (i % 3) * 50), 200 + Math.sin(i * 1.7) * 60, 0.6, i % 2 ? 'rose' : 'roseLt', i);
-    for (let i = 0; i < 14; i++) { const u = ((t * 0.25 + i * 0.071) % 1); P.flower(200 + ((i * 197) % 1100) + Math.sin(u * 8 + i) * 30, -20 + u * 560, 0.32, 'roseLt', u * 6); }
+    cherryTree(P, 1165, 532, 0.9, t);   // a cherry in full blossom, shedding its petals
     // the box of his things: a plant, a mug, the duck
     ctx.save(); ctx.translate(560, 520);
     P.both(svg('M-160 0 L-150 -170 L150 -170 L160 0 Z'), 'ochre', 4); P.line(svg('M-150 -170 L-190 -220 M150 -170 L190 -220'), 4);
@@ -290,6 +286,7 @@ function spring(P, f, L, t, w, h) {
     P.text('LAYOFF', 0, -70, { font: FONT.caps, weight: 700, size: 30, color: 'sepiaDk' });
     ctx.restore();
     heroFront(P, 300, 290, 0.42, { mouth: sing(f), open: f.vocal, look: [0.5, 0.2], blink: blinkAt(t), apron: t > wd(L, 0, 'craftsman') });
+    cherryTree(P, 1165, 532, 0.9, t, { part: 'petals' });   // the petals blow across him
   } else {
     marketStall(P, f, t, w, h, L, false);
   }

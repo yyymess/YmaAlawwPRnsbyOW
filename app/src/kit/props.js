@@ -1,5 +1,5 @@
 // Props and staging helpers shared by scenes.
-import { C, at, ell, rect, svg, lyric, FONT, clamp } from '../paint.js';
+import { C, at, ell, rect, svg, lyric, FONT, clamp, lerp } from '../paint.js';
 
 /** the time of the last beat at/before the first word of the matching line: a cut that never lands late */
 export function cut(f, q, nth = 0, tol = 0.03) {
@@ -74,6 +74,144 @@ export function tree(P, x, y, s, seed = 1) {
     P.tone(p, 'hoodDot', { from: [cx - rr * 0.4, cy - rr * 0.4, 0], to: [cx + rr, cy + rr, 0.5], bbox: [cx - rr * 1.2, cy - rr * 1.2, cx + rr * 1.2, cy + rr * 1.2] }, 5);
     P.line(p, lw);
     for (let k = 0; k < 3; k++) { const a = r() * Math.PI * 2, d = rr * (0.25 + r() * 0.4), lx = cx + Math.cos(a) * d, ly = cy + Math.sin(a) * d; P.line(svg(`M${lx - 10} ${ly + 4} C${lx - 6} ${ly - 8} ${lx + 6} ${ly - 8} ${lx + 10} ${ly + 2}`), lw * 0.6); }
+  }
+  ctx.restore();
+}
+/**
+ * A cherry tree in full blossom, drawn by the rules in docs/FIGURES.md (Trees). (x, y) the foot of its trunk, s its scale,
+ * t the time (for the sway and the falling petals). Its space: the trunk forks at ~210 units up; one long low limb arches
+ * out ~470 units to the left, the crown rises to ~480 and spreads ~240 to the right. o.part: 'tree' (default) draws the
+ * tree with the petals on the ground; 'petals' draws only the petals in the air, to be laid over whatever stands in front.
+ */
+const SAKURA = 'M0 0 C-0.42 -0.18 -0.56 -0.72 -0.3 -1 L0 -0.84 L0.3 -1 C0.56 -0.72 0.42 -0.18 0 0 Z';   // a petal, notched at the tip
+function cubicAt(c, u) { const v = 1 - u; return [0, 1].map((k) => v * v * v * c[0][k] + 3 * v * v * u * c[1][k] + 3 * v * u * u * c[2][k] + u * u * u * c[3][k]); }
+function cherrySkeleton(seed) {
+  const r = rng0(seed), limbs = [], tips = [], masses = [];
+  const add = (c, w0, w1, depth, root = limbs.length) => { limbs.push({ c, w0, w1, depth, root }); return limbs[limbs.length - 1]; };
+  const dirAt = (c, u) => { const p = cubicAt(c, Math.max(0, u - 0.01)), q = cubicAt(c, Math.min(1, u + 0.01)), d = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1; return [(q[0] - p[0]) / d, (q[1] - p[1]) / d]; };
+  // the trunk, leaning and turning in an S, and three limbs from its fork (at the fork 52² ≈ 32² + 30² + 27²)
+  add([[0, 0], [22, -80], [-40, -150], [-16, -222]], 60, 52, 0);
+  const main = [
+    add([[-16, -222], [-96, -330], [-290, -372], [-480, -300]], 32, 6, 1),   // the long limb, rising and then reaching out low to the left
+    add([[-16, -222], [-60, -300], [20, -410], [-30, -500]], 30, 6, 1),      // up through the middle, with a kink
+    add([[-16, -222], [70, -270], [130, -360], [262, -412]], 27, 6, 1),      // out to the right, lifting at the end
+  ];
+  // side branches, alternating sides, leaving the limb at a slant; each takes a share of the width
+  for (const L of main) {
+    const len = Math.hypot(L.c[3][0] - L.c[0][0], L.c[3][1] - L.c[0][1]);
+    for (let i = 0; i < 3; i++) {
+      const u = 0.34 + i * 0.2 + r() * 0.05, p = cubicAt(L.c, u), [dx, dy] = dirAt(L.c, u), side = i % 2 ? 1 : -1;
+      let a = Math.atan2(dy, dx) + side * (0.62 + r() * 0.3); if (Math.sin(a) > 0.25) a = Math.atan2(dy, dx) - side * (0.62 + r() * 0.3);   // never straight down
+      const bl = len * (0.36 - i * 0.07) * (0.85 + r() * 0.3), w = lerp(L.w0, L.w1, u) * 0.6, e = [p[0] + Math.cos(a) * bl, p[1] + Math.sin(a) * bl - bl * 0.12];
+      const B = add([p, [p[0] + Math.cos(a) * bl * 0.45, p[1] + Math.sin(a) * bl * 0.45], [e[0] - Math.cos(a + side * 0.5) * bl * 0.3, e[1] - Math.sin(a + side * 0.5) * bl * 0.3], e], w, 3, 2, L.root);
+      tips.push({ p: e, a, k: 2, B });
+    }
+    tips.push({ p: L.c[3], a: Math.atan2(...dirAt(L.c, 1).reverse()), k: 1, L });
+  }
+  // twigs off every side branch, so the blossom has somewhere to gather
+  for (const tp of tips.slice()) {
+    if (!tp.B) continue;
+    for (let k = 0; k < 2; k++) {
+      const v = 0.5 + k * 0.3, q = cubicAt(tp.B.c, v), side = k ? -1 : 1, ta = tp.a + side * (0.5 + r() * 0.5) - 0.15, tl = 40 + r() * 34, te = [q[0] + Math.cos(ta) * tl, q[1] + Math.sin(ta) * tl];
+      add([q, [q[0] + Math.cos(ta) * tl * 0.45, q[1] + Math.sin(ta) * tl * 0.45], [te[0] - Math.cos(ta) * tl * 0.3, te[1] - Math.sin(ta) * tl * 0.3 - 4], te], 3.4, 1.4, 3, tp.B.root);
+      tips.push({ p: te, a: ta, k: 3 });
+    }
+  }
+  // the blossom: a cloud (a puff) riding on each branch, flattened towards the horizontal like the tiers of a cherry in a
+  // print; on each limb one midway (behind the wood) and one at its end (in front); on each side branch one at its end
+  const puffs = [], lenOf = (L) => Math.hypot(L.c[3][0] - L.c[0][0], L.c[3][1] - L.c[0][1]);
+  const flat = (a) => { let k = a; if (k > Math.PI / 2) k -= Math.PI; if (k < -Math.PI / 2) k += Math.PI; return k * 0.35; };
+  const puffOn = (L, u, size, back) => { const p = cubicAt(L.c, u), [dx, dy] = dirAt(L.c, Math.min(0.99, u)), rx = size * (0.9 + r() * 0.25), ry = rx * (0.5 + r() * 0.12), rot = flat(Math.atan2(dy, dx)); puffs.push({ cx: p[0] + Math.sin(rot) * ry * 0.35, cy: p[1] - Math.cos(rot) * ry * 0.55, rx, ry, rot, back, seed: Math.floor(r() * 1e4) }); };
+  for (const L of main) { const len = lenOf(L); puffOn(L, 0.6, len * 0.3, true); puffOn(L, 1, len * 0.3, false); }
+  limbs.filter((L) => L.depth === 2).forEach((L, i) => puffOn(L, 1, lenOf(L) * 0.62 + 20, i % 3 === 1));
+  const inPuff = (x, y, q, k = 1) => { const c = Math.cos(-q.rot), sn = Math.sin(-q.rot), dx = x - q.cx, dy = y - q.cy, ex = dx * c - dy * sn, ey = dx * sn + dy * c; return (ex / (q.rx * k)) ** 2 + (ey / (q.ry * k)) ** 2 < 1; };
+  // flowers: on the upper rims of the front clouds where nothing covers them, and sprigs on the twigs that poke out
+  const flowers = [], front = puffs.filter((q) => !q.back), covered = (x, y, not) => front.some((q) => q !== not && inPuff(x, y, q, 1.02));
+  for (const q of front) for (let k = 0; k < 9; k++) {
+    const a = -Math.PI * (0.08 + (k / 8) * 0.84), x = q.cx + Math.cos(a) * q.rx * Math.cos(q.rot) - Math.sin(a) * q.ry * Math.sin(q.rot), y = q.cy + Math.cos(a) * q.rx * Math.sin(q.rot) + Math.sin(a) * q.ry * Math.cos(q.rot);
+    if (!covered(x, y, q) && r() < 0.3) flowers.push({ x, y, sz: 11 + r() * 4, rot: r() * 6 });
+  }
+  for (const L of limbs) {
+    if (L.depth !== 3) continue;
+    const e = L.c[3], d = cubicAt(L.c, 0.9), ang = Math.atan2(e[1] - d[1], e[0] - d[0]) - 0.25, len = 30 + r() * 26, tip = [e[0] + Math.cos(ang) * len, e[1] + Math.sin(ang) * len - 8];
+    if (puffs.some((q) => inPuff(tip[0], tip[1], q, 1.05))) continue;
+    flowers.push({ sprig: [e, [e[0] + Math.cos(ang) * len * 0.5, e[1] + Math.sin(ang) * len * 0.5 - 6], tip], x: tip[0], y: tip[1], sz: 10 + r() * 3, rot: r() * 6 });
+  }
+  return { limbs, puffs, flowers };
+}
+const CHERRY = new Map();
+function sakura(P, x, y, sz, rot, o = {}) {   // a flower of five notched petals, a dark eye, stamens
+  const ctx = P.ctx; ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  for (let i = 0; i < 5; i++) { ctx.save(); ctx.rotate((i / 5) * Math.PI * 2); ctx.scale(sz, sz); P.fill(svg(SAKURA), o.fill ?? 'blossom'); ctx.lineWidth = (o.lw ?? 1.6) / sz; ctx.strokeStyle = C.line; ctx.stroke(svg(SAKURA)); ctx.restore(); }
+  P.fill(ell(0, 0, sz * 0.24), 'blossomDeep');
+  for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2 + 0.6; P.line(svg(`M${Math.cos(a) * sz * 0.2} ${Math.sin(a) * sz * 0.2} L${Math.cos(a) * sz * 0.42} ${Math.sin(a) * sz * 0.42}`), Math.max(0.8, sz * 0.05), 'redDk'); }
+  ctx.restore();
+}
+export function cherryTree(P, x, y, s, t, o = {}) {
+  const ctx = P.ctx, seed = o.seed ?? 7; if (!CHERRY.has(seed)) CHERRY.set(seed, cherrySkeleton(seed));
+  const { limbs, puffs, flowers } = CHERRY.get(seed), lw = Math.max(1.3, 3.5 * s) / s;
+  if (o.part === 'petals') {   // petals in the air: each falls from the crown, drifting left on the breeze and tumbling
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+    const r = rng0(seed + 5);
+    for (let i = 0; i < (o.count ?? 34); i++) {
+      const x0 = -520 + r() * 800, y0 = -460 + r() * 220, sp = 70 + r() * 50, ph = r(), span = -y0 + 30, u = ((t * sp) / span + ph) % 1;
+      const px = x0 - u * span * (0.55 + r() * 0.3) + Math.sin(u * 9 + i) * 26, py = y0 + u * span, spin = t * (2 + r() * 2) + i, sz = 15 + r() * 6;
+      ctx.save(); ctx.translate(px, py); ctx.rotate(spin); ctx.scale(Math.cos(t * 3.1 + i) * 0.85 + 0.15 * Math.sign(Math.cos(t * 3.1 + i) || 1), 1); ctx.scale(sz, sz);
+      P.fill(svg(SAKURA), i % 3 ? 'blossom' : 'cream'); ctx.lineWidth = 1.4 / sz; ctx.strokeStyle = C.line; ctx.stroke(svg(SAKURA)); ctx.restore();
+    }
+    ctx.restore(); return;
+  }
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+  // its shadow on the grass, and the petals that have fallen into it
+  P.tone(ell(-110, 8, 420, 34), o.shade ?? 'sageDk', { from: [-110, 8, 0.6], to: [310, 8, 0], radial: true, bbox: [-530, -26, 310, 42] }, 6);
+  { const r = rng0(seed + 9); for (let i = 0; i < 40; i++) { const gx = -520 + r() * 760, gy = -6 + r() * 30; ctx.save(); ctx.translate(gx, gy); ctx.scale(1, 0.45); ctx.rotate(r() * 6.3); ctx.scale(12, 12); P.fill(svg(SAKURA), i % 4 ? 'blossom' : 'cream'); ctx.lineWidth = 1.2 / 12; ctx.strokeStyle = C.line; ctx.stroke(svg(SAKURA)); ctx.restore(); } }
+  // it sways a little from the foot
+  ctx.rotate(Math.sin(t * 1.1) * 0.006 + Math.sin(t * 2.3) * 0.002);
+  const flare = svg('M-62 4 C-44 -6 -36 -24 -30 -52 L30 -52 C34 -24 44 -6 66 4 Z');   // the root flare at its foot
+  // a cloud of blossom: an ellipse whose edge is a run of small bumps of varying size (the heads of the flowers), flat
+  // pink, toned towards its lower right, outlined
+  const puff = (q) => {
+    const r = rng0(q.seed), bob = Math.sin(t * 1.6 + q.cx * 0.013) * 1.8, per = Math.PI * (3 * (q.rx + q.ry) - Math.sqrt((3 * q.rx + q.ry) * (q.rx + 3 * q.ry))), n = Math.max(9, Math.round(per / 34));
+    const pt = (a, k) => { const ex = Math.cos(a) * q.rx * k, ey = Math.sin(a) * q.ry * k; return [q.cx + ex * Math.cos(q.rot) - ey * Math.sin(q.rot), q.cy + bob + ex * Math.sin(q.rot) + ey * Math.cos(q.rot)]; };
+    const ks = Array.from({ length: n }, () => 0.94 + r() * 0.1), path = new Path2D();
+    for (let i = 0; i <= n; i++) {
+      const a = (i / n) * Math.PI * 2, p = pt(a, ks[i % n]);
+      if (!i) { path.moveTo(...p); continue; }
+      const am = ((i - 0.5) / n) * Math.PI * 2, c = pt(am, (ks[i % n] + ks[i - 1]) / 2 + 0.16 + r() * 0.06); path.quadraticCurveTo(c[0], c[1], p[0], p[1]);
+    }
+    const bb = [q.cx - q.rx * 1.2, q.cy - q.ry * 1.5, q.cx + q.rx * 1.2, q.cy + q.ry * 1.5];
+    P.fill(path, q.back ? 'blossomDk' : 'blossom');
+    P.tone(path, q.back ? 'blossomDeep' : 'blossomDk', { from: [q.cx - q.rx * 0.1, q.cy - q.ry * 0.2, q.back ? 0.1 : 0], to: [q.cx + q.rx * 0.9, q.cy + q.ry * 1.1, q.back ? 0.62 : 0.55], bbox: bb }, 5);
+    P.line(path, lw);
+  };
+  const layer = (front) => puffs.filter((q) => q.back !== front).sort((a, b) => a.cy - b.cy).forEach(puff);
+  // the blossom behind the wood
+  layer(false);
+  // the limbs: one silhouette, outline under fill, tapering by the curve
+  const seg = (L, i, n) => { const a = cubicAt(L.c, i / n), b = cubicAt(L.c, (i + 1) / n); return [a, b, lerp(L.w0, L.w1, (i + 0.5) / n)]; };
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  for (const pass of [0, 1]) {
+    if (pass) P.fill(flare, 'bark'); else P.line(flare, 2 * lw);
+    for (const L of limbs) { const n = L.depth < 2 ? 18 : 10; for (let i = 0; i < n; i++) { const [a, b, w] = seg(L, i, n); P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), pass ? w : w + 2 * lw, pass ? 'bark' : 'line'); } }
+  }
+  // the bark: a light edge along the lit (left) side of the trunk and limbs; on the trunk the cherry's short horizontal
+  // lenticels, irregular, kept to the shaded half
+  { const r = rng0(seed + 21);
+    for (const L of limbs) {
+      if (L.depth > 1) continue;
+      const edge = new Path2D(), n = 18;
+      for (let i = 0; i <= n; i++) { const u = (i / n) * (L.depth ? 0.8 : 0.97) + (L.depth ? 0.04 : 0.02), p = cubicAt(L.c, u), q = cubicAt(L.c, Math.min(1, u + 0.01)), w = lerp(L.w0, L.w1, u), dx = q[0] - p[0], dy = q[1] - p[1], dl = Math.hypot(dx, dy) || 1, nx = -dy / dl, ny = dx / dl, sd = nx < 0 ? 1 : -1; const ex = p[0] + nx * sd * w * 0.32, ey = p[1] + ny * sd * w * 0.32; i ? edge.lineTo(ex, ey) : edge.moveTo(ex, ey); }
+      P.line(edge, lw * 0.75, 'barkLt');
+    }
+    const T = limbs[0];
+    for (let i = 0; i < 6; i++) { const u = 0.1 + i * 0.14 + r() * 0.05, p = cubicAt(T.c, u), w = lerp(T.w0, T.w1, u), cx = p[0] + w * (0.06 + r() * 0.14), half = w * (0.1 + r() * 0.1); P.line(svg(`M${cx - half} ${p[1]} L${cx + half} ${p[1] - 1}`), lw * 0.6, 'barkLt'); }
+  }
+  // the blossom in front of it, and flowers on the rim of the crown
+  layer(true);
+  for (const fl of flowers) {
+    const dy = Math.sin(t * 1.6 + fl.x * 0.013) * 1.6;
+    if (fl.sprig) { const [a, m, b] = fl.sprig; P.line(svg(`M${a[0]} ${a[1] + dy} Q${m[0]} ${m[1] + dy} ${b[0]} ${b[1] + dy}`), lw * 0.75, 'bark'); }
+    sakura(P, fl.x, fl.y + dy, fl.sz, fl.rot);
   }
   ctx.restore();
 }

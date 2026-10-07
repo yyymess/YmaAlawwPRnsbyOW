@@ -12,7 +12,7 @@ export function hero(P) {
   for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 880, 0.4, (i / 8) * Math.PI * 2);
 }
 
-import { tree, cypress, campus, megacampus, agentAngel } from './props.js';
+import { tree, cypress, campus, megacampus, agentAngel, cherryTree } from './props.js';
 export function props(P) {
   robotaxi(P, 300, 330, 0.75, 0.3);
   campus(P, 860, 330, 0.85);
@@ -75,4 +75,11 @@ export function poses(P) {
   heroPose(P, 1030, 820, 0.62, { lean: 0.28, hipY: -430, legs: { near: { a: 0.75, b: 0.05 }, far: { a: -0.55, b: -0.55 } }, arms: { near: { a: 1.25, e: 1.55 }, far: { a: 0.9, e: 1.5 } }, hands: { near: 'fist', far: 'fist' },
     hold: (P, which, w, ang) => { if (which === 'far') P.line(svg(`M${w[0] - 260} ${w[1] + 70} L${w[0] + 420} ${w[1] - 80}`), 9); } });
   heroPose(P, 1420, 820, 0.62, { lean: 0.12, legs: { near: { a: 0.05, b: 0.05 }, far: { a: -0.08, b: -0.08 } }, arms: { near: { a: 0.75, e: 1.35 }, far: { a: 0.45, e: 1.2 } }, look: [0, 0.6], hands: { near: 'fist' } });
+}
+
+// the cherry tree in blossom, large, on a spring sky over grass
+export function cherry(P) {
+  P.fill(rect(0, 0, 1600, 900), 'sky'); P.fill(rect(0, 760, 1600, 140), 'sage');
+  cherryTree(P, 1000, 780, 1.25, 2.0);
+  cherryTree(P, 1000, 780, 1.25, 2.0, { part: 'petals' });
 }
