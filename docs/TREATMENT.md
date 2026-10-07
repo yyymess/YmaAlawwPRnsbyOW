@@ -50,7 +50,7 @@ Times are from `data/audio.json` / `data/lyrics.json` (bars are 3.0 s; bar 0 is 
 | outro | 3:57–4:38 | **The Choir** |
 
 ### Intro — The Valley (0:00–0:21)
-Amish's opening shot, rebuilt: a Mucha landscape poster of a fenced lane through golden hills at dawn. "As I walk through the Valley where the robo-taxis roam": the hero walks the lane in profile; a robo-taxi glides past, its roof sensor spinning like a small halo. "I fear no outage, 'cause my agent's on call from home": he lifts his phone (back to us, camera bump), a tiny halo-bearing cursor answers. "with its tokens and its context, it comforts me": tokens drift past like blossoms. On the last bar the arch frame closes in and the banner letters **ENGINEER'S PARADISE**.
+Amish's opening shot, rebuilt: a Mucha landscape poster of a fenced lane through golden hills at dawn. "As I walk through the Valley where the robo-taxis roam": the hero walks the lane in profile; a robo-taxi glides past, its roof sensor spinning like a small halo. "I fear no outage, 'cause my agent's on call from home": he lifts his phone (back to us, camera bump), the agent appears above him like an angel: an abstract geometric mark with Mucha wings. "with its tokens and its context, it comforts me": tokens drift past like blossoms. On the last bar the arch frame closes in and the banner letters **ENGINEER'S PARADISE**.
 
 ### Verse 1 — The Book of the Engineer (0:21–0:57)
 A frieze of six arched chapters on a long wall; the camera glides one chapter per couplet, landing with the first word. Each couplet is lettered on the chapter's plaque under a small title tab.

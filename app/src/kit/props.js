@@ -185,7 +185,7 @@ export function megacampus(P, x, y, s, o = {}) {
 
 /**
  * The agent, as an AI angel: an abstract geometric mark (eight rounded rays round a ring, in the idiom
- * of AI product icons, not any one of them), a halo above, two Mucha wings, a glow.
+ * of AI product icons, not any one of them), two Mucha wings, a glow. No halo: the mark is symbol enough.
  */
 export function agentAngel(P, x, y, s, t, o = {}) {
   const ctx = P.ctx, lw = Math.max(1.5, 4 * s);
@@ -197,7 +197,6 @@ export function agentAngel(P, x, y, s, t, o = {}) {
     for (let k = 0; k < 4; k++) { ctx.save(); ctx.rotate(-0.55 + k * 0.32); P.both(svg(`M40 0 C80 -18 ${150 - k * 14} -26 ${190 - k * 22} -10 C${150 - k * 14} 8 80 14 40 0 Z`), k % 2 ? 'cream' : 'goldLt', lw / s); ctx.restore(); }
     ctx.restore();
   }
-  P.both(ell(0, -118, 54, 14), 'gold', lw / s);                                                  // halo
   ctx.save(); ctx.rotate(t * 0.4);
   for (let k = 0; k < 8; k++) { ctx.save(); ctx.rotate((k / 8) * Math.PI * 2); P.both(rect(-11, -88, 22, 58, 11), k % 2 ? 'gold' : 'goldLt', lw / s); ctx.restore(); }
   ctx.restore();
