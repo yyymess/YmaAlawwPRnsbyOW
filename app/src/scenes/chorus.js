@@ -323,9 +323,9 @@ const VARIANTS = {
       }
       else if (c === 1) { fillBg(P, box, 'night', 'redDk', 0.4); scroll(P, 195, 120, 260, 360, { unroll: ease.outCubic(clamp(lt / 0.8)), title: 'INVOICE', titleSize: 26, lines: ['tokens', '4,000,000,000', '', 'due: April', 'PAID IN FULL'], size: 26, lineH: 44 }); }
       else if (c === 2) {
-        fillBg(P, box, 'sky', 'gold', 0.4); P.both(svg('M-10 430 C150 400 300 420 400 410 L400 560 L-10 560 Z'), 'sage', 3); charger(P, 300, 496, 0.9);
+        fillBg(P, box, 'sky', 'gold', 0.4); P.both(svg('M-10 430 C150 400 300 420 400 410 L400 560 L-10 560 Z'), 'sage', 3); { const arr0 = word(lines, 4, 'horse') + 3.2; charger(P, 300, 496, 0.9, t > arr0 ? 0.15 + 0.85 * clamp((t - arr0) / 4) : 0); }
         const arr = word(lines, 4, 'horse') + 2.2, u = ease.outCubic(clamp((t - arr) / 1.0));
-        if (u > 0) { robotaxi(P, lerp(-200, 120, u), 496, 0.36, t * (1 - u), 1); if (u >= 1) { const cab = svg('M255 384 C232 392 214 424 208 452'); P.line(cab, 8); P.line(cab, 5, 'char'); P.both(rect(200, 446, 16, 16, 3), 'black', 2); const g = 0.5 + 0.5 * Math.sin(t * 6); P.ctx.save(); P.alpha(g); bolt(P, 120, 372, 1.1); P.ctx.restore(); } }
+        if (u > 0) { robotaxi(P, lerp(-200, 120, u), 496, 0.36, t * (1 - u), 1); if (u >= 1) { const cab = svg('M352 403 C380 420 330 470 268 466 C236 464 214 450 206 434'); P.line(cab, 9); P.line(cab, 5.5, 'char'); P.both(rect(196, 424, 20, 16, 4), 'charDk', 2); P.fill(ell(202, 432, 2.5), 'mint'); const g = 0.5 + 0.5 * Math.sin(t * 6); P.ctx.save(); P.alpha(g); bolt(P, 120, 372, 1.1); P.ctx.restore(); } }
       }
       else { fillBg(P, box, 'night', 'navy', 0.3); agentAngel(P, 195, 200, 0.42, t + 2); speech(P, 195, 430, 'Certainly!'); cascade(P, f, lines, [['Love this!', 195, 320]], 3); }
     },
@@ -393,11 +393,17 @@ function calPage(P, x, y, m, u, t, i) {
   if (u > 0) { P.line(svg(`M-150 ${yb} L150 ${yb}`), lw * 2.4, 'charDk'); for (let k = 0; k < 6; k++) flame(P, -125 + k * 50, yb + 6, 60 + 30 * (((k + i) * 7) % 3) / 2, 52, t, k + i * 3, k % 2 ? ['gold', 'cream'] : ['red', 'gold']); }
   end(P);
 }
-function gauge(P, x, y, v) {
-  const lw = begin(P, x, y, 1);
-  const arc = new Path2D(); arc.arc(0, 0, 130, Math.PI, 2 * Math.PI); P.line(arc, 26); P.line(arc, 18, 'cream');
-  const a = Math.PI + v * Math.PI; P.line(svg(`M0 0 L${Math.cos(a) * 110} ${Math.sin(a) * 110}`), 8, 'red'); P.both(ell(0, 0, 14), 'char', 3);
-  P.text('E', -120, 40, { font: FONT.caps, weight: 700, size: 34, color: 'cream' }); P.text('F', 120, 40, { font: FONT.caps, weight: 700, size: 34, color: 'cream' });
+function gauge(P, x, y, v) {   // a car's fuel gauge, reading TOKENS: chrome bezel, ticks, E ½ F, a red zone, a pump light
+  const ctx = P.ctx, lw = begin(P, x, y, 1), arc = (r) => { const p = new Path2D(); p.arc(0, 0, r, Math.PI, 2 * Math.PI); return p; };
+  const face = svg('M-150 30 L-150 0 A150 150 0 0 1 150 0 L150 30 Z');
+  P.fill(face, 'black'); P.line(face, 12, 'silver'); P.line(face, 4); P.line(svg('M-138 22 L138 22'), 2, 'charDk');
+  P.line(arc(118), 10, 'charDk'); { const p = new Path2D(); p.arc(0, 0, 118, Math.PI, Math.PI * 1.18); P.line(p, 10, 'red'); }
+  for (let k = 0; k <= 16; k++) { const a = Math.PI + (k / 16) * Math.PI, r0 = k % 4 ? 102 : 94; P.line(svg(`M${Math.cos(a) * r0} ${Math.sin(a) * r0} L${Math.cos(a) * 124} ${Math.sin(a) * 124}`), k % 4 ? 2.5 : 5, k < 3 ? 'red' : 'cream'); }
+  P.text('E', -96, -14, { font: FONT.caps, weight: 700, size: 30, color: 'red' }); P.text('F', 96, -14, { font: FONT.caps, weight: 700, size: 30, color: 'cream' }); P.text('½', 0, -70, { font: FONT.caps, weight: 700, size: 24, color: 'cream' });
+  const low = v < 0.18, on = low && Math.floor((P.t ?? 0) * 3) % 2 === 0;   // the low light blinks
+  ctx.save(); ctx.translate(-12, -32); P.both(svg('M-12 14 L-12 -14 L6 -14 L6 14 Z M6 -6 L14 -2 L14 10'), on ? 'gold' : 'charDk', 2.5); ctx.restore();
+  const a = Math.PI + Math.max(0.03, v) * Math.PI; P.line(svg(`M${-Math.cos(a) * 18} ${-Math.sin(a) * 18} L${Math.cos(a) * 112} ${Math.sin(a) * 112}`), 9); P.line(svg(`M${-Math.cos(a) * 18} ${-Math.sin(a) * 18} L${Math.cos(a) * 112} ${Math.sin(a) * 112}`), 5, 'red');
+  P.both(ell(0, 0, 16), 'char', 3); P.fill(ell(-4, -4, 5), 'grey');
   P.text('TOKENS', 0, 90, { font: FONT.caps, weight: 700, size: 28, color: 'goldLt' });
   end(P);
 }
@@ -408,11 +414,32 @@ function endOfLine(P, x, y, s) {
   P.both(rect(-140, -60, 280, 40, 6), 'red', lw); for (let i = 0; i < 5; i++) P.fill(rect(-130 + i * 56, -60, 28, 40), 'cream'); P.line(rect(-140, -60, 280, 40, 6), lw);
   end(P);
 }
-function hay(P, x, y, s) { const lw = begin(P, x, y, s); P.both(rect(-110, -120, 220, 120, 16), 'ochre', lw); for (let i = 0; i < 7; i++) P.line(svg(`M${-100 + i * 32} -110 l10 100`), lw * 0.5, 'sepiaDk'); P.line(svg('M-110 -60 L110 -60'), lw * 1.4, 'red'); end(P); }
-function charger(P, x, y, s) {
-  const lw = begin(P, x, y, s);
-  P.both(rect(-50, -260, 100, 260, 14), 'mint', lw); P.both(rect(-34, -230, 68, 80, 8), 'black', lw); bolt(P, 0, -190, 1.3);
-  P.line(svg('M50 -120 C110 -110 120 -40 90 0'), lw * 2.4); P.line(svg('M50 -120 C110 -110 120 -40 90 0'), lw * 1.2, 'char');
+function hay(P, x, y, s) {   // a square bale: straw in the top and front faces, the cut end, two twine bands, loose straws
+  const lw = begin(P, x, y, s), r = rng(21);
+  const front = svg('M-120 0 L-120 -110 L90 -110 L90 0 Z'), topF = svg('M-120 -110 L-80 -140 L130 -140 L90 -110 Z'), end_ = svg('M90 0 L90 -110 L130 -140 L130 -30 Z');
+  P.fill(front, 'ochre'); P.fill(topF, 'goldLt'); P.fill(end_, 'gold');
+  P.tone(front, 'sepiaDk', { from: [-20, -110, 0], to: [90, 0, 0.45], bbox: [-120, -110, 90, 0] }, 5); P.tone(end_, 'sepiaDk', { from: [90, -110, 0.3], to: [130, 0, 0.6], bbox: [90, -140, 130, 0] }, 5);
+  P.ctx.save(); P.clip(front); for (let i = 0; i < 70; i++) { const sx = -120 + r() * 210, sy = -110 + r() * 110, a = (r() - 0.5) * 0.9; P.line(svg(`M${sx} ${sy} l${Math.cos(a) * 26} ${Math.sin(a) * 26}`), lw * 0.4, r() < 0.5 ? 'sepiaDk' : 'goldLt'); } P.ctx.restore();
+  P.ctx.save(); P.clip(topF); for (let i = 0; i < 40; i++) { const sx = -110 + r() * 230, sy = -138 + r() * 28, a = (r() - 0.5) * 0.9; P.line(svg(`M${sx} ${sy} l${Math.cos(a) * 22} ${Math.sin(a) * 10}`), lw * 0.4, 'ochre'); } P.ctx.restore();
+  P.ctx.save(); P.clip(end_); for (let i = 0; i < 30; i++) { const sx = 92 + r() * 36, sy = -136 + r() * 132; P.fill(ell(sx, sy, 2.4), r() < 0.5 ? 'sepiaDk' : 'goldLt'); } P.ctx.restore();
+  P.line(front, lw); P.line(topF, lw); P.line(end_, lw);
+  for (const bx of [-60, 30]) { P.line(svg(`M${bx} 0 L${bx} -110 L${bx + 40} -140`), lw * 1.8); P.line(svg(`M${bx} 0 L${bx} -110 L${bx + 40} -140`), lw * 1, 'red'); }
+  for (let i = 0; i < 12; i++) { const sx = -130 + r() * 270, a = -0.3 - r() * 2.5, l = 14 + r() * 18, sy = i % 2 ? -4 : -110 - r() * 30; P.line(svg(`M${sx} ${sy} l${Math.cos(a) * l} ${Math.sin(a) * l}`), lw * 0.5, 'gold'); }
+  end(P);
+}
+function charger(P, x, y, s, level = 0) {   // a fast charger: a tall pedestal with a canopy, a screen, its cable coiled on the holster
+  const lw = begin(P, x, y, s), thin = lw * 0.5;
+  P.both(rect(-60, -8, 120, 14, 4), 'grey', lw);
+  const ped = svg('M-46 -8 L-46 -250 C-46 -266 -36 -272 -22 -272 L22 -272 C36 -272 46 -266 46 -250 L46 -8 Z');
+  P.fill(ped, 'cream'); P.tone(ped, 'sepia', { from: [10, -272, 0], to: [46, -8, 0.5], bbox: [-46, -272, 46, -8] }, 5); P.line(ped, lw);
+  P.both(svg('M-58 -276 L58 -276 L52 -290 L-52 -290 Z'), 'tealDk', lw);
+  P.both(rect(-50, -132, 100, 18, 3), 'tealDk', thin * 1.6);   // the accent band
+  P.both(rect(-34, -248, 68, 92, 8), 'black', lw); P.fill(rect(-28, -242, 56, 66, 4), '#1d3a39');
+  P.ctx.save(); P.ctx.translate(0, -212); P.ctx.scale(1.2, 1.2); P.both(svg('M6 -26 L-14 4 L-1 4 L-8 26 L14 -6 L1 -6 Z'), 'gold', 2.4); P.ctx.restore();
+  P.both(rect(-26, -170, 52, 8, 3), 'charDk', thin); if (level > 0) P.fill(rect(-25, -169, 50 * level, 6, 2), 'mint');
+  P.fill(ell(30, -150, 4), level > 0 ? 'mint' : 'gold');
+  P.both(rect(46, -110, 16, 30, 4), 'charDk', thin * 1.4);   // the holster
+  if (level <= 0) { P.line(svg('M54 -96 C90 -90 96 -40 70 -20 C50 -6 76 4 96 -6'), lw * 2.6); P.line(svg('M54 -96 C90 -90 96 -40 70 -20 C50 -6 76 4 96 -6'), lw * 1.4, 'char'); }
   end(P);
 }
 /** compliments popping one per beat during the last refrain */

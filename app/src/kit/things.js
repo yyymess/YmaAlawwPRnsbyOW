@@ -312,10 +312,15 @@ export function clock(P, x, y, r, h) {
 }
 
 /** a paper coffee cup */
-export function cup(P, x, y, s, rot = 0) {
-  const lw = begin(P, x, y, s, rot);
-  P.both(svg('M-30 0 L-38 -90 L38 -90 L30 0 Z'), 'cream', lw); P.both(svg('M-36 -66 L36 -66 L34 -40 L-34 -40 Z'), 'sepiaDk', lw * 0.8);
-  P.both(rect(-42, -102, 84, 14, 5), 'ivory', lw);
+export function cup(P, x, y, s, rot = 0) {   // a paper coffee cup: tapered, a kraft sleeve with its ribs, the lid with a sip hole
+  const lw = begin(P, x, y, s, rot), thin = lw * 0.5;
+  const body = svg('M-30 0 L-38 -90 L38 -90 L30 0 Z'); P.fill(body, 'cream'); P.tone(body, 'sepia', { from: [6, 0, 0], to: [38, 0, 0.6], bbox: [-38, -92, 38, 0] }, 4); P.line(body, lw);
+  P.line(svg('M-24 -12 L-31 -80'), lw * 0.9, 'ivory');
+  const sl = svg('M-35 -66 L35 -66 L32.5 -36 L-32.5 -36 Z'); P.fill(sl, 'kraft'); P.tone(sl, 'kraftDk', { from: [4, -66, 0], to: [35, -36, 0.5], bbox: [-35, -66, 35, -36] }, 4); P.line(sl, lw * 0.8);
+  for (let k = -24; k <= 24; k += 8) P.line(svg(`M${k} -63 L${k * 0.95} -39`), thin * 0.6, 'kraftDk');
+  P.both(ell(0, -51, 7), 'cream', thin);   // a stamp on the sleeve
+  P.both(svg('M-42 -90 L42 -90 L40 -98 L-40 -98 Z'), 'ivory', lw * 0.9); P.both(svg('M-34 -98 C-30 -110 30 -110 34 -98 Z'), 'ivory', lw * 0.9);   // the lid
+  P.both(rect(8, -108, 12, 5, 2), 'charDk', thin * 0.8);
   end(P);
 }
 
@@ -508,16 +513,40 @@ export function horse(P, x, y, s, phase = 0, o = {}) {
   end(P);
 }
 
-/** an Amish buggy: a grey box on two tall spoked wheels; (x, y) the ground under its axle */
+/**
+ * An Amish buggy, facing right, (x, y) the ground under its middle: a black box with a grey top, a small window and the
+ * door, a sliver of its back with the orange slow-moving-vehicle triangle, leaf springs, big wooden wheels with many spokes
+ * and steel tyres, a step, a brass lamp, the dash, and the shafts out to the horse (ending ~420 ahead). t turns the wheels.
+ */
 export function buggy(P, x, y, s, t = 0) {
-  const lw = begin(P, x, y, s);
-  P.both(svg('M-200 -360 C-200 -420 200 -420 200 -360 L200 -120 L-200 -120 Z'), 'char', lw * 1.3);
-  P.tone(svg('M-200 -360 C-200 -420 200 -420 200 -360 L200 -120 L-200 -120 Z'), '#000', { from: [0, -400, 0], to: [200, -120, 0.4], bbox: [-200, -420, 200, -120] }, 6);
-  P.both(rect(-160, -330, 120, 120, 8), 'black', lw); P.both(svg('M-200 -150 L-240 -110 L240 -110 L200 -150 Z'), 'charDk', lw);
-  P.both(svg('M120 -90 L120 -60'), 'line', lw);
-  P.both(rect(130, -330, 50, 40, 6), 'red', lw * 0.6); P.both(svg('M150 -300 L160 -318 L170 -300 Z'), 'gold', lw * 0.5);
-  for (const wx of [-110, 110]) { P.both(ell(wx, -50, 70), 'ivory', lw); P.line(ell(wx, -50, 60), lw * 0.5); for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI + t * 2; P.line(svg(`M${wx + Math.cos(a) * 60} ${-50 + Math.sin(a) * 60} L${wx - Math.cos(a) * 60} ${-50 - Math.sin(a) * 60}`), lw * 0.6); } P.both(ell(wx, -50, 10), 'char', lw * 0.6); }
-  P.line(svg('M200 -150 L420 -170'), lw * 2);
+  const lw = begin(P, x, y, s), thin = lw * 0.5;
+  // the shafts and the reins out to the horse, behind the far wheel
+  P.line(svg('M150 -150 C250 -160 340 -172 424 -168'), lw * 4.2); P.line(svg('M150 -150 C250 -160 340 -172 424 -168'), lw * 2.6, 'sepiaDk');
+  // the far wheels peeking under the body
+  for (const [wx, r] of [[-110, 78], [118, 66]]) P.both(ell(wx + 16, -r - 2, r), 'charDk', thin * 1.6);
+  // the back, seen a little: a sliver with the triangle
+  P.both(svg('M-200 -150 L-226 -136 L-226 -352 L-200 -380 Z'), 'charDk', lw);
+  P.both(svg('M-214 -232 L-206 -212 L-222 -212 Z'), 'red', thin); P.fill(svg('M-214 -226 L-209 -215 L-219 -215 Z'), 'gold');
+  // the box: grey top over a black body, the window with a slatted blind half down, the door, a dash at the front
+  const top = svg('M-204 -350 C-200 -404 200 -404 204 -350 L204 -336 L-204 -336 Z'); P.fill(top, '#8d8a80'); P.tone(top, '#000', { from: [0, -404, 0], to: [204, -336, 0.35], bbox: [-204, -404, 204, -336] }, 5); P.line(top, lw * 1.2);
+  const box = svg('M-200 -336 L200 -336 L200 -150 L-200 -150 Z'); P.fill(box, 'black'); P.tone(box, 'charDk', { from: [-200, -336, 0.5], to: [200, -150, 0], bbox: [-200, -336, 200, -150] }, 5); P.line(box, lw * 1.2);
+  P.line(svg('M-200 -336 L200 -336'), lw * 1.2, 'char');
+  P.both(rect(40, -312, 120, 90, 8), 'charDk', thin * 1.6); P.fill(rect(46, -306, 108, 40, 6), '#3b4c4b'); for (let k = 0; k < 4; k++) P.line(svg(`M46 ${-304 + k * 10} L154 ${-304 + k * 10}`), thin, 'char');
+  P.line(svg('M-150 -320 L-150 -170 L20 -170 L20 -320 Z'), thin * 1.6, 'char'); P.both(rect(-4, -252, 12, 6, 2), 'silver', thin);
+  P.both(svg('M200 -150 C226 -150 238 -190 232 -236 L224 -236 C226 -196 216 -166 200 -164 Z'), 'black', thin * 1.6);   // the dash
+  P.both(svg('M-200 -150 L200 -150 L194 -128 L-194 -128 Z'), 'charDk', lw);
+  // the lamp at the front corner, lit; a step under the door
+  P.line(svg('M196 -300 L214 -300'), lw * 1.4); P.both(rect(212, -322, 18, 30, 4), 'gold', thin * 1.4); P.fill(rect(216, -316, 10, 16), 'goldLt');
+  P.line(svg('M-80 -128 L-80 -96 L-40 -96'), lw * 1.4);
+  // leaf springs over the axles
+  for (const [wx, r] of [[-110, 78], [118, 66]]) P.both(svg(`M${wx - 60} -128 C${wx - 30} ${-r - 24} ${wx + 30} ${-r - 24} ${wx + 60} -128 C${wx + 30} ${-r - 14} ${wx - 30} ${-r - 14} ${wx - 60} -128 Z`), 'charDk', thin * 1.4);
+  // the near wheels: steel tyre, wooden rim, fourteen spokes turning, the hub
+  for (const [wx, r] of [[-110, 78], [118, 66]]) {
+    const cy = -r - 2;
+    P.line(ell(wx, cy, r), lw * 3.4); P.line(ell(wx, cy, r), lw * 1.8, 'sepiaDk'); P.line(ell(wx, cy, r - lw * 1.6), lw * 1.2, 'ochre');
+    for (let k = 0; k < 14; k++) { const a = (k / 14) * Math.PI * 2 + t * 2 * (66 / r); P.line(svg(`M${wx + Math.cos(a) * 12} ${cy + Math.sin(a) * 12} L${wx + Math.cos(a) * (r - 6)} ${cy + Math.sin(a) * (r - 6)}`), lw * 0.9, 'ochre'); }
+    P.both(ell(wx, cy, 14), 'charDk', thin * 1.6); P.fill(ell(wx, cy, 5), 'silver');
+  }
   end(P);
 }
 

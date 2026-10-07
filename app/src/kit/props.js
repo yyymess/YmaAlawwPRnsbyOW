@@ -28,36 +28,53 @@ export function lyricBanner(P, f, line, cx, cy, o = {}) {
 }
 
 /**
- * A robo-taxi pod (bidirectional, no bonnet, like the boxy carriage pods): sensor towers on the top
- * corners, a big glazed middle, wheels at the very ends with X-pattern covers. Centred on (x, y) = ground.
+ * The robo-taxi: a driverless pod, the same at both ends, (x, y) the ground under its middle; dir its way (wheels roll
+ * that way). A two-tone body, a wraparound band of dark glass with pillars and a sliding door in the middle, light bars at
+ * the ends, lidar towers spinning on the roof corners and a camera dome between, side cameras, aero wheel covers. Over its
+ * sensors floats its halo.
  */
 export function robotaxi(P, x, y, s, t, dir = -1) {
   const ctx = P.ctx; ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
-  const lw = Math.max(1.5, 4 * s) / s, roll = -dir * t * 5.5;
-  const body = svg('M-236 -56 C-240 -170 -226 -232 -170 -240 L170 -240 C226 -232 240 -170 236 -56 L236 -30 C236 -12 224 -6 210 -6 L-210 -6 C-224 -6 -236 -12 -236 -30 Z');
-  P.fill(body, 'mint'); P.tone(body, 'mintDk', { from: [0, -150, 0], to: [0, -6, 0.55], bbox: [-240, -245, 240, 0] }, 5); P.line(body, lw * 1.4);
-  // glazing: the two middle door panes, the end windows
-  for (const [gx, gw] of [[-94, 92], [2, 92]]) { P.both(rect(gx, -214, gw, 196, 14), 'black', lw); P.line(svg(`M${gx + 14} -200 L${gx + 40} -150`), lw * 0.8, 'glass'); }
-  P.line(svg('M0 -214 L0 -18'), lw);
+  const lw = Math.max(1.5, 4 * s) / s, roll = -dir * t * 5.5, thin = lw * 0.5;
+  P.tone(ell(0, 4, 270, 22), '#000', { from: [0, 4, 0.55], to: [270, 4, 0], radial: true, bbox: [-270, -18, 270, 26] }, 5);   // its shadow
+  // the body: a rounded box, the lower body darker under the beltline, a dark skirt between the wheels
+  const body = svg('M-236 -60 C-238 -170 -230 -236 -176 -248 C-120 -256 120 -256 176 -248 C230 -236 238 -170 236 -60 L236 -34 C236 -16 224 -8 208 -8 L-208 -8 C-224 -8 -236 -16 -236 -34 Z');
+  P.fill(body, 'mint'); P.tone(body, 'mintDk', { from: [0, -150, 0], to: [0, -8, 0.6], bbox: [-240, -256, 240, 0] }, 5);
+  P.fill(svg('M-236 -60 L236 -60 L236 -34 C236 -16 224 -8 208 -8 L-208 -8 C-224 -8 -236 -16 -236 -34 Z'), 'tealDk');
+  P.fill(svg('M-170 -250 C-110 -258 110 -258 170 -250 L176 -236 L-176 -236 Z'), 'cream');   // the roof's light edge
+  P.line(body, lw * 1.4);
+  // the glass: one dark band wrapping round, pillars, the light running across it
+  const glass = svg('M-218 -128 C-220 -180 -214 -218 -170 -224 L170 -224 C214 -218 220 -180 218 -128 Z');
+  P.fill(glass, 'black'); P.tone(glass, 'tealDk', { from: [-218, -224, 0.5], to: [0, -128, 0], bbox: [-220, -226, 220, -126] }, 4);
+  ctx.save(); P.clip(glass); for (const gx of [-190, -70, 50, 170]) P.line(svg(`M${gx} -228 L${gx + 44} -124`), lw * 2.2, '#2c4746'); for (const gx of [-160, -40, 80, 200]) P.line(svg(`M${gx} -228 L${gx + 20} -184`), lw * 0.8, 'glass'); ctx.restore();
+  P.line(glass, lw);
+  for (const px of [-118, 118]) { P.both(rect(px - 7, -226, 14, 100, 3), 'mint', thin * 1.6); }
+  P.line(svg('M-236 -120 L236 -120'), lw * 1.6, 'cream'); P.line(svg('M-236 -116 L236 -116'), thin);   // the beltline trim
+  // the sliding doors in the middle, split down the centre, flush handles
+  P.line(svg('M-112 -226 L-112 -60 M112 -226 L112 -60 M0 -226 L0 -60'), thin * 1.4);
+  for (const hx of [-26, 18]) P.both(rect(hx, -100, 8, 26, 3), 'silver', thin);
+  // light bars at both ends, an amber marker under each; side cameras on the corners
   for (const sx of [-1, 1]) {
-    P.both(svg(`M${sx * 112} -206 L${sx * 196} -206 C${sx * 214} -206 ${sx * 220} -190 ${sx * 220} -170 L${sx * 220} -118 L${sx * 112} -118 Z`), 'black', lw);
-    P.both(rect(sx * 232 - 7, -200, 14, 150, 6), 'black', lw * 0.8);                                     // side sensor bar
-    P.both(rect(sx * 168 - 14, -270, 28, 32, 5), 'black', lw * 0.8);                                     // corner sensor tower
-    P.both(rect(sx * 168 - 24, -292, 48, 22, 8), 'tealDk', lw * 0.8);
-    ctx.save(); ctx.beginPath(); ctx.rect(sx * 168 - 24, -292, 48, 22); ctx.clip();
-    for (let i = 0; i < 4; i++) { const xx = ((i * 14 + t * 60) % 48 + 48) % 48 - 24; P.line(svg(`M${sx * 168 + xx} -292 L${sx * 168 + xx} -270`), lw * 0.6, 'goldLt'); }
-    ctx.restore();
-    P.both(rect(sx * 222 - 4, -92, 8, 18, 3), 'gold', lw * 0.6);                                          // light
+    P.both(rect(sx * 229 - 4, -214, 8, 76, 3), 'cream', thin); ctx.save(); P.alpha(0.35); P.fill(ell(sx * 234, -176, 18, 46), 'goldLt'); ctx.restore();
+    P.both(rect(sx * 227 - 5, -92, 10, 18, 3), 'gold', thin);
+    P.both(svg(`M${sx * 236} -150 L${sx * 250} -150 L${sx * 250} -128 L${sx * 236} -128 Z`), 'black', thin); P.fill(ell(sx * 247, -139, 3), 'glass');
   }
-  P.ctx.save(); P.ctx.setLineDash([]); P.line(ell(0, -300, 210, 20), lw * 2.6, 'line'); P.line(ell(0, -300, 210, 20), lw * 1.4, 'gold'); P.ctx.restore();   // its sensors' halo
-  // wheels at the ends, with X covers
-  for (const wx of [-170, 170]) {
-    P.both(svg(`M${wx - 80} -6 C${wx - 80} -70 ${wx + 80} -70 ${wx + 80} -6 Z`), 'mintDk', lw);          // arch
-    P.both(ell(wx, -2, 62), 'black', lw); P.both(ell(wx, -2, 40), 'line', lw * 0.6);
-    for (let k = 0; k < 4; k++) {
-      const a = roll + k * Math.PI / 2 + Math.PI / 4;
-      ctx.save(); ctx.translate(wx + Math.cos(a) * 22, -2 + Math.sin(a) * 22); ctx.rotate(a); P.both(rect(-11, -9, 22, 18, 7), 'cream', lw * 0.5); ctx.restore();
-    }
+  // the roof: lidar towers at the corners, spinning; a camera dome in the middle
+  for (const sx of [-1, 1]) {
+    P.both(rect(sx * 168 - 16, -268, 32, 22, 4), 'black', thin * 1.6);
+    const cyl = rect(sx * 168 - 24, -294, 48, 28, 10); P.both(cyl, 'tealDk', thin * 1.6);
+    ctx.save(); P.clip(cyl); for (let i = 0; i < 4; i++) { const xx = ((i * 14 + t * 60) % 48 + 48) % 48 - 24; P.line(svg(`M${sx * 168 + xx} -294 L${sx * 168 + xx} -266`), lw * 0.6, 'goldLt'); } ctx.restore();
+    P.both(rect(sx * 168 - 20, -300, 40, 8, 4), 'black', thin);
+  }
+  P.both(svg('M-40 -252 C-40 -282 40 -282 40 -252 Z'), 'black', thin * 1.6); P.line(svg('M-24 -270 C-10 -278 10 -278 24 -270'), thin, 'glass');
+  P.ctx.save(); P.line(ell(0, -318, 210, 20), lw * 2.6, 'line'); P.line(ell(0, -318, 210, 20), lw * 1.4, 'gold'); P.ctx.restore();   // its sensors' halo
+  // the wheels at the corners: arches in shadow, tyres, aero covers that turn
+  for (const wx of [-160, 160]) {
+    P.fill(svg(`M${wx - 78} -8 C${wx - 78} -82 ${wx + 78} -82 ${wx + 78} -8 Z`), 'black');
+    P.both(ell(wx, -4, 62), 'black', lw); P.line(ell(wx, -4, 54), thin, 'charDk');
+    P.both(ell(wx, -4, 40), 'silver', thin * 1.4); P.tone(ell(wx, -4, 40), 'grey', { from: [wx - 20, -24, 0], to: [wx + 40, 36, 0.5], bbox: [wx - 40, -44, wx + 40, 36] }, 4);
+    for (let k = 0; k < 5; k++) { const a = roll + (k / 5) * Math.PI * 2; P.line(svg(`M${wx + Math.cos(a) * 12} ${-4 + Math.sin(a) * 12} Q${wx + Math.cos(a + 0.4) * 28} ${-4 + Math.sin(a + 0.4) * 28} ${wx + Math.cos(a + 0.2) * 38} ${-4 + Math.sin(a + 0.2) * 38}`), thin * 1.4, 'charDk'); }
+    P.both(ell(wx, -4, 10), 'charDk', thin);
   }
   ctx.restore();
 }
