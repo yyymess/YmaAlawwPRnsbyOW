@@ -5,8 +5,8 @@
   "scripts": {
     "preview": "node app/render.mjs serve",
     "check": "node app/render.mjs check --step 0.25",
-    "render": "node app/render.mjs video --workers 4",
-    "render:4k": "node app/render.mjs video --workers 4 --scale 2 --crf 18 --out out/engineers-paradise-4k.mp4"
+    "render": "node app/render.mjs video --workers 4 --fmt jpg",
+    "render:4k": "node app/render.mjs video --workers 4 --fmt jpg --scale 2 --crf 18 --out out/engineers-paradise-4k.mp4"
   },
   "devDependencies": {
     "playwright": "^1.56.1"

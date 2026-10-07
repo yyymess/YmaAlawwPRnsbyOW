@@ -26,7 +26,9 @@ npm run render                        # out/engineers-paradise.mp4, 1920x1080
 npm run render:4k                     # out/engineers-paradise-4k.mp4, 3840x2160
 ```
 
-`--scale 2` draws every frame at 3840x2160. It is all vector (lines, fills, screentone dots sized in frame units), so 4K is genuinely sharper, not upscaled; only the paper grain is a texture. It takes roughly three to four times as long as 1080p; set `--workers` to about the number of performance cores. `--scale 2 --size 1440` gives a supersampled 1440p. `--fmt jpg` pipes JPEG frames instead of PNG: faster, very slightly softer.
+`--scale 2` draws every frame at 3840x2160. It is all vector (lines, fills, screentone dots sized in frame units), so 4K is genuinely sharper, not upscaled; only the paper grain is a texture. It takes roughly three to four times as long as 1080p; set `--workers` to about the number of performance cores. `--scale 2 --size 1440` gives a supersampled 1440p.
+
+`--fmt jpg` pipes JPEG frames (quality 0.95) instead of PNG: about four times faster (encoding a PNG of all that screentone in the page is the bottleneck), and after the x264 encode the difference is invisible; the npm scripts use it. Leave it off for a lossless frame pipe. The pages render at most a few frames ahead of ffmpeg, so memory stays flat however long the song or big the frames.
 
 Preview keys: space play/pause · ←/→ ±1 s (shift ±5 s) · `,`/`.` ±1 frame · `[`/`]` previous/next scene · `h` hide the HUD. `?t=57` starts at a time, `?only=verse1,chorus1` loads only those scenes.
 

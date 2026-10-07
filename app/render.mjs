@@ -92,14 +92,17 @@ else {
       const closed = new Promise((r) => ff.on('close', r));
       // extra pages render ahead; frames are written in order
       const pages = [page], extra = []; for (let i = 1; i < workers; i++) { const o = await open(server); pages.push(o.page); extra.push(o.browser); }
-      const t0 = Date.now(); let next = 0;
-      const pending = new Map();
-      const work = async (pg) => { for (;;) { const i = next++; if (i >= n) return; const buf = await shot(pg, from + (i + 0.5) / fps, opt('fmt', 'png')); pending.set(i, buf); } };
+      const t0 = Date.now(); let next = 0, written = 0;
+      // frames waiting for their turn to be written; the pages may only render a little ahead of ffmpeg, or a slow encode
+      // (or big 4K frames) would pile them up in memory until the process is killed
+      const pending = new Map(), AHEAD = Math.max(8, workers * 4);
+      const work = async (pg) => { for (;;) { const i = next++; if (i >= n) return; while (i - written > AHEAD) await new Promise((r) => setTimeout(r, 10)); const buf = await shot(pg, from + (i + 0.5) / fps, opt('fmt', 'png')); pending.set(i, buf); } };
       const writer = (async () => {
         for (let i = 0; i < n; i++) {
           while (!pending.has(i)) await new Promise((r) => setTimeout(r, 5));
           const b = pending.get(i); pending.delete(i);
           if (!ff.stdin.write(b)) await new Promise((r) => ff.stdin.once('drain', r));
+          written = i + 1;
           if (i % fps === 0) { const el = (Date.now() - t0) / 1000; process.stdout.write(`\r${i}/${n} frames  ${(i / el || 0).toFixed(1)} fps  eta ${((n - i) / (i / el || 1) / 60).toFixed(1)} min   `); }
         }
         ff.stdin.end();
