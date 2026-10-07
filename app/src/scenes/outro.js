@@ -208,19 +208,20 @@ function lit(L, draw) {   // draw with the whole palette lit by L = [r, g, b]
   const saved = { ...C };
   try { for (const k in saved) C[k] = hex(rgb(saved[k]).map((v, i) => v * L[i])); draw(); } finally { Object.assign(C, saved); }
 }
-const LAND = [[0, [1.0, 0.92, 0.8]], [4, [0.98, 0.8, 0.64]], [7, [0.86, 0.58, 0.48]], [9.2, [0.54, 0.4, 0.45]], [11.5, [0.3, 0.26, 0.37]]];
-const SUN = [[0, [1, 1, 1]], [4, [1, 0.88, 0.72]], [7, [1, 0.68, 0.5]], [9.7, [0.95, 0.5, 0.38]]];
+const LAND = [[0, [1.0, 0.97, 0.9]], [3, [1.0, 0.86, 0.68]], [6.5, [0.9, 0.62, 0.5]], [9.2, [0.54, 0.4, 0.45]], [11.5, [0.3, 0.26, 0.37]]];
+const SUN = [[0, [1, 1, 1]], [4, [1, 0.88, 0.72]], [7, [1, 0.68, 0.5]], [9.3, [0.95, 0.5, 0.38]]];
 const SKY = [[0, '#f0d9a8'], [4, '#efc39a'], [7, '#d98f7f'], [9.2, '#7f5266'], [11.5, '#2b293d']];
+const TOP = [[0, '#d2a74e'], [4, '#d9895f'], [7, '#a85a6a'], [9.2, '#3a2a48'], [11.5, '#15141f']];   // the tone from the top of the sky: the intro's gold, then dusk
 const GLOW = [[0, '#e6c77f'], [4, '#f0a860'], [7, '#e8743f'], [9.2, '#c24a36'], [11.5, '#5e2a36']];
 const RIDGE = 'M-100 560 C200 470 420 500 640 520 C900 545 1100 470 1700 520';   // the far hill's crest; the sun sets behind it
 const ABOVE_RIDGE = 'M-100 -20 L1700 -20 L1700 520 C1100 470 900 545 640 520 C420 500 200 470 -100 560 Z';
-const SUN_X = 1120, SUN_R = 200, sunY = (lt) => 280 + 44 * lt;   // clear of the ridge at first, half set at ~5 s, gone by ~9.7 s
+const SUN_X = 1120, SUN_R = 250, sunY = (lt) => 470 + 31 * lt;   // it starts where the intro's dawn had it, half behind the ridge; gone by ~9.3 s
 // his path: along the lane, up the hill and over the crest under the sun (x always increasing, so he never turns round);
 // each sample keeps its scale (smaller as he climbs away) and the distance walked to reach it in the figure's own units
 const WALK = (() => {
   const cub = (a, b, c, d, u) => { const v = 1 - u; return v * v * v * a + 3 * v * v * u * b + 3 * v * u * u * c + u * u * u * d; };
   const pts = [];
-  for (let i = 0; i <= 240; i++) { const u = i / 240, y = cub(748, 752, 590, 507.5, u); pts.push([cub(430, 780, 900, 1100, u), y, 0.36 * (y - 464.6) / 283.4]); }
+  for (let i = 0; i <= 240; i++) { const u = i / 240, y = cub(760, 764, 590, 507.5, u); pts.push([cub(430, 780, 900, 1100, u), y, 0.46 * (y - 473.9) / 286.1]); }   // on the lane at the intro's size
   const crest = pts.length - 1, sc = pts[crest][2];
   for (let i = 1; i <= 60; i++) { const v = i / 60; pts.push([1100 + 44 * v, 507.5 + 70 * v * (0.6 + 0.4 * v), sc * (1 - 0.3 * v)]); }   // down the far side, out of sight
   pts[0].push(0);
@@ -239,34 +240,39 @@ function walkAt(lt) {   // [x, y, scale, past the crest] after lt seconds of wal
 
 function valleyEnd(P, f, t, lt) {
   const ctx = P.ctx, L = hour(LAND, lt), sy = sunY(lt);
-  // the sky: its colour of the hour, a glow on the horizon round the sun, night coming down from the top
+  // the sky: the intro's sky at first (its gold tone from the top), then that tone turning to dusk and night as it
+  // thickens, and a glow on the horizon round the sinking sun
   P.fill(rect(0, 0, W, H), hour(SKY, lt));
-  const gw = hour([[0, 0.5], [6, 0.8], [9.2, 0.55], [11.5, 0.25]], lt);
-  P.tone(rect(0, 0, W, 600), hour(GLOW, lt), { from: [SUN_X, 520, gw], to: [SUN_X + 1000, 520, 0], radial: true, bbox: [0, 0, W, 600] }, 8);
-  const dusk = hour([[0, 0], [5, 0.12], [9.2, 0.55], [11.5, 0.85]], lt);
-  if (dusk > 0.04) P.tone(rect(0, 0, W, 600), '#1b1a2c', { from: [800, 0, dusk], to: [800, 560, 0], bbox: [0, 0, W, 600] }, 8);
+  P.tone(rect(0, 0, W, 520), hour(TOP, lt), { from: [800, 0, hour([[0, 0.45], [4, 0.45], [7, 0.5], [9.2, 0.62], [11.5, 0.85]], lt)], to: [800, 520, 0], bbox: [0, 0, W, 520] }, 8);
+  const gw = hour([[0, 0], [3, 0.55], [6.5, 0.8], [9.2, 0.5], [11.5, 0.2]], lt);
+  if (gw > 0.04) P.tone(rect(0, 0, W, 600), hour(GLOW, lt), { from: [SUN_X, 520, gw], to: [SUN_X + 1000, 520, 0], radial: true, bbox: [0, 0, W, 600] }, 8);
   const night = clamp((lt - 7.6) / 2.2);   // the stars and a new moon come out once the sun is down
   if (night > 0) { ctx.save(); P.alpha(night); const r = rng(3); for (let i = 0; i < 16; i++) star(P, r() * W, 30 + r() * 300, 5, t * 2 + i); moon(P, 250, 150, 34); ctx.restore(); }
   // the sun, the great halo of the intro's dawn, reddening as it sinks behind the far ridge
-  const sunFade = clamp((9.9 - lt) / 1.2);
-  if (sunFade > 0) lit(hour(SUN, lt), () => { P.halo(SUN_X, sy, SUN_R, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.03, 0.4 * sunFade); ctx.save(); P.alpha(sunFade); P.beads(SUN_X, sy, SUN_R + 30, 36, 6, 'goldLt', f.kick); ctx.restore(); });
+  const sunFade = clamp((9.4 - lt) / 1.0);
+  if (sunFade > 0) lit(hour(SUN, lt), () => { P.halo(SUN_X, sy, SUN_R, ['', '', '', '', '', '', '', '', '', '', '', ''], t * 0.05, 0.5 * sunFade); ctx.save(); P.alpha(sunFade); P.beads(SUN_X, sy, SUN_R + 35, 36, 6, 'goldLt', f.kick); ctx.restore(); });
   // the land in the light of the hour
   const [px, py, hs, over] = walkAt(lt);
   lit(L, () => {
-    P.both(svg(`${RIDGE} L1700 900 L-100 900 Z`), 'ochre', 4);
+    P.both(svg(`${RIDGE} L1700 900 L-100 900 Z`), 'hill', 4);   // the intro's hills, lane and trees, in the evening light
     campus(P, 380, 532, 0.5);
     // the road along the ridge, and the robo-taxi gliding along it the other way, five stars on its door
     P.fill(rect(-20, 566, W + 40, 16), 'sepia'); P.line(svg('M-20 566 L1620 566 M-20 582 L1620 582'), 2.5);
     const rx = lerp(1750, -250, clamp((lt - 0.3) / 3.6));
     if (rx > -240 && rx < 1740) { robotaxi(P, rx, 578, 0.3, t, -1); P.both(rect(rx - 44, 578 - 0.3 * 150, 88, 22, 6), 'cream', 2); P.text('★★★★★', rx, 578 - 0.3 * 150 + 16, { size: 15, color: 'gold' }); }
     const near = svg('M-100 640 C300 590 600 620 900 630 C1200 640 1400 600 1700 620 L1700 900 L-100 900 Z');
-    P.both(near, 'sageDk', 4); P.tone(near, 'hoodDot', { from: [800, 620, 0.1], to: [800, 900, 0.5], bbox: [0, 580, W, H] }, 7);
+    P.both(near, 'sage', 4); P.tone(near, 'hoodDot', { from: [800, 620, 0], to: [800, 900, 0.35], bbox: [0, 580, W, H] }, 7);
     tree(P, 150, 650, 0.9, 2); cypress(P, 250, 655, 0.8); cypress(P, 1290, 640, 0.7); tree(P, 1420, 645, 0.8, 5);
-    P.both(rect(-20, 700, W + 40, 70), 'sepia', 4);
-    // the path leaves the lane and climbs to the crest, narrowing as it goes; its fill runs on into the lane over the edge
-    const pts = WALK.pts, off = pts.findIndex((q) => q[1] < 700), into = pts.findIndex((q) => q[1] < 728);
-    for (let i = off; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2] + 5); }
-    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2], 'sepia'); }
+    for (let x = -40; x < W + 80; x += 70) P.line(svg(`M${x} 690 l6 -16 M${x + 8} 690 l2 -20 M${x + 16} 690 l-4 -14`), 2, 'sageDk');
+    P.both(rect(-20, 700, W + 40, 70), 'cream', 4); P.tone(rect(-20, 700, W + 40, 70), 'skinDot', { from: [0, 700, 0.0], to: [0, 770, 0.35], bbox: [0, 700, W, 770] }, 6);
+    // the path leaves the lane and climbs to the crest, narrowing as it goes; cut square at the lane's edge, its fill
+    // just covering the edge line so the two run together
+    const pts = WALK.pts, into = pts.findIndex((q) => q[1] < 740);
+    ctx.save(); P.clip(rect(-50, -50, W + 100, 752));
+    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2] + 5); }
+    ctx.restore(); ctx.save(); P.clip(rect(-50, -50, W + 100, 755));
+    for (let i = into; i < WALK.crest; i += 6) { const a = pts[i], b = pts[Math.min(WALK.crest, i + 7)]; P.line(svg(`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`), 200 * a[2], 'cream'); }
+    ctx.restore();
   });
   // he walks at a steady pace, backlit into a silhouette as he nears the sun; past the crest only what is above it shows
   lit(L.map((v) => v * lerp(1, 0.35, clamp((lt - 2.5) / 4.5))), () => {
