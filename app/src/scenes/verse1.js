@@ -200,6 +200,38 @@ function pigeon(P, x, y, s, t) {
 }
 
 // ---- III · THE PILGRIMAGE: walking west into the sunset, a packing list, a dream, one commit per step ---------
+/**
+ * The Golden Gate in elevation, in international orange, the deck at y = 452: two Art Deco towers (two legs stepping in at
+ * each tier, portal struts between, fluted), on piers in the water; the main cable from anchorage to anchorage with its
+ * suspenders; the stiffening truss under the deck; its reflection; fog rolling in under it.
+ */
+function goldenGate(P, t) {
+  const ctx = P.ctx, cable = (x) => { const L = [-232, 452], A = [-102, 322], B = [158, 322], R = [292, 452];
+    if (x <= A[0]) { const u = (x - L[0]) / (A[0] - L[0]); return lerp(L[1], A[1], u * u * 0.4 + u * 0.6); }
+    if (x >= B[0]) { const u = (R[0] - x) / (R[0] - B[0]); return lerp(R[1], B[1], u * u * 0.4 + u * 0.6); }
+    const m = (A[0] + B[0]) / 2, k = (x - m) / ((B[0] - A[0]) / 2); return 440 - (440 - A[1]) * k * k; };
+  // reflections of the towers in the bay
+  ctx.save(); P.alpha(0.35); for (const tx of [-102, 158]) for (let k = 0; k < 6; k++) { const wob = Math.sin(t * 3 + k) * 3; P.line(svg(`M${tx - 10 + wob} ${484 + k * 7} L${tx + 10 + wob} ${484 + k * 7}`), 3, 'red'); } ctx.restore();
+  // the suspenders, then the main cable
+  for (let x = -224; x <= 284; x += 9) { if (Math.abs(x + 102) < 12 || Math.abs(x - 158) < 12) continue; P.line(svg(`M${x} ${cable(x)} L${x} 452`), 0.9, 'redDk'); }
+  const cb = new Path2D(); for (let x = -232; x <= 292; x += 4) { const y = cable(x); x === -232 ? cb.moveTo(x, y) : cb.lineTo(x, y); }
+  P.line(cb, 4.4); P.line(cb, 2.4, 'red');
+  // the towers
+  for (const tx of [-102, 158]) {
+    P.both(rect(tx - 18, 470, 36, 14, 2), 'cream', 2);                                                  // the pier
+    const legs = []; for (const sd of [-1, 1]) legs.push(svg(`M${tx + sd * 6} 474 L${tx + sd * 6} 322 L${tx + sd * 13} 322 L${tx + sd * 13} 360 L${tx + sd * 15} 362 L${tx + sd * 15} 410 L${tx + sd * 17} 412 L${tx + sd * 17} 474 Z`));
+    for (const lg of legs) { P.fill(lg, 'red'); P.line(lg, 1.8); }
+    for (const sd of [-1, 1]) P.line(svg(`M${tx + sd * 10} 330 L${tx + sd * 10} 466`), 0.8, 'redDk');            // the fluting
+    for (const [py, ph] of [[324, 9], [350, 6], [384, 6], [418, 6]]) { P.both(rect(tx - 7, py, 14, ph, 1), 'red', 1.2); }   // portal struts
+    P.both(rect(tx - 15, 318, 30, 6, 2), 'redDk', 1.4);                                                 // the saddle at the top
+  }
+  // the deck and its stiffening truss, the approach spans on piers to each shore
+  P.both(rect(-240, 450, 540, 6, 1), 'red', 1.6);
+  const tr = new Path2D(); tr.moveTo(-240, 456); for (let x = -240, k = 0; x <= 300; x += 7, k++) tr.lineTo(x, k % 2 ? 464 : 456); P.line(tr, 0.9, 'redDk'); P.line(svg('M-240 464 L300 464'), 1.4, 'redDk');
+  for (const ax of [-232, 292]) P.both(rect(ax - 10, 452, 20, 22, 2), 'cream', 1.6);
+  // fog rolling in under the deck and round the tower feet
+  ctx.save(); for (let i = 0; i < 6; i++) { const fx = ((i * 110 + t * 18) % 660) - 300, fy = 470 + (i % 2) * 8; P.alpha(0.55); P.fill(svg(`M${fx - 70} ${fy + 10} C${fx - 70} ${fy - 8} ${fx - 40} ${fy - 16} ${fx - 16} ${fy - 8} C${fx} ${fy - 22} ${fx + 40} ${fy - 20} ${fx + 50} ${fy - 4} C${fx + 70} ${fy - 6} ${fx + 80} ${fy + 4} ${fx + 76} ${fy + 10} Z`), 'cream'); } ctx.restore();
+}
 function pilgrimage(P, f, L, t) {
   const ctx = P.ctx, t0 = L[0].words[0].start, walk = t - (t0 - 1.0);
   const scrollX = walk * 70;
@@ -209,11 +241,9 @@ function pilgrimage(P, f, L, t) {
   // the bay with a bridge, far hills
   ctx.save(); ctx.translate(((scrollX * 0.12) % 900), 0); for (const ox of [-900, 0]) P.both(svg(`M${ox - 10} 420 C${ox + 120} 380 ${ox + 240} 400 ${ox + 360} 410 C${ox + 500} 420 ${ox + 640} 380 ${ox + 900} 400 L${ox + 900} 520 L${ox - 10} 520 Z`), 'plum', 3); ctx.restore();
   P.fill(rect(-10, 440, PW + 20, 80), 'mint'); P.tone(rect(-10, 440, PW + 20, 80), 'mintDk', { from: [0, 440, 0.4], to: [0, 520, 0], bbox: [0, 440, PW, 520] }, 6);
+  for (let i = 0; i < 14; i++) { const wx = ((i * 83 - scrollX * 0.3) % 1100 + 1100) % 1100 - 100, wy = 470 + (i % 3) * 14; P.line(svg(`M${wx} ${wy} q8 -5 16 0 q8 5 16 0`), 1.6, 'mintDk'); }
   const bx = 260 + scrollX * 0.42;
-  ctx.save(); ctx.translate(bx, 0);
-  P.line(svg('M-160 452 L240 452'), 5, 'red'); P.both(rect(-110, 330, 16, 124, 2), 'red', 2.5); P.both(rect(150, 330, 16, 124, 2), 'red', 2.5);
-  P.line(svg('M-220 452 C-160 380 -130 335 -102 332 C-40 400 100 400 158 332 C190 340 220 390 290 452'), 2.5, 'redDk');
-  ctx.restore();
+  ctx.save(); ctx.translate(bx, 0); goldenGate(P, t); ctx.restore();
   // the near ground and the road
   P.both(svg('M-10 520 C200 500 500 530 900 505 L900 660 L-10 660 Z'), 'sage', 3);
   P.fill(rect(-10, 560, PW + 20, 58), 'cream'); P.line(svg('M-10 560 L900 560 M-10 618 L900 618'), 3);
@@ -223,7 +253,7 @@ function pilgrimage(P, f, L, t) {
   const pts = []; for (let i = 0; i < Math.floor(beatN) + 1; i++) { const age = beatN - i; pts.push([hx + 40 + age * 52, 600 + (i % 4 === 2 ? -22 : 0)]); }
   commits(P, pts, pts.length + (beatN % 1), { r: 9, lw: 3 });
   const hashes = ['a1f9c3e', '7d02b4a', 'e5c1d90', '3b8f2aa', 'c40e7f1', '96ad5b3', 'f00dfee', '1e2d3c4'];
-  pts.slice(-3).forEach((q, i) => { if (q[0] < PW - 40) P.text(hashes[(pts.length - 3 + i + 8) % 8], q[0], q[1] + 34, { font: FONT.mono, size: 15, weight: 600, color: 'sepiaDk' }); });
+  pts.slice(-3).forEach((q, i) => { const n = pts.length - 3 + i; if (q[0] < PW - 40 && n >= 0) P.text(hashes[(n + 8) % 8], q[0], n % 2 ? q[1] - 16 : q[1] - 34, { font: FONT.mono, size: 14, weight: 600, color: 'sepiaDk' }); });   // staggered in two rows above the line, so they never overlap
   // the pilgrim, walking west (to the left), duffel and laptop
   ctx.save(); ctx.translate(hx, 0); ctx.scale(-1, 1);
   heroWalk(P, 0, 600, 0.5, walk * 5.6, { carry: 'duffel', mouth: f.vocal > 0.18 ? 'sing' : 'neutral', open: f.vocal });
