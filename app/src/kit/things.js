@@ -717,3 +717,28 @@ export function snakePlant(P, x, y, s, t = 0) {
   P.line(svg('M-46 -96 L-30 -96'), lw * 1.2, '#dd9a78');
   end(P);
 }
+
+
+/** a small hatchback in profile, facing right, (x, y) the ground under its middle; o.color its paint */
+export function car(P, x, y, s, o = {}) {
+  const lw = begin(P, x, y, s), thin = lw * 0.5, col = o.color ?? 'denim';
+  P.tone(ell(0, 2, 200, 12), '#000', { from: [0, 2, 0.5], to: [200, 2, 0], radial: true, bbox: [-200, -10, 200, 14] }, 4);
+  const body = svg('M-180 -36 C-180 -66 -170 -84 -150 -92 L-90 -134 C-80 -140 -60 -142 -30 -142 L50 -142 C76 -142 90 -136 102 -126 L140 -94 C164 -90 176 -82 178 -64 L180 -36 C180 -24 172 -20 160 -20 L-160 -20 C-172 -20 -180 -24 -180 -36 Z');
+  P.fill(body, col); P.tone(body, '#000', { from: [0, -100, 0], to: [0, -20, 0.45], bbox: [-180, -142, 180, -20] }, 4);
+  const gl = svg('M-84 -128 C-76 -133 -60 -134 -34 -134 L-34 -98 L-108 -98 Z M-26 -134 L46 -134 C66 -134 78 -128 88 -118 L112 -98 L-26 -98 Z');
+  P.fill(gl, 'glass'); P.tone(gl, 'tealDk', { from: [-108, -134, 0.1], to: [112, -98, 0.5], bbox: [-108, -134, 112, -98] }, 3);
+  P.line(svg('M-70 -130 L-88 -102 M10 -132 L-10 -102 M30 -132 L12 -102'), lw * 0.8, 'cream');
+  P.line(gl, lw * 0.8); P.line(body, lw * 1.2);
+  P.line(svg('M-30 -98 L-30 -26 M110 -96 L106 -28 M-150 -96 L-150 -40'), thin);                      // door shut lines
+  P.line(svg('M-180 -64 C-60 -60 60 -60 178 -66'), thin, 'cream');                                     // the shoulder's highlight
+  for (const hx of [-14, 92]) P.both(rect(hx, -86, 18, 5, 2), 'silver', thin);                          // handles
+  P.both(svg('M164 -84 L178 -78 L178 -62 L162 -66 Z'), 'goldLt', thin); P.both(rect(-182, -86, 8, 22, 3), 'red', thin);   // lights
+  P.both(svg('M-6 -102 L-6 -118 L-24 -118 L-24 -108 Z'), col, thin);                                   // the mirror
+  for (const wx of [-112, 112]) {
+    P.fill(svg(`M${wx - 46} -20 C${wx - 46} -70 ${wx + 46} -70 ${wx + 46} -20 Z`), 'black');
+    P.both(ell(wx, -22, 32), 'black', lw); P.both(ell(wx, -22, 19), 'silver', thin * 1.4);
+    for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2; P.line(svg(`M${wx} -22 L${wx + Math.cos(a) * 17} ${-22 + Math.sin(a) * 17}`), thin, 'grey'); }
+    P.fill(ell(wx, -22, 5), 'charDk');
+  }
+  end(P);
+}

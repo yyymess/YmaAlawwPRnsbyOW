@@ -4,7 +4,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric, greyed } from '../paint.js';
 import { heroFront, heroPose, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { sodaCan, tablet, scroll, begin, end, priceTag } from '../kit/things.js';
+import { sodaCan, tablet, scroll, begin, end, priceTag, car } from '../kit/things.js';
 import { heart, fist, sleeveArm, armPlan, upperArm, foreArm } from './verse1.js';
 
 const POSTERS = [
@@ -326,17 +326,79 @@ function codeYellow(P, f, L, t, w, h) {
 }
 
 // ---- 7. FRIDAY: an email; he drives in like before; the badge reader blinks red; he greys out, like a disabled button -
+/**
+ * Outside the office on a Friday morning: the lot where he parked, a lawn, the plaza, and on the right the building's
+ * ground floor, a wall of glass in a grid of mullions with the sky and trees in it, the doors and their badge reader, a
+ * planter, a lamp, the low sign: BLDG 42. (w, h) the poster's art box; he walks on y = 400.
+ */
+function officeFront(P, w, h, t) {
+  const ctx = P.ctx;
+  fill(P, w, h, 'sky', 'goldLt', 0.3);
+  // far trees along the back of the lot
+  for (let i = 0; i < 9; i++) { const tx = -20 + i * 98 + (i % 2) * 20, ty = 300 + (i % 3) * 6, tr = 46 + (i % 3) * 10; const c = svg(`M${tx - tr} ${ty} C${tx - tr} ${ty - tr * 1.6} ${tx + tr} ${ty - tr * 1.6} ${tx + tr} ${ty} Z`); P.fill(c, i % 2 ? 'sage' : 'sageDk'); P.tone(c, 'hoodDot', { from: [tx, ty - tr, 0], to: [tx + tr, ty, 0.4], bbox: [tx - tr, ty - tr * 1.3, tx + tr, ty] }, 5); P.line(c, 2.5); }
+  // the parking lot, his car in its bay
+  P.both(rect(-10, 300, w + 20, 62), 'grey', 3); P.tone(rect(-10, 300, w + 20, 62), 'charDk', { from: [0, 300, 0.1], to: [0, 362, 0.4], bbox: [0, 300, w, 362] }, 5);
+  for (let i = 0; i < 9; i++) P.line(svg(`M${30 + i * 96} 304 L${12 + i * 96} 358`), 2.5, 'cream');
+  car(P, 250, 352, 0.62, { color: 'denim' });
+  // the lawn and its kerb, then the plaza in big pavers
+  P.both(rect(-10, 360, w + 20, 26), 'sage', 3); for (let gx = 10; gx < w; gx += 60) P.line(svg(`M${gx} 384 l4 -12 M${gx + 6} 384 l1 -15 M${gx + 12} 384 l-3 -10`), 2, 'sageDk');
+  const plaza = rect(-10, 386, w + 20, h - 376); P.fill(plaza, 'cream'); P.tone(plaza, 'skinDot', { from: [0, 386, 0], to: [0, h, 0.3], bbox: [0, 386, w, h] }, 6);
+  P.line(svg(`M-10 386 L${w + 10} 386`), 3.5); P.line(svg(`M-10 392 L${w + 10} 392`), 1.5);
+  for (const y of [412, 446, 494]) P.line(svg(`M-10 ${y} L${w + 10} ${y}`), 1.5, 'sepia');
+  for (let i = -6; i < 20; i++) { const x0 = 600 + (i - 6) * 70; P.line(svg(`M${x0 + (x0 - 600) * 0.06} 392 L${x0 + (x0 - 600) * 0.62} ${h}`), 1.5, 'sepia'); }
+  // a lamp and a planter on the plaza, behind his path
+  P.line(svg('M560 390 L560 110'), 9); P.line(svg('M560 390 L560 110'), 5, 'char'); P.both(svg('M540 112 L600 104 L602 116 L542 122 Z'), 'charDk', 3); P.fill(svg('M548 120 L598 114 L598 118 L548 124 Z'), 'goldLt');
+  P.both(rect(612, 330, 140, 62, 4), 'silver', 3); P.tone(rect(612, 330, 140, 62), 'grey', { from: [700, 330, 0], to: [752, 392, 0.5], bbox: [612, 330, 752, 392] }, 5); P.line(svg('M612 342 L752 342'), 2);
+  for (let k = 0; k < 9; k++) { const gx = 626 + k * 14, a = -1.7 + (k - 4) * 0.12; P.line(svg(`M${gx} 332 Q${gx + Math.cos(a) * 30} ${332 + Math.sin(a) * 50} ${gx + Math.cos(a) * 46 + Math.sin(t * 1.5 + k) * 3} ${332 + Math.sin(a) * 80}`), 3, k % 2 ? 'sageDk' : 'sage'); }
+  // the building: a wall of glass in a grid, spandrels at the floor line, the sky and the trees reflected in it
+  const bx = 780, wall = rect(bx, -20, w - bx + 20, 412);
+  P.fill(wall, 'glass'); P.tone(wall, 'mintDk', { from: [bx, -20, 0], to: [w, 392, 0.45], bbox: [bx, -20, w, 392] }, 6);
+  ctx.save(); P.clip(wall);
+  for (let i = 0; i < 6; i++) { const rx = bx + 30 + i * 90, ry = 360; const c = svg(`M${rx - 50} ${ry} C${rx - 50} ${ry - 90} ${rx + 50} ${ry - 90} ${rx + 50} ${ry} Z`); ctx.save(); P.alpha(0.35); P.fill(c, 'sageDk'); ctx.restore(); }
+  ctx.save(); P.alpha(0.45); for (const gx of [bx + 60, bx + 250, bx + 330]) P.fill(svg(`M${gx} -20 L${gx + 60} -20 L${gx - 120} 392 L${gx - 180} 392 Z`), 'cream'); ctx.restore();
+  ctx.restore();
+  P.fill(rect(bx, 112, w - bx + 20, 22), 'char'); P.tone(rect(bx, 112, w - bx + 20, 22), '#000', { from: [0, 112, 0.2], to: [0, 134, 0.5], bbox: [bx, 112, w, 134] }, 4);
+  for (let mx = bx; mx <= w + 10; mx += 74) P.line(svg(`M${mx} -20 L${mx} 392`), 4, 'char');
+  P.line(svg(`M${bx} 112 L${w + 10} 112 M${bx} 134 L${w + 10} 134 M${bx} 262 L${w + 10} 262`), 3, 'char');
+  P.line(wall, 4);
+  // the doors: a deeper frame, two leaves with long pull bars, a mat, the reader on its post (green, for now)
+  const dx = bx + 74 * 1, dw = 148;
+  P.both(rect(dx - 8, 140, dw + 16, 252), 'charDk', 3); P.fill(rect(dx, 148, dw, 244), 'glass'); P.tone(rect(dx, 148, dw, 244), 'tealDk', { from: [dx, 148, 0.2], to: [dx + dw, 392, 0.6], bbox: [dx, 148, dx + dw, 392] }, 5);
+  P.line(svg(`M${dx + dw / 2} 148 L${dx + dw / 2} 392`), 4, 'char'); P.line(rect(dx, 148, dw, 244), 3, 'char');
+  for (const hx of [dx + dw / 2 - 16, dx + dw / 2 + 12]) P.both(rect(hx, 230, 5, 90, 2), 'silver', 2);
+  P.both(rect(dx - 10, 388, dw + 20, 10, 3), 'charDk', 2);
+  P.line(svg(`M${dx + dw + 34} 392 L${dx + dw + 34} 300`), 6); P.both(rect(dx + dw + 22, 268, 24, 36, 5), 'char', 2.5); P.fill(ell(dx + dw + 34, 280, 4), 'sage');
+  // the sign: a low slab of concrete with the logo and the building's number
+  const sx = 1080; P.both(rect(sx, 286, 130, 104, 4), 'silver', 3); P.tone(rect(sx, 286, 130, 104), 'grey', { from: [sx + 60, 286, 0], to: [sx + 130, 390, 0.45], bbox: [sx, 286, sx + 130, 390] }, 5);
+  for (const [cx2, c2] of [[sx + 34, 'rose'], [sx + 50, 'gold'], [sx + 66, 'teal']]) { ctx.save(); P.alpha(0.9); P.fill(ell(cx2, 318, 14), c2); ctx.restore(); }
+  P.text('BLDG 42', sx + 65, 366, { font: FONT.caps, weight: 700, size: 22, color: 'charDk' });
+  // the building's morning shadow across the plaza, and in the foreground a bike rack with someone's bike
+  P.tone(svg(`M${bx} 392 L${w + 10} 392 L${w + 10} ${h + 10} L${bx - 260} ${h + 10} Z`), 'skinDot', { from: [bx, 392, 0.35], to: [bx - 200, h, 0.25], bbox: [bx - 270, 392, w, h] }, 5);
+  for (let k = 0; k < 4; k++) { const rx = 70 + k * 74; P.line(svg(`M${rx} 548 L${rx} 486 C${rx} 462 ${rx + 40} 462 ${rx + 40} 486 L${rx + 40} 548`), 9); P.line(svg(`M${rx} 548 L${rx} 486 C${rx} 462 ${rx + 40} 462 ${rx + 40} 486 L${rx + 40} 548`), 5, 'silver'); }
+  bike(P, 200, 548, 0.9);
+}
+/** a commuter bicycle in profile, facing right, (x, y) the ground under its middle */
+function bike(P, x, y, s) {
+  const lw = begin(P, x, y, s), r = 52, A = [-86, -r], B = [86, -r], S = [-26, -r - 4], H = [62, -122], T = [-36, -116];
+  for (const [cx, cy] of [A, B]) { P.line(ell(cx, cy, r), lw * 2.6); P.line(ell(cx, cy, r), lw * 1.4, 'charDk'); P.line(ell(cx, cy, r - 7), lw * 0.4); for (let k = 0; k < 12; k++) { const a = (k / 12) * Math.PI * 2; P.line(svg(`M${cx} ${cy} L${cx + Math.cos(a) * (r - 6)} ${cy + Math.sin(a) * (r - 6)}`), lw * 0.3); } P.both(ell(cx, cy, 5), 'silver', lw * 0.4); }
+  const frame = `M${A[0]} ${A[1]} L${S[0]} ${S[1]} L${T[0]} ${T[1]} L${H[0] - 8} ${H[1] + 14} L${S[0]} ${S[1]} M${A[0]} ${A[1]} L${T[0]} ${T[1]} M${H[0] - 8} ${H[1] + 14} L${B[0]} ${B[1]}`;
+  P.line(svg(frame), lw * 3.4); P.line(svg(frame), lw * 2, 'red');
+  P.line(svg(`M${T[0]} ${T[1]} L${T[0] - 6} ${T[1] - 16}`), lw * 1.6); P.both(svg(`M${T[0] - 26} ${T[1] - 20} L${T[0] + 14} ${T[1] - 22} C${T[0] + 14} ${T[1] - 14} ${T[0] - 18} ${T[1] - 10} ${T[0] - 26} ${T[1] - 20} Z`), 'charDk', lw * 0.6);
+  P.line(svg(`M${H[0] - 8} ${H[1] + 14} L${H[0]} ${H[1]} C${H[0] + 10} ${H[1] - 8} ${H[0] + 26} ${H[1] - 6} ${H[0] + 30} ${H[1] + 4}`), lw * 1.6);
+  P.both(ell(S[0], S[1], 12), 'silver', lw * 0.5); P.line(svg(`M${S[0]} ${S[1]} L${S[0] + 10} ${S[1] + 14}`), lw);   // crank and pedal
+  P.line(svg(`M${A[0]} ${A[1]} L${S[0]} ${S[1] + 2}`), lw * 0.4, 'grey');   // the chain
+  end(P);
+}
 function friday(P, f, L, t, w, h) {
   const ctx = P.ctx, br = L[1].words[0].start - 0.25;
   if (t < br) {
     // the email arrives, he walks to the office door
-    fill(P, w, h, 'sky', 'goldLt', 0.3);
-    P.both(svg(`M-10 380 L${w + 10} 380 L${w + 10} ${h + 10} L-10 ${h + 10} Z`), 'sage', 3);
-    P.both(rect(780, 60, 380, 330, 6), 'glass', 4); P.line(svg('M970 60 L970 390'), 4); P.tone(rect(780, 60, 380, 330), 'mintDk', { from: [780, 60, 0], to: [1160, 390, 0.5], bbox: [780, 60, 1160, 390] }, 6);
+    officeFront(P, w, h, t);
     const em = wd(L, 0, 'email'), eu = ease.outBack(clamp((t - em + 0.2) / 0.4));
     if (eu > 0 && t < em + 2.2) { ctx.save(); ctx.translate(205, 150); ctx.scale(eu * 0.9, eu * 0.9); P.both(rect(-150, -80, 300, 170, 8), 'ivory', 4); P.line(svg('M-150 -80 L0 20 L150 -80'), 4); P.both(rect(-130, 40, 260, 34, 6), 'cream', 2); P.text('Subject: Org update', 0, 64, { size: 20 }); ctx.restore(); }
     const walk = t - (L[0].words[0].start - 0.3);
     const hx = lerp(430, 700, clamp(walk / 2.6));
+    P.tone(ell(hx, 404, 70, 8), '#000', { from: [hx, 404, 0.4], to: [hx + 70, 404, 0], radial: true, bbox: [hx - 70, 396, hx + 70, 412] }, 4);
     ctx.save(); heroWalk(P, hx, 400, 0.36, walk * 6, {}); ctx.restore();
   } else {
     // the close-up: badge to the reader; it blinks red, and he is greyed out like a disabled control, the grey spreading
