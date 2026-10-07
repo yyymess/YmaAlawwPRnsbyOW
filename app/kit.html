@@ -5,14 +5,18 @@
   @font-face { font-family: Federant; src: url(fonts/Federant.ttf); }
   @font-face { font-family: Cinzel; src: url(fonts/Cinzel.ttf); font-weight: 400 900; }
   @font-face { font-family: "Plex Mono"; src: url(fonts/PlexMono.ttf); }
+  @font-face { font-family: Inter; src: url(fonts/Inter.ttf); font-weight: 100 900; }
+  @font-face { font-family: Archivo; src: url(fonts/Archivo.ttf); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: "Comic Neue"; src: url(fonts/ComicNeue-Bold.ttf); font-weight: 700; }
   body { margin: 0; background: #222; }
 </style>
 <canvas id="c" width="1920" height="1080"></canvas>
 <script type="module">
-  // Character / prop review sheets: ?sheet=hero|props
+  // Character / prop review sheets: ?sheet=<an export of src/kit/sheets.js>: hero, props, closeup, cast, faces, poses,
+  // campuses, cherry. Shoot them with: node app/render.mjs kit --sheet cast,faces
   import { painter, W, H, rect } from './src/paint.js';
   import * as sheets from './src/kit/sheets.js';
-  await Promise.all(['40px Federant', '700 40px Cinzel', '600 20px "Plex Mono"'].map((f) => document.fonts.load(f)));
+  await Promise.all(['40px Federant', '700 40px Cinzel', '600 20px "Plex Mono"', '700 40px "Comic Neue"', '400 20px Inter', '800 20px Archivo'].map((f) => document.fonts.load(f)));
   const c = document.getElementById('c'), ctx = c.getContext('2d'); ctx.scale(1920 / W, 1080 / H);
   const P = painter(ctx); P.paper();
   sheets[new URLSearchParams(location.search).get('sheet') ?? 'hero'](P);

@@ -5,6 +5,7 @@
 //   node app/render.mjs video  [--from 0] [--to <end>] [--fps 30] [--crf 16] [--only ids] [--workers 3] [--size 720] [--scale 2] [--out out/engineers-paradise.mp4]
 //     --scale renders the frames themselves larger (2 = 3840x2160, true 4K: it is all vector); --size only downscales the encode
 //   node app/render.mjs check  [--step 0.2] [--from] [--to]   (draws every step; reports scene errors, exit 2 if any)
+//   node app/render.mjs kit    --sheet cast,faces [--out out]   (the review sheets in src/kit/sheets.js, as out/kit-<name>.png)
 //   node app/render.mjs serve  [--port 5173]          (preview: http://localhost:5173/app/?t=0)
 import { createRequire } from 'node:module';
 import { execSync, spawn } from 'node:child_process';
@@ -53,6 +54,20 @@ const errors = async (page) => page.evaluate(() => window.__ep.errors);
 
 const server = serve(mode === 'serve' ? opt('port', 5173) : 0);
 if (mode === 'serve') { console.log(`preview: http://localhost:${server.address().port}/app/?t=0`); }
+else if (mode === 'kit') {   // character and prop review sheets: app/kit.html?sheet=<name>, one PNG each
+  const browser = await chromium.launch({ executablePath: CHROMIUM });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } }), errs = [];
+    page.on('pageerror', (e) => errs.push(e.message));
+    const out = path.resolve(ROOT, opt('out', 'out')); await mkdir(out, { recursive: true });
+    for (const sh of opt('sheet', 'hero').split(',')) {
+      await page.goto(`http://localhost:${server.address().port}/app/kit.html?sheet=${sh}`);
+      await page.waitForFunction(() => window.__ep?.ready, null, { timeout: 30000 }).catch(() => { throw new Error(`sheet ${sh}: ${errs.join('; ') || 'did not draw'}`); });
+      const url = await page.evaluate(() => window.__ep.png()), f = path.join(out, `kit-${sh}.png`);
+      await writeFile(f, Buffer.from(url.split(',')[1], 'base64')); console.log(f);
+    }
+  } finally { await browser.close(); server.closeAllConnections?.(); server.close(); }
+}
 else {
   const { browser, page, logs } = await open(server);
   const duration = await page.evaluate(() => window.__ep.duration);

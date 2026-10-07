@@ -9,6 +9,8 @@ node app/render.mjs sheet --from 0 --to 21.6 --n 12 --out out/intro.jpg
 node app/render.mjs video                       # out/engineers-paradise.mp4, 1920x1080, 30 fps, with the song
 node app/render.mjs video --from 21.6 --to 57.7 --only verse1 --preset veryfast --out out/verse1.mp4
 node app/render.mjs video --from 150 --to 158 --size 720 --crf 23 --preset veryfast --out out/clip.mp4   # a quick 720p clip of one shot
+node app/render.mjs check --from 160 --to 170 --step 0.1   # draw every step, exit 2 on scene errors
+node app/render.mjs kit --sheet cast,faces                 # character and prop review sheets (src/kit/sheets.js) as out/kit-*.png
 ```
 
 Needs Node, Chromium (Playwright's, or set `CHROMIUM`) and ffmpeg. `--workers N` renders with N headless pages (default 3); about 15 frames/s on 4 cores for simple scenes.
