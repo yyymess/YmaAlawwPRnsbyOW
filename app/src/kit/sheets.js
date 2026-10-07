@@ -12,7 +12,7 @@ export function hero(P) {
   for (let i = 0; i < 8; i++) heroWalk(P, 110 + i * 190, 880, 0.4, (i / 8) * Math.PI * 2);
 }
 
-import { tree, cypress, campus, agentAngel } from './props.js';
+import { tree, cypress, campus, megacampus, agentAngel } from './props.js';
 export function props(P) {
   robotaxi(P, 300, 330, 0.75, 0.3);
   campus(P, 860, 330, 0.85);
@@ -21,6 +21,13 @@ export function props(P) {
   P.vine([[600, 840], [560, 760], [700, 700], [640, 560]], 5);
   P.vine([[760, 840], [800, 760], [700, 690], [780, 560]], 5);
   heroFront(P, 1150, 600, 0.42, { hold: 'phone', uplit: 0.6, look: [0, 0.6] });
+}
+
+// the campus at dawn and what it grew into by dusk (its glass lit below)
+export function campuses(P) {
+  campus(P, 330, 420, 0.9);
+  megacampus(P, 700, 380, 0.5, { n: 7 });
+  megacampus(P, 700, 760, 0.5, { n: 7, glow: 1 });
 }
 
 // close-ups for checking the side view and the grip

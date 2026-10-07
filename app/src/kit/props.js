@@ -125,6 +125,47 @@ export function campus(P, x, y, s) {
 }
 
 /**
+ * The campus as it is now: a megastructure lying low along the ridge, after the new headquarters of the last few years.
+ * A row of tent-like canopies clad in silver solar scales, each with a glazed clerestory under its peak, over one long
+ * ribbon of dark glass on a concrete plinth; a sharp prow at the end, a column under it, a nameless slab of a sign.
+ * Austere where the old campus was whimsical: no slide, no bikes, no roof garden. (x, y) is the left end of its base;
+ * o.n canopies; o.glow 0..1 the light in its glass at night (in raw colours, so a scene's palette dimming leaves it be).
+ */
+export function megacampus(P, x, y, s, o = {}) {
+  const ctx = P.ctx, n = o.n ?? 8, CW = 212, EAVE = -92, PEAK = -152, FB = -82, GB = -16, b = n * CW, tip = b + 96;
+  const lw = Math.max(1.3, 3.5 * s) / s;
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+  const roof = new Path2D(); roof.moveTo(-40, FB); roof.lineTo(-40, EAVE);
+  for (let i = 0; i < n; i++) { const a = i * CW; roof.quadraticCurveTo(a + CW * 0.3, EAVE - 24, a + CW / 2, PEAK); roof.quadraticCurveTo(a + CW * 0.7, EAVE - 24, a + CW, EAVE); }   // broad tents, gently hollowed
+  roof.lineTo(tip, EAVE + 4); roof.lineTo(tip - 22, FB); roof.closePath();
+  const clere = new Path2D(); for (let i = 0; i < n; i++) { const m = i * CW + CW / 2; clere.moveTo(m + 3, PEAK + 12); clere.lineTo(m + 3, EAVE + 1); clere.lineTo(m + CW * 0.27, EAVE + 1); clere.closePath(); }
+  const glass = rect(0, FB, b + 40, GB - FB), panes = new Path2D(), g = o.glow ?? 0;
+  for (let gx = 0; gx < b + 40; gx += 26) panes.rect(gx + 2.5, FB + 3, 21, GB - FB - 6);
+  // the plinth and the glass ribbon, shadowed under the deep eave
+  P.both(rect(-40, GB, tip + 60, -GB), '#bdb8ae', lw);
+  P.fill(glass, 'navyDk'); P.tone(glass, 'denim', { from: [0, GB, 0.5], to: [600, FB, 0], bbox: [0, FB, b + 40, GB] }, 5);
+  for (let gx = 0; gx <= b + 40; gx += 26) P.line(svg(`M${gx} ${FB} L${gx} ${GB}`), lw * 0.5, 'char');
+  P.tone(glass, '#000', { from: [0, FB, 0.55], to: [0, FB + 26, 0], bbox: [0, FB, b + 40, GB] }, 5); P.line(glass, lw);
+  if (g > 0) { ctx.save(); P.alpha(g); P.fill(panes, '#e3f0ec'); ctx.restore(); }   // the light inside, cold and even: never switched off
+  // the canopies: silver scales, the clerestories, the fascia's edge
+  P.fill(roof, 'silver');
+  ctx.save(); P.clip(roof);
+  const sc = new Path2D(); for (let ry = PEAK + 6, row = 0; ry < FB; ry += 8, row++) for (let rx = -40 + (row % 2) * 7; rx < tip; rx += 14) { sc.moveTo(rx - 7, ry); sc.arc(rx, ry, 7, Math.PI, 0, true); }
+  P.line(sc, lw * 0.32, '#a9a49a');
+  P.tone(roof, 'grey', { from: [0, PEAK, 0], to: [0, FB, 0.35], bbox: [-40, PEAK, tip, FB] }, 5);
+  P.fill(clere, 'navyDk'); P.tone(clere, 'denim', { from: [0, PEAK, 0.4], to: [0, EAVE, 0], bbox: [-40, PEAK, tip, EAVE] }, 4);
+  if (g > 0) { ctx.save(); P.alpha(g * 0.85); P.fill(clere, '#cfe4e0'); ctx.restore(); }
+  for (let i = 0; i < n; i++) { const m = i * CW + CW / 2; P.line(svg(`M${m + 3} ${PEAK + 12} L${m + 3} ${EAVE} M${m + 20} ${EAVE - 14} L${m + 20} ${EAVE} M${m + 37} ${EAVE - 4} L${m + 37} ${EAVE}`), lw * 0.4, 'char'); }
+  ctx.restore();
+  P.line(roof, lw * 1.2); P.line(svg(`M-40 ${EAVE + 2} L${b} ${EAVE + 2} L${tip} ${EAVE + 5}`), lw * 0.5);
+  // the prow's column, light poles along the plinth, the slab of a sign
+  P.line(svg(`M${tip - 28} ${FB} L${tip - 28} ${GB}`), lw * 1.6, 'char');
+  for (let px = 120; px < b; px += 320) { P.line(svg(`M${px} ${GB} L${px} ${GB - 46}`), lw * 0.7); P.line(svg(`M${px - 8} ${GB - 46} L${px + 8} ${GB - 46}`), lw * 1.2); }
+  P.both(rect(b - 120, -64, 24, 64), 'charDk', lw); P.line(svg(`M${b - 116} -40 L${b - 100} -40`), lw * 0.6, 'silver');
+  ctx.restore();
+}
+
+/**
  * The agent, as an AI angel: an abstract geometric mark (eight rounded rays round a ring, in the idiom
  * of AI product icons, not any one of them), a halo above, two Mucha wings, a glow.
  */

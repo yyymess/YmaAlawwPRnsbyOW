@@ -6,7 +6,7 @@
 import { W, H, C, rect, ell, svg, at, ease, keys, prog, clamp, rng, lerp, FONT, lyric } from '../paint.js';
 import { heroFront, heroWalk } from '../kit/hero.js';
 import { person } from '../kit/people.js';
-import { lyricBanner, agentAngel, robotaxi, tree, cypress, campus, posterFrame, beatCut } from '../kit/props.js';
+import { lyricBanner, agentAngel, robotaxi, tree, cypress, megacampus, posterFrame, beatCut } from '../kit/props.js';
 import { redPen, scroll, begin, end, star, moon, platter } from '../kit/things.js';
 import { fist, sleeveArm } from './verse1.js';
 
@@ -255,7 +255,9 @@ function valleyEnd(P, f, t, lt) {
   const [px, py, hs, over] = walkAt(lt);
   lit(L, () => {
     P.both(svg(`${RIDGE} L1700 900 L-100 900 Z`), 'hill', 4);   // the intro's hills, lane and trees, in the evening light
-    campus(P, 380, 532, 0.5);
+    // where the playful campus of the dawn stood: the headquarters it grew into, lying low along the ridge, fenced
+    megacampus(P, -200, 548, 0.58, { n: 8, glow: clamp((lt - 5.8) / 2.8) });   // on past the frame; its glass glows cold and even as the light goes
+    P.line(svg('M-20 552 L872 552'), 2, 'grey'); for (let fx = -10; fx < 872; fx += 22) P.line(svg(`M${fx} 552 L${fx} 562`), 1.6, 'grey');
     // his path, drawn in two stretches so the layers fall right: the far one climbs the far hill to the crest and goes
     // under the road (the road runs on across it, the robo-taxi drives over it); the near one comes up from the lane
     // over the brow of the near hill. Each band narrows as it climbs away.
@@ -283,8 +285,6 @@ function valleyEnd(P, f, t, lt) {
     heroWalk(P, px, py, hs, Math.PI * 2 * CADENCE * lt, { hood: 'teal' });
     ctx.restore();
   });
-  // the campus works on into the night: its windows light up one by one
-  if (lt > 8.2) { const r = rng(11); ctx.save(); ctx.translate(380, 532); ctx.scale(0.5, 0.5); for (let fl = 0; fl < 2; fl++) for (let k = 0; k < 12; k++) { const on = clamp((lt - 8.2 - r() * 2.2) / 0.25), dark = r() < 0.25; if (on <= 0 || dark || (fl === 1 && (k === 5 || k === 6))) continue; ctx.save(); P.alpha(on); P.fill(rect(-200 + k * 34 + (k ? 4 : 3), -166 + fl * 84, k ? 26 : 25, 76), 'goldLt'); ctx.restore(); } ctx.restore(); }
   // the fence, nearest and darkest
   lit(L.map((v) => v * 0.82), () => {
     for (let x = -40; x < W + 160; x += 160) P.both(rect(x - 11, 770, 22, 130, 6), 'cream', 3);
